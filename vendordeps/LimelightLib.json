@@ -1,0 +1,12 @@
+{
+  "fileName": "LimelightLib.json",
+  "name": "LimelightLib",
+  "version": "1.0",
+  "uuid": "limelightlib",
+  "frcYear": "2026",
+  "mavenUrls": [],
+  "jsonUrl": "https://limelightvision.github.io/limelightlib-wpijava/LimelightLib.json",
+  "javaDependencies": [],
+  "jniDependencies": [],
+  "cppDependencies": []
+}

@@ -1,0 +1,41 @@
+{
+  "fileName": "MARSLib.json",
+  "name": "MARSLib",
+  "version": "1.0.0",
+  "uuid": "4c947c61-0d33-4f51-b0be-3fe0cc0b0a88",
+  "mavenUrls": [
+    "https://maven.pkg.github.com/MARSLib/Releases",
+    "https://3015rangerrobotics.github.io/pathplannerlib/repo/",
+    "https://lib.choreo.autos/repo/"
+  ],
+  "jsonUrl": "https://raw.githubusercontent.com/MARSLib/MARSLib/main/MARSLib.json",
+  "javaDependencies": [
+    {
+      "groupId": "com.mars",
+      "artifactId": "marslib-java",
+      "version": "1.0.0"
+    },
+    {
+      "groupId": "com.pathplanner.lib",
+      "artifactId": "PathPlannerLib-java",
+      "version": "2025.2.1"
+    },
+    {
+      "groupId": "com.choreo.lib",
+      "artifactId": "ChoreoLib-java",
+      "version": "2025.1.0"
+    },
+    {
+      "groupId": "org.dyn4j",
+      "artifactId": "dyn4j",
+      "version": "5.0.2"
+    },
+    {
+      "groupId": "org.photonvision",
+      "artifactId": "photonlib-java",
+      "version": "2025.+"
+    }
+  ],
+  "jniDependencies": [],
+  "cppDependencies": []
+}

@@ -1,0 +1,12 @@
+{
+  "fileName": "QuestNav.json",
+  "name": "QuestNav",
+  "version": "1.0",
+  "uuid": "gg.questnav.questnav",
+  "frcYear": "2026",
+  "mavenUrls": [],
+  "jsonUrl": "https://questnav.gg/QuestNav.json",
+  "javaDependencies": [],
+  "jniDependencies": [],
+  "cppDependencies": []
+}
