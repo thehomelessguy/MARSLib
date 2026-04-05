@@ -6,6 +6,12 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * High-level subsystem representing a linearly actuating elevator.
+ *
+ * <p>Automates physics simulation, position tracking, and dynamic current limiting
+ * based on system voltage bounds.
+ */
 public class MARSElevator extends SubsystemBase {
 
   private final LinearMechanismIO io;

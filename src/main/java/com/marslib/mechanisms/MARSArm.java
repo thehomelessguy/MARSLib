@@ -6,6 +6,12 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * High-level subsystem representing a rotating single-jointed arm.
+ *
+ * <p>Handles physics simulation, angular position tracking, and dynamic load shedding
+ * to prevent battery brownouts using MARSPowerManager data.
+ */
 public class MARSArm extends SubsystemBase {
 
   private final RotaryMechanismIO io;

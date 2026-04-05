@@ -1,7 +1,10 @@
 package com.marslib.power;
 
 import org.littletonrobotics.junction.AutoLog;
-
+/**
+ * Hardware interface for power management reading.
+ * Provides inputs such as system voltage and total current draw.
+ */
 public interface PowerIO {
   @AutoLog
   public static class PowerIOInputs {

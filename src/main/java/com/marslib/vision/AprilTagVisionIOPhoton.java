@@ -6,6 +6,12 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 
+/**
+ * PhotonVision hardware IO implementation for AprilTag tracking.
+ * 
+ * <p>Automatically streams estimated poses and timestamp information into the
+ * AdvantageKit log so you can precisely back-calculate vision odometry updates.
+ */
 public class AprilTagVisionIOPhoton implements AprilTagVisionIO {
 
   private final PhotonCamera camera;
