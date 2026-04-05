@@ -1,0 +1,65 @@
+
+> Task :eventDeploy
+Not running deploy task, skipping commit
+
+> Task :createVersionFile
+createVersionFile called. Path C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot
+
+> Task :compileJava FAILED
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOPhoton.java:23: warning: [removal] getLatestResult() in PhotonCamera has been deprecated and marked for removal
+    var result = camera.getLatestResult();
+                       ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOPhoton.java:26: warning: [removal] update(PhotonPipelineResult) in PhotonPoseEstimator has been deprecated and marked for removal
+      Optional<EstimatedRobotPose> estimatedPose = poseEstimator.update(result);
+                                                                ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\MARSVision.java:78: error: cannot find symbol
+          swerveDrive.addVisionMeasurement(pose2d, timestamp, stdDevs);
+                     ^
+  symbol:   method addVisionMeasurement(Pose2d,double,Matrix<N3,N1>)
+  location: variable swerveDrive of type SwerveDrive
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\MARSVision.java:96: error: cannot find symbol
+        swerveDrive.addVisionMeasurement(pose2d, timestamp, stdDevs);
+                   ^
+  symbol:   method addVisionMeasurement(Pose2d,double,Matrix<N3,N1>)
+  location: variable swerveDrive of type SwerveDrive
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+2 errors
+2 warnings
+Compilation Error!
+GradleRIO detected this build failed due to a Compile Error (compileJava).
+Check that all your files are saved, then scroll up in this log for more information.
+[Incubating] Problems report is available at: file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOPhoton.java:23: warning: [removal] getLatestResult() in PhotonCamera has been deprecated and marked for removal
+      var result = camera.getLatestResult();
+                         ^
+  C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOPhoton.java:26: warning: [removal] update(PhotonPipelineResult) in PhotonPoseEstimator has been deprecated and marked for removal
+        Optional<EstimatedRobotPose> estimatedPose = poseEstimator.update(result);
+                                                                  ^
+  Note: Some input files use unchecked or unsafe operations.
+  Note: Recompile with -Xlint:unchecked for details.
+  C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\MARSVision.java:78: error: cannot find symbol
+            swerveDrive.addVisionMeasurement(pose2d, timestamp, stdDevs);
+                       ^
+    symbol:   method addVisionMeasurement(Pose2d,double,Matrix<N3,N1>)
+    location: variable swerveDrive of type SwerveDrive
+  C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\MARSVision.java:96: error: cannot find symbol
+          swerveDrive.addVisionMeasurement(pose2d, timestamp, stdDevs);
+                     ^
+    symbol:   method addVisionMeasurement(Pose2d,double,Matrix<N3,N1>)
+    location: variable swerveDrive of type SwerveDrive
+  2 errors
+  2 warnings
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 2s
+3 actionable tasks: 3 executed

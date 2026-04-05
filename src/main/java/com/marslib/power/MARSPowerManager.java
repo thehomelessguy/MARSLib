@@ -4,6 +4,14 @@ import com.marslib.faults.Alert;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.littletonrobotics.junction.Logger;
 
+/**
+ * Subsystem responsible for monitoring the central Power Distribution Hub (PDH).
+ *
+ * <p>Students: This layer pulls input telemetry directly from the physical hardware
+ * (Voltage/Current) and actively manages structural alerts. Most importantly, it pushes real-time
+ * voltage down into the SwerveDrive subsystem allowing the robot to automatically execute "Load
+ * Shedding" to prevent brownouts.
+ */
 public class MARSPowerManager extends SubsystemBase {
   private final PowerIO io;
   private final PowerIOInputsAutoLogged inputs = new PowerIOInputsAutoLogged();
@@ -13,10 +21,19 @@ public class MARSPowerManager extends SubsystemBase {
   private final Alert criticalAlert =
       new Alert("Power", "Load Shedding: Voltage below 7.0V", Alert.AlertType.CRITICAL);
 
+  /**
+   * Initializes the Power Manager.
+   *
+   * @param io The selected IO layer (Sim or Hardware PDH) pulling raw voltages.
+   */
   public MARSPowerManager(PowerIO io) {
     this.io = io;
   }
 
+  /**
+   * Processes IO loops periodically. It triggers AdvantageScope "Alerts" if voltage falls below
+   * safe structural operating limits.
+   */
   @Override
   public void periodic() {
     io.updateInputs(inputs);
@@ -37,5 +54,15 @@ public class MARSPowerManager extends SubsystemBase {
       warningAlert.set(false);
       criticalAlert.set(false);
     }
+  }
+
+  /**
+   * Evaluates the absolute bus voltage dynamically.
+   *
+   * @return The exact system voltage across the PDP/PDH. Usually ~12.5V, dropping during heavy
+   *     loads.
+   */
+  public double getVoltage() {
+    return inputs.voltage;
   }
 }
