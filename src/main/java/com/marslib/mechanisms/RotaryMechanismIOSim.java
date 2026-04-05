@@ -14,7 +14,7 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
 
   private final Body armBody;
   private final Body anchorBody;
-  private final RevoluteJoint joint;
+  private final RevoluteJoint<Body> joint;
 
   private final DCMotor gearbox;
   private final double gearRatio;
@@ -44,7 +44,7 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
     armBody.translate(lengthMeters / 2.0, 0.0);
 
     // Joint binds at origin
-    joint = new RevoluteJoint(anchorBody, armBody, new Vector2(0.0, 0.0));
+    joint = new RevoluteJoint<Body>(anchorBody, armBody, new Vector2(0.0, 0.0));
 
     // Register into the singleton Physics world
     MARSPhysicsWorld.getInstance().getWorld().addBody(anchorBody);

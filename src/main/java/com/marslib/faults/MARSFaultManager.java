@@ -1,6 +1,5 @@
 package com.marslib.faults;
 
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * Central aggregator for all mission-critical error states and hardware timeouts.
@@ -11,13 +10,11 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class MARSFaultManager {
   private static boolean hasNewCriticalFault = false;
-  private static double lastCriticalFaultTime = 0.0;
   private static int activeCriticalFaults = 0;
 
   /** Reports that a new critical fault has occurred. */
   private static void reportNewCriticalFault() {
     hasNewCriticalFault = true;
-    lastCriticalFaultTime = Timer.getFPGATimestamp();
   }
 
   /**

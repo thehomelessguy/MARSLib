@@ -25,7 +25,6 @@ public class MARSElevator extends SubsystemBase {
   private static final double MAX_CURRENT_AMPS = 60.0;
   private static final double MIN_CURRENT_AMPS = 20.0;
 
-  private double currentTargetMeters = 0.0;
   private final MARSPowerManager powerManager;
 
   public MARSElevator(LinearMechanismIO io, MARSPowerManager powerManager) {
@@ -62,7 +61,6 @@ public class MARSElevator extends SubsystemBase {
   }
 
   public void setTargetPosition(double positionMeters) {
-    currentTargetMeters = positionMeters;
     double ffVolts = feedforward.calculate(0.0); // Simple static FF
     io.setClosedLoopPosition(positionMeters, ffVolts);
     Logger.recordOutput("Elevator/TargetPositionMeters", positionMeters);

@@ -16,6 +16,7 @@ public class AprilTagVisionIOPhoton implements AprilTagVisionIO {
     this.poseEstimator = poseEstimator;
   }
 
+  @SuppressWarnings("removal")
   @Override
   public void updateInputs(AprilTagVisionIOInputs inputs) {
     var results = camera.getAllUnreadResults();

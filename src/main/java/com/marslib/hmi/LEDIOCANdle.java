@@ -6,7 +6,6 @@ package com.marslib.hmi;
 
 public class LEDIOCANdle implements LEDIO {
   // private final CANdle candle;
-  private final int numLeds;
   // private final StrobeAnimation criticalAnimation;
 
   public enum State {
@@ -20,7 +19,6 @@ public class LEDIOCANdle implements LEDIO {
 
   public LEDIOCANdle(int canId, String canbus, int numLeds) {
     // this.candle = new CANdle(canId, canbus);
-    this.numLeds = numLeds;
 
     // CANdleConfiguration config = new CANdleConfiguration();
     // config.stripType = com.ctre.phoenix.led.CANdle.LEDStripType.GRB;

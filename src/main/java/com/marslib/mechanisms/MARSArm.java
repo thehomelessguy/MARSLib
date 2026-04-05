@@ -25,7 +25,6 @@ public class MARSArm extends SubsystemBase {
   private static final double MAX_CURRENT_AMPS = 60.0;
   private static final double MIN_CURRENT_AMPS = 20.0;
 
-  private double currentTargetRads = 0.0;
   private final MARSPowerManager powerManager;
 
   public MARSArm(RotaryMechanismIO io, MARSPowerManager powerManager) {
@@ -62,7 +61,6 @@ public class MARSArm extends SubsystemBase {
   }
 
   public void setTargetPosition(double positionRads) {
-    currentTargetRads = positionRads;
     double ffVolts =
         feedforward.calculate(positionRads, 0.0); // Simple static FF, not velocity-aware
     io.setClosedLoopPosition(positionRads, ffVolts);

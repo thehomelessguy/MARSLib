@@ -14,7 +14,7 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
 
   private final Body carriageBody;
   private final Body anchorBody;
-  private final PrismaticJoint joint;
+  private final PrismaticJoint<Body> joint;
 
   private final DCMotor gearbox;
   private final double gearRatio;
@@ -46,7 +46,7 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
 
     // Joint allows only vertical translation
     joint =
-        new PrismaticJoint(anchorBody, carriageBody, new Vector2(0.0, 0.0), new Vector2(0.0, 1.0));
+        new PrismaticJoint<Body>(anchorBody, carriageBody, new Vector2(0.0, 0.0), new Vector2(0.0, 1.0));
 
     MARSPhysicsWorld.getInstance().getWorld().addBody(anchorBody);
     MARSPhysicsWorld.getInstance().registerMechanismBody(mechanismName, carriageBody);
