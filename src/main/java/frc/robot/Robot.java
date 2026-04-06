@@ -27,6 +27,8 @@ public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   public Robot() {
+    super(Constants.LOOP_PERIOD_SECS);
+    
     // Record metadata
     Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
     Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);

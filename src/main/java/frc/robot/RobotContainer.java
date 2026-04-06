@@ -30,6 +30,8 @@ public class RobotContainer {
   private final MARSArm arm;
   private final MARSSuperstructure superstructure;
 
+  private final ChassisSpeeds targetSpeeds = new ChassisSpeeds();
+
   public RobotContainer() {
     // 1. Dependency Injection based on Current Mode
     if (Constants.currentMode == Constants.Mode.SIM) {
@@ -89,11 +91,11 @@ public class RobotContainer {
               double linearMag = 4.5;
               double angularMag = Math.PI * 2;
 
-              double xVelocity = -MathUtil.applyDeadband(controller.getLeftY(), 0.1) * linearMag;
-              double yVelocity = -MathUtil.applyDeadband(controller.getLeftX(), 0.1) * linearMag;
-              double omega = -MathUtil.applyDeadband(controller.getRightX(), 0.1) * angularMag;
+              targetSpeeds.vxMetersPerSecond = -MathUtil.applyDeadband(controller.getLeftY(), 0.1) * linearMag;
+              targetSpeeds.vyMetersPerSecond = -MathUtil.applyDeadband(controller.getLeftX(), 0.1) * linearMag;
+              targetSpeeds.omegaRadiansPerSecond = -MathUtil.applyDeadband(controller.getRightX(), 0.1) * angularMag;
 
-              swerveDrive.runVelocity(new ChassisSpeeds(xVelocity, yVelocity, omega));
+              swerveDrive.runVelocity(targetSpeeds);
             }));
   }
 
