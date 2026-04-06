@@ -33,6 +33,34 @@ public class MARSAuto {
   }
 
   /**
+   * Executes a pre-planned Choreo trajectory but dynamically pathfinds to the start position first
+   * if the robot is off-target. This is the ultimate "Hybrid" approach.
+   *
+   * @param choreoTrajectoryName The filename of the trajectory inside deploy/choreo
+   * @return The autonomous execution Command
+   */
+  public static Command pathfindThenRunChoreoTrajectory(String choreoTrajectoryName) {
+    try {
+      PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory(choreoTrajectoryName);
+      
+      // Constraints for navigating to the starting pose of the trajectory
+      PathConstraints pathfindingConstraints =
+          new PathConstraints(
+              3.0, // Max Velocity (m/s)
+              2.0, // Max Acceleration (m/s^2)
+              Math.PI, // Max Angular Velocity (rad/s)
+              Math.PI / 2 // Max Angular Acceleration (rad/s^2)
+          );
+          
+      return AutoBuilder.pathfindThenFollowPath(path, pathfindingConstraints);
+    } catch (Exception e) {
+      System.err.println("Failed to load Choreo trajectory for pathfinding: " + choreoTrajectoryName);
+      e.printStackTrace();
+      return new edu.wpi.first.wpilibj2.command.PrintCommand("Fallback: Trajectory failed to load");
+    }
+  }
+
+  /**
    * Utilizes PathPlanner's A* Pathfinding to navigate avoiding obstacles. Helpful for dynamic
    * teleop routing.
    *
