@@ -10,6 +10,8 @@ package com.marslib.swerve;
 public class GyroIOSim implements GyroIO {
   private double yawPositionRad = 0.0;
   private double yawVelocityRadPerSec = 0.0;
+  private final java.util.Random random = new java.util.Random();
+  private double accumulatedDriftRad = 0.0;
 
   /**
    * Called by SwerveDrive to update the simulated gyro yaw from kinematics each loop.
@@ -20,15 +22,32 @@ public class GyroIOSim implements GyroIO {
   public void updateYawVelocity(double omegaRadPerSec, double dtSeconds) {
     yawVelocityRadPerSec = omegaRadPerSec;
     yawPositionRad += omegaRadPerSec * dtSeconds;
+
+    if (frc.robot.Constants.SimulationConstants.ENABLE_GYRO_NOISE) {
+      accumulatedDriftRad +=
+          Math.toRadians(frc.robot.Constants.SimulationConstants.GYRO_DRIFT_DEG_PER_SEC)
+              * dtSeconds;
+    }
   }
 
   @Override
   public void updateInputs(GyroIOInputs inputs) {
     inputs.connected = true;
-    inputs.yawPositionRad = yawPositionRad;
+
+    double noiseRads = 0.0;
+    if (frc.robot.Constants.SimulationConstants.ENABLE_GYRO_NOISE) {
+      noiseRads =
+          random.nextGaussian()
+              * frc.robot.Constants.SimulationConstants.GYRO_NOISE_SCALAR
+              * (1.0 + Math.abs(yawVelocityRadPerSec));
+    }
+
+    double noisyYaw = yawPositionRad + accumulatedDriftRad + noiseRads;
+
+    inputs.yawPositionRad = noisyYaw;
     inputs.yawVelocityRadPerSec = yawVelocityRadPerSec;
     // Provide per-frame yaw data so the pose estimator drain loop uses interpolated
     // yaw instead of a single scalar — prevents rotational aliasing during fast turns.
-    inputs.odometryYawPositions = new double[] {yawPositionRad};
+    inputs.odometryYawPositions = new double[] {noisyYaw};
   }
 }

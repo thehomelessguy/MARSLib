@@ -45,6 +45,7 @@ public class SwerveDrive extends SubsystemBase {
   private final SysIdRoutine sysIdRoutine;
 
   private final SwerveChassisPhysics simPhysics;
+  private final com.marslib.simulation.LidarIOSim lidarSim;
 
   private double lastLoadShedLimit = SwerveConstants.DRIVE_STATOR_CURRENT_LIMIT;
 
@@ -76,6 +77,7 @@ public class SwerveDrive extends SubsystemBase {
 
     if (frc.robot.Robot.isSimulation()) {
       simPhysics = new SwerveChassisPhysics(poseEstimator.getEstimatedPosition());
+      lidarSim = new com.marslib.simulation.LidarIOSim();
 
       // Inject the centralized physics reference into each SwerveModuleIOSim so they
       // read wheel omegas from the single source of truth instead of local DCMotorSims.
@@ -84,6 +86,7 @@ public class SwerveDrive extends SubsystemBase {
       }
     } else {
       simPhysics = null;
+      lidarSim = null;
     }
 
     // Native SysId Configuration hooked dynamically into this layer
@@ -245,6 +248,11 @@ public class SwerveDrive extends SubsystemBase {
           currentPositions,
           simBoundedPose); // Force odometry matching
       currentPose = simBoundedPose;
+
+      // Update our LiDAR point cloud based on our collision frame constraints
+      if (lidarSim != null) {
+        lidarSim.updateInputs(currentPose);
+      }
     }
 
     Logger.recordOutput("SwerveDrive/Pose", currentPose);

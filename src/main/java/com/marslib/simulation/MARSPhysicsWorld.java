@@ -50,6 +50,10 @@ public class MARSPhysicsWorld {
     return instance;
   }
 
+  public World<Body> getDyn4jWorld() {
+    return world;
+  }
+
   private final World<Body> world;
   private final Map<String, Body> mechanismBodies;
   private final List<GamePieceSim> gamePieces;

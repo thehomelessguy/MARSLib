@@ -12,6 +12,8 @@ public interface PowerIO {
     public double totalCurrentAmps = 0.0;
     public double voltage = 0.0;
     public double[] channelCurrentsAmps = new double[0];
+    public double canBusUtilization = 0.0;
+    public boolean isBrownedOut = false;
   }
 
   public default void updateInputs(PowerIOInputs inputs) {}

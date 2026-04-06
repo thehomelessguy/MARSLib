@@ -37,8 +37,9 @@ public class GamePieceSim {
     // Model as a circle with radius from FieldConstants
     BodyFixture fixture =
         gamePieceBody.addFixture(Geometry.createCircle(FieldConstants.GAME_PIECE_RADIUS_METERS));
-    fixture.setFriction(0.3);
-    fixture.setRestitution(0.7);
+    // High friction and zero bounciness to mimic foam deformation/squish
+    fixture.setFriction(0.8);
+    fixture.setRestitution(0.0);
 
     // Compute density from mass and area: density = mass / (π * r²)
     double area =
@@ -46,9 +47,9 @@ public class GamePieceSim {
     fixture.setDensity(FieldConstants.GAME_PIECE_MASS_KG / area);
     gamePieceBody.setMass(MassType.NORMAL);
 
-    // Damping so pieces naturally decelerate after being bumped
-    gamePieceBody.setLinearDamping(1.5);
-    gamePieceBody.setAngularDamping(1.5);
+    // Heavy damping so pieces dramatically decelerate and "stick" when dragged by intake
+    gamePieceBody.setLinearDamping(4.5);
+    gamePieceBody.setAngularDamping(5.0);
 
     gamePieceBody.translate(initialPosition.getX(), initialPosition.getY());
 

@@ -36,6 +36,9 @@ public class SwerveChassisPhysics {
    */
   private final double[] simulatedWheelOmegas = new double[NUM_MODULES];
 
+  /** Simulated stator temperatures for the Kraken X60 drive motors (Celsius). */
+  private final double[] statorTempCelsius = new double[] {25.0, 25.0, 25.0, 25.0};
+
   /**
    * Constructs the chassis physics body and registers it with the {@link MARSPhysicsWorld}.
    *
@@ -141,6 +144,18 @@ public class SwerveChassisPhysics {
       totalCurrentAmps += Math.abs(currentDrawAmps);
 
       double motorTorqueNm = motor.getTorque(currentDrawAmps);
+
+      // Calculate Stator Thermals (I^2 * ThermalResistance) and ambient cooling
+      double heatGenerated = (currentDrawAmps * currentDrawAmps * 0.005) * dtSeconds;
+      double heatDissipated = (statorTempCelsius[i] - 25.0) * 0.05 * dtSeconds;
+      statorTempCelsius[i] = Math.max(25.0, statorTempCelsius[i] + heatGenerated - heatDissipated);
+
+      // Hardware-mimicking Thermal Torque Rollback (Fade output over 90C)
+      if (statorTempCelsius[i] > 90.0) {
+        double fadeFactor = Math.max(0.1, 1.0 - ((statorTempCelsius[i] - 90.0) * 0.05));
+        motorTorqueNm *= fadeFactor;
+      }
+
       double wheelTorqueNm = motorTorqueNm * SwerveConstants.DRIVE_GEAR_RATIO;
 
       // --- 2. TIRE SLIP PHYSICS (Stribeck/Coulomb) ---
@@ -199,6 +214,7 @@ public class SwerveChassisPhysics {
     Logger.recordOutput("PhysicsSim/WheelRPMs", wheelRPMs);
     Logger.recordOutput("PhysicsSim/BatteryVoltage", batteryVoltage);
     Logger.recordOutput("PhysicsSim/TotalCurrentDraw_A", totalCurrentAmps);
+    Logger.recordOutput("PhysicsSim/StatorTemp_C", statorTempCelsius);
 
     MARSPhysicsWorld.getInstance().addFrameCurrentDrawAmps(totalCurrentAmps);
   }
