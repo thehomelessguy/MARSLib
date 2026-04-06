@@ -61,6 +61,15 @@ public class SwerveModule {
   }
 
   /**
+   * Returns the hardware timestamps of the high-frequency positional records.
+   *
+   * @return Array of FPGA/Hardware timestamps tightly synced with {@link #getPositionDeltas()}.
+   */
+  public double[] getOdometryTimestamps() {
+    return inputs.odometryTimestamps;
+  }
+
+  /**
    * Returns the most recent physical location recorded by the drive motors.
    *
    * @return A singular {@link SwerveModulePosition} bounding distance traveled and heading.
@@ -105,12 +114,16 @@ public class SwerveModule {
     // Optimize to minimize turn rotation (may flip drive direction)
     desiredState.optimize(currentAngle);
 
-    // Drive voltage: linear mapping from speed to voltage
-    double driveVoltage =
-        desiredState.speedMetersPerSecond * 12.0 / SwerveConstants.MAX_LINEAR_SPEED_MPS;
-
     // Turn voltage: proportional controller on angular error
     double angleErrorRad = desiredState.angle.minus(currentAngle).getRadians();
+
+    // Cosine Compensation: Scale drive speed by cosine of error angle
+    // This prevents the robot from driving while the wheels are sideways, eliminating drift.
+    double driveVoltage =
+        (desiredState.speedMetersPerSecond * Math.cos(angleErrorRad))
+            * 12.0
+            / SwerveConstants.MAX_LINEAR_SPEED_MPS;
+
     double turnVoltage = angleErrorRad * SwerveConstants.TURN_KP;
     turnVoltage = Math.max(-12.0, Math.min(12.0, turnVoltage));
 

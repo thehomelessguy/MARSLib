@@ -70,8 +70,10 @@ public class MARSArm extends SubsystemBase {
   }
 
   public void setTargetPosition(double positionRads) {
-    double ffVolts =
-        feedforward.calculate(positionRads, 0.0); // Simple static FF, not velocity-aware
+    // Dynamic FF using actual arm physical angle and instantaneous profile target velocity from
+    // CTRE Motion Magic
+    double currentAngleRads = inputs.positionRad;
+    double ffVolts = feedforward.calculate(currentAngleRads, inputs.targetVelocityRadPerSec);
     io.setClosedLoopPosition(positionRads, ffVolts);
     Logger.recordOutput("Arm/TargetPositionRads", positionRads);
   }

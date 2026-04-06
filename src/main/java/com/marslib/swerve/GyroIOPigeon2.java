@@ -31,8 +31,10 @@ public class GyroIOPigeon2 implements GyroIO {
     yaw = pigeon.getYaw();
     yawVelocity = pigeon.getAngularVelocityZWorld();
 
-    yaw.setUpdateFrequency(250.0);
     yawVelocity.setUpdateFrequency(100.0);
+    // yaw frequency is managed by the OdometryThread
+
+    PhoenixOdometryThread.getInstance().registerGyro(yaw);
 
     pigeon.optimizeBusUtilization();
   }
@@ -43,5 +45,13 @@ public class GyroIOPigeon2 implements GyroIO {
     inputs.connected = yaw.getStatus().isOK();
     inputs.yawPositionRad = Units.degreesToRadians(yaw.getValueAsDouble());
     inputs.yawVelocityRadPerSec = Units.degreesToRadians(yawVelocity.getValueAsDouble());
+
+    double[] rawOdometryYaw = PhoenixOdometryThread.getInstance().getGyroYawData();
+    // In MARSLib, we'll need to store this in GyroIOInputs. Let's assume there's a field for
+    // odometryYawPositions
+    inputs.odometryYawPositions = new double[rawOdometryYaw.length];
+    for (int i = 0; i < rawOdometryYaw.length; i++) {
+      inputs.odometryYawPositions[i] = Units.degreesToRadians(rawOdometryYaw[i]);
+    }
   }
 }

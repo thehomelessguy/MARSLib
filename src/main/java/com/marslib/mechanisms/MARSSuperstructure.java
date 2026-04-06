@@ -23,50 +23,55 @@ public class MARSSuperstructure extends SubsystemBase {
     this.arm = arm;
   }
 
-  /** Generates a collision-safe dynamic Command grouping to transition to the required state. */
+  // Idealistic goal states
+  private double goalElevatorHeight = 0.0;
+  private double goalArmAngle = 0.0;
+
+  /** Updates the target state of the superstructure dynamically. */
   public Command setAbsoluteState(SuperstructureState targetState) {
-    return Commands.runOnce(() -> currentState = targetState)
-        .andThen(
-            Commands.defer(
-                () -> {
-                  switch (targetState) {
-                    case INTAKE_FLOOR:
-                      return Commands.either(
-                          Commands.parallel(
-                              arm.runOnce(() -> arm.setTargetPosition(Math.PI / 4)),
-                              elevator.runOnce(() -> elevator.setTargetPosition(0.2))),
-                          Commands.sequence(
-                              arm.runOnce(() -> arm.setTargetPosition(Math.PI / 4)),
-                              Commands.waitUntil(
-                                  () -> Math.abs(arm.getPositionRads() - Math.PI / 4) < 0.1),
-                              elevator.runOnce(() -> elevator.setTargetPosition(0.2))),
-                          () -> elevator.getPositionMeters() < 0.3);
+    return Commands.runOnce(() -> currentState = targetState, this);
+  }
 
-                    case SCORE_HIGH:
-                      return Commands.either(
-                          Commands.parallel(
-                              elevator.runOnce(() -> elevator.setTargetPosition(1.5)),
-                              arm.runOnce(() -> arm.setTargetPosition(Math.PI / 2))),
-                          Commands.sequence(
-                              elevator.runOnce(() -> elevator.setTargetPosition(1.5)),
-                              Commands.waitUntil(() -> elevator.getPositionMeters() > 1.0),
-                              arm.runOnce(() -> arm.setTargetPosition(Math.PI / 2))),
-                          () -> elevator.getPositionMeters() > 1.0);
+  @Override
+  public void periodic() {
+    // 1. Map enum state to idealistic spatial goals
+    switch (currentState) {
+      case INTAKE_FLOOR:
+        goalElevatorHeight = 0.2;
+        goalArmAngle = Math.PI / 4;
+        break;
+      case SCORE_HIGH:
+        goalElevatorHeight = 1.5;
+        goalArmAngle = Math.PI / 2;
+        break;
+      case STOWED:
+      default:
+        goalElevatorHeight = 0.0;
+        goalArmAngle = 0.0;
+        break;
+    }
 
-                    case STOWED:
-                    default:
-                      return Commands.either(
-                          Commands.parallel(
-                              arm.runOnce(() -> arm.setTargetPosition(0.0)),
-                              elevator.runOnce(() -> elevator.setTargetPosition(0.0))),
-                          Commands.sequence(
-                              arm.runOnce(() -> arm.setTargetPosition(0.0)),
-                              Commands.waitUntil(() -> Math.abs(arm.getPositionRads()) < 0.2),
-                              elevator.runOnce(() -> elevator.setTargetPosition(0.0))),
-                          () -> arm.getPositionRads() < 0.2);
-                  }
-                },
-                java.util.Set.of(this, elevator, arm)));
+    // 2. Safe collision bounding logic (2D State Machine constraint clamping)
+    double safeArmAngle = goalArmAngle;
+    double safeElevatorHeight = goalElevatorHeight;
+
+    // RULE A: If elevator is physically low, the arm is not allowed to extend outwards.
+    // This prevents the arm from smashing into the floor/bumpers.
+    if (elevator.getPositionMeters() < 0.5) {
+      // Clamp arm to a safe stowed boundary when elevator is down
+      safeArmAngle = Math.min(safeArmAngle, 0.2);
+    }
+
+    // RULE B: If the arm is currently extended outside the safe stow bounds,
+    // the elevator is not allowed to drop below the safe transit height.
+    if (arm.getPositionRads() > 0.3) {
+      // Clamp elevator minimum height to prevent it crushing downwards while arm is out
+      safeElevatorHeight = Math.max(safeElevatorHeight, 0.6);
+    }
+
+    // 3. Dispatch safe commands continuously
+    elevator.setTargetPosition(safeElevatorHeight);
+    arm.setTargetPosition(safeArmAngle);
   }
 
   public SuperstructureState getCurrentState() {

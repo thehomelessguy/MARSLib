@@ -26,6 +26,8 @@ public class Robot extends LoggedRobot {
   private RobotContainer m_robotContainer;
   private Command m_autonomousCommand;
 
+  private int disabledTimer = 0; // Throttle counter for GC
+
   public Robot() {
     super(Constants.LOOP_PERIOD_SECS);
 
@@ -66,6 +68,11 @@ public class Robot extends LoggedRobot {
     }
 
     // Start AdvantageKit logger
+    // TODO: Elite CTRE Enhancement - URCL
+    // To enable automatic CANBus logging, install the 'URCL' vendordep and uncomment the line
+    // below.
+    // org.littletonrobotics.urcl.URCL.start(); // Wait actually Logger.registerURCL is the syntax.
+    // Logger.registerURCL(org.littletonrobotics.urcl.URCL.start());
     Logger.start();
   }
 
@@ -82,11 +89,21 @@ public class Robot extends LoggedRobot {
 
   /** This function is called once when the robot is disabled. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    // Clear out memory aggressively before a match starts
+    System.gc();
+  }
 
   /** This function is called periodically when disabled. */
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    disabledTimer++;
+    // Throttle forceful GC to roughly 1 Hz to clear out unreferenced visual caches
+    if (disabledTimer >= 50) {
+      System.gc();
+      disabledTimer = 0;
+    }
+  }
 
   /** This autonomous runs the selected autonomous command. */
   @Override

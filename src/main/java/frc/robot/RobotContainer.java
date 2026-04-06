@@ -2,7 +2,7 @@ package frc.robot;
 
 import com.marslib.auto.GhostManager;
 import com.marslib.auto.MARSDiagnosticCheck;
-import com.marslib.auto.SmartAssistAlign;
+import com.marslib.auto.ShootOnTheMoveCommand;
 import com.marslib.hmi.LEDIOAddressable;
 import com.marslib.hmi.LEDManager;
 import com.marslib.hmi.OperatorInterface;
@@ -28,8 +28,8 @@ import com.marslib.vision.MARSVision;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -59,9 +59,11 @@ public class RobotContainer {
   private final MARSVision vision;
 
   private final ChassisSpeeds targetSpeeds = new ChassisSpeeds();
-  private final SlewRateLimiter xLimiter = new SlewRateLimiter(3.0);
-  private final SlewRateLimiter yLimiter = new SlewRateLimiter(3.0);
-  private final SlewRateLimiter omegaLimiter = new SlewRateLimiter(6.0);
+  // Fixed: Physical Acceleration Caps (15.0 m/s^2 instead of arbitrary unitless timings)
+  private final SlewRateLimiter xLimiter = new SlewRateLimiter(15.0);
+  private final SlewRateLimiter yLimiter = new SlewRateLimiter(15.0);
+  private final SlewRateLimiter omegaLimiter =
+      new SlewRateLimiter(Math.PI * 6); // Fast rotation limit
   private final PIDController headingController = new PIDController(5.0, 0, 0);
   private Rotation2d targetHeading = new Rotation2d();
 
@@ -253,8 +255,14 @@ public class RobotContainer {
               double omgVal =
                   MathUtil.applyDeadband(ghostManager.getRightX(() -> controller.getRightX()), 0.1);
 
-              targetSpeeds.vxMetersPerSecond = -xLimiter.calculate(Math.pow(xVal, 3.0)) * linearMag;
-              targetSpeeds.vyMetersPerSecond = -yLimiter.calculate(Math.pow(yVal, 3.0)) * linearMag;
+              // Fixed: Cube joystick first to maintain exponential curve, then apply Slew Rate
+              // Limiter to physical meters/sec
+              double mappedX = Math.pow(xVal, 3.0) * linearMag;
+              double mappedY = Math.pow(yVal, 3.0) * linearMag;
+              double mappedOmg = Math.pow(omgVal, 3.0) * angularMag;
+
+              targetSpeeds.vxMetersPerSecond = -xLimiter.calculate(mappedX);
+              targetSpeeds.vyMetersPerSecond = -yLimiter.calculate(mappedY);
 
               if (Math.abs(omgVal) <= 0.01) {
                 if (Math.abs(xVal) > 0.01 || Math.abs(yVal) > 0.01) {
@@ -271,8 +279,7 @@ public class RobotContainer {
               } else {
                 // Driver rotating actively
                 targetHeading = swerveDrive.getPose().getRotation();
-                targetSpeeds.omegaRadiansPerSecond =
-                    -omegaLimiter.calculate(Math.pow(omgVal, 3.0)) * angularMag;
+                targetSpeeds.omegaRadiansPerSecond = -omegaLimiter.calculate(mappedOmg);
               }
 
               // CRITICAL: Convert teleop joystick values from Field-Relative to Robot-Centric
@@ -329,16 +336,21 @@ public class RobotContainer {
     // Start -> Diagnostic Hardware Check
     controller.start().onTrue(new MARSDiagnosticCheck(swerveDrive, elevator, arm, ledManager));
 
-    // Left Bumper -> Smart Assist Odometry Alignment (Example Field Target)
+    // Left Bumper -> Velocity-Added Kinematic Leading (Shoot On The Move!)
     controller
         .leftBumper()
         .whileTrue(
-            new SmartAssistAlign(
+            new ShootOnTheMoveCommand(
                 swerveDrive,
                 () ->
                     -xLimiter.calculate(
-                        Math.pow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 3.0)),
-                new Pose2d(5.0, 3.0, new Rotation2d(0))));
+                        Math.pow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 3.0)
+                            * SwerveConstants.MAX_LINEAR_SPEED_MPS),
+                () ->
+                    -yLimiter.calculate(
+                        Math.pow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 3.0)
+                            * SwerveConstants.MAX_LINEAR_SPEED_MPS),
+                new Translation2d(16.5, 5.5))); // Example Field Coordinate (E.g. Red Speaker)
   }
 
   public Command getAutonomousCommand() {

@@ -8,6 +8,7 @@ public interface LinearMechanismIO {
     public boolean hasHardwareConnected = true;
     public double positionMeters = 0.0;
     public double velocityMetersPerSec = 0.0;
+    public double targetVelocityMetersPerSec = 0.0;
     public double appliedVolts = 0.0;
     public double[] currentAmps = new double[] {};
   }

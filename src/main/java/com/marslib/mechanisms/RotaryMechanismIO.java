@@ -8,6 +8,7 @@ public interface RotaryMechanismIO {
     public boolean hasHardwareConnected = true;
     public double positionRad = 0.0;
     public double velocityRadPerSec = 0.0;
+    public double targetVelocityRadPerSec = 0.0;
     public double appliedVolts = 0.0;
     public double[] currentAmps = new double[] {};
   }

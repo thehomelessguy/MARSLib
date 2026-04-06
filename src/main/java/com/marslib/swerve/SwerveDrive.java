@@ -165,11 +165,12 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     // Use real gyro yaw for pose estimation
-    Rotation2d yaw =
-        gyroInputs.connected ? new Rotation2d(gyroInputs.yawPositionRad) : new Rotation2d();
+    // Rotation2d yaw = ... (moved into the drain loop for high frequency accuracy)
 
     // Synchronous Pose Estimator Drain
     int sampleCount = modules[0].getPositionDeltas().length;
+    double[] timestamps = modules[0].getOdometryTimestamps();
+
     for (int i = 0; i < sampleCount; i++) {
       SwerveModulePosition[] positionsForFrame =
           new SwerveModulePosition[] {
@@ -179,7 +180,17 @@ public class SwerveDrive extends SubsystemBase {
             modules[3].getPositionDeltas()[i]
           };
 
-      poseEstimator.update(yaw, positionsForFrame);
+      Rotation2d frameYaw;
+      if (gyroInputs.connected && gyroInputs.odometryYawPositions.length > i) {
+        frameYaw = new Rotation2d(gyroInputs.odometryYawPositions[i]);
+      } else {
+        frameYaw = new Rotation2d(gyroInputs.yawPositionRad);
+      }
+
+      double timestamp =
+          (timestamps.length > i) ? timestamps[i] : edu.wpi.first.wpilibj.Timer.getFPGATimestamp();
+
+      poseEstimator.updateWithTime(timestamp, frameYaw, positionsForFrame);
     }
 
     // Log final Pose

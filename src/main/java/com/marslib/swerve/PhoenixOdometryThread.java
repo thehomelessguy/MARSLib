@@ -33,6 +33,9 @@ public class PhoenixOdometryThread extends Thread {
   private final List<BlockingQueue<Double>> turnPositionQueues = new ArrayList<>();
   private final List<BlockingQueue<Double>> timestampQueues = new ArrayList<>();
 
+  private final BlockingQueue<Double> gyroYawQueue = new ArrayBlockingQueue<>(50);
+  private int gyroSignalIndex = -1;
+
   public PhoenixOdometryThread() {
     setName("PhoenixOdometryThread");
     setDaemon(true);
@@ -87,6 +90,32 @@ public class PhoenixOdometryThread extends Thread {
     }
   }
 
+  public void registerGyro(BaseStatusSignal yawPos) {
+    signalsLock.lock();
+    try {
+      yawPos.setUpdateFrequency(250.0);
+      signals.add(yawPos);
+      gyroSignalIndex = signals.size() - 1;
+    } finally {
+      signalsLock.unlock();
+    }
+  }
+
+  public double[] getGyroYawData() {
+    signalsLock.lock();
+    try {
+      int size = gyroYawQueue.size();
+      double[] data = new double[size];
+      for (int i = 0; i < size; i++) {
+        Double val = gyroYawQueue.poll();
+        data[i] = val != null ? val : 0.0;
+      }
+      return data;
+    } finally {
+      signalsLock.unlock();
+    }
+  }
+
   @Override
   public void run() {
     while (true) {
@@ -113,6 +142,7 @@ public class PhoenixOdometryThread extends Thread {
 
         // For each module (2 signals per module)
         for (int i = 0; i < drivePositionQueues.size(); i++) {
+          // Drive signals are always added sequentially 0,1 then 2,3 etc.
           double drivePos = currentSignals[i * 2].getValueAsDouble();
           double turnPos = currentSignals[i * 2 + 1].getValueAsDouble();
 
@@ -120,6 +150,14 @@ public class PhoenixOdometryThread extends Thread {
             drivePositionQueues.get(i).offer(drivePos);
             turnPositionQueues.get(i).offer(turnPos);
             timestampQueues.get(i).offer(time);
+          }
+        }
+
+        // Process gyro if registered
+        if (gyroSignalIndex != -1 && gyroSignalIndex < currentSignals.length) {
+          double yawPos = currentSignals[gyroSignalIndex].getValueAsDouble();
+          if (gyroYawQueue.remainingCapacity() > 0) {
+            gyroYawQueue.offer(yawPos);
           }
         }
       } finally {

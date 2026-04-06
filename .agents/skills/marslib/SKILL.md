@@ -18,13 +18,13 @@ Periodically perform `io.updateInputs(inputs)` and call `Logger.processInputs("[
 Do NOT use `SmartDashboard`; use `LoggedTunableNumber`.
 
 ## 2. Superstructure & Collision Prevention
-When writing a command that requires multiple mechanisms to move simultaneously, do NOT use WPILib's `ParallelCommandGroup`. 
+When writing a command that requires multiple mechanisms to move simultaneously, do NOT use WPILib's `ParallelCommandGroup`.
 Instead, queue a request in `MARSSuperstructure.java`. The Superstructure must evaluate physical constraints natively (e.g., "Elevator must be above 20 inches before Arm can pivot") via dynamic conditionals (like `Commands.either()`) before dispatching the states to the respective subsystems dynamically.
 
 ## 3. Motor Configuration Rule (Phoenix 6)
-All CTRE hardware uses the **Phoenix 6 API**. Do not use Phoenix 5 (`TalonFXControlMode` or `WPI_TalonFX`). 
-- Always use `TalonFXConfiguration` objects to apply settings. 
-- You must enforce `StatorCurrentLimit` and `SupplyCurrentLimit` on all motors to prevent roboRIO brownouts. 
+All CTRE hardware uses the **Phoenix 6 API**. Do not use Phoenix 5 (`TalonFXControlMode` or `WPI_TalonFX`).
+- Always use `TalonFXConfiguration` objects to apply settings.
+- You must enforce `StatorCurrentLimit` and `SupplyCurrentLimit` on all motors to prevent roboRIO brownouts.
 - Use `BaseStatusSignal.setUpdateFrequency()` to lower the CAN bus utilization of non-essential telemetry (like motor temperature).
 - Use `MARSPowerManager` to dynamically step down and track limits if the voltage drops to critical bounds.
 

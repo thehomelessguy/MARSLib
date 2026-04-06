@@ -13,6 +13,7 @@ public interface GyroIO {
     public boolean connected = false;
     public double yawPositionRad = 0.0;
     public double yawVelocityRadPerSec = 0.0;
+    public double[] odometryYawPositions = new double[] {};
   }
 
   /** Updates the set of loggable inputs. */

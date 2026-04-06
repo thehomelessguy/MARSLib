@@ -70,7 +70,8 @@ public class MARSElevator extends SubsystemBase {
   }
 
   public void setTargetPosition(double positionMeters) {
-    double ffVolts = feedforward.calculate(0.0); // Simple static FF
+    // Dynamic FF using instantaneous profile target velocity from CTRE Motion Magic
+    double ffVolts = feedforward.calculate(inputs.targetVelocityMetersPerSec);
     io.setClosedLoopPosition(positionMeters, ffVolts);
     Logger.recordOutput("Elevator/TargetPositionMeters", positionMeters);
   }

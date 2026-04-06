@@ -37,6 +37,7 @@ public class LinearMechanismIOTalonFX implements LinearMechanismIO {
   private final StatusSignal<AngularVelocity> velocity;
   private final StatusSignal<Voltage> appliedVolts;
   private final StatusSignal<Current> statorCurrent;
+  private final StatusSignal<Double> closedLoopReferenceSlope;
 
   private final VoltageOut voltageRequest = new VoltageOut(0.0);
   private final MotionMagicVoltage motionMagicRequest = new MotionMagicVoltage(0.0);
@@ -89,18 +90,21 @@ public class LinearMechanismIOTalonFX implements LinearMechanismIO {
     velocity = motor.getVelocity();
     appliedVolts = motor.getMotorVoltage();
     statorCurrent = motor.getStatorCurrent();
+    closedLoopReferenceSlope = motor.getClosedLoopReferenceSlope();
 
     position.setUpdateFrequency(50.0);
     velocity.setUpdateFrequency(50.0);
     appliedVolts.setUpdateFrequency(50.0);
     statorCurrent.setUpdateFrequency(50.0);
+    closedLoopReferenceSlope.setUpdateFrequency(50.0);
 
     motor.optimizeBusUtilization();
   }
 
   @Override
   public void updateInputs(LinearMechanismIOInputs inputs) {
-    BaseStatusSignal.refreshAll(position, velocity, appliedVolts, statorCurrent);
+    BaseStatusSignal.refreshAll(
+        position, velocity, appliedVolts, statorCurrent, closedLoopReferenceSlope);
 
     inputs.hasHardwareConnected = true;
 
@@ -108,6 +112,8 @@ public class LinearMechanismIOTalonFX implements LinearMechanismIO {
 
     inputs.positionMeters = position.getValueAsDouble() * metersPerMotorRotation;
     inputs.velocityMetersPerSec = velocity.getValueAsDouble() * metersPerMotorRotation;
+    inputs.targetVelocityMetersPerSec =
+        closedLoopReferenceSlope.getValueAsDouble() * metersPerMotorRotation;
     inputs.appliedVolts = appliedVolts.getValueAsDouble();
     inputs.currentAmps = new double[] {statorCurrent.getValueAsDouble()};
 
