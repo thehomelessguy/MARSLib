@@ -9,8 +9,8 @@ import org.littletonrobotics.junction.Logger;
 /**
  * High-level subsystem representing a linearly actuating elevator.
  *
- * <p>Automates physics simulation, position tracking, and dynamic current limiting
- * based on system voltage bounds.
+ * <p>Automates physics simulation, position tracking, and dynamic current limiting based on system
+ * voltage bounds.
  */
 public class MARSElevator extends SubsystemBase {
 

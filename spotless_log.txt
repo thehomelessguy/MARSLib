@@ -1,6 +1,0 @@
-> Task :spotlessInternalRegisterDependencies UP-TO-DATE
-> Task :spotlessGroovyGradle UP-TO-DATE
-> Task :spotlessGroovyGradleApply UP-TO-DATE
-
-> Task :spotlessJava FAILED
-4 actionable tasks: 1 executed, 3 up-to-date

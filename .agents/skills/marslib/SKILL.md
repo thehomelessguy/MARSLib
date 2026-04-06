@@ -5,10 +5,10 @@ description: Helps write FRC robot code using the MARSLib Advanced Simulation an
 
 # MARSLib Framework Skill
 
-When asked to create new robot subsystems, commands, or mechanisms for a MARSLib-based project, adhere strictly to the following architectural guidelines. 
+When asked to create new robot subsystems, commands, or mechanisms for a MARSLib-based project, adhere strictly to the following architectural guidelines.
 
 ## 1. IO Layer Abstraction (AdvantageKit)
-Every subsystem MUST have its hardware interaction abstracted behind an IO interface. 
+Every subsystem MUST have its hardware interaction abstracted behind an IO interface.
 Never put hardware objects (TalonFX, CANSparkMax, Solenoids) directly inside a Subsystem class.
 - **`[Name]IO.java`**: The interface file. It must contain the `@AutoLog` inner class `[Name]IOInputs`. All hardware reading methods update this inputs object.
 - **`[Name]IOReal.java`**: The real hardware implementation. Directly interfaces with CAN motors and sensors.
@@ -28,7 +28,7 @@ Always pipe hardware failures or timeout detections through `MARSFaultManager`.
 
 ## 4. Simulation Integration (Dyn4j)
 When writing `[Name]IOSim.java` layers:
-- Register the `Body` logic to the centralized `MARSPhysicsWorld`. 
+- Register the `Body` logic to the centralized `MARSPhysicsWorld`.
 - Provide basic internal profile controllers to roughly mimic 1kHz motor controllers (like TalonFX Motion Magic).
 - Always aggregate the simulated current draw up to `MARSPhysicsWorld.getInstance().addFrameCurrentDrawAmps(currentDrawAmps)`.
 

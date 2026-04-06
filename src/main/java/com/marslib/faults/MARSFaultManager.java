@@ -1,6 +1,5 @@
 package com.marslib.faults;
 
-
 /**
  * Central aggregator for all mission-critical error states and hardware timeouts.
  *

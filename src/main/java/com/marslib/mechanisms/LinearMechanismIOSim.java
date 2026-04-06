@@ -46,7 +46,8 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
 
     // Joint allows only vertical translation
     joint =
-        new PrismaticJoint<Body>(anchorBody, carriageBody, new Vector2(0.0, 0.0), new Vector2(0.0, 1.0));
+        new PrismaticJoint<Body>(
+            anchorBody, carriageBody, new Vector2(0.0, 0.0), new Vector2(0.0, 1.0));
 
     MARSPhysicsWorld.getInstance().getWorld().addBody(anchorBody);
     MARSPhysicsWorld.getInstance().registerMechanismBody(mechanismName, carriageBody);

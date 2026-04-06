@@ -6,11 +6,11 @@ This architecture is designed to enforce consistent AdvantageKit input abstracti
 
 ## Project Structure
 
-Your logic is segmented into two spheres: 
+Your logic is segmented into two spheres:
 
 1. `com.marslib.*`: This is the inner library. It contains the abstraction interfaces (`LinearMechanismIO`, `RotaryMechanismIO`), the Dyn4j physics simulation wrappers (`LinearMechanismIOSim`, `RotaryMechanismIOSim`), Fault Management (`MARSFaultManager`), HMI interfaces, and Vision interfaces.
    - Do **NOT** write specific robot logic here. This is the hardware engine.
-2. `frc.robot.*`: This is the standard WPILib competition code footprint. You will create your Subsystems, Commands, and RobotContainer directly in here. 
+2. `frc.robot.*`: This is the standard WPILib competition code footprint. You will create your Subsystems, Commands, and RobotContainer directly in here.
 
 ## How to use Subsystems
 

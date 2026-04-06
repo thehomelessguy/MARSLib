@@ -91,9 +91,12 @@ public class RobotContainer {
               double linearMag = 4.5;
               double angularMag = Math.PI * 2;
 
-              targetSpeeds.vxMetersPerSecond = -MathUtil.applyDeadband(controller.getLeftY(), 0.1) * linearMag;
-              targetSpeeds.vyMetersPerSecond = -MathUtil.applyDeadband(controller.getLeftX(), 0.1) * linearMag;
-              targetSpeeds.omegaRadiansPerSecond = -MathUtil.applyDeadband(controller.getRightX(), 0.1) * angularMag;
+              targetSpeeds.vxMetersPerSecond =
+                  -MathUtil.applyDeadband(controller.getLeftY(), 0.1) * linearMag;
+              targetSpeeds.vyMetersPerSecond =
+                  -MathUtil.applyDeadband(controller.getLeftX(), 0.1) * linearMag;
+              targetSpeeds.omegaRadiansPerSecond =
+                  -MathUtil.applyDeadband(controller.getRightX(), 0.1) * angularMag;
 
               swerveDrive.runVelocity(targetSpeeds);
             }));
