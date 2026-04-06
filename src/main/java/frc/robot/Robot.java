@@ -68,10 +68,10 @@ public class Robot extends LoggedRobot {
     }
 
     // Start AdvantageKit logger
-    // TODO: Elite CTRE Enhancement - URCL
+    // Note: Elite CTRE Enhancement - URCL
     // To enable automatic CANBus logging, install the 'URCL' vendordep and uncomment the line
     // below.
-    // org.littletonrobotics.urcl.URCL.start(); // Wait actually Logger.registerURCL is the syntax.
+    // org.littletonrobotics.urcl.URCL.start();
     // Logger.registerURCL(org.littletonrobotics.urcl.URCL.start());
     Logger.start();
   }

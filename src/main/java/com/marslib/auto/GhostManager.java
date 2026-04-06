@@ -22,7 +22,7 @@ public class GhostManager {
 
   private static final String FILE_PATH = "/home/lvuser/ghost_macro.csv";
 
-  private boolean isRecording = false;
+
   private boolean isPlaying = false;
 
   private PrintWriter writer;
@@ -116,7 +116,7 @@ public class GhostManager {
           // Fast header
           writer.println("time,ly,lx,rx,a,b,x,y,lb,rb,up,down,left,right");
           timer.restart();
-          isRecording = true;
+
           SmartDashboard.putBoolean("Ghost/IsRecording", true);
         } catch (Exception e) {
           e.printStackTrace();
@@ -151,7 +151,7 @@ public class GhostManager {
         if (writer != null) {
           writer.close();
         }
-        isRecording = false;
+
         SmartDashboard.putBoolean("Ghost/IsRecording", false);
       }
     };
