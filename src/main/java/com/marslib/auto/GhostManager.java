@@ -22,7 +22,6 @@ public class GhostManager {
 
   private static final String FILE_PATH = "/home/lvuser/ghost_macro.csv";
 
-
   private boolean isPlaying = false;
 
   private PrintWriter writer;

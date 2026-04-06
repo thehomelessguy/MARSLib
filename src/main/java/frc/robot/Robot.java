@@ -51,6 +51,10 @@ public class Robot extends LoggedRobot {
         // Running on a real robot, log to a USB stick ("/U/logs")
         Logger.addDataReceiver(new WPILOGWriter());
         Logger.addDataReceiver(new NT4Publisher());
+
+        // Elite CTRE Logging: Phoenix natively records all data at 250Hz+ into .hoot files
+        com.ctre.phoenix6.SignalLogger.setPath("/U/logs");
+        com.ctre.phoenix6.SignalLogger.start();
         break;
 
       case SIM:
@@ -68,11 +72,6 @@ public class Robot extends LoggedRobot {
     }
 
     // Start AdvantageKit logger
-    // Note: Elite CTRE Enhancement - URCL
-    // To enable automatic CANBus logging, install the 'URCL' vendordep and uncomment the line
-    // below.
-    // org.littletonrobotics.urcl.URCL.start();
-    // Logger.registerURCL(org.littletonrobotics.urcl.URCL.start());
     Logger.start();
   }
 
