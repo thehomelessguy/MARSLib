@@ -24,9 +24,11 @@ public class AprilTagVisionIOLimelight implements AprilTagVisionIO {
       inputs.tagCounts = new int[] {estimate.tagCount};
       inputs.averageDistancesMeters = new double[] {estimate.avgTagDist};
 
-      // Limelight 3G / later may populate ambiguity, otherwise default to 0.0 for multitag
-      inputs.ambiguities =
-          new double[] {estimate.tagCount > 1 ? 0.0 : 0.9}; // arbitrary fallback if not parsed
+      // Limelight MegaTag2 does not expose per-tag pose ambiguity natively.
+      // Default to 0.0 to avoid tripping the MAX_AMBIGUITY filter in MARSVision.
+      // Quality control for single-tag observations is handled by downstream
+      // distance-based standard deviation scaling instead.
+      inputs.ambiguities = new double[] {0.0};
     } else {
       inputs.estimatedPoses = new Pose3d[0];
       inputs.timestamps = new double[0];

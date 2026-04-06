@@ -27,5 +27,8 @@ public class GyroIOSim implements GyroIO {
     inputs.connected = true;
     inputs.yawPositionRad = yawPositionRad;
     inputs.yawVelocityRadPerSec = yawVelocityRadPerSec;
+    // Provide per-frame yaw data so the pose estimator drain loop uses interpolated
+    // yaw instead of a single scalar — prevents rotational aliasing during fast turns.
+    inputs.odometryYawPositions = new double[] {yawPositionRad};
   }
 }

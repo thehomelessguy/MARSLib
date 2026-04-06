@@ -6,6 +6,10 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
+/**
+ * Subsystem handling driver and operator input, including intelligent rumble feedback for faults
+ * and voltage sags.
+ */
 public class OperatorInterface extends SubsystemBase {
   private final CommandXboxController controller;
   private final MARSPowerManager powerManager;
@@ -13,8 +17,10 @@ public class OperatorInterface extends SubsystemBase {
   // Pulse parameters
   private boolean isPulsing = false;
   private int pulseCounter = 0;
-  private static final int PULSE_DURATION_LOOPS = 25; // 500ms
-  private static final int PULSE_INTERVAL_LOOPS = 25; // 500ms
+  private static final int PULSE_DURATION_LOOPS =
+      frc.robot.Constants.OperatorConstants.PULSE_DURATION_LOOPS;
+  private static final int PULSE_INTERVAL_LOOPS =
+      frc.robot.Constants.OperatorConstants.PULSE_INTERVAL_LOOPS;
 
   public OperatorInterface(int port, MARSPowerManager powerManager) {
     this.controller = new CommandXboxController(port);
@@ -53,9 +59,12 @@ public class OperatorInterface extends SubsystemBase {
 
     // 2. Voltage Droop Rumble
     double voltage = powerManager.getVoltage();
-    if (voltage > 0.0 && voltage < 10.0) {
-      // Map 10V to 0.0 strength and 7.0V to 1.0 strength
-      double rumbleStrength = 1.0 - ((voltage - 7.0) / 3.0);
+    double nominal = frc.robot.Constants.PowerConstants.NOMINAL_VOLTAGE;
+    double critical = frc.robot.Constants.PowerConstants.CRITICAL_VOLTAGE;
+
+    if (voltage > 0.0 && voltage < nominal) {
+      double voltageRange = nominal - critical;
+      double rumbleStrength = 1.0 - ((voltage - critical) / voltageRange);
       rumbleStrength = Math.max(0.0, Math.min(1.0, rumbleStrength));
       setRumble(rumbleStrength);
     } else {

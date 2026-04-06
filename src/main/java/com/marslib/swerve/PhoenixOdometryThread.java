@@ -8,9 +8,25 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * High-frequency CAN bus polling thread for CTRE Phoenix 6 odometry signals.
+ *
+ * <p>This singleton thread runs at {@link frc.robot.Constants.DriveConstants#ODOMETRY_HZ} Hz,
+ * continuously sampling drive/turn encoder positions and gyro yaw from TalonFX and Pigeon2 devices.
+ * Samples are buffered in thread-safe {@link BlockingQueue}s and drained by {@link
+ * com.marslib.swerve.SwerveDrive#periodic()} each robot loop iteration.
+ *
+ * <p><b>Thread Safety:</b> All signal registration and data access is guarded by a {@link
+ * ReentrantLock}. The queues use a fixed capacity of 50 to bound memory usage.
+ */
 public class PhoenixOdometryThread extends Thread {
   private static PhoenixOdometryThread instance = null;
 
+  /**
+   * Returns the singleton instance, creating and starting the thread on first access.
+   *
+   * @return The global {@link PhoenixOdometryThread} instance.
+   */
   public static synchronized PhoenixOdometryThread getInstance() {
     if (instance == null) {
       instance = new PhoenixOdometryThread();
@@ -19,9 +35,13 @@ public class PhoenixOdometryThread extends Thread {
     return instance;
   }
 
+  /** Container for a batch of synchronized odometry samples from a single module. */
   public static class SyncData {
+    /** Accumulated drive encoder positions (motor rotations) since the last drain. */
     public double[] drivePositions;
+    /** Accumulated turn encoder positions (motor rotations) since the last drain. */
     public double[] turnPositions;
+    /** FPGA timestamps corresponding to each position sample. */
     public double[] timestamps;
   }
 
@@ -41,6 +61,13 @@ public class PhoenixOdometryThread extends Thread {
     setDaemon(true);
   }
 
+  /**
+   * Registers a swerve module's drive and turn position signals for high-frequency sampling.
+   *
+   * @param drivePosition The drive motor's position {@link BaseStatusSignal}.
+   * @param turnPosition The turn motor's position {@link BaseStatusSignal}.
+   * @return The module ID used to retrieve synchronized data via {@link #getSyncData(int)}.
+   */
   public int registerModule(BaseStatusSignal drivePosition, BaseStatusSignal turnPosition) {
     signalsLock.lock();
     try {
@@ -53,8 +80,9 @@ public class PhoenixOdometryThread extends Thread {
       signals.add(turnPosition);
 
       // Configure frequencies to 250Hz
-      drivePosition.setUpdateFrequency(250.0);
-      turnPosition.setUpdateFrequency(250.0);
+      double odometryHz = frc.robot.Constants.DriveConstants.ODOMETRY_HZ;
+      drivePosition.setUpdateFrequency(odometryHz);
+      turnPosition.setUpdateFrequency(odometryHz);
 
       return id;
     } finally {
@@ -62,6 +90,12 @@ public class PhoenixOdometryThread extends Thread {
     }
   }
 
+  /**
+   * Drains all buffered odometry samples for a specific module since the last call.
+   *
+   * @param moduleId The module ID returned by {@link #registerModule}.
+   * @return A {@link SyncData} containing synchronized drive/turn positions and timestamps.
+   */
   public SyncData getSyncData(int moduleId) {
     signalsLock.lock();
     try {
@@ -90,10 +124,15 @@ public class PhoenixOdometryThread extends Thread {
     }
   }
 
+  /**
+   * Registers the gyro yaw signal for high-frequency sampling alongside module signals.
+   *
+   * @param yawPos The Pigeon2 yaw position {@link BaseStatusSignal}.
+   */
   public void registerGyro(BaseStatusSignal yawPos) {
     signalsLock.lock();
     try {
-      yawPos.setUpdateFrequency(250.0);
+      yawPos.setUpdateFrequency(frc.robot.Constants.DriveConstants.ODOMETRY_HZ);
       signals.add(yawPos);
       gyroSignalIndex = signals.size() - 1;
     } finally {
@@ -101,6 +140,11 @@ public class PhoenixOdometryThread extends Thread {
     }
   }
 
+  /**
+   * Drains all buffered high-frequency gyro yaw samples since the last call.
+   *
+   * @return Array of yaw positions (rotations) accumulated since the last drain.
+   */
   public double[] getGyroYawData() {
     signalsLock.lock();
     try {
@@ -133,8 +177,9 @@ public class PhoenixOdometryThread extends Thread {
         continue;
       }
 
-      // Wait for all signals to update, timeout after 250hz expectations
-      BaseStatusSignal.waitForAll(2.0 / 250.0, currentSignals);
+      // Wait for all signals to update, timeout after 2x the expected period
+      double odometryHz = frc.robot.Constants.DriveConstants.ODOMETRY_HZ;
+      BaseStatusSignal.waitForAll(2.0 / odometryHz, currentSignals);
 
       signalsLock.lock();
       try {

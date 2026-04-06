@@ -34,6 +34,12 @@ public class MARSElevator extends SubsystemBase {
 
   private final MARSPowerManager powerManager;
 
+  /**
+   * Constructs a MARSElevator with the given IO layer and power manager.
+   *
+   * @param io The mechanism IO layer (TalonFX or simulation).
+   * @param powerManager The active power manager for load-shedding voltage queries.
+   */
   public MARSElevator(LinearMechanismIO io, MARSPowerManager powerManager) {
     this.io = io;
     this.powerManager = powerManager;
@@ -69,6 +75,14 @@ public class MARSElevator extends SubsystemBase {
     Logger.recordOutput("Elevator/ActiveCurrentLimit", currentLimit);
   }
 
+  /**
+   * Commands the elevator to a target height using Motion Magic with dynamic feedforward.
+   *
+   * <p>The feedforward voltage is computed using the instantaneous Motion Magic profile velocity
+   * (for kV contribution) and the static gravity term kG.
+   *
+   * @param positionMeters Target elevator height in meters.
+   */
   public void setTargetPosition(double positionMeters) {
     // Dynamic FF using instantaneous profile target velocity from CTRE Motion Magic
     double ffVolts = feedforward.calculate(inputs.targetVelocityMetersPerSec);
@@ -76,6 +90,11 @@ public class MARSElevator extends SubsystemBase {
     Logger.recordOutput("Elevator/TargetPositionMeters", positionMeters);
   }
 
+  /**
+   * Returns the current measured elevator height.
+   *
+   * @return Current elevator position in meters.
+   */
   public double getPositionMeters() {
     return inputs.positionMeters;
   }

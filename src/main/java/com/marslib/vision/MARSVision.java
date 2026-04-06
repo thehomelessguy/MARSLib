@@ -28,8 +28,6 @@ public class MARSVision extends SubsystemBase {
   private final VIOSlamIOInputsAutoLogged[] slamInputs;
 
   // Base standard deviation multiplier for AprilTags
-  private static final double TAG_STD_BASE = 0.05;
-
   /**
    * Constructs the absolute Vision mapping structure.
    *
@@ -72,20 +70,24 @@ public class MARSVision extends SubsystemBase {
         double timestamp = aprilTagInputs[i].timestamps[f];
 
         // Dynamic Filtering & Ambiguity Rejection
-        if (tagCount == 1 && (ambiguity > 0.2 || Math.abs(pose3d.getZ()) > 0.5)) {
+        if (tagCount == 1
+            && (ambiguity > frc.robot.Constants.VisionConstants.MAX_AMBIGUITY
+                || Math.abs(pose3d.getZ()) > frc.robot.Constants.VisionConstants.MAX_Z_HEIGHT)) {
           continue; // Reject noisy single tag or flying robot
         }
 
-        // Exponential scaling based on distance
-        // The further away, the exponentially less we trust it
-        double linearStdDev = TAG_STD_BASE * Math.exp(avgDist);
+        // Quadratic scaling based on distance
+        // The further away, the exponentially less we trust it (squared)
+        double linearStdDev =
+            frc.robot.Constants.VisionConstants.TAG_STD_BASE * Math.pow(avgDist, 2);
 
-        // MegaTag2 Boost
+        // MegaTag2 Boost: Dramatically tighten bounds when multiple tags are visible
         if (tagCount > 1) {
-          linearStdDev *= 0.1; // Extremely tight bound when multi-tag is locked
+          linearStdDev *= frc.robot.Constants.VisionConstants.MULTI_TAG_STD_MULTIPLIER;
         }
 
-        double angularStdDev = linearStdDev * 2.0;
+        double angularStdDev =
+            linearStdDev * frc.robot.Constants.VisionConstants.ANGULAR_STD_MULTIPLIER;
 
         Matrix<N3, N1> stdDevs = VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev);
         Pose2d pose2d = pose3d.toPose2d();
@@ -104,8 +106,12 @@ public class MARSVision extends SubsystemBase {
         Pose3d pose3d = slamInputs[i].estimatedPoses[f];
         double timestamp = slamInputs[i].timestamps[f];
 
-        // Extremely tight static covariance for reliable VIO Odometry
-        Matrix<N3, N1> stdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
+        // Tight static covariance for reliable VIO odometry
+        Matrix<N3, N1> stdDevs =
+            VecBuilder.fill(
+                frc.robot.Constants.VisionConstants.SLAM_STD_DEV,
+                frc.robot.Constants.VisionConstants.SLAM_STD_DEV,
+                frc.robot.Constants.VisionConstants.SLAM_STD_DEV);
         Pose2d pose2d = pose3d.toPose2d();
 
         swerveDrive.addVisionMeasurement(pose2d, timestamp, stdDevs);

@@ -8,8 +8,17 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
+/** Sequential command group that performs a predefined sequence of automated hardware checks. */
 public class MARSDiagnosticCheck extends SequentialCommandGroup {
 
+  /**
+   * Constructs a new diagnostic check command.
+   *
+   * @param swerveDrive the swerve drive subsystem
+   * @param elevator the elevator subsystem
+   * @param arm the rotary arm subsystem
+   * @param ledManager the LED feedback subsystem
+   */
   public MARSDiagnosticCheck(
       SwerveDrive swerveDrive, MARSElevator elevator, MARSArm arm, LEDManager ledManager) {
 

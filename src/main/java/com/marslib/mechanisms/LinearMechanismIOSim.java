@@ -10,6 +10,10 @@ import org.dyn4j.geometry.Geometry;
 import org.dyn4j.geometry.MassType;
 import org.dyn4j.geometry.Vector2;
 
+/**
+ * Simulation implementation of the LinearMechanismIO interface. Uses Dyn4j to run a rigid-body
+ * physics simulation of a 1D elevator mechanism.
+ */
 public class LinearMechanismIOSim implements LinearMechanismIO {
 
   private final Body carriageBody;
@@ -40,7 +44,12 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
 
     // Carriage body (Dynamic)
     carriageBody = new Body();
-    carriageBody.addFixture(Geometry.createRectangle(0.5, 0.1), massKg / 0.05, 0.2, 0.0);
+    // Typical FRC elevator carriage geometry approximation
+    double carriageWidth = 0.5;
+    double carriageHeight = 0.1;
+    double area = carriageWidth * carriageHeight;
+    carriageBody.addFixture(
+        Geometry.createRectangle(carriageWidth, carriageHeight), massKg / area, 0.2, 0.0);
     carriageBody.setMass(MassType.NORMAL);
     carriageBody.translate(0.0, 0.0);
 
@@ -53,6 +62,9 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
     MARSPhysicsWorld.getInstance().registerMechanismBody(mechanismName, carriageBody);
     MARSPhysicsWorld.getInstance().getWorld().addJoint(joint);
 
+    // Internal profiled PID mimics the TalonFX Motion Magic controller in sim.
+    // kP=5.0 provides stiff tracking; constraints model a typical FRC elevator profile:
+    //   maxVelocity = 2.0 m/s, maxAcceleration = 4.0 m/s²
     internalController =
         new ProfiledPIDController(5.0, 0.0, 0.0, new TrapezoidProfile.Constraints(2.0, 4.0));
   }
@@ -66,7 +78,8 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
     if (closedLoop) {
       double pidVolts = internalController.calculate(currentPosMeters);
       appliedVolts = pidVolts + currentFeedforward;
-      appliedVolts = Math.max(-12.0, Math.min(12.0, appliedVolts));
+      double maxVoltage = MARSPhysicsWorld.getInstance().getSimulatedVoltage();
+      appliedVolts = Math.max(-maxVoltage, Math.min(maxVoltage, appliedVolts));
     }
 
     // DC Motor Math linearly coupled via spool
@@ -85,6 +98,10 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
     inputs.hasHardwareConnected = true;
     inputs.positionMeters = currentPosMeters;
     inputs.velocityMetersPerSec = currentVelocityMetersPerSec;
+    // Feed back the profiled setpoint velocity so the subsystem-level ElevatorFeedforward
+    // kV term is exercised in simulation (mirrors MotionMagic reference slope on real HW).
+    inputs.targetVelocityMetersPerSec =
+        closedLoop ? internalController.getSetpoint().velocity : 0.0;
     inputs.appliedVolts = appliedVolts;
     inputs.currentAmps = new double[] {Math.abs(currentDrawAmps)};
   }
@@ -92,7 +109,8 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
   @Override
   public void setVoltage(double volts) {
     closedLoop = false;
-    appliedVolts = Math.max(-12.0, Math.min(12.0, volts));
+    double maxVoltage = MARSPhysicsWorld.getInstance().getSimulatedVoltage();
+    appliedVolts = Math.max(-maxVoltage, Math.min(maxVoltage, volts));
   }
 
   @Override

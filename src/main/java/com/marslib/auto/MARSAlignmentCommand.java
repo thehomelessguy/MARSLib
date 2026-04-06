@@ -27,14 +27,24 @@ public class MARSAlignmentCommand extends Command {
 
     // Default fast-response kinematic constraints for visual alignment
     TrapezoidProfile.Constraints translationConstraints =
-        new TrapezoidProfile.Constraints(3.0, 3.0);
+        new TrapezoidProfile.Constraints(
+            frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_MAX_VELOCITY_MPS,
+            frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_MAX_ACCEL_MPS2);
     TrapezoidProfile.Constraints rotationConstraints =
-        new TrapezoidProfile.Constraints(Math.PI * 2, Math.PI * 4);
+        new TrapezoidProfile.Constraints(
+            frc.robot.Constants.AutoConstants.ALIGN_ROTATION_MAX_VELOCITY_RAD_PER_SEC,
+            frc.robot.Constants.AutoConstants.ALIGN_ROTATION_MAX_ACCEL_RAD_PER_SEC2);
 
-    xController = new ProfiledPIDController(5.0, 0, 0, translationConstraints);
-    yController = new ProfiledPIDController(5.0, 0, 0, translationConstraints);
+    xController =
+        new ProfiledPIDController(
+            frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_KP, 0, 0, translationConstraints);
+    yController =
+        new ProfiledPIDController(
+            frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_KP, 0, 0, translationConstraints);
 
-    thetaController = new ProfiledPIDController(5.0, 0, 0, rotationConstraints);
+    thetaController =
+        new ProfiledPIDController(
+            frc.robot.Constants.AutoConstants.ALIGN_THETA_KP, 0, 0, rotationConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     addRequirements(swerveDrive);
@@ -75,7 +85,8 @@ public class MARSAlignmentCommand extends Command {
     double rotationError =
         Math.abs(currentPos.getRotation().minus(target.getRotation()).getRadians());
 
-    return error.getNorm() < 0.05 && rotationError < 0.05;
+    return error.getNorm() < frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_TOLERANCE_METERS
+        && rotationError < frc.robot.Constants.AutoConstants.ALIGN_ROTATION_TOLERANCE_RAD;
   }
 
   @Override

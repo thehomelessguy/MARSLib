@@ -69,6 +69,14 @@ public class MARSArm extends SubsystemBase {
     Logger.recordOutput("Arm/ActiveCurrentLimit", currentLimit);
   }
 
+  /**
+   * Commands the arm to a target angular position using Motion Magic with dynamic feedforward.
+   *
+   * <p>The feedforward voltage is computed using the current arm angle (for gravity compensation)
+   * and the instantaneous Motion Magic profile velocity (for kV contribution).
+   *
+   * @param positionRads Target arm angle in radians.
+   */
   public void setTargetPosition(double positionRads) {
     // Dynamic FF using actual arm physical angle and instantaneous profile target velocity from
     // CTRE Motion Magic
@@ -78,6 +86,11 @@ public class MARSArm extends SubsystemBase {
     Logger.recordOutput("Arm/TargetPositionRads", positionRads);
   }
 
+  /**
+   * Returns the current measured arm angle.
+   *
+   * @return Current arm position in radians.
+   */
   public double getPositionRads() {
     return inputs.positionRad;
   }

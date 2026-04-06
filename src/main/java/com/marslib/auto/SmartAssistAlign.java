@@ -1,6 +1,5 @@
 package com.marslib.auto;
 
-import com.marslib.swerve.SwerveConstants;
 import com.marslib.swerve.SwerveDrive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -8,6 +7,10 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.DoubleSupplier;
 
+/**
+ * Command for dynamic, odometry-based robot alignment specifically for scoring on standard FRC grid
+ * nodes.
+ */
 public class SmartAssistAlign extends Command {
 
   private final SwerveDrive swerveDrive;
@@ -32,8 +35,10 @@ public class SmartAssistAlign extends Command {
     this.targetNode = targetNode;
 
     // These controllers compare the Robot's true position to the Node's true position
-    this.yAlignController = new PIDController(4.0, 0, 0);
-    this.thetaAlignController = new PIDController(5.0, 0, 0);
+    this.yAlignController =
+        new PIDController(frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_KP, 0, 0);
+    this.thetaAlignController =
+        new PIDController(frc.robot.Constants.AutoConstants.ALIGN_THETA_KP, 0, 0);
     this.thetaAlignController.enableContinuousInput(-Math.PI, Math.PI);
 
     addRequirements(swerveDrive);
@@ -44,7 +49,7 @@ public class SmartAssistAlign extends Command {
     Pose2d currentPose = swerveDrive.getPose();
 
     // 1. Let the driver keep control of the speed advancing towards the grid (Field X)
-    double fieldVx = forwardThrottleSupplier.getAsDouble() * SwerveConstants.MAX_LINEAR_SPEED_MPS;
+    double fieldVx = forwardThrottleSupplier.getAsDouble();
 
     // 2. Automate strafing to line up exactly with target Y (Field Y)
     double fieldVy = yAlignController.calculate(currentPose.getY(), targetNode.getY());

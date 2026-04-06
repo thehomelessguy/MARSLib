@@ -1,13 +1,11 @@
 package com.marslib.faults;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StringArrayPublisher;
 import edu.wpi.first.wpilibj.Timer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.littletonrobotics.junction.Logger;
 
 /** Class for managing various alerts to be displayed on the driver station. */
 public class Alert {
@@ -67,16 +65,8 @@ public class Alert {
 
   private static class SendableAlerts {
     private final List<Alert> alerts = new ArrayList<>();
-    private final StringArrayPublisher infoPub;
-    private final StringArrayPublisher warningPub;
-    private final StringArrayPublisher criticalPub;
 
-    public SendableAlerts() {
-      NetworkTable table = NetworkTableInstance.getDefault().getTable("Alerts");
-      infoPub = table.getStringArrayTopic("Info").publish();
-      warningPub = table.getStringArrayTopic("Warning").publish();
-      criticalPub = table.getStringArrayTopic("Critical").publish();
-    }
+    public SendableAlerts() {}
 
     public void updateAlert(Alert alert) {
       if (alert.active && !alerts.contains(alert)) {
@@ -105,9 +95,11 @@ public class Alert {
         }
       }
 
-      infoPub.set(infoStrings.toArray(new String[0]));
-      warningPub.set(warningStrings.toArray(new String[0]));
-      criticalPub.set(criticalStrings.toArray(new String[0]));
+      // Use the group name in the log key so different alert groups don't overwrite each other
+      String prefix = alerts.isEmpty() ? "Alerts" : alerts.get(0).group;
+      Logger.recordOutput(prefix + "/Info", infoStrings.toArray(new String[0]));
+      Logger.recordOutput(prefix + "/Warning", warningStrings.toArray(new String[0]));
+      Logger.recordOutput(prefix + "/Critical", criticalStrings.toArray(new String[0]));
     }
   }
 }

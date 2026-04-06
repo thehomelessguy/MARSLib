@@ -6,10 +6,15 @@ import com.marslib.auto.ShootOnTheMoveCommand;
 import com.marslib.hmi.LEDIOAddressable;
 import com.marslib.hmi.LEDManager;
 import com.marslib.hmi.OperatorInterface;
+import com.marslib.mechanisms.FlywheelIO;
+import com.marslib.mechanisms.FlywheelIOSim;
+import com.marslib.mechanisms.FlywheelIOTalonFX;
 import com.marslib.mechanisms.LinearMechanismIOSim;
 import com.marslib.mechanisms.LinearMechanismIOTalonFX;
 import com.marslib.mechanisms.MARSArm;
 import com.marslib.mechanisms.MARSElevator;
+import com.marslib.mechanisms.MARSIntake;
+import com.marslib.mechanisms.MARSShooter;
 import com.marslib.mechanisms.MARSSuperstructure;
 import com.marslib.mechanisms.RotaryMechanismIOSim;
 import com.marslib.mechanisms.RotaryMechanismIOTalonFX;
@@ -19,21 +24,26 @@ import com.marslib.power.PowerIOSim;
 import com.marslib.swerve.GyroIO;
 import com.marslib.swerve.GyroIOPigeon2;
 import com.marslib.swerve.GyroIOSim;
-import com.marslib.swerve.SwerveConstants;
 import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIOSim;
 import com.marslib.swerve.SwerveModuleIOTalonFX;
+import com.marslib.vision.AprilTagVisionIOLimelight;
+import com.marslib.vision.AprilTagVisionIOSim;
 import com.marslib.vision.MARSVision;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import java.util.List;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
  * Central Dependency Injection container for the robot. All subsystem instantiation and mode-based
@@ -49,27 +59,32 @@ public class RobotContainer {
   private final SwerveDrive swerveDrive;
   private final MARSElevator elevator;
   private final MARSArm arm;
+  private final MARSIntake intake;
+  private final MARSShooter shooter;
   private final MARSSuperstructure superstructure;
   private final GhostManager ghostManager = new GhostManager();
 
-  @SuppressWarnings("unused")
   private final LEDManager ledManager;
 
-  @SuppressWarnings("unused")
   private final MARSVision vision;
 
   private final ChassisSpeeds targetSpeeds = new ChassisSpeeds();
   // Fixed: Physical Acceleration Caps (15.0 m/s^2 instead of arbitrary unitless timings)
-  private final SlewRateLimiter xLimiter = new SlewRateLimiter(15.0);
-  private final SlewRateLimiter yLimiter = new SlewRateLimiter(15.0);
+  private final SlewRateLimiter xLimiter =
+      new SlewRateLimiter(Constants.DriveConstants.TELEOP_LINEAR_ACCEL_LIMIT);
+  private final SlewRateLimiter yLimiter =
+      new SlewRateLimiter(Constants.DriveConstants.TELEOP_LINEAR_ACCEL_LIMIT);
   private final SlewRateLimiter omegaLimiter =
-      new SlewRateLimiter(Math.PI * 6); // Fast rotation limit
-  private final PIDController headingController = new PIDController(5.0, 0, 0);
+      new SlewRateLimiter(Constants.DriveConstants.TELEOP_OMEGA_ACCEL_LIMIT); // Fast rotation limit
+  private final PIDController headingController =
+      new PIDController(Constants.DriveConstants.HEADING_KP, 0, 0);
   private Rotation2d targetHeading = new Rotation2d();
+
+  private final LoggedDashboardChooser<Command> autoChooser;
 
   public RobotContainer() {
     // 1. Dependency Injection based on Current Mode
-    switch (Constants.currentMode) {
+    switch (Constants.CURRENT_MODE) {
       case SIM:
         {
           powerManager = new MARSPowerManager(new PowerIOSim());
@@ -78,10 +93,10 @@ public class RobotContainer {
           swerveDrive =
               new SwerveDrive(
                   new SwerveModule[] {
-                    new SwerveModule(0, new SwerveModuleIOSim()),
-                    new SwerveModule(1, new SwerveModuleIOSim()),
-                    new SwerveModule(2, new SwerveModuleIOSim()),
-                    new SwerveModule(3, new SwerveModuleIOSim())
+                    new SwerveModule(0, new SwerveModuleIOSim(0)),
+                    new SwerveModule(1, new SwerveModuleIOSim(1)),
+                    new SwerveModule(2, new SwerveModuleIOSim(2)),
+                    new SwerveModule(3, new SwerveModuleIOSim(3))
                   },
                   gyroSim,
                   powerManager);
@@ -102,6 +117,14 @@ public class RobotContainer {
                       Constants.ArmConstants.SIM_MOI,
                       Constants.ArmConstants.SIM_LENGTH),
                   powerManager);
+          intake =
+              new MARSIntake(
+                  new FlywheelIOSim(
+                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(1), 1.0, 0.01));
+          shooter =
+              new MARSShooter(
+                  new FlywheelIOSim(
+                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(2), 1.0, 0.05));
 
           // LED uses AddressableLED in sim
           ledManager =
@@ -109,6 +132,22 @@ public class RobotContainer {
                   new LEDIOAddressable(
                       Constants.LEDConstants.PWM_PORT, Constants.LEDConstants.LENGTH),
                   powerManager);
+
+          vision =
+              new MARSVision(
+                  swerveDrive,
+                  java.util.List.of(
+                      new AprilTagVisionIOSim(
+                          "limelight-front",
+                          new Transform3d(
+                              new Translation3d(0.3, 0.0, 0.5), new Rotation3d(0, 0, 0)),
+                          () -> swerveDrive.getPose()),
+                      new AprilTagVisionIOSim(
+                          "limelight-back",
+                          new Transform3d(
+                              new Translation3d(-0.3, 0.0, 0.5), new Rotation3d(0, 0, Math.PI)),
+                          () -> swerveDrive.getPose())),
+                  java.util.List.of());
           break;
         }
       case REAL:
@@ -164,6 +203,16 @@ public class RobotContainer {
                       Constants.ArmConstants.GEAR_RATIO,
                       Constants.ArmConstants.INVERTED),
                   powerManager);
+          intake =
+              new MARSIntake(
+                  new FlywheelIOTalonFX(
+                      Constants.IntakeConstants.MOTOR_ID, Constants.IntakeConstants.CANBUS, false));
+          shooter =
+              new MARSShooter(
+                  new FlywheelIOTalonFX(
+                      Constants.ShooterConstants.MOTOR_ID,
+                      Constants.ShooterConstants.CANBUS,
+                      false));
 
           // LED uses AddressableLED on real robot
           // Students: Replace with LEDIOCANdle if using a CTRE CANdle:
@@ -174,6 +223,14 @@ public class RobotContainer {
                   new LEDIOAddressable(
                       Constants.LEDConstants.PWM_PORT, Constants.LEDConstants.LENGTH),
                   powerManager);
+
+          vision =
+              new MARSVision(
+                  swerveDrive,
+                  java.util.List.of(
+                      new AprilTagVisionIOLimelight("limelight-front"),
+                      new AprilTagVisionIOLimelight("limelight-back")),
+                  java.util.List.of());
           break;
         }
       case REPLAY:
@@ -186,10 +243,10 @@ public class RobotContainer {
           swerveDrive =
               new SwerveDrive(
                   new SwerveModule[] {
-                    new SwerveModule(0, new SwerveModuleIOSim()),
-                    new SwerveModule(1, new SwerveModuleIOSim()),
-                    new SwerveModule(2, new SwerveModuleIOSim()),
-                    new SwerveModule(3, new SwerveModuleIOSim())
+                    new SwerveModule(0, new SwerveModuleIOSim(0)),
+                    new SwerveModule(1, new SwerveModuleIOSim(1)),
+                    new SwerveModule(2, new SwerveModuleIOSim(2)),
+                    new SwerveModule(3, new SwerveModuleIOSim(3))
                   },
                   new GyroIO() {},
                   powerManager);
@@ -210,26 +267,34 @@ public class RobotContainer {
                       Constants.ArmConstants.SIM_MOI,
                       Constants.ArmConstants.SIM_LENGTH),
                   powerManager);
+          intake = new MARSIntake(new FlywheelIO() {});
+          shooter = new MARSShooter(new FlywheelIO() {});
           ledManager =
               new LEDManager(
                   new LEDIOAddressable(
                       Constants.LEDConstants.PWM_PORT, Constants.LEDConstants.LENGTH),
                   powerManager);
+
+          vision = new MARSVision(swerveDrive, java.util.List.of(), java.util.List.of());
           break;
         }
     }
 
-    // Vision pipeline (no cameras configured by default — add your AprilTag/VIO sources here)
     // Students: To add cameras, pass lists of AprilTagVisionIO and VIOSlamIO implementations:
     //   vision = new MARSVision(swerveDrive,
     //       List.of(new AprilTagVisionIOLimelight("limelight")),
     //       List.of(new VIOSlamIOQuestNav()));
-    vision = new MARSVision(swerveDrive, List.of(), List.of());
 
     operatorInterface = new OperatorInterface(0, powerManager);
-    superstructure = new MARSSuperstructure(elevator, arm);
+    superstructure = new MARSSuperstructure(elevator, arm, intake, shooter, swerveDrive::getPose);
 
     headingController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // Initialize the Auto Chooser
+    autoChooser =
+        new LoggedDashboardChooser<>(
+            "Auto Chooser", com.pathplanner.lib.auto.AutoBuilder.buildAutoChooser());
+    autoChooser.addDefaultOption("Ghost Playback", ghostManager.getPlaybackCommand());
 
     // 2. Configure Default Commands
     configureDefaultCommands();
@@ -255,14 +320,26 @@ public class RobotContainer {
               double omgVal =
                   MathUtil.applyDeadband(ghostManager.getRightX(() -> controller.getRightX()), 0.1);
 
-              // Fixed: Cube joystick first to maintain exponential curve, then apply Slew Rate
-              // Limiter to physical meters/sec
+              // Cube joystick first to maintain exponential curve, then scale to physical m/s
               double mappedX = Math.pow(xVal, 3.0) * linearMag;
               double mappedY = Math.pow(yVal, 3.0) * linearMag;
               double mappedOmg = Math.pow(omgVal, 3.0) * angularMag;
 
-              targetSpeeds.vxMetersPerSecond = -xLimiter.calculate(mappedX);
-              targetSpeeds.vyMetersPerSecond = -yLimiter.calculate(mappedY);
+              // CRITICAL: Negate for WPILib convention, then apply Alliance-flip BEFORE the
+              // slew rate limiters so the limiters track the correct sign domain.
+              double orientedX = -mappedX;
+              double orientedY = -mappedY;
+              if (DriverStation.getAlliance().isPresent()
+                  && DriverStation.getAlliance().get() == Alliance.Red) {
+                orientedX = -orientedX;
+                orientedY = -orientedY;
+              }
+
+              double finalX = xLimiter.calculate(orientedX);
+              double finalY = yLimiter.calculate(orientedY);
+
+              targetSpeeds.vxMetersPerSecond = finalX;
+              targetSpeeds.vyMetersPerSecond = finalY;
 
               if (Math.abs(omgVal) <= 0.01) {
                 if (Math.abs(xVal) > 0.01 || Math.abs(yVal) > 0.01) {
@@ -342,18 +419,33 @@ public class RobotContainer {
         .whileTrue(
             new ShootOnTheMoveCommand(
                 swerveDrive,
-                () ->
-                    -xLimiter.calculate(
-                        Math.pow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 3.0)
-                            * SwerveConstants.MAX_LINEAR_SPEED_MPS),
-                () ->
-                    -yLimiter.calculate(
-                        Math.pow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 3.0)
-                            * SwerveConstants.MAX_LINEAR_SPEED_MPS),
-                new Translation2d(16.5, 5.5))); // Example Field Coordinate (E.g. Red Speaker)
+                () -> {
+                  double raw =
+                      -Math.pow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 3.0)
+                          * SwerveConstants.MAX_LINEAR_SPEED_MPS;
+                  if (DriverStation.getAlliance().isPresent()
+                      && DriverStation.getAlliance().get() == Alliance.Red) {
+                    raw = -raw;
+                  }
+                  return raw;
+                },
+                () -> {
+                  double raw =
+                      -Math.pow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 3.0)
+                          * SwerveConstants.MAX_LINEAR_SPEED_MPS;
+                  if (DriverStation.getAlliance().isPresent()
+                      && DriverStation.getAlliance().get() == Alliance.Red) {
+                    raw = -raw;
+                  }
+                  return raw;
+                }));
   }
 
   public Command getAutonomousCommand() {
-    return ghostManager.getPlaybackCommand();
+    return autoChooser.get();
+  }
+
+  public MARSVision getVision() {
+    return vision;
   }
 }

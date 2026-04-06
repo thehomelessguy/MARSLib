@@ -5,6 +5,7 @@ import com.marslib.power.MARSPowerManager;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/** Centralized manager for robot LED logic, translating robot states into visual feedback. */
 public class LEDManager extends SubsystemBase {
   private final LEDIO io;
   private final MARSPowerManager powerManager;

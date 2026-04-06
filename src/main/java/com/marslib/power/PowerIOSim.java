@@ -2,6 +2,7 @@ package com.marslib.power;
 
 import com.marslib.simulation.MARSPhysicsWorld;
 
+/** Simulated implementation of the power and battery IO interface. */
 public class PowerIOSim implements PowerIO {
 
   @Override

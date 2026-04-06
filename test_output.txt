@@ -1,0 +1,1418 @@
+Initialized native services in: C:\Users\david\.gradle\native
+Initialized jansi services in: C:\Users\david\.gradle\native
+Found daemon DaemonInfo{pid=25000, address=[32fce77a-d08e-4a59-beff-36eb485f33c2 port:59884, addresses:[/127.0.0.1]], state=Idle, lastBusy=1775432084117, context=DefaultDaemonContext[uid=1ee877fa-5656-4655-9ddb-1d0aa0edff8c,javaHome=C:\Users\david\.antigravity\extensions\redhat.java-1.53.0-win32-x64\jre\21.0.10-win32-x86_64,javaVersion=21,javaVendor=Eclipse Adoptium,daemonRegistryDir=C:\Users\david\.gradle\daemon,pid=25000,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-XX:MaxMetaspaceSize=384m,-XX:+HeapDumpOnOutOfMemoryError,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=US,-Duser.language=en,-Duser.variant]} however its context does not match the desired criteria.
+JVM is incompatible.
+Wanted: DaemonRequestContext{jvmCriteria=C:\Users\Public\wpilib\2026\jdk (from org.gradle.java.home), daemonOpts=[-XX:MaxMetaspaceSize=384m, -XX:+HeapDumpOnOutOfMemoryError, -Xms256m, -Xmx512m, -Dfile.encoding=windows-1252, -Duser.country=US, -Duser.language=en, -Duser.variant], applyInstrumentationAgent=true, nativeServicesMode=ENABLED, priority=NORMAL}
+Actual: DefaultDaemonContext[uid=1ee877fa-5656-4655-9ddb-1d0aa0edff8c,javaHome=C:\Users\david\.antigravity\extensions\redhat.java-1.53.0-win32-x64\jre\21.0.10-win32-x86_64,javaVersion=21,javaVendor=Eclipse Adoptium,daemonRegistryDir=C:\Users\david\.gradle\daemon,pid=25000,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-XX:MaxMetaspaceSize=384m,-XX:+HeapDumpOnOutOfMemoryError,-Xms256m,-Xmx512m,-Dfile.encoding=UTF-8,-Duser.country=US,-Duser.language=en,-Duser.variant]
+
+  Looking for a different daemon...
+Found daemon DaemonInfo{pid=42732, address=[00a1a471-7bf5-40cd-8469-974cbfca0464 port:64792, addresses:[/127.0.0.1]], state=Idle, lastBusy=1775432071936, context=DefaultDaemonContext[uid=90da1dfa-5bb3-4b7b-b8f1-018a6005c09d,javaHome=C:\Users\david\.antigravity\extensions\redhat.java-1.53.0-win32-x64\jre\21.0.10-win32-x86_64,javaVersion=21,javaVendor=Eclipse Adoptium,daemonRegistryDir=C:\Users\david\.gradle\daemon,pid=42732,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-Dfile.encoding=UTF-8,-Duser.country=US,-Duser.language=en,-Duser.variant]} however its context does not match the desired criteria.
+JVM is incompatible.
+Wanted: DaemonRequestContext{jvmCriteria=C:\Users\Public\wpilib\2026\jdk (from org.gradle.java.home), daemonOpts=[-XX:MaxMetaspaceSize=384m, -XX:+HeapDumpOnOutOfMemoryError, -Xms256m, -Xmx512m, -Dfile.encoding=windows-1252, -Duser.country=US, -Duser.language=en, -Duser.variant], applyInstrumentationAgent=true, nativeServicesMode=ENABLED, priority=NORMAL}
+Actual: DefaultDaemonContext[uid=90da1dfa-5bb3-4b7b-b8f1-018a6005c09d,javaHome=C:\Users\david\.antigravity\extensions\redhat.java-1.53.0-win32-x64\jre\21.0.10-win32-x86_64,javaVersion=21,javaVendor=Eclipse Adoptium,daemonRegistryDir=C:\Users\david\.gradle\daemon,pid=42732,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=-Dfile.encoding=UTF-8,-Duser.country=US,-Duser.language=en,-Duser.variant]
+
+  Looking for a different daemon...
+The client will now receive all logging from the daemon (pid: 42360). The daemon log file: C:\Users\david\.gradle\daemon\8.11\daemon-42360.out.log
+Starting 21st build in daemon [uptime: 3 hrs 9 mins 2.742 secs, performance: 100%, GC rate: 0.00/s, heap usage: 0% of 512 MiB, non-heap usage: 25% of 384 MiB]
+Using 16 worker leases.
+Now considering [C:\Users\david\dev\robotics\frc\MARSLib] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Starting Build
+Settings evaluated using settings file 'C:\Users\david\dev\robotics\frc\MARSLib\settings.gradle'.
+Projects loaded. Root project using build file 'C:\Users\david\dev\robotics\frc\MARSLib\build.gradle'.
+Included projects: [root project 'MARSLib']
+
+> Configure project :
+Evaluating root project 'MARSLib' using build file 'C:\Users\david\dev\robotics\frc\MARSLib\build.gradle'.
+Transforming GradleRIO-2026.2.1.jar (edu.wpi.first:GradleRIO:2026.2.1) with InstrumentationAnalysisTransform
+Transforming gversion-plugin-1.10.jar (gradle.plugin.com.peterabeles.gversion:gversion-plugin:1.10) with InstrumentationAnalysisTransform
+Transforming spotless-plugin-gradle-6.12.0.jar (com.diffplug.spotless:spotless-plugin-gradle:6.12.0) with InstrumentationAnalysisTransform
+Transforming native-utils-2026.0.1.jar (edu.wpi.first:native-utils:2026.0.1) with InstrumentationAnalysisTransform
+Transforming gradle-cpp-vscode-2.1.0.jar (edu.wpi.first:gradle-cpp-vscode:2.1.0) with InstrumentationAnalysisTransform
+Transforming ToolchainPlugin-2026.0.1.jar (edu.wpi.first:ToolchainPlugin:2026.0.1) with InstrumentationAnalysisTransform
+Transforming DeployUtils-2025.2.0.jar (edu.wpi.first:DeployUtils:2025.2.0) with InstrumentationAnalysisTransform
+Transforming gson-2.13.1.jar (com.google.code.gson:gson:2.13.1) with InstrumentationAnalysisTransform
+Transforming gradle-download-task-5.6.0.jar (de.undercouch:gradle-download-task:5.6.0) with InstrumentationAnalysisTransform
+Transforming durian-io-1.2.0.jar (com.diffplug.durian:durian-io:1.2.0) with InstrumentationAnalysisTransform
+Transforming spotless-lib-extra-2.31.0.jar (com.diffplug.spotless:spotless-lib-extra:2.31.0) with InstrumentationAnalysisTransform
+Transforming durian-collect-1.2.0.jar (com.diffplug.durian:durian-collect:1.2.0) with InstrumentationAnalysisTransform
+Transforming durian-core-1.2.0.jar (com.diffplug.durian:durian-core:1.2.0) with InstrumentationAnalysisTransform
+Transforming grgit-core-5.0.0.jar (org.ajoberstar.grgit:grgit-core:5.0.0) with InstrumentationAnalysisTransform
+Transforming org.eclipse.jgit-6.0.0.202111291000-r.jar (org.eclipse.jgit:org.eclipse.jgit:6.0.0.202111291000-r) with InstrumentationAnalysisTransform
+Transforming spotless-lib-2.31.0.jar (com.diffplug.spotless:spotless-lib:2.31.0) with InstrumentationAnalysisTransform
+Transforming error_prone_annotations-2.38.0.jar (com.google.errorprone:error_prone_annotations:2.38.0) with InstrumentationAnalysisTransform
+Transforming JavaEWAH-1.1.13.jar (com.googlecode.javaewah:JavaEWAH:1.1.13) with InstrumentationAnalysisTransform
+Transforming sshd-sftp-2.13.2.jar (org.apache.sshd:sshd-sftp:2.13.2) with InstrumentationAnalysisTransform
+Transforming sshd-core-2.13.2.jar (org.apache.sshd:sshd-core:2.13.2) with InstrumentationAnalysisTransform
+Transforming sshd-common-2.13.2.jar (org.apache.sshd:sshd-common:2.13.2) with InstrumentationAnalysisTransform
+Transforming jcl-over-slf4j-1.7.32.jar (org.slf4j:jcl-over-slf4j:1.7.32) with InstrumentationAnalysisTransform
+Transforming slf4j-api-1.7.32.jar (org.slf4j:slf4j-api:1.7.32) with InstrumentationAnalysisTransform
+Transforming concurrent-trees-2.6.1.jar (com.googlecode.concurrent-trees:concurrent-trees:2.6.1) with InstrumentationAnalysisTransform
+Transforming groovy-xml-3.0.10.jar (org.codehaus.groovy:groovy-xml:3.0.10) with InstrumentationAnalysisTransform
+Transforming groovy-3.0.10.jar (org.codehaus.groovy:groovy:3.0.10) with InstrumentationAnalysisTransform
+Transforming eddsa-0.3.0.jar (net.i2p.crypto:eddsa:0.3.0) with InstrumentationAnalysisTransform
+Transforming jsch-0.1.55.jar (com.jcraft:jsch:0.1.55) with InstrumentationAnalysisTransform
+Transforming GradleRIO-2026.2.1.jar (edu.wpi.first:GradleRIO:2026.2.1) with InstrumentationAnalysisTransform
+Transforming GradleRIO-2026.2.1.jar (edu.wpi.first:GradleRIO:2026.2.1) with MergeInstrumentationAnalysisTransform
+Transforming gversion-plugin-1.10.jar (gradle.plugin.com.peterabeles.gversion:gversion-plugin:1.10) with InstrumentationAnalysisTransform
+Transforming gversion-plugin-1.10.jar (gradle.plugin.com.peterabeles.gversion:gversion-plugin:1.10) with MergeInstrumentationAnalysisTransform
+Transforming spotless-plugin-gradle-6.12.0.jar (com.diffplug.spotless:spotless-plugin-gradle:6.12.0) with InstrumentationAnalysisTransform
+Transforming spotless-plugin-gradle-6.12.0.jar (com.diffplug.spotless:spotless-plugin-gradle:6.12.0) with MergeInstrumentationAnalysisTransform
+Transforming GradleRIO-2026.2.1.jar (edu.wpi.first:GradleRIO:2026.2.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming native-utils-2026.0.1.jar (edu.wpi.first:native-utils:2026.0.1) with InstrumentationAnalysisTransform
+Transforming native-utils-2026.0.1.jar (edu.wpi.first:native-utils:2026.0.1) with MergeInstrumentationAnalysisTransform
+Transforming gversion-plugin-1.10.jar (gradle.plugin.com.peterabeles.gversion:gversion-plugin:1.10) with ExternalDependencyInstrumentingArtifactTransform
+Transforming spotless-plugin-gradle-6.12.0.jar (com.diffplug.spotless:spotless-plugin-gradle:6.12.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming gradle-cpp-vscode-2.1.0.jar (edu.wpi.first:gradle-cpp-vscode:2.1.0) with InstrumentationAnalysisTransform
+Transforming gradle-cpp-vscode-2.1.0.jar (edu.wpi.first:gradle-cpp-vscode:2.1.0) with MergeInstrumentationAnalysisTransform
+Transforming native-utils-2026.0.1.jar (edu.wpi.first:native-utils:2026.0.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming ToolchainPlugin-2026.0.1.jar (edu.wpi.first:ToolchainPlugin:2026.0.1) with InstrumentationAnalysisTransform
+Transforming gradle-cpp-vscode-2.1.0.jar (edu.wpi.first:gradle-cpp-vscode:2.1.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming ToolchainPlugin-2026.0.1.jar (edu.wpi.first:ToolchainPlugin:2026.0.1) with MergeInstrumentationAnalysisTransform
+Transforming DeployUtils-2025.2.0.jar (edu.wpi.first:DeployUtils:2025.2.0) with InstrumentationAnalysisTransform
+Transforming DeployUtils-2025.2.0.jar (edu.wpi.first:DeployUtils:2025.2.0) with MergeInstrumentationAnalysisTransform
+Transforming ToolchainPlugin-2026.0.1.jar (edu.wpi.first:ToolchainPlugin:2026.0.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming gson-2.13.1.jar (com.google.code.gson:gson:2.13.1) with InstrumentationAnalysisTransform
+Transforming gson-2.13.1.jar (com.google.code.gson:gson:2.13.1) with MergeInstrumentationAnalysisTransform
+Transforming DeployUtils-2025.2.0.jar (edu.wpi.first:DeployUtils:2025.2.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming gradle-download-task-5.6.0.jar (de.undercouch:gradle-download-task:5.6.0) with InstrumentationAnalysisTransform
+Transforming gson-2.13.1.jar (com.google.code.gson:gson:2.13.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming gradle-download-task-5.6.0.jar (de.undercouch:gradle-download-task:5.6.0) with MergeInstrumentationAnalysisTransform
+Transforming durian-io-1.2.0.jar (com.diffplug.durian:durian-io:1.2.0) with InstrumentationAnalysisTransform
+Transforming durian-io-1.2.0.jar (com.diffplug.durian:durian-io:1.2.0) with MergeInstrumentationAnalysisTransform
+Transforming gradle-download-task-5.6.0.jar (de.undercouch:gradle-download-task:5.6.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming spotless-lib-extra-2.31.0.jar (com.diffplug.spotless:spotless-lib-extra:2.31.0) with InstrumentationAnalysisTransform
+Transforming spotless-lib-extra-2.31.0.jar (com.diffplug.spotless:spotless-lib-extra:2.31.0) with MergeInstrumentationAnalysisTransform
+Transforming durian-io-1.2.0.jar (com.diffplug.durian:durian-io:1.2.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming durian-collect-1.2.0.jar (com.diffplug.durian:durian-collect:1.2.0) with InstrumentationAnalysisTransform
+Transforming spotless-lib-extra-2.31.0.jar (com.diffplug.spotless:spotless-lib-extra:2.31.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming durian-collect-1.2.0.jar (com.diffplug.durian:durian-collect:1.2.0) with MergeInstrumentationAnalysisTransform
+Transforming durian-core-1.2.0.jar (com.diffplug.durian:durian-core:1.2.0) with InstrumentationAnalysisTransform
+Transforming durian-core-1.2.0.jar (com.diffplug.durian:durian-core:1.2.0) with MergeInstrumentationAnalysisTransform
+Transforming durian-collect-1.2.0.jar (com.diffplug.durian:durian-collect:1.2.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming grgit-core-5.0.0.jar (org.ajoberstar.grgit:grgit-core:5.0.0) with InstrumentationAnalysisTransform
+Transforming grgit-core-5.0.0.jar (org.ajoberstar.grgit:grgit-core:5.0.0) with MergeInstrumentationAnalysisTransform
+Transforming durian-core-1.2.0.jar (com.diffplug.durian:durian-core:1.2.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming org.eclipse.jgit-6.0.0.202111291000-r.jar (org.eclipse.jgit:org.eclipse.jgit:6.0.0.202111291000-r) with InstrumentationAnalysisTransform
+Transforming org.eclipse.jgit-6.0.0.202111291000-r.jar (org.eclipse.jgit:org.eclipse.jgit:6.0.0.202111291000-r) with MergeInstrumentationAnalysisTransform
+Transforming grgit-core-5.0.0.jar (org.ajoberstar.grgit:grgit-core:5.0.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming spotless-lib-2.31.0.jar (com.diffplug.spotless:spotless-lib:2.31.0) with InstrumentationAnalysisTransform
+Transforming spotless-lib-2.31.0.jar (com.diffplug.spotless:spotless-lib:2.31.0) with MergeInstrumentationAnalysisTransform
+Transforming error_prone_annotations-2.38.0.jar (com.google.errorprone:error_prone_annotations:2.38.0) with InstrumentationAnalysisTransform
+Transforming org.eclipse.jgit-6.0.0.202111291000-r.jar (org.eclipse.jgit:org.eclipse.jgit:6.0.0.202111291000-r) with ExternalDependencyInstrumentingArtifactTransform
+Transforming error_prone_annotations-2.38.0.jar (com.google.errorprone:error_prone_annotations:2.38.0) with MergeInstrumentationAnalysisTransform
+Transforming spotless-lib-2.31.0.jar (com.diffplug.spotless:spotless-lib:2.31.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming JavaEWAH-1.1.13.jar (com.googlecode.javaewah:JavaEWAH:1.1.13) with InstrumentationAnalysisTransform
+Transforming error_prone_annotations-2.38.0.jar (com.google.errorprone:error_prone_annotations:2.38.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming JavaEWAH-1.1.13.jar (com.googlecode.javaewah:JavaEWAH:1.1.13) with MergeInstrumentationAnalysisTransform
+Transforming sshd-sftp-2.13.2.jar (org.apache.sshd:sshd-sftp:2.13.2) with InstrumentationAnalysisTransform
+Transforming sshd-sftp-2.13.2.jar (org.apache.sshd:sshd-sftp:2.13.2) with MergeInstrumentationAnalysisTransform
+Transforming JavaEWAH-1.1.13.jar (com.googlecode.javaewah:JavaEWAH:1.1.13) with ExternalDependencyInstrumentingArtifactTransform
+Transforming sshd-core-2.13.2.jar (org.apache.sshd:sshd-core:2.13.2) with InstrumentationAnalysisTransform
+Transforming sshd-core-2.13.2.jar (org.apache.sshd:sshd-core:2.13.2) with MergeInstrumentationAnalysisTransform
+Transforming sshd-common-2.13.2.jar (org.apache.sshd:sshd-common:2.13.2) with InstrumentationAnalysisTransform
+Transforming sshd-common-2.13.2.jar (org.apache.sshd:sshd-common:2.13.2) with MergeInstrumentationAnalysisTransform
+Transforming jcl-over-slf4j-1.7.32.jar (org.slf4j:jcl-over-slf4j:1.7.32) with InstrumentationAnalysisTransform
+Transforming sshd-sftp-2.13.2.jar (org.apache.sshd:sshd-sftp:2.13.2) with ExternalDependencyInstrumentingArtifactTransform
+Transforming jcl-over-slf4j-1.7.32.jar (org.slf4j:jcl-over-slf4j:1.7.32) with MergeInstrumentationAnalysisTransform
+Transforming sshd-core-2.13.2.jar (org.apache.sshd:sshd-core:2.13.2) with ExternalDependencyInstrumentingArtifactTransform
+Transforming slf4j-api-1.7.32.jar (org.slf4j:slf4j-api:1.7.32) with InstrumentationAnalysisTransform
+Transforming sshd-common-2.13.2.jar (org.apache.sshd:sshd-common:2.13.2) with ExternalDependencyInstrumentingArtifactTransform
+Transforming slf4j-api-1.7.32.jar (org.slf4j:slf4j-api:1.7.32) with MergeInstrumentationAnalysisTransform
+Transforming jcl-over-slf4j-1.7.32.jar (org.slf4j:jcl-over-slf4j:1.7.32) with ExternalDependencyInstrumentingArtifactTransform
+Transforming concurrent-trees-2.6.1.jar (com.googlecode.concurrent-trees:concurrent-trees:2.6.1) with InstrumentationAnalysisTransform
+Transforming slf4j-api-1.7.32.jar (org.slf4j:slf4j-api:1.7.32) with ExternalDependencyInstrumentingArtifactTransform
+Transforming concurrent-trees-2.6.1.jar (com.googlecode.concurrent-trees:concurrent-trees:2.6.1) with MergeInstrumentationAnalysisTransform
+Transforming groovy-xml-3.0.10.jar (org.codehaus.groovy:groovy-xml:3.0.10) with InstrumentationAnalysisTransform
+Transforming concurrent-trees-2.6.1.jar (com.googlecode.concurrent-trees:concurrent-trees:2.6.1) with ExternalDependencyInstrumentingArtifactTransform
+Transforming groovy-xml-3.0.10.jar (org.codehaus.groovy:groovy-xml:3.0.10) with MergeInstrumentationAnalysisTransform
+Transforming groovy-3.0.10.jar (org.codehaus.groovy:groovy:3.0.10) with InstrumentationAnalysisTransform
+Transforming groovy-3.0.10.jar (org.codehaus.groovy:groovy:3.0.10) with MergeInstrumentationAnalysisTransform
+Transforming eddsa-0.3.0.jar (net.i2p.crypto:eddsa:0.3.0) with InstrumentationAnalysisTransform
+Transforming groovy-xml-3.0.10.jar (org.codehaus.groovy:groovy-xml:3.0.10) with ExternalDependencyInstrumentingArtifactTransform
+Transforming eddsa-0.3.0.jar (net.i2p.crypto:eddsa:0.3.0) with MergeInstrumentationAnalysisTransform
+Transforming groovy-3.0.10.jar (org.codehaus.groovy:groovy:3.0.10) with ExternalDependencyInstrumentingArtifactTransform
+Transforming jsch-0.1.55.jar (com.jcraft:jsch:0.1.55) with InstrumentationAnalysisTransform
+Transforming jsch-0.1.55.jar (com.jcraft:jsch:0.1.55) with MergeInstrumentationAnalysisTransform
+Transforming eddsa-0.3.0.jar (net.i2p.crypto:eddsa:0.3.0) with ExternalDependencyInstrumentingArtifactTransform
+Transforming jsch-0.1.55.jar (com.jcraft:jsch:0.1.55) with ExternalDependencyInstrumentingArtifactTransform
+Registering vendor dep maven: d820cc26-74e3-11ec-90d6-0242ac120003_0 on project :
+Registering vendor dep maven: 1b42324f-17c6-4875-8e77-1c312bc8c786_0 on project :
+Registering vendor dep maven: e995de00-2c64-4df5-8831-c1441420ff19_0 on project :
+Registering vendor dep maven: 515fe07e-bfc6-11fa-b3de-0242ac130004_0 on project :
+Registering vendor dep maven: 515fe07e-bfc6-11fa-b3de-0242ac130004_1 on project :
+All projects evaluated.
+Task name matched 'test'
+Selected primary task 'test' from project :
+Transforming opencv-cpp-4.10.0-3-windowsx86-64.zip (edu.wpi.first.thirdparty.frc2025.opencv:opencv-cpp:4.10.0-3) with UnzipTransform
+Transforming hal-cpp-2026.2.1-windowsx86-64.zip (edu.wpi.first.hal:hal-cpp:2026.2.1) with UnzipTransform
+Transforming wpimath-cpp-2026.2.1-windowsx86-64.zip (edu.wpi.first.wpimath:wpimath-cpp:2026.2.1) with UnzipTransform
+Transforming simCANCoder-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simCANCoder:25.4.0) with UnzipTransform
+Transforming simTalonSRX-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simTalonSRX:25.4.0) with UnzipTransform
+Transforming simProPigeon2-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simProPigeon2:25.4.0) with UnzipTransform
+Transforming akit-wpilibio-26.0.2-windowsx86-64.zip (org.littletonrobotics.akit:akit-wpilibio:26.0.2) with UnzipTransform
+Transforming simVictorSPX-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simVictorSPX:25.4.0) with UnzipTransform
+Transforming simProCANdi-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simProCANdi:25.4.0) with UnzipTransform
+Transforming simProCANdle-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simProCANdle:25.4.0) with UnzipTransform
+Transforming simProTalonFX-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simProTalonFX:25.4.0) with UnzipTransform
+Transforming simProTalonFXS-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simProTalonFXS:25.4.0) with UnzipTransform
+Transforming simPigeonIMU-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simPigeonIMU:25.4.0) with UnzipTransform
+Transforming ntcore-cpp-2026.2.1-windowsx86-64.zip (edu.wpi.first.ntcore:ntcore-cpp:2026.2.1) with UnzipTransform
+Transforming wpinet-cpp-2026.2.1-windowsx86-64.zip (edu.wpi.first.wpinet:wpinet-cpp:2026.2.1) with UnzipTransform
+Transforming wpiutil-cpp-2026.2.1-windowsx86-64.zip (edu.wpi.first.wpiutil:wpiutil-cpp:2026.2.1) with UnzipTransform
+Transforming apriltag-cpp-2026.2.1-windowsx86-64.zip (edu.wpi.first.apriltag:apriltag-cpp:2026.2.1) with UnzipTransform
+Transforming photontargeting-cpp-v2026.3.2-windowsx86-64.zip (org.photonvision:photontargeting-cpp:v2026.3.2) with UnzipTransform
+Transforming api-cpp-sim-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:api-cpp-sim:25.4.0) with UnzipTransform
+Transforming tools-sim-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:tools-sim:25.4.0) with UnzipTransform
+Transforming simProCANcoder-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simProCANcoder:25.4.0) with UnzipTransform
+Transforming simProCANrange-25.4.0-windowsx86-64.zip (com.ctre.phoenix6.sim:simProCANrange:25.4.0) with UnzipTransform
+Transforming cscore-cpp-2026.2.1-windowsx86-64.zip (edu.wpi.first.cscore:cscore-cpp:2026.2.1) with UnzipTransform
+Transforming halsim_gui-2026.2.1-windowsx86-64.zip (edu.wpi.first.halsim:halsim_gui:2026.2.1) with UnzipTransform
+Transforming halsim_ds_socket-2026.2.1-windowsx86-64.zip (edu.wpi.first.halsim:halsim_ds_socket:2026.2.1) with UnzipTransform
+Tasks to be executed: [task ':eventDeploy', task ':createVersionFile', task ':spotlessInternalRegisterDependencies', task ':spotlessGroovyGradle', task ':spotlessGroovyGradleApply', task ':spotlessJava', task ':spotlessJavaApply', task ':spotlessJson', task ':spotlessJsonApply', task ':spotlessMisc', task ':spotlessMiscApply', task ':spotlessApply', task ':compileJava', task ':processResources', task ':classes', task ':compileTestJava', task ':extractReleaseNative', task ':processTestResources', task ':testClasses', task ':test']
+Tasks that were excluded: []
+Running wrapper inspector on project :
+Found gradle-wrapper.properties on :
+Resolve mutations for :eventDeploy (Thread[Execution worker,5,main]) started.
+:eventDeploy (Thread[Execution worker Thread 10,5,main]) started.
+
+> Task :eventDeploy
+Caching disabled for task ':eventDeploy' because:
+  Build cache is disabled
+Task ':eventDeploy' is not up-to-date because:
+  Task has not declared any outputs despite executing actions.
+Not running deploy task, skipping commit
+Resolve mutations for :createVersionFile (Thread[Execution worker Thread 10,5,main]) started.
+:createVersionFile (Thread[Execution worker Thread 10,5,main]) started.
+
+> Task :createVersionFile
+Caching disabled for task ':createVersionFile' because:
+  Build cache is disabled
+Task ':createVersionFile' is not up-to-date because:
+  Task has not declared any outputs despite executing actions.
+createVersionFile called. Path C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot
+Resolve mutations for :spotlessInternalRegisterDependencies (Thread[Execution worker Thread 10,5,main]) started.
+:spotlessInternalRegisterDependencies (Thread[Execution worker Thread 10,5,main]) started.
+
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+Caching disabled for task ':spotlessInternalRegisterDependencies' because:
+  Build cache is disabled
+  Caching has not been enabled for the task
+Skipping task ':spotlessInternalRegisterDependencies' as it is up-to-date.
+Resolve mutations for :spotlessGroovyGradle (Thread[Execution worker Thread 10,5,main]) started.
+:spotlessGroovyGradle (Thread[Execution worker Thread 15,5,main]) started.
+
+> Task :spotlessGroovyGradle UP-TO-DATE
+Caching disabled for task ':spotlessGroovyGradle' because:
+  Build cache is disabled
+Skipping task ':spotlessGroovyGradle' as it is up-to-date.
+Resolve mutations for :spotlessGroovyGradleApply (Thread[Execution worker Thread 15,5,main]) started.
+:spotlessGroovyGradleApply (Thread[Execution worker Thread 15,5,main]) started.
+
+> Task :spotlessGroovyGradleApply UP-TO-DATE
+Caching disabled for task ':spotlessGroovyGradleApply' because:
+  Build cache is disabled
+Task ':spotlessGroovyGradleApply' is not up-to-date because:
+  Task has not declared any outputs despite executing actions.
+Resolve mutations for :spotlessJava (Thread[Execution worker Thread 15,5,main]) started.
+:spotlessJava (Thread[Execution worker Thread 15,5,main]) started.
+
+> Task :spotlessJava
+Caching disabled for task ':spotlessJava' because:
+  Build cache is disabled
+Task ':spotlessJava' is not up-to-date because:
+  Input property 'target' file C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java has changed.
+Resolve mutations for :spotlessJavaApply (Thread[Execution worker Thread 15,5,main]) started.
+:spotlessJavaApply (Thread[Execution worker Thread 6,5,main]) started.
+
+> Task :spotlessJavaApply
+Caching disabled for task ':spotlessJavaApply' because:
+  Build cache is disabled
+Task ':spotlessJavaApply' is not up-to-date because:
+  Task has not declared any outputs despite executing actions.
+Resolve mutations for :spotlessJson (Thread[Execution worker Thread 6,5,main]) started.
+:spotlessJson (Thread[Execution worker Thread 6,5,main]) started.
+
+> Task :spotlessJson UP-TO-DATE
+Caching disabled for task ':spotlessJson' because:
+  Build cache is disabled
+Skipping task ':spotlessJson' as it is up-to-date.
+Resolve mutations for :spotlessJsonApply (Thread[Execution worker Thread 6,5,main]) started.
+:spotlessJsonApply (Thread[Execution worker Thread 6,5,main]) started.
+
+> Task :spotlessJsonApply UP-TO-DATE
+Caching disabled for task ':spotlessJsonApply' because:
+  Build cache is disabled
+Task ':spotlessJsonApply' is not up-to-date because:
+  Task has not declared any outputs despite executing actions.
+Resolve mutations for :spotlessMisc (Thread[Execution worker Thread 6,5,main]) started.
+:spotlessMisc (Thread[Execution worker Thread 2,5,main]) started.
+
+> Task :spotlessMisc UP-TO-DATE
+Caching disabled for task ':spotlessMisc' because:
+  Build cache is disabled
+Skipping task ':spotlessMisc' as it is up-to-date.
+Resolve mutations for :spotlessMiscApply (Thread[Execution worker Thread 2,5,main]) started.
+:spotlessMiscApply (Thread[Execution worker Thread 9,5,main]) started.
+
+> Task :spotlessMiscApply UP-TO-DATE
+Caching disabled for task ':spotlessMiscApply' because:
+  Build cache is disabled
+Task ':spotlessMiscApply' is not up-to-date because:
+  Task has not declared any outputs despite executing actions.
+Resolve mutations for :spotlessApply (Thread[Execution worker Thread 9,5,main]) started.
+:spotlessApply (Thread[Execution worker Thread 11,5,main]) started.
+
+> Task :spotlessApply
+Skipping task ':spotlessApply' as it has no actions.
+Resolve mutations for :compileJava (Thread[Execution worker Thread 11,5,main]) started.
+:compileJava (Thread[Execution worker Thread 11,5,main]) started.
+
+> Task :compileJava
+Caching disabled for task ':compileJava' because:
+  Build cache is disabled
+Task ':compileJava' is not up-to-date because:
+  Input property 'stableSources' file C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java has changed.
+Compilation mode: in-process compilation
+Created classpath snapshot for incremental compilation in 0.002 secs.
+Full recompilation is required because org.littletonrobotics.junction.AutoLogAnnotationProcessor is not incremental. Analysis took 0.005 secs.
+Compiling with toolchain 'C:\Users\Public\wpilib\2026\jdk'.
+Compiling with JDK Java compiler API.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:58: warning: [removal] PhotonPoseEstimator(AprilTagFieldLayout,PoseStrategy,Transform3d) in PhotonPoseEstimator has been deprecated and marked for removal
+        new PhotonPoseEstimator(
+        ^
+1 warning
+Class dependency analysis for incremental compilation took 0.184 secs.
+Resolve mutations for :processResources (Thread[Execution worker Thread 11,5,main]) started.
+:processResources (Thread[Execution worker Thread 11,5,main]) started.
+
+> Task :processResources NO-SOURCE
+Skipping task ':processResources' as it has no source files and no previous output files.
+Resolve mutations for :classes (Thread[Execution worker Thread 11,5,main]) started.
+:classes (Thread[Execution worker Thread 7,5,main]) started.
+
+> Task :classes
+Skipping task ':classes' as it has no actions.
+Resolve mutations for :compileTestJava (Thread[Execution worker Thread 7,5,main]) started.
+:compileTestJava (Thread[Execution worker Thread 7,5,main]) started.
+
+> Task :compileTestJava UP-TO-DATE
+Caching disabled for task ':compileTestJava' because:
+  Build cache is disabled
+Task ':compileTestJava' is not up-to-date because:
+  Input property 'classpath' file C:\Users\david\dev\robotics\frc\MARSLib\build\classes\java\main\frc\robot\BuildConstants.class has changed.
+Compilation mode: in-process compilation
+Created classpath snapshot for incremental compilation in 0.005 secs.
+None of the classes needs to be compiled! Analysis took 0.009 secs. 
+Resolve mutations for :extractReleaseNative (Thread[Execution worker Thread 7,5,main]) started.
+:extractReleaseNative (Thread[Execution worker Thread 7,5,main]) started.
+
+> Task :extractReleaseNative UP-TO-DATE
+Caching disabled for task ':extractReleaseNative' because:
+  Build cache is disabled
+  Caching has not been enabled for the task
+Skipping task ':extractReleaseNative' as it is up-to-date.
+Resolve mutations for :processTestResources (Thread[Execution worker Thread 7,5,main]) started.
+:processTestResources (Thread[Execution worker Thread 7,5,main]) started.
+
+> Task :processTestResources NO-SOURCE
+Skipping task ':processTestResources' as it has no source files and no previous output files.
+Resolve mutations for :testClasses (Thread[Execution worker Thread 7,5,main]) started.
+:testClasses (Thread[Execution worker,5,main]) started.
+
+> Task :testClasses UP-TO-DATE
+Skipping task ':testClasses' as it has no actions.
+Resolve mutations for :test (Thread[Execution worker,5,main]) started.
+:test (Thread[Execution worker,5,main]) started.
+Gradle Test Executor 10 started executing tests.
+HAL Extensions: No extensions found
+
+> Task :test
+Custom actions are attached to task ':test'.
+Caching disabled for task ':test' because:
+  Build cache is disabled
+Task ':test' is not up-to-date because:
+  Task has failed previously.
+Starting process 'Gradle Test Executor 10'. Working directory: C:\Users\david\dev\robotics\frc\MARSLib Command: C:\Users\Public\wpilib\2026\jdk\bin\java.exe -Djava.library.path=C:\Users\david\dev\robotics\frc\MARSLib\build\jni\release -Djunit.jupiter.extensions.autodetection.enabled=true -Dorg.gradle.internal.worker.tmpdir=C:\Users\david\dev\robotics\frc\MARSLib\build\tmp\test\work @C:\Users\david\.gradle\.tmp\gradle-worker-classpath5969171420516878855txt -Xmx512m -Dfile.encoding=windows-1252 -Duser.country=US -Duser.language=en -Duser.variant -ea worker.org.gradle.process.internal.worker.GradleWorkerMain 'Gradle Test Executor 10'
+Successfully started process 'Gradle Test Executor 10'
+
+MARSPowerManagerTest > testLoadSheddingAtLowVoltage() FAILED
+    java.lang.StackOverflowError
+        at java.base/java.util.HashMap.tableSizeFor(HashMap.java:378)
+        at java.base/java.util.HashMap.<init>(HashMap.java:451)
+        at java.base/java.util.LinkedHashMap.<init>(LinkedHashMap.java:348)
+        at org.dyn4j.collision.broadphase.DynamicAABBTree.<init>(DynamicAABBTree.java:95)
+        at org.dyn4j.world.AbstractCollisionWorld.<init>(AbstractCollisionWorld.java:208)
+        at org.dyn4j.world.AbstractPhysicsWorld.<init>(AbstractPhysicsWorld.java:188)
+        at org.dyn4j.world.World.<init>(World.java:61)
+        at org.dyn4j.world.World.<init>(World.java:52)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:64)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+        at com.marslib.simulation.MARSPhysicsWorld.getInstance(MARSPhysicsWorld.java:48)
+        at com.marslib.simulation.GamePieceSim.<init>(GamePieceSim.java:55)
+        at com.marslib.simulation.MARSPhysicsWorld.spawnInitialGamePieces(MARSPhysicsWorld.java:104)
+        at com.marslib.simulation.MARSPhysicsWorld.buildFieldBoundaries(MARSPhysicsWorld.java:96)
+        at com.marslib.simulation.MARSPhysicsWorld.<init>(MARSPhysicsWorld.java:69)
+
+TagExtractor > printTags() STANDARD_OUT
+    2026 REBUILT TAG LAYOUT:
+    Tag 1: X: 11.88, Y: 7.42, Z: 0.89
+    Tag 2: X: 11.92, Y: 4.64, Z: 1.12
+    Tag 3: X: 11.31, Y: 4.39, Z: 1.12
+    Tag 4: X: 11.31, Y: 4.03, Z: 1.12
+    Tag 5: X: 11.92, Y: 3.43, Z: 1.12
+    Tag 6: X: 11.88, Y: 0.64, Z: 0.89
+    Tag 7: X: 11.95, Y: 0.64, Z: 0.89
+    Tag 8: X: 12.27, Y: 3.43, Z: 1.12
+    Tag 9: X: 12.52, Y: 3.68, Z: 1.12
+    Tag 10: X: 12.52, Y: 4.03, Z: 1.12
+    Tag 11: X: 12.27, Y: 4.64, Z: 1.12
+    Tag 12: X: 11.95, Y: 7.42, Z: 0.89
+    Tag 13: X: 16.53, Y: 7.40, Z: 0.55
+    Tag 14: X: 16.53, Y: 6.97, Z: 0.55
+    Tag 15: X: 16.53, Y: 4.32, Z: 0.55
+    Tag 16: X: 16.53, Y: 3.89, Z: 0.55
+    Tag 17: X: 4.66, Y: 0.64, Z: 0.89
+    Tag 18: X: 4.63, Y: 3.43, Z: 1.12
+    Tag 19: X: 5.23, Y: 3.68, Z: 1.12
+    Tag 20: X: 5.23, Y: 4.03, Z: 1.12
+    Tag 21: X: 4.63, Y: 4.64, Z: 1.12
+    Tag 22: X: 4.66, Y: 7.42, Z: 0.89
+
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+Gradle Test Executor 10 finished executing tests.
+
+
+4 tests completed, 1 failed
+> Task :test FAILED
+Finished generating test XML results (0.004 secs) into: C:\Users\david\dev\robotics\frc\MARSLib\build\test-results\test
+Generating HTML test report...
+Finished generating test html results (0.007 secs) into: C:\Users\david\dev\robotics\frc\MARSLib\build\reports\tests\test
+Build Exception: class org.gradle.internal.exceptions.LocationAwareException -> Execution failed for task ':test'.
+Build Exception: class org.gradle.api.tasks.TaskExecutionException -> Execution failed for task ':test'.
+Build Exception: class org.gradle.api.internal.exceptions.MarkedVerificationException -> There were failing tests. See the report at: file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/tests/test/index.html
+Exception Task: class org.gradle.api.tasks.testing.Test_Decorated -> test
+[Incubating] Problems report is available at: file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':test'.
+> There were failing tests. See the report at: file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/tests/test/index.html
+
+* Try:
+> Run with --scan to get full insights.
+
+BUILD FAILED in 6s
+15 actionable tasks: 6 executed, 9 up-to-date
+Watched directory hierarchies: [C:\Users\david\dev\robotics\frc\MARSLib]

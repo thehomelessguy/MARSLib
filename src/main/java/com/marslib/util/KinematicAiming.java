@@ -4,7 +4,13 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
-/** Pure mathematics SLAM utility for calculating Projectile Kinematics (Shoot-On-The-Move). */
+/**
+ * Pure mathematics SLAM utility for calculating Projectile Kinematics (Shoot-On-The-Move).
+ *
+ * <p>NOTE: This class uses a naive ToF (Time of Flight) approximation (distance / speed). It is
+ * useful for learning the basics of kinematic leading. For production use on the real robot, use
+ * {@link ShootOnTheMoveCommand} which implements the superior quadratic trajectory solver.
+ */
 public class KinematicAiming {
 
   /**

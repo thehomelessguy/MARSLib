@@ -10,6 +10,10 @@ import org.dyn4j.geometry.Geometry;
 import org.dyn4j.geometry.MassType;
 import org.dyn4j.geometry.Vector2;
 
+/**
+ * Simulation implementation of the RotaryMechanismIO interface. Uses Dyn4j to run a rigid-body
+ * physics simulation of a 1D rotary arm mechanism.
+ */
 public class RotaryMechanismIOSim implements RotaryMechanismIO {
 
   private final Body armBody;
@@ -38,7 +42,14 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
 
     // Arm body (Dynamic)
     armBody = new Body();
-    armBody.addFixture(Geometry.createRectangle(lengthMeters, 0.05), 5.0, 0.2, 0.0); // Simple rod
+    double thickness = 0.05;
+    // Calculate mass from moment of inertia assuming rigid rod rotating about its center
+    // I = (1/12) * m * L^2  =>  m = 12 * I / L^2
+    double mass = 12.0 * jKgMetersSquared / (lengthMeters * lengthMeters);
+    double area = lengthMeters * thickness;
+    double density = mass / area;
+    armBody.addFixture(
+        Geometry.createRectangle(lengthMeters, thickness), density, 0.2, 0.0); // Simple rod
     armBody.setMass(MassType.NORMAL);
     // Center mass roughly half way
     armBody.translate(lengthMeters / 2.0, 0.0);
@@ -51,7 +62,9 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
     MARSPhysicsWorld.getInstance().registerMechanismBody(mechanismName, armBody);
     MARSPhysicsWorld.getInstance().getWorld().addJoint(joint);
 
-    // Mimic Motion Magic constraints
+    // Internal profiled PID mimics the TalonFX Motion Magic controller in sim.
+    // kP=5.0 provides stiff tracking; constraints model a typical FRC arm profile:
+    //   maxVelocity = 10.0 rad/s, maxAcceleration = 20.0 rad/s²
     internalController =
         new ProfiledPIDController(5.0, 0.0, 0.0, new TrapezoidProfile.Constraints(10.0, 20.0));
   }
@@ -64,7 +77,8 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
     if (closedLoop) {
       double pidVolts = internalController.calculate(currentAngleRad);
       appliedVolts = pidVolts + currentFeedforward;
-      appliedVolts = Math.max(-12.0, Math.min(12.0, appliedVolts));
+      double maxVoltage = MARSPhysicsWorld.getInstance().getSimulatedVoltage();
+      appliedVolts = Math.max(-maxVoltage, Math.min(maxVoltage, appliedVolts));
     }
 
     // DC Motor Math
@@ -79,6 +93,9 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
     inputs.hasHardwareConnected = true;
     inputs.positionRad = currentAngleRad;
     inputs.velocityRadPerSec = currentVelocityRadPerSec;
+    // Feed back the profiled setpoint velocity so the subsystem-level ArmFeedforward
+    // kV term is exercised in simulation (mirrors MotionMagic reference slope on real HW).
+    inputs.targetVelocityRadPerSec = closedLoop ? internalController.getSetpoint().velocity : 0.0;
     inputs.appliedVolts = appliedVolts;
     inputs.currentAmps = new double[] {Math.abs(currentDrawAmps)};
   }
@@ -86,7 +103,8 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
   @Override
   public void setVoltage(double volts) {
     closedLoop = false;
-    appliedVolts = Math.max(-12.0, Math.min(12.0, volts));
+    double maxVoltage = MARSPhysicsWorld.getInstance().getSimulatedVoltage();
+    appliedVolts = Math.max(-maxVoltage, Math.min(maxVoltage, volts));
   }
 
   @Override

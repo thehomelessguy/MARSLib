@@ -3,6 +3,7 @@ package com.marslib.vision;
 import edu.wpi.first.math.geometry.Pose3d;
 import org.littletonrobotics.junction.AutoLog;
 
+/** Hardware abstraction interface for physical AprilTag tracking cameras. */
 public interface AprilTagVisionIO {
 
   @AutoLog

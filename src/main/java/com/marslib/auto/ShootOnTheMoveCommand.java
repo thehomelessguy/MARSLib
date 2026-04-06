@@ -5,42 +5,33 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.DoubleSupplier;
 
+/**
+ * Overrides the driver's rotational (Theta) control to perfectly track a specific field coordinate
+ * using Velocity-Added Kinematic Leading, while allowing them to freely strafe and sprint in X and
+ * Y simultaneously.
+ */
 public class ShootOnTheMoveCommand extends Command {
 
   private final SwerveDrive swerveDrive;
   private final DoubleSupplier joystickX;
   private final DoubleSupplier joystickY;
-  private final Translation2d targetNode;
 
   private final PIDController thetaAlignController;
 
   // Approximate game piece exit velocity (Tune this matching your shooter mechanisms!)
-  private static final double PROJECTILE_SPEED_MPS = 15.0;
-
-  /**
-   * Overrides the driver's rotational (Theta) control to perfectly track a specific field
-   * coordinate using Velocity-Added Kinematic Leading, while allowing them to freely strafe and
-   * sprint in X and Y simultaneously.
-   *
-   * @param swerveDrive Standard drive subsystem hook.
-   * @param joystickX Lambda to the driver's X-axis joystick input (Field X).
-   * @param joystickY Lambda to the driver's Y-axis joystick input (Field Y).
-   * @param targetNode The stationary coordinate point we want to shoot at.
-   */
   public ShootOnTheMoveCommand(
-      SwerveDrive swerveDrive,
-      DoubleSupplier joystickX,
-      DoubleSupplier joystickY,
-      Translation2d targetNode) {
+      SwerveDrive swerveDrive, DoubleSupplier joystickX, DoubleSupplier joystickY) {
     this.swerveDrive = swerveDrive;
     this.joystickX = joystickX;
     this.joystickY = joystickY;
-    this.targetNode = targetNode;
 
-    this.thetaAlignController = new PIDController(5.0, 0, 0);
+    this.thetaAlignController =
+        new PIDController(frc.robot.Constants.AutoConstants.ALIGN_THETA_KP, 0, 0);
     this.thetaAlignController.enableContinuousInput(-Math.PI, Math.PI);
 
     addRequirements(swerveDrive);
@@ -59,15 +50,43 @@ public class ShootOnTheMoveCommand extends Command {
     ChassisSpeeds currentFieldSpeeds =
         ChassisSpeeds.fromRobotRelativeSpeeds(currentSpeeds, currentPose.getRotation());
 
-    // 3. Velocity-Added Kinematic Leading Math (The Magic)
-    double distance = currentPose.getTranslation().getDistance(targetNode);
-    double timeOfFlight = distance / PROJECTILE_SPEED_MPS;
+    // Determine dynamic target based on alliance
+    Translation2d targetNode = frc.robot.Constants.FieldConstants.BLUE_HUB_POS;
+    if (DriverStation.getAlliance().isPresent()
+        && DriverStation.getAlliance().get() == Alliance.Red) {
+      targetNode = frc.robot.Constants.FieldConstants.RED_HUB_POS;
+    }
+
+    // 3. Exact True-Vector Quadratic Time-Of-Flight Intersection Solver
+    double dx = targetNode.getX() - currentPose.getX();
+    double dy = targetNode.getY() - currentPose.getY();
+    double vx = currentFieldSpeeds.vxMetersPerSecond;
+    double vy = currentFieldSpeeds.vyMetersPerSecond;
+    double s = frc.robot.Constants.ShooterConstants.PROJECTILE_SPEED_MPS;
+
+    double a = (s * s) - ((vx * vx) + (vy * vy));
+    double b = -2.0 * ((dx * vx) + (dy * vy));
+    double c = -((dx * dx) + (dy * dy));
+
+    double discriminant = (b * b) - (4.0 * a * c);
+    double timeOfFlight;
+
+    if (discriminant < 0.0 || a == 0.0) {
+      // Fallback to naive approximation if physically impossible to mathematically solve
+      timeOfFlight = currentPose.getTranslation().getDistance(targetNode) / Math.max(s, 0.01);
+    } else {
+      double t1 = (-b + Math.sqrt(discriminant)) / (2.0 * a);
+      double t2 = (-b - Math.sqrt(discriminant)) / (2.0 * a);
+
+      if (t1 > 0.0 && t2 > 0.0) timeOfFlight = Math.min(t1, t2);
+      else if (t1 > 0.0) timeOfFlight = t1;
+      else if (t2 > 0.0) timeOfFlight = t2;
+      else timeOfFlight = currentPose.getTranslation().getDistance(targetNode) / Math.max(s, 0.01);
+    }
 
     // Shift the target backwards opposite to our momentum so the game piece sweeps in perfectly
-    double virtualTargetX =
-        targetNode.getX() - (currentFieldSpeeds.vxMetersPerSecond * timeOfFlight);
-    double virtualTargetY =
-        targetNode.getY() - (currentFieldSpeeds.vyMetersPerSecond * timeOfFlight);
+    double virtualTargetX = targetNode.getX() - (vx * timeOfFlight);
+    double virtualTargetY = targetNode.getY() - (vy * timeOfFlight);
 
     // Calculate heading intercept
     double aimTheta =

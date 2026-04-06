@@ -13,6 +13,7 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 
+/** Hardware IO implementation for a Swerve Module using CTRE TalonFX motors and a CANcoder. */
 public class SwerveModuleIOTalonFX implements SwerveModuleIO {
   private final TalonFX driveMotor;
   private final TalonFX turnMotor;
@@ -35,13 +36,15 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO {
 
     TalonFXConfiguration driveConfig = new TalonFXConfiguration();
     driveConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-    driveConfig.CurrentLimits.StatorCurrentLimit = 80.0;
+    driveConfig.CurrentLimits.StatorCurrentLimit =
+        frc.robot.SwerveConstants.DRIVE_STATOR_CURRENT_LIMIT;
     driveConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     driveMotor.getConfigurator().apply(driveConfig);
 
     TalonFXConfiguration turnConfig = new TalonFXConfiguration();
     turnConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-    turnConfig.CurrentLimits.StatorCurrentLimit = 40.0;
+    turnConfig.CurrentLimits.StatorCurrentLimit =
+        frc.robot.SwerveConstants.TURN_STATOR_CURRENT_LIMIT;
     turnConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     turnMotor.getConfigurator().apply(turnConfig);
 
@@ -52,13 +55,14 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO {
     driveCurrent = driveMotor.getStatorCurrent();
     turnCurrent = turnMotor.getStatorCurrent();
 
-    // Ensure these signals run at standard 50hz
-    driveVelocity.setUpdateFrequency(50.0);
-    turnVelocity.setUpdateFrequency(50.0);
-    driveAppliedVolts.setUpdateFrequency(50.0);
-    turnAppliedVolts.setUpdateFrequency(50.0);
-    driveCurrent.setUpdateFrequency(50.0);
-    turnCurrent.setUpdateFrequency(50.0);
+    // Ensure these signals run at standard config frequency
+    double updateHz = frc.robot.Constants.DriveConstants.TELEMETRY_HZ;
+    driveVelocity.setUpdateFrequency(updateHz);
+    turnVelocity.setUpdateFrequency(updateHz);
+    driveAppliedVolts.setUpdateFrequency(updateHz);
+    turnAppliedVolts.setUpdateFrequency(updateHz);
+    driveCurrent.setUpdateFrequency(updateHz);
+    turnCurrent.setUpdateFrequency(updateHz);
 
     // Register position signals to Odometry thread
     odometryId =
@@ -78,8 +82,13 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO {
         driveCurrent, turnCurrent);
 
     inputs.hasHardwareConnected = true; // Assume true if no error during refresh mapping
-    inputs.driveVelocityRadPerSec = Units.rotationsToRadians(driveVelocity.getValueAsDouble());
-    inputs.turnVelocityRadPerSec = Units.rotationsToRadians(turnVelocity.getValueAsDouble());
+    // Convert from motor-domain (rotations) to output-shaft-domain (radians at the wheel)
+    inputs.driveVelocityRadPerSec =
+        Units.rotationsToRadians(driveVelocity.getValueAsDouble())
+            / frc.robot.SwerveConstants.DRIVE_GEAR_RATIO;
+    inputs.turnVelocityRadPerSec =
+        Units.rotationsToRadians(turnVelocity.getValueAsDouble())
+            / frc.robot.SwerveConstants.TURN_GEAR_RATIO;
     inputs.driveAppliedVolts = driveAppliedVolts.getValueAsDouble();
     inputs.turnAppliedVolts = turnAppliedVolts.getValueAsDouble();
     inputs.driveCurrentAmps = driveCurrent.getValueAsDouble();
@@ -95,8 +104,13 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO {
     inputs.odometryTimestamps = new double[data.timestamps.length];
 
     for (int i = 0; i < data.drivePositions.length; i++) {
-      inputs.drivePositionsRad[i] = Units.rotationsToRadians(data.drivePositions[i]);
-      inputs.turnPositionsRad[i] = Units.rotationsToRadians(data.turnPositions[i]);
+      // Convert from motor rotations to output-shaft radians (post-gearing)
+      inputs.drivePositionsRad[i] =
+          Units.rotationsToRadians(data.drivePositions[i])
+              / frc.robot.SwerveConstants.DRIVE_GEAR_RATIO;
+      inputs.turnPositionsRad[i] =
+          Units.rotationsToRadians(data.turnPositions[i])
+              / frc.robot.SwerveConstants.TURN_GEAR_RATIO;
       inputs.odometryTimestamps[i] = data.timestamps[i];
     }
   }

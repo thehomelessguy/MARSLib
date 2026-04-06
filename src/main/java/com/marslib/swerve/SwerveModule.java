@@ -1,8 +1,10 @@
 package com.marslib.swerve;
 
+import com.marslib.simulation.SwerveChassisPhysics;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import frc.robot.SwerveConstants;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -16,6 +18,8 @@ public class SwerveModule {
   private final SwerveModuleIO io;
   private final SwerveModuleIOInputsAutoLogged inputs = new SwerveModuleIOInputsAutoLogged();
   private final int index;
+
+  private double lastDriveVoltage = 0.0;
 
   /**
    * Constructs a generic Swerve Module boundary structure.
@@ -39,7 +43,8 @@ public class SwerveModule {
 
   /**
    * Iterates over the high-frequency positional arrays produced by internal Phoenix 6 Odometry
-   * Threads to generate intermediate WPILib poses across a single 20ms delta window.
+   * Threads to generate intermediate WPILib poses across a single {@value
+   * frc.robot.Constants#LOOP_PERIOD_SECS}s delta window.
    *
    * @return Array of all physical module locations over the delta window in abstract WPILib
    *     kinematics terms.
@@ -121,12 +126,16 @@ public class SwerveModule {
     // This prevents the robot from driving while the wheels are sideways, eliminating drift.
     double driveVoltage =
         (desiredState.speedMetersPerSecond * Math.cos(angleErrorRad))
-            * 12.0
+            * SwerveConstants.NOMINAL_BATTERY_VOLTAGE
             / SwerveConstants.MAX_LINEAR_SPEED_MPS;
 
     double turnVoltage = angleErrorRad * SwerveConstants.TURN_KP;
-    turnVoltage = Math.max(-12.0, Math.min(12.0, turnVoltage));
+    turnVoltage =
+        Math.max(
+            -SwerveConstants.NOMINAL_BATTERY_VOLTAGE,
+            Math.min(SwerveConstants.NOMINAL_BATTERY_VOLTAGE, turnVoltage));
 
+    lastDriveVoltage = driveVoltage;
     io.setDriveVoltage(driveVoltage);
     io.setTurnVoltage(turnVoltage);
   }
@@ -137,7 +146,13 @@ public class SwerveModule {
    * @param volts Target requested feedforward / PID voltage calculated securely.
    */
   public void setDriveVoltage(double volts) {
+    lastDriveVoltage = volts;
     io.setDriveVoltage(volts);
+  }
+
+  /** Used strictly for extracting injected sim forces. */
+  public double getSimDriveVoltage() {
+    return lastDriveVoltage;
   }
 
   /**
@@ -158,5 +173,20 @@ public class SwerveModule {
    */
   public void setCurrentLimit(double amps) {
     io.setCurrentLimit(amps);
+  }
+
+  /**
+   * Injects the centralized chassis physics reference into the underlying IO layer if it is a
+   * {@link SwerveModuleIOSim}. This ensures the sim IO reads wheel omegas from the single physics
+   * engine rather than running its own duplicate motor simulation.
+   *
+   * <p>No-op if the IO layer is not a sim implementation.
+   *
+   * @param physics The {@link SwerveChassisPhysics} instance to inject.
+   */
+  public void injectChassisPhysics(SwerveChassisPhysics physics) {
+    if (io instanceof SwerveModuleIOSim) {
+      ((SwerveModuleIOSim) io).setChassisPhysics(physics);
+    }
   }
 }

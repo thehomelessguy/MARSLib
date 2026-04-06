@@ -1,0 +1,18 @@
+Compiled from "AprilTagFields.java"
+public final class edu.wpi.first.apriltag.AprilTagFields extends java.lang.Enum<edu.wpi.first.apriltag.AprilTagFields> {
+  public static final edu.wpi.first.apriltag.AprilTagFields k2022RapidReact;
+  public static final edu.wpi.first.apriltag.AprilTagFields k2023ChargedUp;
+  public static final edu.wpi.first.apriltag.AprilTagFields k2024Crescendo;
+  public static final edu.wpi.first.apriltag.AprilTagFields k2025ReefscapeWelded;
+  public static final edu.wpi.first.apriltag.AprilTagFields k2025ReefscapeAndyMark;
+  public static final edu.wpi.first.apriltag.AprilTagFields k2026RebuiltWelded;
+  public static final edu.wpi.first.apriltag.AprilTagFields k2026RebuiltAndymark;
+  public static final java.lang.String kBaseResourceDir;
+  public static final edu.wpi.first.apriltag.AprilTagFields kDefaultField;
+  public final java.lang.String m_resourceFile;
+  edu.wpi.first.apriltag.AprilTagFieldLayout m_fieldLayout;
+  public static edu.wpi.first.apriltag.AprilTagFields[] values();
+  public static edu.wpi.first.apriltag.AprilTagFields valueOf(java.lang.String);
+  public edu.wpi.first.apriltag.AprilTagFieldLayout loadAprilTagLayoutField();
+  static {};
+}

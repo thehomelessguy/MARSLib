@@ -2,6 +2,7 @@ package com.marslib.mechanisms;
 
 import org.littletonrobotics.junction.AutoLog;
 
+/** Hardware abstraction interface for a linear translating mechanism (like an elevator). */
 public interface LinearMechanismIO {
   @AutoLog
   public static class LinearMechanismIOInputs {
