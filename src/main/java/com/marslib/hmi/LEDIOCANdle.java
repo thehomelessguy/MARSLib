@@ -1,12 +1,21 @@
 package com.marslib.hmi;
 
-// import com.ctre.phoenix.led.CANdle;
-// import com.ctre.phoenix.led.CANdleConfiguration;
-// import com.ctre.phoenix.led.StrobeAnimation;
+import com.ctre.phoenix6.controls.SolidColor;
+import com.ctre.phoenix6.hardware.CANdle;
+import com.ctre.phoenix6.signals.RGBWColor;
+import edu.wpi.first.wpilibj.Timer;
 
+/**
+ * LED IO layer using the CTRE CANdle (Connected via CAN bus). The CANdle supports addressable LED
+ * strips and provides solid/strobe effects natively via Phoenix 6 control requests.
+ *
+ * <p>Students: The CANdle is a CAN-connected LED controller from CTRE. It supports up to 8 onboard
+ * LEDs (indices 0-7) and an attached strip (indices 8+). This implementation uses Phoenix 6's
+ * {@link SolidColor} control requests with {@link RGBWColor}.
+ */
 public class LEDIOCANdle implements LEDIO {
-  // private final CANdle candle;
-  // private final StrobeAnimation criticalAnimation;
+  private final CANdle candle;
+  private final SolidColor solidColorRequest;
 
   public enum State {
     DEFAULT,
@@ -17,15 +26,17 @@ public class LEDIOCANdle implements LEDIO {
   private State currentState = State.DEFAULT;
   private State lastState = null;
 
+  /**
+   * Constructs a CANdle LED IO layer.
+   *
+   * @param canId The CAN ID of the CANdle device.
+   * @param canbus The CAN bus name (e.g., "rio" or "canivore").
+   * @param numLeds The total number of LEDs (onboard + strip).
+   */
   public LEDIOCANdle(int canId, String canbus, int numLeds) {
-    // this.candle = new CANdle(canId, canbus);
-
-    // CANdleConfiguration config = new CANdleConfiguration();
-    // config.stripType = com.ctre.phoenix.led.CANdle.LEDStripType.GRB;
-    // config.brightnessScalar = 1.0;
-    // candle.configAllSettings(config);
-
-    // criticalAnimation = new StrobeAnimation(255, 0, 0, 0, 0.5, numLeds);
+    this.candle = new CANdle(canId, canbus);
+    // Control all LEDs from index 0 to numLeds-1
+    this.solidColorRequest = new SolidColor(0, numLeds - 1);
   }
 
   @Override
@@ -45,25 +56,27 @@ public class LEDIOCANdle implements LEDIO {
 
   @Override
   public void update() {
+    // Only push new commands when state changes (except critical which flashes continuously)
     if (currentState == lastState && currentState != State.CRITICAL_FAULT) {
       return;
     }
     lastState = currentState;
 
-    // candle.clearAnimation(0);
-
-    /*
     switch (currentState) {
       case CRITICAL_FAULT:
-        candle.animate(criticalAnimation);
+        // Flash red at ~5Hz by toggling based on FPGA timestamp
+        if (((int) (Timer.getFPGATimestamp() * 10)) % 2 == 0) {
+          candle.setControl(solidColorRequest.withColor(new RGBWColor(255, 0, 0)));
+        } else {
+          candle.setControl(solidColorRequest.withColor(new RGBWColor(0, 0, 0)));
+        }
         break;
       case LOAD_SHEDDING:
-        candle.setLEDs(255, 60, 0);
+        candle.setControl(solidColorRequest.withColor(new RGBWColor(255, 60, 0))); // Orange
         break;
       case DEFAULT:
-        candle.setLEDs(0, 0, 255);
+        candle.setControl(solidColorRequest.withColor(new RGBWColor(0, 0, 255))); // Blue
         break;
     }
-    */
   }
 }

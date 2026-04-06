@@ -2,6 +2,7 @@ package com.marslib.power;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.marslib.swerve.GyroIO;
 import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIO;
@@ -53,7 +54,7 @@ public class MARSPowerManagerTest {
       new SwerveModule(3, new MockSwerveModuleIO())
     };
 
-    SwerveDrive drive = new SwerveDrive(modules, powerManager);
+    SwerveDrive drive = new SwerveDrive(modules, new GyroIO() {}, powerManager);
 
     // 3. Proc updates
     powerManager.periodic();

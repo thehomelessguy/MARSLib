@@ -12,7 +12,6 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -24,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -36,31 +36,33 @@ import org.littletonrobotics.junction.Logger;
  */
 public class SwerveDrive extends SubsystemBase {
   private final SwerveModule[] modules;
+  private final GyroIO gyroIO;
+  private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
+  private final GyroIOSim gyroIOSim; // Null if not in sim mode
   private final SwerveDriveKinematics kinematics;
   private final SwerveDrivePoseEstimator poseEstimator;
   private final MARSPowerManager powerManager;
   private final SysIdRoutine sysIdRoutine;
   private final Field2d field;
 
+  private double lastLoadShedLimit = SwerveConstants.DRIVE_STATOR_CURRENT_LIMIT;
+
   /**
    * Constructs a new SwerveDrive instance.
    *
    * @param modules Array of 4 SwerveModules (FL, FR, BL, BR) wrapping hardware/simulation logic.
+   * @param gyroIO The gyro IO layer (Pigeon2 or Sim) providing heading data.
    * @param powerManager The active MARSPowerManager for querying bus voltages for load shedding.
    */
-  public SwerveDrive(SwerveModule[] modules, MARSPowerManager powerManager) {
+  public SwerveDrive(SwerveModule[] modules, GyroIO gyroIO, MARSPowerManager powerManager) {
     this.modules = modules;
+    this.gyroIO = gyroIO;
     this.powerManager = powerManager;
 
-    // Abstracted rectangle dimensions (can be injected via config later)
-    Translation2d[] locations =
-        new Translation2d[] {
-          new Translation2d(0.3, 0.3), // FL
-          new Translation2d(0.3, -0.3), // FR
-          new Translation2d(-0.3, 0.3), // BL
-          new Translation2d(-0.3, -0.3) // BR
-        };
-    this.kinematics = new SwerveDriveKinematics(locations);
+    // Store sim reference for kinematics-derived yaw updates
+    this.gyroIOSim = (gyroIO instanceof GyroIOSim) ? (GyroIOSim) gyroIO : null;
+
+    this.kinematics = new SwerveDriveKinematics(SwerveConstants.MODULE_LOCATIONS);
 
     SwerveModulePosition[] initialPositions =
         new SwerveModulePosition[] {
@@ -120,33 +122,53 @@ public class SwerveDrive extends SubsystemBase {
 
   @Override
   public void periodic() {
+    // Update gyro inputs
+    gyroIO.updateInputs(gyroInputs);
+    Logger.processInputs("SwerveDrive/Gyro", gyroInputs);
+
     for (SwerveModule module : modules) {
       module.periodic();
     }
 
-    // Active Dynamic Load Shedding
+    // Active Dynamic Load Shedding — only write to CAN when the limit actually changes
     double voltage = powerManager.getVoltage();
-    if (voltage < 10.0 && voltage > 0.0) {
-      // Proportional scaling: At 10V = 80A, At 7V = 20A (Slope = 20A per Volt)
-      double currentLimit = 20.0 + (voltage - 7.0) * 20.0;
-      currentLimit = Math.max(20.0, Math.min(80.0, currentLimit)); // Clamp bounds
+    double currentLimit;
+    if (voltage < Constants.PowerConstants.NOMINAL_VOLTAGE && voltage > 0.0) {
+      double slope =
+          (SwerveConstants.DRIVE_STATOR_CURRENT_LIMIT - SwerveConstants.MIN_LOAD_SHED_CURRENT)
+              / (Constants.PowerConstants.NOMINAL_VOLTAGE
+                  - Constants.PowerConstants.CRITICAL_VOLTAGE);
+      currentLimit =
+          SwerveConstants.MIN_LOAD_SHED_CURRENT
+              + (voltage - Constants.PowerConstants.CRITICAL_VOLTAGE) * slope;
+      currentLimit =
+          Math.max(
+              SwerveConstants.MIN_LOAD_SHED_CURRENT,
+              Math.min(SwerveConstants.DRIVE_STATOR_CURRENT_LIMIT, currentLimit));
+    } else {
+      currentLimit = SwerveConstants.DRIVE_STATOR_CURRENT_LIMIT;
+    }
 
+    // Only push CAN writes when the limit changes by at least 1A (BUG-03 fix)
+    if (Math.abs(currentLimit - lastLoadShedLimit) >= 1.0) {
       for (SwerveModule mod : modules) {
         mod.setCurrentLimit(currentLimit);
       }
-      Logger.recordOutput("SwerveDrive/LoadShedLimitAmps", currentLimit);
-    } else {
-      // Nominal operation limit
-      for (SwerveModule mod : modules) {
-        mod.setCurrentLimit(80.0);
-      }
-      Logger.recordOutput("SwerveDrive/LoadShedLimitAmps", 80.0);
+      lastLoadShedLimit = currentLimit;
+    }
+    Logger.recordOutput("SwerveDrive/LoadShedLimitAmps", currentLimit);
+
+    // Update simulated gyro from measured kinematics (BUG-01 fix)
+    if (gyroIOSim != null) {
+      ChassisSpeeds measuredSpeeds = getChassisSpeeds();
+      gyroIOSim.updateYawVelocity(measuredSpeeds.omegaRadiansPerSecond, Constants.LOOP_PERIOD_SECS);
     }
 
-    // Synchronous Pose Estimator Drain
-    // Retrieve gyro from a generic source (assuming 0 for structural mockup)
-    Rotation2d yaw = new Rotation2d();
+    // Use real gyro yaw for pose estimation
+    Rotation2d yaw =
+        gyroInputs.connected ? new Rotation2d(gyroInputs.yawPositionRad) : new Rotation2d();
 
+    // Synchronous Pose Estimator Drain
     int sampleCount = modules[0].getPositionDeltas().length;
     for (int i = 0; i < sampleCount; i++) {
       SwerveModulePosition[] positionsForFrame =
@@ -157,7 +179,6 @@ public class SwerveDrive extends SubsystemBase {
             modules[3].getPositionDeltas()[i]
           };
 
-      // Assume odometry thread populated timestamps. We iterate implicitly.
       poseEstimator.update(yaw, positionsForFrame);
     }
 
@@ -178,19 +199,16 @@ public class SwerveDrive extends SubsystemBase {
    * Drives the robot at the given velocity natively.
    *
    * <p>This is commonly triggered dynamically via PathPlanner trajectory followings or Teleop
-   * joysticks.
+   * joysticks. Modules are optimized for minimal rotation before applying voltages.
    *
    * @param speeds The requested translational and rotational velocities in m/s and rad/s.
    */
   public void runVelocity(ChassisSpeeds speeds) {
-    SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
-    SwerveDriveKinematics.desaturateWheelSpeeds(states, 4.5);
-    // Voltage application or PID mapping usually applied heavily here.
-    // For structural phase 3:
+    ChassisSpeeds discretizedSpeeds = ChassisSpeeds.discretize(speeds, Constants.LOOP_PERIOD_SECS);
+    SwerveModuleState[] states = kinematics.toSwerveModuleStates(discretizedSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.MAX_LINEAR_SPEED_MPS);
     for (int i = 0; i < 4; i++) {
-      // Placeholder for feedforward / PID
-      modules[i].setDriveVoltage(states[i].speedMetersPerSecond * 12.0 / 4.5);
-      // turn voltage...
+      modules[i].setDesiredState(states[i]);
     }
   }
 
@@ -229,8 +247,10 @@ public class SwerveDrive extends SubsystemBase {
    * @param pose The new Pose2d coordinate mapped in standard WPILib field units.
    */
   public void resetPose(Pose2d pose) {
+    Rotation2d yaw =
+        gyroInputs.connected ? new Rotation2d(gyroInputs.yawPositionRad) : new Rotation2d();
     poseEstimator.resetPosition(
-        new Rotation2d(),
+        yaw,
         new SwerveModulePosition[] {
           modules[0].getLatestPosition(), modules[1].getLatestPosition(),
           modules[2].getLatestPosition(), modules[3].getLatestPosition()

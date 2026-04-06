@@ -5,6 +5,7 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 
 /**
  * Utility Command factory for autonomous routines.
@@ -42,19 +43,19 @@ public class MARSAuto {
   public static Command pathfindThenRunChoreoTrajectory(String choreoTrajectoryName) {
     try {
       PathPlannerPath path = PathPlannerPath.fromChoreoTrajectory(choreoTrajectoryName);
-      
+
       // Constraints for navigating to the starting pose of the trajectory
       PathConstraints pathfindingConstraints =
           new PathConstraints(
-              3.0, // Max Velocity (m/s)
-              2.0, // Max Acceleration (m/s^2)
-              Math.PI, // Max Angular Velocity (rad/s)
-              Math.PI / 2 // Max Angular Acceleration (rad/s^2)
-          );
-          
+              Constants.AutoConstants.MAX_VELOCITY_MPS,
+              Constants.AutoConstants.MAX_ACCELERATION_MPS2,
+              Constants.AutoConstants.MAX_ANGULAR_VELOCITY_RAD_PER_SEC,
+              Constants.AutoConstants.MAX_ANGULAR_ACCELERATION_RAD_PER_SEC2);
+
       return AutoBuilder.pathfindThenFollowPath(path, pathfindingConstraints);
     } catch (Exception e) {
-      System.err.println("Failed to load Choreo trajectory for pathfinding: " + choreoTrajectoryName);
+      System.err.println(
+          "Failed to load Choreo trajectory for pathfinding: " + choreoTrajectoryName);
       e.printStackTrace();
       return new edu.wpi.first.wpilibj2.command.PrintCommand("Fallback: Trajectory failed to load");
     }
@@ -71,11 +72,10 @@ public class MARSAuto {
     // Tunable dynamic pathfinding constraints
     PathConstraints constraints =
         new PathConstraints(
-            3.0, // Max Velocity (m/s)
-            2.0, // Max Acceleration (m/s^2)
-            Math.PI, // Max Angular Velocity (rad/s)
-            Math.PI / 2 // Max Angular Acceleration (rad/s^2)
-            );
+            Constants.AutoConstants.MAX_VELOCITY_MPS,
+            Constants.AutoConstants.MAX_ACCELERATION_MPS2,
+            Constants.AutoConstants.MAX_ANGULAR_VELOCITY_RAD_PER_SEC,
+            Constants.AutoConstants.MAX_ANGULAR_ACCELERATION_RAD_PER_SEC2);
 
     // Pathfind dynamically to target, ending with 0 velocity
     return AutoBuilder.pathfindToPose(

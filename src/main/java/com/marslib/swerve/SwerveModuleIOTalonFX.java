@@ -24,7 +24,8 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO {
   private final StatusSignal<Current> driveCurrent;
   private final StatusSignal<Current> turnCurrent;
 
-  private final VoltageOut voltageRequest = new VoltageOut(0.0);
+  private final VoltageOut driveVoltageRequest = new VoltageOut(0.0);
+  private final VoltageOut turnVoltageRequest = new VoltageOut(0.0);
 
   private final int odometryId;
 
@@ -102,12 +103,12 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO {
 
   @Override
   public void setDriveVoltage(double volts) {
-    driveMotor.setControl(voltageRequest.withOutput(volts));
+    driveMotor.setControl(driveVoltageRequest.withOutput(volts));
   }
 
   @Override
   public void setTurnVoltage(double volts) {
-    turnMotor.setControl(voltageRequest.withOutput(volts));
+    turnMotor.setControl(turnVoltageRequest.withOutput(volts));
   }
 
   @Override

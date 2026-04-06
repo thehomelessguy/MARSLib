@@ -1,5 +1,8 @@
 package com.marslib.faults;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Central aggregator for all mission-critical error states and hardware timeouts.
  *
@@ -59,7 +62,13 @@ public class MARSFaultManager {
    * @param deviceName Name of the specific controller/device throwing the timeout (e.g.
    *     "ElevatorTalon").
    */
+  private static final Map<String, Alert> disconnectAlerts = new HashMap<>();
+
   public static void reportHardwareDisconnect(String deviceName) {
-    new Alert("Hardware Disconnect: " + deviceName, Alert.AlertType.CRITICAL).set(true);
+    if (!disconnectAlerts.containsKey(deviceName)) {
+      disconnectAlerts.put(
+          deviceName, new Alert("Hardware Disconnect: " + deviceName, Alert.AlertType.CRITICAL));
+    }
+    disconnectAlerts.get(deviceName).set(true);
   }
 }

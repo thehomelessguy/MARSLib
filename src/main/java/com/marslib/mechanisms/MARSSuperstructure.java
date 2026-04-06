@@ -31,32 +31,42 @@ public class MARSSuperstructure extends SubsystemBase {
                 () -> {
                   switch (targetState) {
                     case INTAKE_FLOOR:
-                      // Safe move: Arm down first, then elevator out slightly
-                      return Commands.sequence(
-                          arm.runOnce(() -> arm.setTargetPosition(Math.PI / 4)),
-                          Commands.waitUntil(
-                              () -> Math.abs(arm.getPositionRads() - Math.PI / 4) < 0.1),
-                          elevator.runOnce(() -> elevator.setTargetPosition(0.2)));
+                      return Commands.either(
+                          Commands.parallel(
+                              arm.runOnce(() -> arm.setTargetPosition(Math.PI / 4)),
+                              elevator.runOnce(() -> elevator.setTargetPosition(0.2))),
+                          Commands.sequence(
+                              arm.runOnce(() -> arm.setTargetPosition(Math.PI / 4)),
+                              Commands.waitUntil(
+                                  () -> Math.abs(arm.getPositionRads() - Math.PI / 4) < 0.1),
+                              elevator.runOnce(() -> elevator.setTargetPosition(0.2))),
+                          () -> elevator.getPositionMeters() < 0.3);
 
                     case SCORE_HIGH:
-                      // Safe move: Elevator up first, then Arm out to score
-                      return Commands.sequence(
-                          elevator.runOnce(() -> elevator.setTargetPosition(1.5)),
-                          Commands.waitUntil(
-                              () -> Math.abs(elevator.getPositionMeters() - 1.5) < 0.1),
-                          arm.runOnce(() -> arm.setTargetPosition(Math.PI / 2)));
+                      return Commands.either(
+                          Commands.parallel(
+                              elevator.runOnce(() -> elevator.setTargetPosition(1.5)),
+                              arm.runOnce(() -> arm.setTargetPosition(Math.PI / 2))),
+                          Commands.sequence(
+                              elevator.runOnce(() -> elevator.setTargetPosition(1.5)),
+                              Commands.waitUntil(() -> elevator.getPositionMeters() > 1.0),
+                              arm.runOnce(() -> arm.setTargetPosition(Math.PI / 2))),
+                          () -> elevator.getPositionMeters() > 1.0);
 
                     case STOWED:
                     default:
-                      // Safe move: Arm heavily stowed *first* to avoid smashing chassis, then
-                      // elevator drops
-                      return Commands.sequence(
-                          arm.runOnce(() -> arm.setTargetPosition(0.0)),
-                          Commands.waitUntil(() -> Math.abs(arm.getPositionRads()) < 0.2),
-                          elevator.runOnce(() -> elevator.setTargetPosition(0.0)));
+                      return Commands.either(
+                          Commands.parallel(
+                              arm.runOnce(() -> arm.setTargetPosition(0.0)),
+                              elevator.runOnce(() -> elevator.setTargetPosition(0.0))),
+                          Commands.sequence(
+                              arm.runOnce(() -> arm.setTargetPosition(0.0)),
+                              Commands.waitUntil(() -> Math.abs(arm.getPositionRads()) < 0.2),
+                              elevator.runOnce(() -> elevator.setTargetPosition(0.0))),
+                          () -> arm.getPositionRads() < 0.2);
                   }
                 },
-                java.util.Set.of(this)));
+                java.util.Set.of(this, elevator, arm)));
   }
 
   public SuperstructureState getCurrentState() {

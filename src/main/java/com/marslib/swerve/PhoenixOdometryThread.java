@@ -60,25 +60,31 @@ public class PhoenixOdometryThread extends Thread {
   }
 
   public SyncData getSyncData(int moduleId) {
-    BlockingQueue<Double> dQueue = drivePositionQueues.get(moduleId);
-    BlockingQueue<Double> tQueue = turnPositionQueues.get(moduleId);
-    BlockingQueue<Double> tsQueue = timestampQueues.get(moduleId);
-
     signalsLock.lock();
-    int size = dQueue.size();
-    SyncData data = new SyncData();
-    data.drivePositions = new double[size];
-    data.turnPositions = new double[size];
-    data.timestamps = new double[size];
+    try {
+      BlockingQueue<Double> dQueue = drivePositionQueues.get(moduleId);
+      BlockingQueue<Double> tQueue = turnPositionQueues.get(moduleId);
+      BlockingQueue<Double> tsQueue = timestampQueues.get(moduleId);
 
-    for (int i = 0; i < size; i++) {
-      data.drivePositions[i] = dQueue.poll();
-      data.turnPositions[i] = tQueue.poll();
-      data.timestamps[i] = tsQueue.poll();
+      int size = dQueue.size();
+      SyncData data = new SyncData();
+      data.drivePositions = new double[size];
+      data.turnPositions = new double[size];
+      data.timestamps = new double[size];
+
+      for (int i = 0; i < size; i++) {
+        Double driveVal = dQueue.poll();
+        Double turnVal = tQueue.poll();
+        Double tsVal = tsQueue.poll();
+        data.drivePositions[i] = driveVal != null ? driveVal : 0.0;
+        data.turnPositions[i] = turnVal != null ? turnVal : 0.0;
+        data.timestamps[i] = tsVal != null ? tsVal : 0.0;
+      }
+
+      return data;
+    } finally {
+      signalsLock.unlock();
     }
-    signalsLock.unlock();
-
-    return data;
   }
 
   @Override

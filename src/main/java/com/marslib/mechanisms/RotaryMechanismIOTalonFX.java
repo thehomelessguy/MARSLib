@@ -40,6 +40,8 @@ public class RotaryMechanismIOTalonFX implements RotaryMechanismIO {
 
   private final double gearRatio;
 
+  private double lastAppliedCurrentLimit = 60.0;
+
   private final LoggedTunableNumber kP;
   private final LoggedTunableNumber kI;
   private final LoggedTunableNumber kD;
@@ -108,9 +110,11 @@ public class RotaryMechanismIOTalonFX implements RotaryMechanismIO {
     inputs.currentAmps = new double[] {statorCurrent.getValueAsDouble()};
 
     // Live Auto-Tuning Check
-    if (kP.hasChanged(motor.getDeviceID())
-        || kI.hasChanged(motor.getDeviceID())
-        || kD.hasChanged(motor.getDeviceID())) {
+    boolean pChanged = kP.hasChanged(motor.getDeviceID());
+    boolean iChanged = kI.hasChanged(motor.getDeviceID());
+    boolean dChanged = kD.hasChanged(motor.getDeviceID());
+
+    if (pChanged || iChanged || dChanged) {
       com.ctre.phoenix6.configs.Slot0Configs slot0 = new com.ctre.phoenix6.configs.Slot0Configs();
       motor.getConfigurator().refresh(slot0);
       slot0.kP = kP.get();
@@ -146,6 +150,10 @@ public class RotaryMechanismIOTalonFX implements RotaryMechanismIO {
 
   @Override
   public void setCurrentLimit(double amps) {
+    if (Math.abs(amps - lastAppliedCurrentLimit) < 1.0) {
+      return;
+    }
+    lastAppliedCurrentLimit = amps;
     CurrentLimitsConfigs limit = new CurrentLimitsConfigs();
     motor.getConfigurator().refresh(limit);
     limit.StatorCurrentLimit = amps;

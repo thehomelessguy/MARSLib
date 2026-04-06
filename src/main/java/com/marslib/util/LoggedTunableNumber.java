@@ -4,7 +4,20 @@ import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
+import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * A tunable number that can be modified at runtime via NetworkTables for live PID tuning.
+ *
+ * <p>When the robot is connected to an FMS (real competition), the value is locked to the default
+ * for safety and determinism. In practice/simulation mode, values can be freely adjusted from the
+ * SmartDashboard or AdvantageScope.
+ *
+ * <p>Students: Use {@code hasChanged(int id)} to detect when a value has been modified. Each
+ * consumer (identified by a unique int ID) independently tracks whether it has seen the latest
+ * value.
+ */
 public class LoggedTunableNumber {
   private static final String tableKey = "TunableNumbers";
 
@@ -13,7 +26,9 @@ public class LoggedTunableNumber {
   private double defaultValue;
   private DoubleSubscriber subscriber;
   private DoublePublisher publisher;
-  private double lastHasChangedValue;
+
+  /** Per-consumer change tracking: maps consumer ID → last seen value */
+  private final Map<Integer, Double> lastHasChangedValues = new HashMap<>();
 
   public LoggedTunableNumber(String dashboardKey) {
     this.key = dashboardKey;
@@ -28,7 +43,6 @@ public class LoggedTunableNumber {
     if (!hasDefault) {
       hasDefault = true;
       this.defaultValue = defaultValue;
-      this.lastHasChangedValue = defaultValue;
       var topic = NetworkTableInstance.getDefault().getTable(tableKey).getDoubleTopic(key);
       publisher = topic.publish();
       publisher.set(defaultValue);
@@ -46,13 +60,21 @@ public class LoggedTunableNumber {
     return subscriber != null ? subscriber.get() : defaultValue;
   }
 
+  /**
+   * Returns true if the value has changed since the last time this specific consumer checked.
+   *
+   * @param id A unique identifier for the consumer (e.g., {@code this.hashCode()} or {@code
+   *     motor.getDeviceID()}).
+   * @return Whether the current value differs from the last value seen by this consumer.
+   */
   public boolean hasChanged(int id) {
     if (DriverStation.isFMSAttached()) {
       return false;
     }
     double currentValue = get();
-    if (currentValue != lastHasChangedValue) {
-      lastHasChangedValue = currentValue;
+    Double lastValue = lastHasChangedValues.get(id);
+    if (lastValue == null || currentValue != lastValue) {
+      lastHasChangedValues.put(id, currentValue);
       return true;
     }
     return false;

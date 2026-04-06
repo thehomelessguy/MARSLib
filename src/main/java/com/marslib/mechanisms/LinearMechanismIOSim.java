@@ -27,9 +27,9 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
   private double currentFeedforward = 0.0;
 
   public LinearMechanismIOSim(
-      String mechanismName, double massKg, double gearRatio, double spoolRadiusMeters) {
+      String mechanismName, double gearRatio, double spoolDiameterMeters, double massKg) {
     this.gearRatio = gearRatio;
-    this.spoolRadiusMeters = spoolRadiusMeters;
+    this.spoolRadiusMeters = spoolDiameterMeters / 2.0;
     this.gearbox = DCMotor.getKrakenX60Foc(1);
 
     // Anchor body (Static base of elevator)

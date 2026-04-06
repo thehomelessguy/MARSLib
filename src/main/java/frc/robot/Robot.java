@@ -129,5 +129,7 @@ public class Robot extends LoggedRobot {
 
   /** This function is called periodically whilst in simulation. */
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+    com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+  }
 }

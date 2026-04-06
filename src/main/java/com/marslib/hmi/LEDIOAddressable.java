@@ -58,7 +58,7 @@ public class LEDIOAddressable implements LEDIO {
   }
 
   private void flashRed() {
-    if ((Timer.getFPGATimestamp() * 10) % 2 == 0) {
+    if (((int) (Timer.getFPGATimestamp() * 10)) % 2 == 0) {
       setAll(255, 0, 0);
     } else {
       setAll(0, 0, 0);

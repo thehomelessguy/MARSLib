@@ -2,6 +2,7 @@ package com.marslib.power;
 
 import com.marslib.faults.Alert;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -17,9 +18,15 @@ public class MARSPowerManager extends SubsystemBase {
   private final PowerIOInputsAutoLogged inputs = new PowerIOInputsAutoLogged();
 
   private final Alert warningAlert =
-      new Alert("Power", "Load Shedding: Voltage below 8.0V", Alert.AlertType.WARNING);
+      new Alert(
+          "Power",
+          "Load Shedding: Voltage below " + Constants.PowerConstants.WARNING_VOLTAGE + "V",
+          Alert.AlertType.WARNING);
   private final Alert criticalAlert =
-      new Alert("Power", "Load Shedding: Voltage below 7.0V", Alert.AlertType.CRITICAL);
+      new Alert(
+          "Power",
+          "Load Shedding: Voltage below " + Constants.PowerConstants.CRITICAL_VOLTAGE + "V",
+          Alert.AlertType.CRITICAL);
 
   /**
    * Initializes the Power Manager.
@@ -40,10 +47,10 @@ public class MARSPowerManager extends SubsystemBase {
     Logger.processInputs("Power", inputs);
 
     if (inputs.voltage > 0) {
-      if (inputs.voltage < 7.0) {
+      if (inputs.voltage < Constants.PowerConstants.CRITICAL_VOLTAGE) {
         warningAlert.set(true);
         criticalAlert.set(true);
-      } else if (inputs.voltage < 8.0) {
+      } else if (inputs.voltage < Constants.PowerConstants.WARNING_VOLTAGE) {
         warningAlert.set(true);
         criticalAlert.set(false);
       } else {

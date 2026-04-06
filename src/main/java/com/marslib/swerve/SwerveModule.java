@@ -51,11 +51,9 @@ public class SwerveModule {
     }
 
     SwerveModulePosition[] positions = new SwerveModulePosition[length];
-    // Wheel radius defaults to 2 inches (0.0508) for MARSLib standard
-    final double wheelRadiusMeters = 0.0508;
 
     for (int i = 0; i < length; i++) {
-      double distanceMeters = inputs.drivePositionsRad[i] * wheelRadiusMeters;
+      double distanceMeters = inputs.drivePositionsRad[i] * SwerveConstants.WHEEL_RADIUS_METERS;
       Rotation2d angle = new Rotation2d(inputs.turnPositionsRad[i]);
       positions[i] = new SwerveModulePosition(distanceMeters, angle);
     }
@@ -78,13 +76,46 @@ public class SwerveModule {
    * @return A {@link SwerveModuleState} tracking linear velocity (m/s) and angular heading.
    */
   public SwerveModuleState getLatestState() {
-    final double wheelRadiusMeters = 0.0508;
     return new SwerveModuleState(
-        inputs.driveVelocityRadPerSec * wheelRadiusMeters,
+        inputs.driveVelocityRadPerSec * SwerveConstants.WHEEL_RADIUS_METERS,
         new Rotation2d(
             inputs.turnPositionsRad.length > 0
                 ? inputs.turnPositionsRad[inputs.turnPositionsRad.length - 1]
                 : 0.0));
+  }
+
+  /**
+   * Optimizes and applies a desired module state (drive speed + turn angle) with closed-loop turn
+   * control and simple voltage feedforward for driving.
+   *
+   * <p>Students: This method first calls {@code SwerveModuleState.optimize()} to minimize turn
+   * motor rotation. It then applies a proportional voltage controller to steer the module and a
+   * linear voltage mapping for drive speed.
+   *
+   * @param desiredState The target speed and angle for this module.
+   */
+  public void setDesiredState(SwerveModuleState desiredState) {
+    // Get current module angle
+    Rotation2d currentAngle =
+        new Rotation2d(
+            inputs.turnPositionsRad.length > 0
+                ? inputs.turnPositionsRad[inputs.turnPositionsRad.length - 1]
+                : 0.0);
+
+    // Optimize to minimize turn rotation (may flip drive direction)
+    desiredState.optimize(currentAngle);
+
+    // Drive voltage: linear mapping from speed to voltage
+    double driveVoltage =
+        desiredState.speedMetersPerSecond * 12.0 / SwerveConstants.MAX_LINEAR_SPEED_MPS;
+
+    // Turn voltage: proportional controller on angular error
+    double angleErrorRad = desiredState.angle.minus(currentAngle).getRadians();
+    double turnVoltage = angleErrorRad * SwerveConstants.TURN_KP;
+    turnVoltage = Math.max(-12.0, Math.min(12.0, turnVoltage));
+
+    io.setDriveVoltage(driveVoltage);
+    io.setTurnVoltage(turnVoltage);
   }
 
   /**

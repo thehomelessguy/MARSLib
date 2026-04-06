@@ -26,7 +26,7 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
   private double currentFeedforward = 0.0;
 
   public RotaryMechanismIOSim(
-      String mechanismName, double massKg, double lengthMeters, double gearRatio) {
+      String mechanismName, double gearRatio, double jKgMetersSquared, double lengthMeters) {
     this.gearRatio = gearRatio;
     this.gearbox = DCMotor.getKrakenX60Foc(1);
 

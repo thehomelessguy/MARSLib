@@ -4,6 +4,7 @@ import com.marslib.power.MARSPowerManager;
 import com.marslib.util.LoggedTunableNumber;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -25,11 +26,11 @@ public class MARSArm extends SubsystemBase {
   private ArmFeedforward feedforward;
 
   // Bounds for active load shedding
-  private static final double NOMINAL_VOLTAGE = 10.0;
-  private static final double CRITICAL_VOLTAGE = 7.0;
+  private static final double NOMINAL_VOLTAGE = Constants.ArmConstants.NOMINAL_VOLTAGE;
+  private static final double CRITICAL_VOLTAGE = Constants.ArmConstants.CRITICAL_VOLTAGE;
 
-  private static final double MAX_CURRENT_AMPS = 60.0;
-  private static final double MIN_CURRENT_AMPS = 20.0;
+  private static final double MAX_CURRENT_AMPS = Constants.ArmConstants.MAX_CURRENT_AMPS;
+  private static final double MIN_CURRENT_AMPS = Constants.ArmConstants.MIN_CURRENT_AMPS;
 
   private final MARSPowerManager powerManager;
 
@@ -45,10 +46,12 @@ public class MARSArm extends SubsystemBase {
     Logger.processInputs("Arm", inputs);
 
     // Update Feedforward if TUNING mode constants are changed
-    if (kS.hasChanged(kS.hashCode())
-        || kG.hasChanged(kG.hashCode())
-        || kV.hasChanged(kV.hashCode())
-        || kA.hasChanged(kA.hashCode())) {
+    boolean sChanged = kS.hasChanged(kS.hashCode());
+    boolean gChanged = kG.hasChanged(kG.hashCode());
+    boolean vChanged = kV.hasChanged(kV.hashCode());
+    boolean aChanged = kA.hasChanged(kA.hashCode());
+
+    if (sChanged || gChanged || vChanged || aChanged) {
       feedforward = new ArmFeedforward(kS.get(), kG.get(), kV.get(), kA.get());
     }
 
