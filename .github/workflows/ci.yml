@@ -33,7 +33,7 @@ jobs:
       run: ./gradlew build
 
     - name: Upload Compiled JAR
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: MARSLib-Build
         path: build/libs/*.jar
@@ -45,7 +45,7 @@ jobs:
       run: ./gradlew javadoc
 
     - name: Upload Javadoc Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: MARSLib-Javadocs
         path: build/docs/javadoc/
