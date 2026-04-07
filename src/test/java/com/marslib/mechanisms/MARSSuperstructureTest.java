@@ -182,6 +182,26 @@ public class MARSSuperstructureTest {
   }
 
   @Test
+  public void testForceStateOverridesIllegalTransitions() {
+    // From SCORE_HIGH, try to go to INTAKE_FLOOR using the forced emergency override
+    superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE_HIGH).initialize();
+
+    // Normal request would fail...
+    superstructure
+        .setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_FLOOR)
+        .initialize();
+    assertEquals(
+        MARSSuperstructure.SuperstructureState.SCORE_HIGH, superstructure.getCurrentState());
+
+    // ...but forceState forces it through STOWED via wildcard bypass
+    superstructure.forceState(MARSSuperstructure.SuperstructureState.INTAKE_FLOOR);
+    assertEquals(
+        MARSSuperstructure.SuperstructureState.INTAKE_FLOOR,
+        superstructure.getCurrentState(),
+        "forceState should bypass standard transition limitations");
+  }
+
+  @Test
   public void testStateMachineTicksAndTransitionCount() {
     // Run a few ticks in STOWED
     for (int i = 0; i < 5; i++) {
