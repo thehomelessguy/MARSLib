@@ -11,7 +11,7 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
-/** Collision-safe superstructure orchestrator using a validated finite state machine. */
+/** Superstructure orchestrator using a validated finite state machine. */
 public class MARSSuperstructure extends SubsystemBase {
 
   private final MARSArm cowl;

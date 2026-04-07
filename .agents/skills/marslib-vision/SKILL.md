@@ -26,20 +26,30 @@ The vision system lives in `com.marslib.vision` with 8 classes:
 ```
 Camera → AprilTagVisionIO.updateInputs() → MARSVision.periodic()
     → Filter by ambiguity (reject > threshold)
-    → Scale stdDevs by distance and velocity
+    → Filter by Z-height (reject "flying robot" hallucinations)
+    → Scale stdDevs quadratically by distance
+    → Multi-tag boost (tighten stdDevs when >1 tag visible)
     → SwerveDrive.addVisionMeasurement(pose, timestamp, stdDevs)
 ```
 
 ## 2. Key Rules
 
-### Rule A: Scale Standard Deviations Dynamically
-Do NOT use fixed standard deviations. Scale them exponentially based on:
-- **Distance to nearest tag** — farther = less trust
-- **Robot velocity** — faster = more motion blur = less trust
-- **Ambiguity metric** — higher = more uncertain = less trust
+### Rule A: Scale Standard Deviations Quadratically by Distance
+Do NOT use fixed standard deviations. Scale them **quadratically** based on distance to nearest tag:
 ```java
-double stdDev = BASE_STD_DEV * Math.exp(DISTANCE_SCALE * distance) * (1 + velocity * VEL_SCALE);
+// Quadratic: further = exponentially less trust (squared)
+double linearStdDev = Constants.VisionConstants.TAG_STD_BASE * Math.pow(avgDist, 2);
+
+// MegaTag2 boost: dramatically tighten when multiple tags are visible
+if (tagCount > 1) {
+    linearStdDev *= Constants.VisionConstants.MULTI_TAG_STD_MULTIPLIER; // 0.1x
+}
+
+// Angular stdDev derived from linear
+double angularStdDev = linearStdDev * Constants.VisionConstants.ANGULAR_STD_MULTIPLIER;
 ```
+
+> **NOTE:** The scaling is `Math.pow(distance, 2)` (quadratic), NOT exponential. There is NO velocity-based scaling — only distance and tag count affect standard deviations.
 
 ### Rule B: Use Capture Timestamp, Not Current Time
 Feed `addVisionMeasurement()` the exact FPGA timestamp when the image was captured, NOT `Timer.getFPGATimestamp()`. The pose estimator's internal buffer reconstructs the past to fuse the measurement at the correct historical pose.
@@ -62,16 +72,25 @@ Without this, camera configurations leak across test classes, producing stale po
 
 Without these, sim performs unrealistically well and hides real-world vision issues.
 
+### Rule F: Rejection Filters
+Two rejection filters are applied before any pose is accepted:
+1. **Ambiguity check** — single-tag observations with ambiguity > `MAX_AMBIGUITY` (0.2) are rejected.
+2. **Z-height check** — single-tag observations with |z| > `MAX_Z_HEIGHT` (0.5m) are rejected as hallucinations.
+
+Multi-tag observations (tagCount > 1) bypass both filters.
+
 ## 3. Adding New Camera Sources
 
 1. Create a new IO implementation (e.g., `AprilTagVisionIOCustom.java`) implementing `AprilTagVisionIO`.
-2. In `updateInputs()`, populate: `poses`, `timestamps`, `ambiguities`, `tagCount`.
+2. In `updateInputs()`, populate: `estimatedPoses`, `timestamps`, `ambiguities`, `averageDistancesMeters`, `tagCounts`.
 3. Wire it in `RobotContainer`:
    ```java
    MARSVision vision = new MARSVision(
-       new AprilTagVisionIOPhoton("FrontCam", cameraPose),
-       new AprilTagVisionIOPhoton("RearCam", cameraPose2)
-   );
+       swerveDrive,
+       java.util.List.of(
+           new AprilTagVisionIOPhoton("FrontCam", cameraPose),
+           new AprilTagVisionIOPhoton("RearCam", cameraPose2)),
+       java.util.List.of()); // Optional: SLAM IOs
    ```
 4. `MARSVision` handles multi-camera aggregation automatically — just pass all IO instances.
 5. Tune per-camera stdDev scaling in `Constants.VisionConstants`.
@@ -86,10 +105,21 @@ drive.resetPose(new Pose2d(startX, startY, startRotation));
 ```
 
 ## 5. Telemetry
-- `Vision/CameraCount` — Number of active camera sources
-- `Vision/TagsDetected` — Total AprilTags seen this frame
-- `Vision/EstimatedPose` — Latest fused Pose2d from vision
-- `Vision/AmbiguityRejections` — Count of rejected high-ambiguity measurements
-- `Vision/AverageLatencyMs` — Mean pipeline latency across all cameras
-- `Vision/StdDevX`, `StdDevY`, `StdDevTheta` — Current dynamic standard deviations
-- `Vision/CamerasConnected` — Boolean[] per camera
+The following log keys are written by `MARSVision.periodic()`:
+
+| Key | Description |
+|---|---|
+| `Vision/AprilTag/{i}` | Raw `@AutoLog` inputs for camera index `i` |
+| `Vision/ValidPoses/{i}` | Accepted Pose2d after ambiguity/z-height filtering for camera `i` |
+| `Vision/SLAM/{i}` | Raw `@AutoLog` inputs for SLAM source index `i` |
+| `Vision/SlamPoses/{i}` | Accepted Pose2d from SLAM source `i` |
+
+### Constants Reference (`Constants.VisionConstants`)
+| Field | Default | Purpose |
+|---|---|---|
+| `TAG_STD_BASE` | 0.05 | Base linear stdDev for single-tag |
+| `MAX_AMBIGUITY` | 0.2 | Rejection threshold for ambiguous single-tag |
+| `MAX_Z_HEIGHT` | 0.5m | Rejection threshold for hallucinated poses |
+| `MULTI_TAG_STD_MULTIPLIER` | 0.1 | StdDev reduction factor when >1 tag visible |
+| `ANGULAR_STD_MULTIPLIER` | 2.0 | Linear → angular stdDev conversion factor |
+| `SLAM_STD_DEV` | 0.01 | Static stdDev for VIO SLAM measurements |

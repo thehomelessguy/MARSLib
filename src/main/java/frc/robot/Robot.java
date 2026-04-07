@@ -26,8 +26,6 @@ public class Robot extends LoggedRobot {
   private RobotContainer m_robotContainer;
   private Command m_autonomousCommand;
 
-  private int disabledTimer = 0; // Throttle counter for GC
-
   public Robot() {
     super(Constants.LOOP_PERIOD_SECS);
 
@@ -96,12 +94,9 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {
-    disabledTimer++;
-    // Throttle forceful GC to roughly 1 Hz to clear out unreferenced visual caches
-    if (disabledTimer >= 50) {
-      System.gc();
-      disabledTimer = 0;
-    }
+    // No-op. GC is triggered once in disabledInit() on mode transition,
+    // which is sufficient to reclaim post-auto garbage without risking
+    // a GC pause during the disabled→auto transition window.
   }
 
   /** This autonomous runs the selected autonomous command. */
