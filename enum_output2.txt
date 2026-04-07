@@ -1,7 +1,0 @@
-ENZ: k2022RapidReact -> /edu/wpi/first/apriltag/2022-rapidreact.json
-ENZ: k2023ChargedUp -> /edu/wpi/first/apriltag/2023-chargedup.json
-ENZ: k2024Crescendo -> /edu/wpi/first/apriltag/2024-crescendo.json
-ENZ: k2025ReefscapeWelded -> /edu/wpi/first/apriltag/2025-reefscape-welded.json
-ENZ: k2025ReefscapeAndyMark -> /edu/wpi/first/apriltag/2025-reefscape-andymark.json
-ENZ: k2026RebuiltWelded -> /edu/wpi/first/apriltag/2026-rebuilt-welded.json
-ENZ: k2026RebuiltAndymark -> /edu/wpi/first/apriltag/2026-rebuilt-andymark.json

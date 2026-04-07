@@ -2,8 +2,6 @@ package com.marslib.integration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.marslib.faults.Alert;
-import com.marslib.faults.MARSFaultManager;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIOSim;
 import com.marslib.simulation.MARSPhysicsWorld;
@@ -11,9 +9,9 @@ import com.marslib.swerve.GyroIOSim;
 import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIOSim;
+import com.marslib.testing.MARSTestHarness;
 import com.marslib.vision.AprilTagVisionIOSim;
 import com.marslib.vision.MARSVision;
-import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -54,16 +52,7 @@ public class VisionFusionTest {
 
   @BeforeEach
   public void setUp() {
-    HAL.initialize(500, 0);
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().unregisterAllSubsystems();
-    MARSPhysicsWorld.resetInstance();
-    AprilTagVisionIOSim.resetSimulation();
-    Alert.resetAll();
-    MARSFaultManager.clear();
-
-    DriverStationSim.setAllianceStationId(edu.wpi.first.hal.AllianceStationID.Blue1);
-    DriverStationSim.setEnabled(true);
+    MARSTestHarness.reset();
     DriverStationSim.setAutonomous(false);
     DriverStationSim.notifyNewData();
 
@@ -92,8 +81,7 @@ public class VisionFusionTest {
 
   @AfterEach
   public void tearDown() {
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().unregisterAllSubsystems();
+    MARSTestHarness.tearDown();
   }
 
   /**

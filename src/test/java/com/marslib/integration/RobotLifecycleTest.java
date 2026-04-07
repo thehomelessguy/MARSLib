@@ -2,8 +2,6 @@ package com.marslib.integration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.marslib.faults.Alert;
-import com.marslib.faults.MARSFaultManager;
 import com.marslib.mechanisms.FlywheelIOSim;
 import com.marslib.mechanisms.LinearMechanismIOSim;
 import com.marslib.mechanisms.MARSArm;
@@ -19,8 +17,7 @@ import com.marslib.swerve.GyroIOSim;
 import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIOSim;
-import com.marslib.vision.AprilTagVisionIOSim;
-import edu.wpi.first.hal.HAL;
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
@@ -51,16 +48,8 @@ public class RobotLifecycleTest {
 
   @BeforeEach
   public void setUp() {
-    HAL.initialize(500, 0);
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().unregisterAllSubsystems();
-    MARSPhysicsWorld.resetInstance();
-    AprilTagVisionIOSim.resetSimulation();
-    Alert.resetAll();
-    MARSFaultManager.clear();
+    MARSTestHarness.reset();
 
-    DriverStationSim.setAllianceStationId(edu.wpi.first.hal.AllianceStationID.Blue1);
-    DriverStationSim.setEnabled(true);
     DriverStationSim.setAutonomous(true);
     DriverStationSim.notifyNewData();
 
@@ -101,8 +90,7 @@ public class RobotLifecycleTest {
 
   @AfterEach
   public void tearDown() {
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().unregisterAllSubsystems();
+    MARSTestHarness.tearDown();
   }
 
   /**
