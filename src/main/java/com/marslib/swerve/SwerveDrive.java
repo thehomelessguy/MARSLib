@@ -125,7 +125,27 @@ public class SwerveDrive extends SubsystemBase {
     LoggedTunableNumber transKD = new LoggedTunableNumber("Auto/Translation_kD", 0.0);
     LoggedTunableNumber rotKP = new LoggedTunableNumber("Auto/Rotation_kP", 5.0);
     LoggedTunableNumber rotKD = new LoggedTunableNumber("Auto/Rotation_kD", 0.0);
+    this.cachedTransKP = transKP;
+    this.cachedTransKD = transKD;
+    this.cachedRotKP = rotKP;
+    this.cachedRotKD = rotKD;
+  }
 
+  // Cached tunable numbers for PathPlanner PID (populated in constructor)
+  private LoggedTunableNumber cachedTransKP;
+  private LoggedTunableNumber cachedTransKD;
+  private LoggedTunableNumber cachedRotKP;
+  private LoggedTunableNumber cachedRotKD;
+
+  /**
+   * Configures PathPlanner's AutoBuilder for autonomous path following. Must be called exactly once
+   * by {@code RobotContainer} after construction.
+   *
+   * <p>This is intentionally separated from the constructor to decouple the drivetrain from
+   * PathPlanner, allowing unit tests to construct SwerveDrive without triggering AutoBuilder's
+   * static singleton.
+   */
+  public void configurePathPlanner() {
     try {
       edu.wpi.first.math.system.plant.DCMotor gearbox =
           edu.wpi.first.math.system.plant.DCMotor.getKrakenX60(1)
@@ -153,21 +173,16 @@ public class SwerveDrive extends SubsystemBase {
           this::getChassisSpeeds,
           (speeds, feedforwards) -> runVelocity(speeds),
           new PPHolonomicDriveController(
-              new PIDConstants(transKP.get(), 0.0, transKD.get()),
-              new PIDConstants(rotKP.get(), 0.0, rotKD.get())),
+              new PIDConstants(cachedTransKP.get(), 0.0, cachedTransKD.get()),
+              new PIDConstants(cachedRotKP.get(), 0.0, cachedRotKD.get())),
           config,
           () -> false, // Mirroring
           this // Subsystem requirement
           );
     } catch (Exception e) {
-      if (e.getMessage() != null && e.getMessage().contains("already been configured")) {
-        // Safe to ignore sequentially in multi-JVM unit test environments where static tracking
-        // persists
-      } else {
-        edu.wpi.first.wpilibj.DriverStation.reportError(
-            "Failed to configure AutoBuilder", e.getStackTrace());
-        throw new RuntimeException("Failed to configure AutoBuilder", e);
-      }
+      edu.wpi.first.wpilibj.DriverStation.reportError(
+          "Failed to configure AutoBuilder", e.getStackTrace());
+      throw new RuntimeException("Failed to configure AutoBuilder", e);
     }
   }
 

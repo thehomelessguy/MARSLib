@@ -5,80 +5,95 @@ description: Helps write and maintain tests for MARSLib. Use this skill when wri
 
 # MARSLib Integrated Testing Skill
 
-You are an expert FRC Software Developer for Team MARS 2614. When asked to write tests for `MARSLib` subsystems, commands, or autonomous paths, you MUST strictly adhere to the following **Integrated Physical Simulation Environment** paradigm.
+You are a test engineer for Team MARS 2614. When writing tests for subsystems, commands, or autonomous paths:
 
-## 1. Avoid Mocking Hardware
-- Do **NOT** use `Mockito` to mock the hardware layer or structural subsystems (e.g., `SwerveDrive`) when testing complex Commands or logical controllers.
-- Instead, instantiate the real subsystems and inject `[Name]IOSim` instances (e.g., `SwerveModuleIOSim`, `GyroIOSim`).
-- We test via "Digital Twins." We assert that the simulation mathematically and physically acts according to realistic constraints.
+## 1. Architecture
 
-## 2. Setting Up The Test Environment (BeforeEach)
-When testing, multiple JVMs and JUnit runners stack test instances together. Because `dyn4j` and `WPILib` utilize static trackers, you must rigorously clear the testing slate before EVERY test using an `@BeforeEach` hook.
+MARSLib uses **Digital Twin** testing — real subsystems with simulated IO, not mocked objects:
 
+| Component | Purpose |
+|---|---|
+| `*IOSim` classes | Physics-backed simulation of each hardware layer |
+| `MARSPhysicsWorld` | Shared dyn4j physics engine for all IOSim instances |
+| `CommandScheduler` | WPILib's real scheduler — same as on the robot |
+| `SimHooks.stepTiming()` | Advances HAL clock for deterministic timing |
+| `DriverStationSim` | Simulates DS heartbeat and mode (auto/teleop/test) |
+
+### Test Execution Loop
+```java
+for (int i = 0; i < 150; i++) {
+    DriverStationSim.notifyNewData();       // Keep DS alive
+    SimHooks.stepTiming(0.02);              // Advance 20ms
+    CommandScheduler.getInstance().run();    // Process commands
+    MARSPhysicsWorld.getInstance().update(0.02); // Step physics
+}
+```
+
+## 2. Key Rules
+
+### Rule A: Never Mock Hardware
+Do NOT use Mockito to mock IO layers. Instantiate real subsystems with `*IOSim` implementations. Mocks hide physics bugs that only appear under real dynamics (wheel slip, gravity, inertia).
+
+### Rule B: Reset ALL Singletons in @BeforeEach
+The following singletons MUST be reset before every test:
 ```java
 @BeforeEach
 public void setUp() {
-  // 1. Initialize the WPILib HAL for simulation
-  edu.wpi.first.hal.HAL.initialize(500, 0);
-
-  // 2. Mock a heartbeat and ensure the robot thinks it's enabled
-  DriverStationSim.setAllianceStationId(edu.wpi.first.hal.AllianceStationID.Blue1);
-  DriverStationSim.setEnabled(true);
-  DriverStationSim.notifyNewData();
-
-  // 3. Clear WPILib's internal scheduler tracking
-  CommandScheduler.getInstance().cancelAll();
-
-  // 4. Reset dyn4j physics state so robots don't stack infinitely at (0,0) across tests
-  com.marslib.simulation.MARSPhysicsWorld.resetInstance();
-
-  // 5. Initialize your Subsystems here using IOSim models!
-}
-```
-
-## 3. Running Physics Loops Natively
-When evaluating a `Command` (like a path follower or aiming logic) requiring iterative loops:
-1. Schedule it in the `CommandScheduler`.
-2. Loop over physical ticks manually using `SimHooks.stepTiming`.
-3. In every cycle, aggressively beat the `DriverStationSim` heartbeat; otherwise WPILib will stealthily disable the robot mid-execution!
-
-```java
-@Test
-public void testMySimulatedCommand() {
-  CommandScheduler.getInstance().schedule(command);
-
-  // Example: 150 loops = 3.0 seconds at 0.02s per loop
-  for (int i = 0; i < 150; i++) {
-    // Refresh DS heartbeat to prevent WPILib intrinsic timeouts
+    HAL.initialize(500, 0);
+    CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().unregisterAllSubsystems();
+    MARSPhysicsWorld.resetInstance();
+    AprilTagVisionIOSim.resetSimulation();
+    Alert.resetAll();
+    MARSFaultManager.clear();
+    DriverStationSim.setEnabled(true);
     DriverStationSim.notifyNewData();
+}
+```
+Skipping ANY of these causes cross-test contamination: stacked physics bodies, stale alerts, leaked commands.
 
-    // Step HAL timestamp
-    edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(frc.robot.Constants.LOOP_PERIOD_SECS);
+### Rule C: Beat the DS Heartbeat Continuously
+WPILib silently disables the robot if `DriverStationSim.notifyNewData()` isn't called every ~0.5s. In any loop stepping the scheduler, call it EVERY iteration. If you only call it once before the loop, the robot will disable mid-test at tick ~25.
 
-    // CommandScheduler reads sensors & acts on motors
-    CommandScheduler.getInstance().run();
-
-    // Physics engine calculates collision, friction, and wheel translations
-    com.marslib.simulation.MARSPhysicsWorld.getInstance().update(frc.robot.Constants.LOOP_PERIOD_SECS);
-  }
-
-  // Evaluate the True pose of the robot after dynamic physics simulation constraints!
-  assertTrue(swerveDrive.getPose().getX() > 1.0, "Robot should have crossed physical 1-meter threshold.");
+### Rule D: Use @AfterEach for Cleanup
+Always unregister subsystems after tests to prevent WPILib from leaking subsystem references:
+```java
+@AfterEach
+public void tearDown() {
+    CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().unregisterAllSubsystems();
 }
 ```
 
-## 4. Handling 3rd Party Configuration Overruns
-Some 3rd party vendor libraries (e.g. `AutoBuilder.configure()` in PathPlanner) throw soft/hard errors when reconfigured serially across test limits.
-- When configuring libraries inside Subsystems, wrap them in `try/catch` handlers that explicitly ignore exceptions like "already been configured"! This prevents JUnit bulk test failures.
+## 3. Adding New Tests
+
+1. Create the test in the matching test package (e.g., `com.marslib.mechanisms.MARSClimberTest`).
+2. In `@BeforeEach`: reset all singletons (see Rule B), construct subsystems with `*IOSim`.
+3. In `@AfterEach`: cancel commands, unregister subsystems.
+4. For physics tests: use the standard execution loop (Section 1 Architecture).
+5. Assert against physical positions, not command states — test what the mechanism actually did.
+6. For integration tests spanning multiple subsystems, see `RobotLifecycleTest` as the reference.
+
+## 4. Test Categories
+
+| Type | Example | What It Catches |
+|---|---|---|
+| Unit | `MARSElevatorTest` | Single-mechanism physics and control |
+| Integration | `RobotLifecycleTest` | Multi-subsystem coordination bugs |
+| Diagnostics | `MARSDiagnosticCheckTest` | Pre-match sweep validation |
+| Math | `KinematicAimingTest` | Pure algorithm correctness |
+| State Machine | `MARSStateMachineTest` | Transition validation logic |
+
+## 5. Telemetry
+Tests don't emit AdvantageKit telemetry, but you can assert against Logger output keys:
+```java
+// The state machine logs transitions — verify the key was set
+assertEquals(SuperstructureState.SCORE_HIGH, superstructure.getCurrentState());
+assertEquals(1, superstructure.getStateMachine().getTotalTransitionCount());
+```
 
 ## Reference Implementations
-For exact functional examples of FRC-grade digital-twin tests running purely on dyn4j integration physics, review:
-- `src/test/java/com/marslib/auto/MARSAlignmentCommandTest.java`
-- `src/test/java/com/marslib/auto/ShootOnTheMoveCommandTest.java`
-
-You must follow these rules strictly to prevent static physics bleed, false-timeout disabling, and bulk-suite test failures.
-
-## 5. Test Hygiene & Static State
-- **Alert System:** The `Alert` class uses a static `Map` of alert groups. Call `Alert.resetAll()` in your `@BeforeEach` block to prevent alert state from bleeding across tests.
-- **Scratch Files:** Do not commit debug utilities (e.g., tag extractors, enum printers) as `@Test` methods. They pollute CI output and confuse students. Store one-off utilities in `/tmp/` or a `scratch/` directory outside the test tree.
-- **MARSFaultManager:** This is also static. After tests that trigger faults, call `MARSFaultManager.clearNewCriticalFault()` to prevent downstream test contamination.
+- `MARSSuperstructureTest` — Physics-backed collision constraint verification
+- `RobotLifecycleTest` — Full auto→teleop→score→stow lifecycle
+- `MARSStateMachineTest` — FSM transition validation and rejection
+- `MARSAlignmentCommandTest` — PID convergence under physics simulation

@@ -76,13 +76,7 @@ public class MARSDiagnosticCheckTest {
       new SwerveModule(2, stubIO),
       new SwerveModule(3, stubIO)
     };
-    try {
-      swerveDrive = new SwerveDrive(modules, new GyroIO() {}, power);
-    } catch (RuntimeException e) {
-      // AutoBuilder.configure() may already be configured from a prior test class.
-      // Re-wrapping is safe — SwerveDrive still constructs, PathPlanner just logs an error.
-      swerveDrive = new SwerveDrive(modules, new GyroIO() {}, power);
-    }
+    swerveDrive = new SwerveDrive(modules, new GyroIO() {}, power);
 
     // Build physics-backed Elevator and Arm
     elevator =

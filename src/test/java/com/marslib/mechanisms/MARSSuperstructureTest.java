@@ -1,6 +1,6 @@
 package com.marslib.mechanisms;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIO;
@@ -72,7 +72,7 @@ public class MARSSuperstructureTest {
   public void testStowConstraintsPhysicallyEnforced() {
     // 1. Give the scheduler a few ticks to assert default stowed positions (0,0)
     for (int i = 0; i < 10; i++) {
-      edu.wpi.first.wpilibj.simulation.DriverStationSim.notifyNewData();
+      DriverStationSim.notifyNewData();
       edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(0.02);
       CommandScheduler.getInstance().run();
       MARSPhysicsWorld.getInstance().update(0.02);
@@ -80,14 +80,14 @@ public class MARSSuperstructureTest {
     assertTrue(elevator.getPositionMeters() < 0.1, "Elevator not stowed");
     assertTrue(arm.getPositionRads() < 0.1, "Arm not stowed");
 
-    // 2. Command unsafe extension of the floor intake immediately before elevator is raised
+    // 2. Command INTAKE_FLOOR — legal from STOWED
     superstructure
         .setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_FLOOR)
         .initialize();
 
     for (int i = 0; i < 50; i++) {
       superstructure.periodic();
-      edu.wpi.first.wpilibj.simulation.DriverStationSim.notifyNewData();
+      DriverStationSim.notifyNewData();
       edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(0.02);
       CommandScheduler.getInstance().run();
       MARSPhysicsWorld.getInstance().update(0.02);
@@ -108,7 +108,7 @@ public class MARSSuperstructureTest {
     // Step simulation enough for the elevator to reach target and arm to begin extending
     for (int i = 0; i < 300; i++) {
       superstructure.periodic();
-      edu.wpi.first.wpilibj.simulation.DriverStationSim.notifyNewData();
+      DriverStationSim.notifyNewData();
       edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(0.02);
       CommandScheduler.getInstance().run();
       MARSPhysicsWorld.getInstance().update(0.02);
@@ -120,13 +120,13 @@ public class MARSSuperstructureTest {
         arm.getPositionRads() > SuperstructureConstants.SAFE_ARM_ANGLE_RAD_MAX_STOW,
         "Arm should have started extending once elevator cleared safe height");
 
-    // 2. Suddenly command the entire superstructure to stow immediately
+    // 2. Command STOWED — legal from SCORE_HIGH
     superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED).initialize();
 
     // 3. Process boundaries briefly — the arm may retract quickly, so check mid-transition
     for (int i = 0; i < 25; i++) {
       superstructure.periodic();
-      edu.wpi.first.wpilibj.simulation.DriverStationSim.notifyNewData();
+      DriverStationSim.notifyNewData();
       edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(0.02);
       CommandScheduler.getInstance().run();
       MARSPhysicsWorld.getInstance().update(0.02);
@@ -144,16 +144,12 @@ public class MARSSuperstructureTest {
   @AfterEach
   public void tearDown() {
     CommandScheduler.getInstance().cancelAll();
-    // Use reflection or standard approach to unregister subsystems if necessary,
-    // or just clear the scheduler completely to prevent ghost periodic calls.
-    // The easiest way to stop ghosts is to literally recreate the test environment, but since
-    // CommandScheduler keeps static lists, we must clear it.
     CommandScheduler.getInstance().unregisterAllSubsystems();
   }
 
   @Test
   public void testScoreDumpingCommand() {
-    // Command SCORE phase
+    // Command SCORE phase — legal from STOWED
     superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE_HIGH).initialize();
 
     for (int i = 0; i < 50; i++) {
@@ -164,5 +160,40 @@ public class MARSSuperstructureTest {
     // Verification: The subsystem natively commands the shooter mechanism
     // Shooter should exceed 100 rads velocity within 0.5s of spin up
     assertTrue(shooter.getVelocityRadPerSec() > 100.0, "Shooter did not spin up for SCORE_HIGH");
+  }
+
+  @Test
+  public void testIllegalTransitionIsRejected() {
+    // From STOWED, go to SCORE_HIGH (legal)
+    superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE_HIGH).initialize();
+    assertEquals(
+        MARSSuperstructure.SuperstructureState.SCORE_HIGH,
+        superstructure.getCurrentState(),
+        "STOWED→SCORE_HIGH should be legal");
+
+    // From SCORE_HIGH, try to go directly to INTAKE_FLOOR (illegal — must go through STOWED)
+    superstructure
+        .setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_FLOOR)
+        .initialize();
+    assertEquals(
+        MARSSuperstructure.SuperstructureState.SCORE_HIGH,
+        superstructure.getCurrentState(),
+        "SCORE_HIGH→INTAKE_FLOOR should be rejected — state should remain SCORE_HIGH");
+  }
+
+  @Test
+  public void testStateMachineTicksAndTransitionCount() {
+    // Run a few ticks in STOWED
+    for (int i = 0; i < 5; i++) {
+      superstructure.periodic();
+    }
+    assertEquals(5, superstructure.getStateMachine().getTicksInCurrentState());
+    assertEquals(0, superstructure.getStateMachine().getTotalTransitionCount());
+
+    // Transition to SCORE_HIGH
+    superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE_HIGH).initialize();
+    superstructure.periodic();
+    assertEquals(1, superstructure.getStateMachine().getTicksInCurrentState());
+    assertEquals(1, superstructure.getStateMachine().getTotalTransitionCount());
   }
 }

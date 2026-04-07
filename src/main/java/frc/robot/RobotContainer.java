@@ -294,6 +294,9 @@ public class RobotContainer {
     operatorInterface = new OperatorInterface(0, powerManager);
     superstructure = new MARSSuperstructure(elevator, arm, intake, shooter, swerveDrive::getPose);
 
+    // Configure PathPlanner AutoBuilder AFTER construction — composition root owns this
+    swerveDrive.configurePathPlanner();
+
     headingController.enableContinuousInput(-Math.PI, Math.PI);
 
     // Initialize the Auto Chooser

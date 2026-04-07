@@ -5,52 +5,76 @@ description: Helps configure and extend the MARSLib dyn4j physics simulation eng
 
 # MARSLib Simulation & Physics Skill
 
-You are a Physics Simulation Engineer for Team MARS 2614. When modifying or extending the `dyn4j`-based physics environment:
+You are a physics simulation engineer for Team MARS 2614. When modifying or extending the dyn4j environment:
 
-## 1. Architecture Overview
-MARSLib's simulation is driven by four core classes:
-- **`MARSPhysicsWorld`** — Singleton orchestrator. Owns the `dyn4j` `World`, manages field boundaries, game pieces, mechanism bodies, and the 50Hz update loop.
-- **`SwerveChassisPhysics`** — Translates WPILib `SwerveModuleState` wheel commands into `dyn4j` force vectors on the chassis `Body`. Handles wheel slip, friction, and angular momentum.
-- **`GamePieceSim`** — Represents a single dynamic game piece (e.g., Fuel). Automatically registers itself with the physics world on construction.
-- **`LidarIOSim`** — Raycasts 360° from the robot chassis to detect walls and game pieces, logging the result as a `Translation3d[]` point cloud.
+## 1. Architecture
 
-## 2. Spawning Game Pieces
-All initial game piece staging is handled in `MARSPhysicsWorld.spawnInitialGamePieces()`:
-- Physical constants (`GAME_PIECE_RADIUS_METERS`, `GAME_PIECE_MASS_KG`) live in `Constants.FieldConstants`.
-- For the 2026 REBUILT game, **168 total Fuel** are spawned: 24 per depot (Blue/Red) and 120 in the Neutral Zone midline.
-- Use grid loops with `spacing = radius * 2.5` to prevent overlapping bodies.
-- Add randomized jitter (`(row % 2 == 0) ? 0.05 : -0.05`) to prevent rigid interlocking at spawn.
+MARSLib's simulation is driven by four core classes in `com.marslib.simulation`:
 
-## 3. Registering Mechanism Bodies
-When writing `[Name]IOSim.java` classes that participate in physics:
-- Create `dyn4j` `Body` objects for the mechanism (e.g., anchor + carriage for a `LinearMechanismIOSim`).
-- Register them via `MARSPhysicsWorld.getInstance().getWorld().addBody(body)` for collision participation.
-- Register named references via `MARSPhysicsWorld.getInstance().registerMechanismBody(name, body)` for cross-subsystem lookups.
-- Always aggregate simulated current draw: `MARSPhysicsWorld.getInstance().addFrameCurrentDrawAmps(amps)`.
+| Class | Purpose |
+|---|---|
+| `MARSPhysicsWorld` | Singleton orchestrator. Owns the dyn4j `World`, manages field boundaries, game pieces, mechanism bodies, and the 50Hz update loop. |
+| `SwerveChassisPhysics` | Translates WPILib `SwerveModuleState` wheel commands into dyn4j force vectors. Handles wheel slip, friction, and angular momentum. |
+| `GamePieceSim` | Represents a single dynamic game piece. Auto-registers with the physics world. |
+| `LidarIOSim` | 360° raycasting from the chassis for point cloud generation. |
 
-## 4. Field Obstacles & Boundaries
-- Field perimeter walls are injected as `MassType.INFINITE` static bodies in `MARSPhysicsWorld`.
-- Use high friction (`0.8`) and low restitution (`0.1`) for walls to prevent physics clipping.
-- For game-specific structures (e.g., Hubs, Depots), use `Geometry.createRectangle()` or `Geometry.createCircle()` for collision shapes.
-- Store all obstacle coordinates in `Constants.FieldConstants`.
+### Singleton Pattern
+`MARSPhysicsWorld` is a **static singleton**. This is necessary because multiple IO layers (elevator, arm, swerve) must share the same physics world. However, this creates a test isolation problem — see Rule C.
 
-## 5. Intake & Scoring Interaction
-Game piece collection is managed by `MARSPhysicsWorld.checkIntake(Pose2d robotPose, double radius)`:
-- Iterates all active `GamePieceSim` bodies and checks if any are within the collection radius.
-- The closest piece is removed from the `dyn4j` world and returns `true`.
-- The `MARSSuperstructure` calls this every loop when in `INTAKE_FLOOR` state.
-- Scoring resets `hasPiece = false` and optionally re-spawns the piece at a scoring location.
+## 2. Key Rules
 
-## 6. Performance Considerations
-- **168 dynamic bodies** at 50Hz is the current upper bound for smooth simulation.
-- If frame times exceed 20ms, consider:
-  - Reducing `GamePieceSim` linear/angular damping to settle faster.
-  - Implementing spatial partitioning or "sleep" thresholds on stationary pieces.
-  - Reducing the Neutral Zone count to ~80 pieces.
-- Always monitor via `Logger.recordOutput("PhysicsSim/StepTimeMs", ...)`.
+### Rule A: Register All Mechanism Bodies
+Every `*IOSim` that participates in physics MUST register its dyn4j `Body` objects:
+```java
+MARSPhysicsWorld.getInstance().getWorld().addBody(body);
+MARSPhysicsWorld.getInstance().registerMechanismBody("Elevator", body);
+```
+Unregistered bodies won't collide with anything and won't be stepped by the physics engine.
 
-## 7. Voltage Sag Simulation
-`MARSPhysicsWorld` tracks total frame current draw from all mechanisms. The aggregated draw is fed into `PowerIOSim` to dynamically simulate battery voltage sag:
-- At high current (>120A), voltage drops below `Constants.PowerConstants.WARNING_VOLTAGE`.
-- This triggers `MARSPowerManager` alerts and `LEDManager` load-shedding colors.
-- Swerve drive may receive reduced voltage headroom, simulating real brownout behavior.
+### Rule B: Aggregate Current Draw
+Every `*IOSim` MUST report its simulated current draw every frame:
+```java
+MARSPhysicsWorld.getInstance().addFrameCurrentDrawAmps(currentAmps);
+```
+This feeds the `PowerIOSim` voltage sag model. Without it, the sim never brownouts and hides real power issues.
+
+### Rule C: Reset Instance in Every Test
+The singleton MUST be reset before every test to prevent physics bodies from stacking:
+```java
+@BeforeEach
+public void setUp() {
+    MARSPhysicsWorld.resetInstance();
+}
+```
+Without this, chassis instances accumulate at (0,0), creating infinite friction and locking the physics engine.
+
+### Rule D: Use Real Materials, Not Defaults
+Field perimeter walls: friction `0.8`, restitution `0.1` (high grip, low bounce). Game pieces: friction `0.3`, restitution `0.5`. Default dyn4j values will cause pieces to clip through walls or robots to slide unrealistically.
+
+## 3. Adding New Field Elements
+
+1. Create static bodies in `MARSPhysicsWorld` using `Geometry.createRectangle()` or `createCircle()`.
+2. Set `body.setMass(MassType.INFINITE)` for immovable obstacles.
+3. Configure materials: high friction for walls, moderate for scoring targets.
+4. Store coordinates in `Constants.FieldConstants`.
+5. Verify collisions in a test by driving the chassis into the new obstacle.
+
+## 4. Game Piece Configuration
+
+All initial piece staging lives in `MARSPhysicsWorld.spawnInitialGamePieces()`:
+- Physical constants in `Constants.FieldConstants`: `GAME_PIECE_RADIUS_METERS`, `GAME_PIECE_MASS_KG`
+- For 2026 REBUILT: **168 Fuel** — 24/depot (Blue+Red) + 120 Neutral Zone midline
+- Grid spacing: `radius * 2.5` to prevent overlap
+- Row jitter: `±0.05m` alternating to prevent rigid interlocking
+
+## 5. Performance Limits
+- **168 dynamic bodies** at 50Hz is the current upper bound
+- If frame times exceed 20ms: reduce damping, implement sleep thresholds, or reduce piece count
+- Monitor via `Logger.recordOutput("PhysicsSim/StepTimeMs", ...)`
+
+## 6. Telemetry
+- `PhysicsSim/StepTimeMs` — Physics engine step duration
+- `PhysicsSim/BodyCount` — Total active dyn4j bodies
+- `PhysicsSim/TotalCurrentDraw` — Aggregate current from all mechanisms
+- `PhysicsSim/GamePiecePoses` — Pose2d[] of all active game pieces (for AdvantageScope 2D field)
+- `PhysicsSim/ChassisVelocity` — Physics-true chassis velocity (not odometry)

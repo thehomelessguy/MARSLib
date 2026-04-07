@@ -27,6 +27,15 @@ public class AprilTagVisionIOSim implements AprilTagVisionIO {
   private static VisionSystemSim visionSim;
   private static AprilTagFieldLayout fieldLayout;
 
+  /**
+   * Resets the shared VisionSystemSim singleton. Must be called in test {@code @BeforeEach} to
+   * prevent stale camera state from leaking between test classes.
+   */
+  public static void resetSimulation() {
+    visionSim = null;
+    fieldLayout = null;
+  }
+
   private final PhotonCamera camera;
   private final PhotonCameraSim cameraSim;
   private final PhotonPoseEstimator poseEstimator;
