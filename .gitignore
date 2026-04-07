@@ -185,3 +185,16 @@ compile_commands.json
 
 # Version file
 src/main/java/frc/robot/BuildConstants.java
+
+# GhostManager recorded macros (generated at runtime)
+ghost_macro*.csv
+
+# Debug/temp text files (should never be committed)
+*_output.txt
+*_test.txt
+*_log.txt
+*_error.txt
+debug_*.txt
+diag_*.txt
+enum_*.txt
+tmp_*.txt

@@ -314,44 +314,35 @@ public class RobotContainer {
     swerveDrive.setDefaultCommand(
         swerveDrive.run(
             () -> {
-              double linearMag = SwerveConstants.MAX_LINEAR_SPEED_MPS;
-              double angularMag = SwerveConstants.MAX_ANGULAR_SPEED_RAD_PER_SEC;
+              // Compute field-relative speeds via shared math (tested in
+              // TeleopDrivePipelineTest)
+              boolean isRed =
+                  DriverStation.getAlliance().isPresent()
+                      && DriverStation.getAlliance().get() == Alliance.Red;
+              ChassisSpeeds preSlewSpeeds =
+                  com.marslib.swerve.TeleopDriveMath.computeFieldRelativeSpeeds(
+                      ghostManager.getLeftY(() -> controller.getLeftY()),
+                      ghostManager.getLeftX(() -> controller.getLeftX()),
+                      ghostManager.getRightX(() -> controller.getRightX()),
+                      isRed);
 
+              // Post-deadband values for gyro-lock condition check
               double xVal =
-                  MathUtil.applyDeadband(ghostManager.getLeftY(() -> controller.getLeftY()), 0.1);
+                  MathUtil.applyDeadband(
+                      ghostManager.getLeftY(() -> controller.getLeftY()),
+                      com.marslib.swerve.TeleopDriveMath.DEADBAND);
               double yVal =
-                  MathUtil.applyDeadband(ghostManager.getLeftX(() -> controller.getLeftX()), 0.1);
+                  MathUtil.applyDeadband(
+                      ghostManager.getLeftX(() -> controller.getLeftX()),
+                      com.marslib.swerve.TeleopDriveMath.DEADBAND);
+              double omgVal =
+                  MathUtil.applyDeadband(
+                      ghostManager.getRightX(() -> controller.getRightX()),
+                      com.marslib.swerve.TeleopDriveMath.DEADBAND);
 
-              // Rotation: use right stick X (axis 4) on real controller,
-              // fall back to buttons for keyboard sim (triggers are sticky)
-              double rawOmg = ghostManager.getRightX(() -> controller.getRightX());
-              if (Constants.CURRENT_MODE == Constants.Mode.SIM && Math.abs(rawOmg) < 0.01) {
-                // Sim keyboard: button 1 (typically 'Z') = rotate CW,
-                //               button 2 (typically 'X') = rotate CCW
-                double btnRotate = 0.0;
-                if (controller.getHID().getRawButton(1)) btnRotate += 1.0;
-                if (controller.getHID().getRawButton(2)) btnRotate -= 1.0;
-                rawOmg = btnRotate;
-              }
-              double omgVal = MathUtil.applyDeadband(rawOmg, 0.1);
-
-              // Cube joystick first to maintain exponential curve, then scale to physical m/s
-              double mappedX = Math.pow(xVal, 3.0) * linearMag;
-              double mappedY = Math.pow(yVal, 3.0) * linearMag;
-              double mappedOmg = Math.pow(omgVal, 3.0) * angularMag;
-
-              // CRITICAL: Negate for WPILib convention, then apply Alliance-flip BEFORE the
-              // slew rate limiters so the limiters track the correct sign domain.
-              double orientedX = -mappedX;
-              double orientedY = -mappedY;
-              if (DriverStation.getAlliance().isPresent()
-                  && DriverStation.getAlliance().get() == Alliance.Red) {
-                orientedX = -orientedX;
-                orientedY = -orientedY;
-              }
-
-              double finalX = xLimiter.calculate(orientedX);
-              double finalY = yLimiter.calculate(orientedY);
+              // Apply slew rate limiting to translation (stateful, stays here)
+              double finalX = xLimiter.calculate(preSlewSpeeds.vxMetersPerSecond);
+              double finalY = yLimiter.calculate(preSlewSpeeds.vyMetersPerSecond);
 
               targetSpeeds.vxMetersPerSecond = finalX;
               targetSpeeds.vyMetersPerSecond = finalY;
@@ -369,9 +360,10 @@ public class RobotContainer {
                   targetSpeeds.omegaRadiansPerSecond = 0.0;
                 }
               } else {
-                // Driver rotating actively
+                // Driver rotating actively — use pre-slew omega from TeleopDriveMath
                 targetHeading = swerveDrive.getPose().getRotation();
-                targetSpeeds.omegaRadiansPerSecond = -omegaLimiter.calculate(mappedOmg);
+                targetSpeeds.omegaRadiansPerSecond =
+                    omegaLimiter.calculate(preSlewSpeeds.omegaRadiansPerSecond);
               }
 
               // CRITICAL: Convert teleop joystick values from Field-Relative to Robot-Centric
