@@ -136,18 +136,44 @@ public class SwerveChassisPhysics {
 
       // --- 1. MOTOR DYNAMICS (1D Flywheel) ---
       // Clamp commanded voltage to available battery voltage (brownout fidelity)
+      double safeBatteryVoltage = Math.max(batteryVoltage, 0.01);
       double clampedVoltage =
-          Math.copySign(Math.min(Math.abs(driveVolts[i]), batteryVoltage), driveVolts[i]);
+          Math.copySign(Math.min(Math.abs(driveVolts[i]), safeBatteryVoltage), driveVolts[i]);
 
       double motorRadPerSec = simulatedWheelOmegas[i] * SwerveConstants.DRIVE_GEAR_RATIO;
       double currentDrawAmps = motor.getCurrent(motorRadPerSec, clampedVoltage);
-      totalCurrentAmps += Math.abs(currentDrawAmps);
+
+      // Enforce stator current limit just like real TalonFX firmware.
+      currentDrawAmps =
+          Math.copySign(
+              Math.min(Math.abs(currentDrawAmps), SwerveConstants.DRIVE_STATOR_CURRENT_LIMIT),
+              currentDrawAmps);
+
+      // Compute the actual motor terminal voltage after current limiting.
+      // From the DC motor equation: I = (V - ω/Kv) / R  →  V = I·R + ω/Kv
+      double effectiveVoltage =
+          currentDrawAmps * motor.rOhms + motorRadPerSec / motor.KvRadPerSecPerVolt;
+
+      // The motor driver cannot produce more than battery voltage.
+      if (Math.abs(effectiveVoltage) > safeBatteryVoltage) {
+        effectiveVoltage = Math.copySign(safeBatteryVoltage, effectiveVoltage);
+        // Recalculate true current at voltage limit
+        currentDrawAmps =
+            (effectiveVoltage - motorRadPerSec / motor.KvRadPerSecPerVolt) / motor.rOhms;
+      }
+
+      // Electrical Power = V_effective * I_stator. Supply Current = Power / V_batt.
+      // Retains correct signage for regenerative braking.
+      double electricalPowerW = effectiveVoltage * currentDrawAmps;
+      double supplyCurrentAmps = electricalPowerW / safeBatteryVoltage;
+      totalCurrentAmps += supplyCurrentAmps;
 
       double motorTorqueNm = motor.getTorque(currentDrawAmps);
 
-      // Calculate Stator Thermals (I^2 * ThermalResistance) and ambient cooling
-      double heatGenerated = (currentDrawAmps * currentDrawAmps * 0.005) * dtSeconds;
-      double heatDissipated = (statorTempCelsius[i] - 25.0) * 0.05 * dtSeconds;
+      // Calculate Stator Thermals (I^2 * (R / C_thermal)) and ambient radiation
+      // A Kraken X60 has ~200 J/K thermal mass. R = 0.03 Ohms. Constant = 0.03 / 200 = 0.00015
+      double heatGenerated = (currentDrawAmps * currentDrawAmps * 0.00015) * dtSeconds;
+      double heatDissipated = (statorTempCelsius[i] - 25.0) * 0.00075 * dtSeconds;
       statorTempCelsius[i] = Math.max(25.0, statorTempCelsius[i] + heatGenerated - heatDissipated);
 
       // Hardware-mimicking Thermal Torque Rollback (Fade output over 90C)
@@ -158,8 +184,9 @@ public class SwerveChassisPhysics {
 
       double wheelTorqueNm = motorTorqueNm * SwerveConstants.DRIVE_GEAR_RATIO;
 
-      // --- 2. TIRE SLIP PHYSICS (Stribeck/Coulomb) ---
-      double wheelSurfaceSpeedMps = simulatedWheelOmegas[i] * SwerveConstants.WHEEL_RADIUS_METERS;
+      // --- 2. TIRE SLIP PHYSICS (Implicit Friction Model) ---
+      double R = SwerveConstants.WHEEL_RADIUS_METERS;
+      double wheelSurfaceSpeedMps = simulatedWheelOmegas[i] * R;
       double longitudinalSlipMps = wheelSurfaceSpeedMps - groundSpeedMps;
 
       // Select friction coefficient based on slip magnitude
@@ -169,32 +196,50 @@ public class SwerveChassisPhysics {
               : SwerveConstants.WHEEL_COF_STATIC;
       double maxTractiveForceN = normalForceN * cofEffective;
 
-      // Viscous ramp up to the friction limit to prevent numerical chatter at low slip
-      double tractiveForceN =
-          longitudinalSlipMps * (maxTractiveForceN / SwerveConstants.SLIP_TRANSITION_VELOCITY_MPS);
-      if (Math.abs(tractiveForceN) > maxTractiveForceN) {
-        tractiveForceN = Math.copySign(maxTractiveForceN, tractiveForceN);
+      // Calculate torque needed to perfectly grip the carpet this tick (slip = 0)
+      double groundOmega = groundSpeedMps / R;
+      double requiredFrictionTorqueNm =
+          (SwerveConstants.WHEEL_MOI_KG_M2 * (groundOmega - simulatedWheelOmegas[i]) / dtSeconds)
+              - wheelTorqueNm;
+
+      // T = -F * r => F = -T / r
+      double requiredTractiveForceN = -requiredFrictionTorqueNm / R;
+      double tractiveForceN;
+
+      if (Math.abs(requiredTractiveForceN) <= maxTractiveForceN) {
+        // Grip achieved (Static Friction)
+        tractiveForceN = requiredTractiveForceN;
+        simulatedWheelOmegas[i] = groundOmega;
+      } else {
+        // Grip broken (Kinetic Friction / Burnout)
+        tractiveForceN = Math.copySign(maxTractiveForceN, requiredTractiveForceN);
+        double loadTorqueNm = -tractiveForceN * R;
+        double wheelAlphaRadPerSec2 =
+            (wheelTorqueNm + loadTorqueNm) / SwerveConstants.WHEEL_MOI_KG_M2;
+        simulatedWheelOmegas[i] += wheelAlphaRadPerSec2 * dtSeconds;
       }
 
       // Apply tractive force to chassis
       Vector2 tractiveForceWorld =
           new Vector2(moduleForward.x * tractiveForceN, moduleForward.y * tractiveForceN);
 
-      // Reaction torque on spinning wheel: T = -F * r
-      double loadTorqueNm = -tractiveForceN * SwerveConstants.WHEEL_RADIUS_METERS;
-
-      // Integrate wheel flywheel: alpha = (motorTorque + loadTorque) / MOI
-      double netWheelTorqueNm = wheelTorqueNm + loadTorqueNm;
-      double wheelAlphaRadPerSec2 = netWheelTorqueNm / SwerveConstants.WHEEL_MOI_KG_M2;
-      simulatedWheelOmegas[i] += wheelAlphaRadPerSec2 * dtSeconds;
-
-      // --- 3. LATERAL SLIP FRICTION ---
+      // --- 3. LATERAL SLIP FRICTION (Implicit) ---
       double lateralSlipMps = moduleVelWorld.dot(moduleRight);
-      double lateralForceN =
-          -lateralSlipMps * (maxTractiveForceN / SwerveConstants.LATERAL_SLIP_RELAXATION);
+
+      // Calculate force needed to halt lateral sliding.
+      // We use an effective mass of 8.5kg per wheel instead of M/4 (15.8kg).
+      // Using M/4 applies a rotational torque that over-corrects angular slip by 168% per tick,
+      // creating a severe high-frequency jitter that averages out to zero grip (floaty).
+      // 8.5kg perfectly balances 53% translational correction and 90% rotational correction per
+      // tick.
+      double effectiveMassPerWheelKG = 8.5;
+      double requiredLateralForceN = -lateralSlipMps * effectiveMassPerWheelKG / dtSeconds;
+
+      double lateralForceN = requiredLateralForceN;
       if (Math.abs(lateralForceN) > maxTractiveForceN) {
         lateralForceN = Math.copySign(maxTractiveForceN, lateralForceN);
       }
+
       Vector2 lateralForceWorld =
           new Vector2(moduleRight.x * lateralForceN, moduleRight.y * lateralForceN);
 

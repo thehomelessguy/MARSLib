@@ -14,6 +14,20 @@ import java.util.function.DoubleSupplier;
  * Overrides the driver's rotational (Theta) control to perfectly track a specific field coordinate
  * using Velocity-Added Kinematic Leading, while allowing them to freely strafe and sprint in X and
  * Y simultaneously.
+ *
+ * <p><b>Mathematical Architecture</b> This command utilizes a true-vector Newton-Raphson
+ * approximation intersecting with a Quadratic Time-Of-Flight polynomial solver. It calculates
+ * precisely where the target WILL be relative to the game piece the exact moment the bullet
+ * connects in 2D space, by mapping:
+ *
+ * <pre>{@code
+ * a = (s² - (v_x² + v_y²))
+ * b = -2 (d_x·v_x + d_y·v_y)
+ * c = -(d_x² + d_y²)
+ * }</pre>
+ *
+ * It acts as an absolute counter-measure to "aim lag" where traditional PIDs always track behind
+ * moving targets.
  */
 public class ShootOnTheMoveCommand extends Command {
 

@@ -1,0 +1,2173 @@
+> Task :extractReleaseNative UP-TO-DATE
+
+> Task :eventDeploy
+Not running deploy task, skipping commit
+
+> Task :createVersionFile
+createVersionFile called. Path C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot
+
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :spotlessGroovyGradle UP-TO-DATE
+> Task :spotlessGroovyGradleApply UP-TO-DATE
+> Task :spotlessJava
+> Task :spotlessJavaApply
+> Task :spotlessJson UP-TO-DATE
+> Task :spotlessJsonApply UP-TO-DATE
+> Task :spotlessMisc UP-TO-DATE
+> Task :spotlessMiscApply UP-TO-DATE
+> Task :spotlessApply
+> Task :compileJava
+> Task :processResources NO-SOURCE
+> Task :classes
+> Task :downloadDepsPreemptively
+> Task :jar
+
+> Task :simulateJavaRelease
+If you receive errors loading the JNI dependencies, make sure you have the latest Visual Studio C++ Redstributable installed.
+That can be found at https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads
+HAL Extensions: Attempting to load: halsim_gui
+Simulator GUI Initializing.
+Simulator GUI Initialized!
+HAL Extensions: Successfully loaded extension
+********** Robot program starting **********
+NT: Listening on NT3 port 1735, NT4 port 5810
+NT: Got a NT4 connection from 127.0.0.1 port 56265
+NT: Got a NT4 connection from 127.0.0.1 port 50568
+NT: CONNECTED NT4 client 'AdvantageScope@1' (from 127.0.0.1:50568)
+NT: Got a NT4 connection from 127.0.0.1 port 64591
+NT: CONNECTED RTT client (from 127.0.0.1:64591)
+NT: Got a NT4 connection from 127.0.0.1 port 53886
+NT: Got a NT4 connection from 127.0.0.1 port 51666
+NT: Got a NT4 connection from 127.0.0.1 port 65216
+NT: Got a NT4 connection from 127.0.0.1 port 49906
+NT: Got a NT4 connection from 127.0.0.1 port 49370
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+********** Robot program startup complete **********
+Warning at edu.wpi.first.wpilibj.IterativeRobotBase.printLoopOverrunMessage(IterativeRobotBase.java:436): Loop time of 0.01s overrun
+
+CommandScheduler loop overrun
+=== AUTO-ENABLING TELEOP FOR DIAGNOSTIC ===
+=== DIAG START === Pose: Pose2d(Translation2d(X: 0.68, Y: 0.21), Rotation2d(Rads: 0.06, Deg: 3.45))
+[DIAG FWD 2m/s t=0] pose=(0.68,0.21,3.4┬░) vel=(0.02,0.00,0.00) V=11.79
+[DIAG FWD 2m/s t=10] pose=(0.75,0.39,-0.1┬░) vel=(1.52,0.00,0.00) V=8.34
+[DIAG FWD 2m/s t=20] pose=(0.87,0.39,0.0┬░) vel=(1.44,0.00,0.00) V=8.26
+[DIAG FWD 2m/s t=30] pose=(1.05,0.39,0.0┬░) vel=(1.95,0.00,0.00) V=10.88
+[DIAG FWD 2m/s t=40] pose=(1.25,0.39,0.0┬░) vel=(2.03,0.00,0.00) V=11.29
+[DIAG FWD 2m/s t=50] pose=(1.45,0.39,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+[DIAG FWD 2m/s t=60] pose=(1.66,0.39,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+[DIAG FWD 2m/s t=70] pose=(1.86,0.39,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+[DIAG FWD 2m/s t=80] pose=(2.07,0.39,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+[DIAG FWD 2m/s t=90] pose=(2.27,0.40,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+[DIAG FWD 2m/s t=100] pose=(2.47,0.40,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+[DIAG FWD 2m/s t=110] pose=(2.68,0.40,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+[DIAG FWD 2m/s t=120] pose=(2.88,0.40,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+[DIAG FWD 2m/s t=130] pose=(3.09,0.40,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG FWD 2m/s t=140] pose=(3.29,0.40,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+=== FWD DONE === Moved 2.80 m (expected ~3.0 m)
+[DIAG ROT ╧Ç/s t=150] pose=(3.49,0.40,0.0┬░) vel=(2.04,0.00,0.00) V=11.34
+[DIAG ROT ╧Ç/s t=160] pose=(3.66,0.40,0.5┬░) vel=(0.22,0.01,2.18) V=10.25
+[DIAG ROT ╧Ç/s t=170] pose=(3.74,0.42,4.4┬░) vel=(-0.05,-0.08,2.22) V=9.85
+[DIAG ROT ╧Ç/s t=180] pose=(3.77,0.47,11.7┬░) vel=(0.06,0.19,1.90) V=9.85
+[DIAG ROT ╧Ç/s t=190] pose=(3.78,0.51,20.3┬░) vel=(-0.02,-0.15,2.72) V=10.25
+[DIAG ROT ╧Ç/s t=200] pose=(3.78,0.55,31.4┬░) vel=(0.10,0.14,2.15) V=10.00
+[DIAG ROT ╧Ç/s t=210] pose=(3.78,0.56,46.5┬░) vel=(0.02,0.02,2.91) V=10.97
+[DIAG ROT ╧Ç/s t=220] pose=(3.78,0.56,64.7┬░) vel=(0.00,-0.00,3.20) V=11.34
+[DIAG ROT ╧Ç/s t=230] pose=(3.78,0.56,83.0┬░) vel=(-0.00,0.00,3.20) V=11.34
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG ROT ╧Ç/s t=240] pose=(3.78,0.56,101.4┬░) vel=(0.00,0.00,3.20) V=11.34
+[DIAG ROT ╧Ç/s t=250] pose=(3.78,0.56,119.7┬░) vel=(0.00,0.00,3.20) V=11.34
+[DIAG ROT ╧Ç/s t=260] pose=(3.78,0.56,136.7┬░) vel=(0.03,-0.02,3.01) V=11.11
+[DIAG ROT ╧Ç/s t=270] pose=(3.78,0.56,155.0┬░) vel=(-0.00,-0.00,3.20) V=11.34
+[DIAG ROT ╧Ç/s t=280] pose=(3.78,0.56,173.3┬░) vel=(0.00,0.00,3.20) V=11.34
+[DIAG ROT ╧Ç/s t=290] pose=(3.78,0.56,-168.3┬░) vel=(0.00,0.00,3.20) V=11.34
+=== ROT DONE === Rotated -151.8┬░ (expected ~540┬░)
+[DIAG STOP t=300] pose=(3.78,0.56,-150.0┬░) vel=(-0.00,0.00,3.20) V=11.34
+[DIAG STOP t=310] pose=(3.78,0.56,-139.8┬░) vel=(0.01,0.03,0.63) V=11.34
+[DIAG STOP t=320] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.34
+[DIAG STOP t=330] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.34
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=340] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.34
+[DIAG STOP t=350] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.34
+[DIAG STOP t=360] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.34
+[DIAG STOP t=370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.34
+[DIAG STOP t=380] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.34
+[DIAG STOP t=390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.34
+[DIAG STOP t=400] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.28
+[DIAG STOP t=410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.84
+[DIAG STOP t=420] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.84
+[DIAG STOP t=430] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.84
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=440] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.84
+[DIAG STOP t=450] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.84
+[DIAG STOP t=460] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=480] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=500] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=520] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=530] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=540] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=550] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=560] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=580] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=600] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=620] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=630] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=640] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=650] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=660] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=680] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=700] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=720] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=730] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=740] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=750] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=760] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=780] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=800] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=820] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=830] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=840] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=850] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=860] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=880] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=900] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=920] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=930] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=940] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=950] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=960] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=980] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=1000] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1020] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1030] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1040] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1050] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1060] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=1080] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=1100] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1120] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1130] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1140] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=1150] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1160] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=1180] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=1200] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1220] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1230] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=1240] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1250] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1260] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=1280] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=1300] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1320] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1330] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1340] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=1350] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1360] pose=(3.78,0.56,-139.4┬░) vel=(-0.00,-0.00,0.00) V=11.85
+[DIAG STOP t=1370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=1380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,-0.00,-0.00) V=11.85
+[DIAG STOP t=1390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=1400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,-0.00) V=11.85
+[DIAG STOP t=1410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=1450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=1650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=1740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=1950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=1990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=2050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=2160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=2260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=2350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=2450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=2560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=2660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=2760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=2860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=2960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=2990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=3050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=3160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=3270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=3470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=3570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=3670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=3770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=3870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=3970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=3990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=4070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=4170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=4270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=4370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=4470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=4570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=4770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=4870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=4970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=4990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=5080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=5170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=5280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=5380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=5480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=5580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=5680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=5770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=5880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=5990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=6080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=6170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=6280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=6370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=6490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=6590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=6680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=6790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=6880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=6980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=6990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=7090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=7180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=7390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=7490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=7590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=7780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=7890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=7980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=7990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=8090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=8180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=8290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=8490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=8600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=8700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=8790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=8890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=8990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=9090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=9200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=9400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=9490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=9600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=9700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=9790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=9890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=9990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=10000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=10100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=10300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=10390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=10500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=10600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=10810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=10910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=10990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=11110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=11210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=11300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=11410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=11500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=11610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=11710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=11810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=11910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=11990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=12020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=12120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=12220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=12310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=12420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=12510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=12610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=12710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=12820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=12910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=12990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=13020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=13120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=13210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=13410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=13520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=13710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=13810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=13920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=13990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=14030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=14130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=14220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=14330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=14430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=14520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=14630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=14720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=14830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=14930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=14990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=15030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=15130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=15230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=15330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=15440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=15530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=15640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=15740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=15830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=15940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=15990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=16140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=16230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=16330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=16540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=16640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=16740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=16830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=16940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=16990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=17130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=17230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=17350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=17530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=17650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=17750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=17850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=17950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=17990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=18050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=18140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=18250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=18350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=18450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18490] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18500] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18510] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18520] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18530] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18540] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18550] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18560] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18570] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18580] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18590] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18600] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18610] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18620] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18630] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18640] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=18650] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18660] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18670] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18680] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18690] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18700] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18710] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18720] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18730] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18740] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=18750] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18760] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18770] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18780] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18790] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18800] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18810] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18820] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18830] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18840] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=18850] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18860] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18870] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18880] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18890] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18900] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18910] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18920] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18930] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18940] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=18950] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18960] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18970] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18980] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=18990] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19000] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19010] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19020] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19030] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19040] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19050] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=19060] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19070] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19080] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19090] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19100] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19110] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19120] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19130] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19140] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19150] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=19160] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19170] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19180] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19190] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19200] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19210] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19220] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19230] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19240] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19250] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=19260] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19270] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19280] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19290] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19300] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19310] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19320] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19330] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19340] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19350] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=19360] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19370] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19380] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19390] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19400] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19410] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19420] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19430] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19440] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19450] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+Warning at edu.wpi.first.wpilibj.DriverStation.reportJoystickUnpluggedWarning(DriverStation.java:1345): Joystick POV 0 on port 0 not available, check if controller is plugged in
+[DIAG STOP t=19460] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19470] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85
+[DIAG STOP t=19480] pose=(3.78,0.56,-139.4┬░) vel=(0.00,0.00,0.00) V=11.85

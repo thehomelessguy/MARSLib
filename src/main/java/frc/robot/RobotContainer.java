@@ -43,6 +43,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -78,6 +79,11 @@ public class RobotContainer {
       new SlewRateLimiter(Constants.DriveConstants.TELEOP_OMEGA_ACCEL_LIMIT); // Fast rotation limit
   private final PIDController headingController =
       new PIDController(Constants.DriveConstants.HEADING_KP, 0, 0);
+
+  {
+    headingController.enableContinuousInput(-Math.PI, Math.PI);
+  }
+
   private Rotation2d targetHeading = new Rotation2d();
 
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -317,8 +323,19 @@ public class RobotContainer {
                   MathUtil.applyDeadband(ghostManager.getLeftY(() -> controller.getLeftY()), 0.1);
               double yVal =
                   MathUtil.applyDeadband(ghostManager.getLeftX(() -> controller.getLeftX()), 0.1);
-              double omgVal =
-                  MathUtil.applyDeadband(ghostManager.getRightX(() -> controller.getRightX()), 0.1);
+
+              // Rotation: use right stick X (axis 4) on real controller,
+              // fall back to buttons for keyboard sim (triggers are sticky)
+              double rawOmg = ghostManager.getRightX(() -> controller.getRightX());
+              if (Constants.CURRENT_MODE == Constants.Mode.SIM && Math.abs(rawOmg) < 0.01) {
+                // Sim keyboard: button 1 (typically 'Z') = rotate CW,
+                //               button 2 (typically 'X') = rotate CCW
+                double btnRotate = 0.0;
+                if (controller.getHID().getRawButton(1)) btnRotate += 1.0;
+                if (controller.getHID().getRawButton(2)) btnRotate -= 1.0;
+                rawOmg = btnRotate;
+              }
+              double omgVal = MathUtil.applyDeadband(rawOmg, 0.1);
 
               // Cube joystick first to maintain exponential curve, then scale to physical m/s
               double mappedX = Math.pow(xVal, 3.0) * linearMag;
@@ -366,6 +383,27 @@ public class RobotContainer {
                       targetSpeeds.vyMetersPerSecond,
                       targetSpeeds.omegaRadiansPerSecond,
                       swerveDrive.getPose().getRotation());
+
+              // Telemetry for debugging drive command pipeline
+              Logger.recordOutput("Teleop/RawJoystickX", controller.getLeftY());
+              Logger.recordOutput("Teleop/RawJoystickY", controller.getLeftX());
+              Logger.recordOutput("Teleop/RawJoystickOmega", controller.getRightX());
+              Logger.recordOutput("Teleop/PostDeadband", new double[] {xVal, yVal, omgVal});
+              Logger.recordOutput(
+                  "Teleop/FieldRelSpeeds",
+                  new double[] {
+                    targetSpeeds.vxMetersPerSecond,
+                    targetSpeeds.vyMetersPerSecond,
+                    targetSpeeds.omegaRadiansPerSecond
+                  });
+              Logger.recordOutput(
+                  "Teleop/RobotRelSpeeds",
+                  new double[] {
+                    robotRelativeSpeeds.vxMetersPerSecond,
+                    robotRelativeSpeeds.vyMetersPerSecond,
+                    robotRelativeSpeeds.omegaRadiansPerSecond
+                  });
+              Logger.recordOutput("Teleop/GyroLockActive", Math.abs(omgVal) <= 0.01);
 
               swerveDrive.runVelocity(robotRelativeSpeeds);
             }));
@@ -447,5 +485,9 @@ public class RobotContainer {
 
   public MARSVision getVision() {
     return vision;
+  }
+
+  public SwerveDrive getSwerveDrive() {
+    return swerveDrive;
   }
 }

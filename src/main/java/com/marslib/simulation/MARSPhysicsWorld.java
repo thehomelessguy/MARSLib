@@ -50,6 +50,11 @@ public class MARSPhysicsWorld {
     return instance;
   }
 
+  /** Resets the singleton instance. Intended exclusively for test isolation environments. */
+  public static void resetInstance() {
+    instance = null;
+  }
+
   public World<Body> getDyn4jWorld() {
     return world;
   }
@@ -91,12 +96,12 @@ public class MARSPhysicsWorld {
     buildStaticRectangle(
         length + wallThickness / 2, width / 2, wallThickness, width + wallThickness * 2);
 
-    // Hub/reef structures
+    // REBUILT Season: Hub/reef structures (Hexagonal geometry)
     double hubSize = FieldConstants.HUB_SIZE_METERS;
-    buildStaticRectangle(
-        FieldConstants.BLUE_HUB_POS.getX(), FieldConstants.BLUE_HUB_POS.getY(), hubSize, hubSize);
-    buildStaticRectangle(
-        FieldConstants.RED_HUB_POS.getX(), FieldConstants.RED_HUB_POS.getY(), hubSize, hubSize);
+    buildStaticHexagon(
+        FieldConstants.BLUE_HUB_POS.getX(), FieldConstants.BLUE_HUB_POS.getY(), hubSize);
+    buildStaticHexagon(
+        FieldConstants.RED_HUB_POS.getX(), FieldConstants.RED_HUB_POS.getY(), hubSize);
 
     spawnInitialGamePieces();
   }
@@ -112,20 +117,41 @@ public class MARSPhysicsWorld {
     new GamePieceSim("mid_4", new edu.wpi.first.math.geometry.Translation2d(midX - 1.0, midY));
   }
 
-  /**
-   * Creates an immovable rectangular body in the physics world.
-   *
-   * @param x Center X position (meters).
-   * @param y Center Y position (meters).
-   * @param w Width of the rectangle (meters).
-   * @param h Height of the rectangle (meters).
-   * @return The created static {@link Body}.
-   */
   private Body buildStaticRectangle(double x, double y, double w, double h) {
     Body body = new Body();
     BodyFixture fixture = body.addFixture(Geometry.createRectangle(w, h));
     fixture.setFriction(frc.robot.Constants.FieldConstants.WALL_FRICTION);
     fixture.setRestitution(frc.robot.Constants.FieldConstants.WALL_RESTITUTION);
+    body.setMass(MassType.INFINITE);
+    body.translate(x, y);
+    world.addBody(body);
+    return body;
+  }
+
+  /**
+   * Creates a static hexagonal body in the physics world to simulate complex REBUILT structures.
+   *
+   * @param x Center X position (meters).
+   * @param y Center Y position (meters).
+   * @param circumradius Distance from center to any vertex (meters).
+   * @return The created static {@link Body}.
+   */
+  private Body buildStaticHexagon(double x, double y, double circumradius) {
+    Body body = new Body();
+    // Create a 6-sided polygon. Polygon geometries in Dyn4j must be defined CCW.
+    Vector2[] vertices = new Vector2[6];
+    for (int i = 0; i < 6; i++) {
+      double angle = i * Math.PI / 3.0; // 60 degrees per vertex
+      vertices[i] = new Vector2(circumradius * Math.cos(angle), circumradius * Math.sin(angle));
+    }
+
+    BodyFixture fixture = body.addFixture(Geometry.createPolygon(vertices));
+
+    // Simulate stronger friction and deadened bounciness to prevent infinite sliding off core
+    // elements
+    fixture.setFriction(frc.robot.Constants.FieldConstants.WALL_FRICTION * 2.5);
+    fixture.setRestitution(0.01);
+
     body.setMass(MassType.INFINITE);
     body.translate(x, y);
     world.addBody(body);
@@ -215,9 +241,15 @@ public class MARSPhysicsWorld {
     world.step(1, dtSeconds);
 
     // Compute battery voltage sag from total current draw
+    Logger.recordOutput("PhysicsWorld/FrameCurrentDraw_A", frameCurrentDrawAmps);
     double loadedVoltage = BatterySim.calculateDefaultBatteryLoadedVoltage(frameCurrentDrawAmps);
+    // CRITICAL: Floor voltage at 6.0V — below this, the roboRIO would brown out and disable
+    // outputs anyway. Allowing voltage to drop lower causes numerical instability in duty cycle
+    // calculations (division by near-zero voltage).
+    loadedVoltage = Math.max(6.0, loadedVoltage);
     simulatedVoltage = loadedVoltage;
     RoboRioSim.setVInVoltage(loadedVoltage);
+    Logger.recordOutput("PhysicsWorld/ComputedVoltage", loadedVoltage);
 
     // Reset per-frame accumulator
     frameCurrentDrawAmps = 0.0;

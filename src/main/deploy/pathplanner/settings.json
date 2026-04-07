@@ -1,0 +1,8 @@
+{
+  "robotMass": 45.0,
+  "robotMOI": 6.0,
+  "wheelbase": 0.5,
+  "trackwidth": 0.5,
+  "driveDirMetersPerSecSq": 10.0,
+  "driveDirMetersPerSecSqMax": 15.0
+}

@@ -10,7 +10,7 @@ public interface PowerIO {
   @AutoLog
   public static class PowerIOInputs {
     public double totalCurrentAmps = 0.0;
-    public double voltage = 0.0;
+    public double voltage = 12.0;
     public double[] channelCurrentsAmps = new double[0];
     public double canBusUtilization = 0.0;
     public boolean isBrownedOut = false;

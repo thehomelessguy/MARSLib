@@ -1,9 +1,13 @@
 package com.marslib.mechanisms;
 
+import static edu.wpi.first.units.Units.Volts;
+
 import com.marslib.power.MARSPowerManager;
 import com.marslib.util.LoggedTunableNumber;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
 
@@ -33,6 +37,7 @@ public class MARSElevator extends SubsystemBase {
   private static final double MIN_CURRENT_AMPS = Constants.ElevatorConstants.MIN_CURRENT_AMPS;
 
   private final MARSPowerManager powerManager;
+  private final SysIdRoutine sysIdRoutine;
 
   /**
    * Constructs a MARSElevator with the given IO layer and power manager.
@@ -44,6 +49,20 @@ public class MARSElevator extends SubsystemBase {
     this.io = io;
     this.powerManager = powerManager;
     feedforward = new ElevatorFeedforward(kS.get(), kG.get(), kV.get(), kA.get());
+
+    this.sysIdRoutine =
+        new SysIdRoutine(
+            new SysIdRoutine.Config(
+                null,
+                null,
+                null,
+                (state) -> Logger.recordOutput("SysIdTestState", state.toString())),
+            new SysIdRoutine.Mechanism(
+                (edu.wpi.first.units.measure.Voltage volts) -> {
+                  io.setVoltage(volts.in(Volts));
+                },
+                null,
+                this));
   }
 
   @Override
@@ -97,5 +116,25 @@ public class MARSElevator extends SubsystemBase {
    */
   public double getPositionMeters() {
     return inputs.positionMeters;
+  }
+
+  /**
+   * Generates a SysId Quasistatic characterization command.
+   *
+   * @param direction The direction of the quasistatic routine (Forward/Reverse).
+   * @return The SysId Command to execute.
+   */
+  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return sysIdRoutine.quasistatic(direction);
+  }
+
+  /**
+   * Generates a SysId Dynamic characterization command.
+   *
+   * @param direction The direction of the dynamic routine (Forward/Reverse).
+   * @return The SysId Command to execute.
+   */
+  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return sysIdRoutine.dynamic(direction);
   }
 }

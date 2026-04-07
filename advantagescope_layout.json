@@ -1,0 +1,108 @@
+{
+  "hubs": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 720,
+      "state": {
+        "sidebar": {
+          "width": 160,
+          "expanded": []
+        },
+        "tabs": {
+          "selected": 0,
+          "tabs": [
+            {
+              "type": 0,
+              "title": "",
+              "controller": null,
+              "controllerUUID": "vgk3rxvfa1w4lw9urqrwx6x6qcsukur3",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 1,
+              "title": "Power Bounds",
+              "controller": {
+                "leftSources": [
+                  {
+                    "type": "stepped",
+                    "logKey": "/RealOutputs/PhysicsWorld/ComputedVoltage",
+                    "logType": "Number",
+                    "visible": true,
+                    "options": {}
+                  }
+                ],
+                "rightSources": [
+                  {
+                    "type": "stepped",
+                    "logKey": "/RealOutputs/SwerveDrive/LoadShedLimitAmps",
+                    "logType": "Number",
+                    "visible": true,
+                    "options": {}
+                  }
+                ]
+              },
+              "controllerUUID": "2xxqvdl924hoa4rag7j4zgh4s0qhmt8s",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 3,
+              "title": "3D Tracker",
+              "controller": {
+                "sources": [
+                  {
+                    "type": "robot",
+                    "logKey": "/RealOutputs/SwerveDrive/Pose",
+                    "logType": "Pose2d",
+                    "visible": true,
+                    "options": {}
+                  },
+                  {
+                    "type": "ghost",
+                    "logKey": "/RealOutputs/PhysicsWorld/GamePieces",
+                    "logType": "Pose3d[]",
+                    "visible": true,
+                    "options": {}
+                  }
+                ]
+              },
+              "controllerUUID": "gb25scl9ck134wnjt0knqugz7tbiyvxl",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 9,
+              "title": "Swerve Modules",
+              "controller": {
+                "sources": [
+                  {
+                    "type": "states",
+                    "logKey": "/RealOutputs/SwerveDrive/MeasuredStates",
+                    "logType": "SwerveModuleState[]",
+                    "visible": true,
+                    "options": {}
+                  },
+                  {
+                    "type": "states",
+                    "logKey": "/RealOutputs/SwerveDrive/DesiredStates",
+                    "logType": "SwerveModuleState[]",
+                    "visible": true,
+                    "options": {}
+                  }
+                ]
+              },
+              "controllerUUID": "dmhf4mnry6hjlh992n8hjaws2lnxen6a",
+              "renderer": null,
+              "controlsHeight": 0
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "satellites": [],
+  "version": "26.0.0"
+}

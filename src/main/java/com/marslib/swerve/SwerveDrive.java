@@ -30,6 +30,18 @@ import org.littletonrobotics.junction.Logger;
  * The core MARSLib SwerveDrive subsystem responsible for managing holonomic kinematics,
  * high-frequency odometry, dynamic PathPlanner autonomous trajectories, and active power shedding.
  *
+ * <p><b>Architecture</b>
+ *
+ * <ul>
+ *   <li><b>Odometry:</b> Powered by a background {@code PhoenixOdometryThread} that drains TalonFX
+ *       Signals at 250Hz natively without waiting for the primary 50Hz RoboRIO loop. This provides
+ *       unprecedented PathPlanner pathing determinism by capturing inter-tick jitter.
+ *   <li><b>Physics-Linked Power Shedding:</b> Native feedback loops constantly poll the {@link
+ *       MARSPowerManager}. If the RoboRIO battery hits 7.0V boundaries, Stator current limits are
+ *       dynamically clamped via CANbus updates to aggressively protect from robot Brownouts during
+ *       pushing matches.
+ * </ul>
+ *
  * <p>Students: This subsystem hooks directly into AdvantageKit. All structural data is natively
  * logged to the network through the periodic loop. The Swerve modules themselves process inputs
  * through their respective hardware IO interfaces (e.g. TalonFX layers).
@@ -115,7 +127,26 @@ public class SwerveDrive extends SubsystemBase {
     LoggedTunableNumber rotKD = new LoggedTunableNumber("Auto/Rotation_kD", 0.0);
 
     try {
-      RobotConfig config = RobotConfig.fromGUISettings();
+      edu.wpi.first.math.system.plant.DCMotor gearbox =
+          edu.wpi.first.math.system.plant.DCMotor.getKrakenX60(1)
+              .withReduction(SwerveConstants.DRIVE_GEAR_RATIO);
+
+      com.pathplanner.lib.config.ModuleConfig moduleConfig =
+          new com.pathplanner.lib.config.ModuleConfig(
+              SwerveConstants.WHEEL_RADIUS_METERS,
+              SwerveConstants.MAX_LINEAR_SPEED_MPS,
+              SwerveConstants.WHEEL_COF_STATIC,
+              gearbox,
+              SwerveConstants.DRIVE_STATOR_CURRENT_LIMIT,
+              1);
+
+      RobotConfig config =
+          new RobotConfig(
+              SwerveConstants.ROBOT_MASS_KG,
+              SwerveConstants.ROBOT_MOI_KG_M2,
+              moduleConfig,
+              SwerveConstants.MODULE_LOCATIONS);
+
       AutoBuilder.configure(
           this::getPose,
           this::resetPose,
@@ -129,7 +160,14 @@ public class SwerveDrive extends SubsystemBase {
           this // Subsystem requirement
           );
     } catch (Exception e) {
-      e.printStackTrace();
+      if (e.getMessage() != null && e.getMessage().contains("already been configured")) {
+        // Safe to ignore sequentially in multi-JVM unit test environments where static tracking
+        // persists
+      } else {
+        edu.wpi.first.wpilibj.DriverStation.reportError(
+            "Failed to configure AutoBuilder", e.getStackTrace());
+        throw new RuntimeException("Failed to configure AutoBuilder", e);
+      }
     }
   }
 

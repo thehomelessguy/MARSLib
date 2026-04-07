@@ -29,6 +29,18 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
   private boolean closedLoop = false;
   private double currentFeedforward = 0.0;
 
+  /**
+   * Constructs a physical simulation instance for a 1D rotary arm mechanism.
+   *
+   * <p>This models the mechanism as a Dyn4j revolute joint and accurately calculates rotational
+   * inertia and forces based on an attached Kraken X60 motor.
+   *
+   * @param mechanismName The unique identifier used for AdvantageKit logging (e.g. "Arm").
+   * @param gearRatio The total gear reduction from motor to arm axis.
+   * @param jKgMetersSquared The total moment of inertia of the rotating arm in kg*m^2.
+   * @param lengthMeters The physical extended length of the arm for visualization and density
+   *     mapping.
+   */
   public RotaryMechanismIOSim(
       String mechanismName, double gearRatio, double jKgMetersSquared, double lengthMeters) {
     this.gearRatio = gearRatio;
@@ -77,18 +89,39 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
     if (closedLoop) {
       double pidVolts = internalController.calculate(currentAngleRad);
       appliedVolts = pidVolts + currentFeedforward;
-      double maxVoltage = MARSPhysicsWorld.getInstance().getSimulatedVoltage();
+      double maxVoltage = Math.max(MARSPhysicsWorld.getInstance().getSimulatedVoltage(), 0.01);
       appliedVolts = Math.max(-maxVoltage, Math.min(maxVoltage, appliedVolts));
     }
 
     // DC Motor Math
     double currentDrawAmps = gearbox.getCurrent(currentVelocityRadPerSec * gearRatio, appliedVolts);
+    // Enforce stator current limit like real TalonFX firmware
+    currentDrawAmps =
+        Math.copySign(
+            Math.min(Math.abs(currentDrawAmps), frc.robot.Constants.ArmConstants.MAX_CURRENT_AMPS),
+            currentDrawAmps);
     double motorTorque = gearbox.getTorque(currentDrawAmps);
     double mechanismTorque = motorTorque * gearRatio;
 
     // Apply strictly to Dyn4j body
     armBody.applyTorque(mechanismTorque);
-    MARSPhysicsWorld.getInstance().addFrameCurrentDrawAmps(Math.abs(currentDrawAmps));
+
+    // Compute effective motor terminal voltage after current limiting
+    double motorSpeedRadPerSec = currentVelocityRadPerSec * gearRatio;
+    double batteryVoltage = Math.max(MARSPhysicsWorld.getInstance().getSimulatedVoltage(), 0.01);
+
+    double effectiveVoltage =
+        currentDrawAmps * gearbox.rOhms + motorSpeedRadPerSec / gearbox.KvRadPerSecPerVolt;
+    if (Math.abs(effectiveVoltage) > batteryVoltage) {
+      effectiveVoltage = Math.copySign(batteryVoltage, effectiveVoltage);
+      currentDrawAmps =
+          (effectiveVoltage - motorSpeedRadPerSec / gearbox.KvRadPerSecPerVolt) / gearbox.rOhms;
+    }
+
+    double electricalPowerW = effectiveVoltage * currentDrawAmps;
+    double supplyCurrentAmps = electricalPowerW / batteryVoltage;
+
+    MARSPhysicsWorld.getInstance().addFrameCurrentDrawAmps(supplyCurrentAmps);
 
     inputs.hasHardwareConnected = true;
     inputs.positionRad = currentAngleRad;

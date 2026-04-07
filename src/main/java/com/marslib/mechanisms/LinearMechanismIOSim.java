@@ -30,6 +30,18 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
   private boolean closedLoop = false;
   private double currentFeedforward = 0.0;
 
+  /**
+   * Constructs a physical simulation instance for a 1D linear elevator mechanism.
+   *
+   * <p>This models the mechanism as a Dyn4j prismatic joint and accurately calculates forces based
+   * on an attached Kraken X60 motor and the physical spool parameters.
+   *
+   * @param mechanismName The unique identifier used for AdvantageKit logging (e.g. "Elevator").
+   * @param gearRatio The total gear reduction from motor to spool (e.g., 25.0 for a 25:1
+   *     reduction).
+   * @param spoolDiameterMeters The diameter of the driven spool in meters.
+   * @param massKg The physical mass of the moving carriage and its load in kilograms.
+   */
   public LinearMechanismIOSim(
       String mechanismName, double gearRatio, double spoolDiameterMeters, double massKg) {
     this.gearRatio = gearRatio;
@@ -78,13 +90,19 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
     if (closedLoop) {
       double pidVolts = internalController.calculate(currentPosMeters);
       appliedVolts = pidVolts + currentFeedforward;
-      double maxVoltage = MARSPhysicsWorld.getInstance().getSimulatedVoltage();
+      double maxVoltage = Math.max(MARSPhysicsWorld.getInstance().getSimulatedVoltage(), 0.01);
       appliedVolts = Math.max(-maxVoltage, Math.min(maxVoltage, appliedVolts));
     }
 
     // DC Motor Math linearly coupled via spool
     double motorSpeedRadsPerSec = (currentVelocityMetersPerSec / spoolRadiusMeters) * gearRatio;
     double currentDrawAmps = gearbox.getCurrent(motorSpeedRadsPerSec, appliedVolts);
+    // Enforce stator current limit like real TalonFX firmware
+    currentDrawAmps =
+        Math.copySign(
+            Math.min(
+                Math.abs(currentDrawAmps), frc.robot.Constants.ElevatorConstants.MAX_CURRENT_AMPS),
+            currentDrawAmps);
     double motorTorque = gearbox.getTorque(currentDrawAmps);
 
     // Torque / radius = Linear Force
@@ -93,7 +111,22 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
     // Apply linear force directly to the body upwards
     carriageBody.applyForce(new Vector2(0.0, linearForceNewtons));
 
-    MARSPhysicsWorld.getInstance().addFrameCurrentDrawAmps(Math.abs(currentDrawAmps));
+    // Compute effective motor terminal voltage after current limiting
+    // V_effective = I·R + ω/Kv (what the motor controller actually applies)
+    double batteryVoltage = Math.max(MARSPhysicsWorld.getInstance().getSimulatedVoltage(), 0.01);
+
+    double effectiveVoltage =
+        currentDrawAmps * gearbox.rOhms + motorSpeedRadsPerSec / gearbox.KvRadPerSecPerVolt;
+    if (Math.abs(effectiveVoltage) > batteryVoltage) {
+      effectiveVoltage = Math.copySign(batteryVoltage, effectiveVoltage);
+      currentDrawAmps =
+          (effectiveVoltage - motorSpeedRadsPerSec / gearbox.KvRadPerSecPerVolt) / gearbox.rOhms;
+    }
+
+    double electricalPowerW = effectiveVoltage * currentDrawAmps;
+    double supplyCurrentAmps = electricalPowerW / batteryVoltage;
+
+    MARSPhysicsWorld.getInstance().addFrameCurrentDrawAmps(supplyCurrentAmps);
 
     inputs.hasHardwareConnected = true;
     inputs.positionMeters = currentPosMeters;

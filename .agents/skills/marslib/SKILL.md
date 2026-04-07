@@ -38,5 +38,20 @@ When writing `[Name]IOSim.java` layers:
 - Register the `Body` logic to the centralized `MARSPhysicsWorld`.
 - Provide basic internal profile controllers to roughly mimic 1kHz motor controllers (like TalonFX Motion Magic).
 - Always aggregate the simulated current draw up to `MARSPhysicsWorld.getInstance().addFrameCurrentDrawAmps(currentDrawAmps)`.
+- Use the overarching dyn4j physics constraint parameters (e.g., Stribeck/Coulomb friction mappings) to drive true, uncheated wheel slip.
+
+## 6. Digital Twin & Stochastic Fidelity
+MARSLib maintains "Einstein-ready" physical simulation parity through configurable noise models located in `Constants.SimulationConstants`:
+- **Sensor Noise**: Never return mathematically perfect values. Wrap Gyro yaws in Gaussian white noise and static drift vectors.
+- **Odometry & Drift**: Rely on native physical acceleration limits; `dyn4j` naturally slips wheels under heavy tractive load, inherently de-syncing odometry unless mitigated with simulated vision.
+- **Vision Occlusion**: Do not assume 100% camera lock. Implement stochastic probabilistic frame-dropping to mirror real-world obstructions.
+- **Hardware Throttling**: Use $I^2R$ electrical modeling to track stator heat buildup over a match. Actively clamp and fade maximum output motor torque matrices if temperatures exceed safe margins (90°C).
+- **Spatial Awareness**: Rely on dynamic raycasting (e.g. `LidarIOSim`) for physical collision-detection rather than cheating and reading the global `Odometry` state. Push collision depth matrices natively to `Translation3d[]` clouds in AdvantageKit.
 
 Always build modular, fail-safe code designed strictly for deterministic log-replay analysis.
+
+## 7. Integrated Simulation Testing (JUnit)
+When writing unit tests for MARSLib commands or subsystems, do NOT use `Mockito` to mock the hardware layer. Instead, use WPILib's native `CommandScheduler` mapping to `SwerveModuleIOSim` and `dyn4j` to achieve physical environment parity.
+- **Physics Resetting**: The `MARSPhysicsWorld` is a static singleton. In a multi-test JUnit suite, failing to clear it causes chassis instances to stack up at `(0,0)`, locking the engine due to infinite friction bounds. ALWAYS manually hook `com.marslib.simulation.MARSPhysicsWorld.resetInstance();` in your `@BeforeEach` `setUp()` block alongside `CommandScheduler.getInstance().cancelAll()`.
+- **DriverStation Timeouts**: WPILib implements intrinsic disabling loops if `DriverStationSim` heartbeat timeouts drop. Inside any 150-tick integration loop where `SimHooks.stepTiming(LOOP_PERIOD_SECS)` and `CommandScheduler.getInstance().run()` are stepped, you MUST continuously call `DriverStationSim.notifyNewData();` to ensure virtual target commands don't abruptly terminate.
+- **Config Crash Bypassing**: Ensure elements like PathPlanner's `AutoBuilder.configure()` gracefully catch and ignore static-linked crashes (e.g. `already been configured`) which natively persist across JUnit runner instances.

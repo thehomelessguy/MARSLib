@@ -19,8 +19,13 @@ import org.littletonrobotics.junction.Logger;
  * RoboRIO flash storage via blazing-fast CSV structures, and replaying those EXACT physics loops
  * back into the teleop sequence for autonomous runs.
  *
- * <p>Recording uses a thread-safe {@link ConcurrentLinkedQueue} buffer drained by a background
- * writer thread. This ensures zero main-loop blocking from file I/O or String formatting.
+ * <p><b>Concurrency &amp; Hardware Safety</b> Re-writing to the physical flash block storage of the
+ * RoboRIO takes milliseconds, which would catastrophically lag the primary 50Hz robotic control
+ * loop. To bypass this, this class implements a thread-safe {@link ConcurrentLinkedQueue} buffer.
+ * The main robot loop exclusively pushes memory-light Strings to the queue without locking.
+ *
+ * <p>A separate background daemon thread wakes up every ~5ms to drain the queue chunks to disk,
+ * guaranteeing zero main-loop blocking from file I/O formatting.
  */
 public class GhostManager {
 

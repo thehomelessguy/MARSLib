@@ -1,0 +1,356 @@
+
+> Task :eventDeploy
+Not running deploy task, skipping commit
+
+> Task :createVersionFile
+createVersionFile called. Path C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot
+
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :spotlessGroovyGradle UP-TO-DATE
+> Task :spotlessGroovyGradleApply UP-TO-DATE
+> Task :spotlessJava
+> Task :spotlessJavaApply
+> Task :spotlessJson UP-TO-DATE
+> Task :spotlessJsonApply UP-TO-DATE
+> Task :spotlessMisc UP-TO-DATE
+> Task :spotlessMiscApply UP-TO-DATE
+> Task :spotlessApply
+> Task :compileJava
+> Task :processResources NO-SOURCE
+> Task :classes
+
+> Task :javadoc
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:22: warning: empty <p> tag
+ * <p>
+   ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:24: error: heading used out of sequence: <H3>, compared to implicit preceding heading: <H1>
+ * <h3>Concurrency & Hardware Safety</h3>
+   ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:24: error: bad HTML entity
+ * <h3>Concurrency & Hardware Safety</h3>
+                   ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\ShootOnTheMoveCommand.java:18: warning: empty <p> tag
+ * <p>
+   ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\ShootOnTheMoveCommand.java:20: error: heading used out of sequence: <H3>, compared to implicit preceding heading: <H1>
+ * <h3>Mathematical Architecture</h3>
+   ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\swerve\SwerveDrive.java:33: warning: empty <p> tag
+ * <p>
+   ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\swerve\SwerveDrive.java:35: error: heading used out of sequence: <H3>, compared to implicit preceding heading: <H1>
+ * <h3>Architecture</h3>
+   ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\util\KinematicAiming.java:12: error: reference not found
+ * {@link ShootOnTheMoveCommand} which implements the superior quadratic trajectory solver.
+          ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:60: warning: no comment
+  public static enum AlertType {
+                ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:20: warning: no comment
+  public Alert(String text, AlertType type) {
+         ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:24: warning: no comment
+  public Alert(String group, String text, AlertType type) {
+         ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:56: warning: no comment
+  public boolean get() {
+                 ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:34: warning: no comment
+  public void set(boolean active) {
+              ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:49: warning: no comment
+  public void setText(String text) {
+              ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:63: warning: no comment
+    CRITICAL
+    ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:61: warning: no comment
+    INFO,
+    ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:62: warning: no comment
+    WARNING,
+    ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIO.java:10: warning: no comment
+  public static class AprilTagVisionIOInputs {
+                ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIO.java:18: warning: no comment
+  public default void updateInputs(AprilTagVisionIOInputs inputs) {}
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIO.java:15: warning: no comment
+    public double[] ambiguities = new double[0];
+                    ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIO.java:14: warning: no comment
+    public double[] averageDistancesMeters = new double[0];
+                    ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIO.java:11: warning: no comment
+    public Pose3d[] estimatedPoses = new Pose3d[0];
+                    ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIO.java:13: warning: no comment
+    public int[] tagCounts = new int[0];
+                 ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIO.java:12: warning: no comment
+    public double[] timestamps = new double[0];
+                    ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOLimelight.java:7: warning: no comment
+public class AprilTagVisionIOLimelight implements AprilTagVisionIO {
+       ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOLimelight.java:11: warning: no comment
+  public AprilTagVisionIOLimelight(String cameraName) {
+         ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOPhoton.java:20: warning: no comment
+  public AprilTagVisionIOPhoton(String cameraName, PhotonPoseEstimator poseEstimator) {
+         ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:18: warning: no comment
+public class AprilTagVisionIOSim implements AprilTagVisionIO {
+       ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:27: warning: no comment
+  public AprilTagVisionIOSim(
+         ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java:12: warning: no comment
+  public static final String BUILD_DATE = "2026-04-06 20:46:43 EDT";
+                             ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java:13: warning: no comment
+  public static final long BUILD_UNIX_TIME = 1775522803138L;
+                           ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java:14: warning: no comment
+  public static final int DIRTY = 1;
+                          ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java:11: warning: no comment
+  public static final String GIT_BRANCH = "master";
+                             ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java:10: warning: no comment
+  public static final String GIT_DATE = "2026-04-06 14:36:45 EDT";
+                             ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java:8: warning: no comment
+  public static final int GIT_REVISION = 17;
+                          ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java:9: warning: no comment
+  public static final String GIT_SHA = "de12cd54010046f0ea31a367dfaf7439cdbd9f8e";
+                             ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java:5: warning: no comment
+  public static final String MAVEN_GROUP = "";
+                             ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java:6: warning: no comment
+  public static final String MAVEN_NAME = "MARSLib";
+                             ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\BuildConstants.java:7: warning: no comment
+  public static final String VERSION = "unspecified";
+                             ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:74: warning: no comment
+  public static final class ArmConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:124: warning: no comment
+  public static final class AutoConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:33: warning: no comment
+  public static final class DriveConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:59: warning: no comment
+  public static final class ElevatorConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:182: warning: no comment
+  public static final class FieldConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:89: warning: no comment
+  public static final class IntakeConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:113: warning: no comment
+  public static final class LEDConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:22: warning: no comment
+  public static enum Mode {
+                ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:177: warning: no comment
+  public static final class OperatorConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:118: warning: no comment
+  public static final class PowerConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:94: warning: no comment
+  public static final class ShooterConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:144: warning: no comment
+  public static final class SimulationConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:100: warning: no comment
+  public static final class SuperstructureConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:157: warning: no comment
+  public static final class VisionConstants {
+                      ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:19: warning: no comment
+  public static final Mode CURRENT_MODE = RobotBase.isReal() ? Mode.REAL : SIM_MODE;
+                           ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:20: warning: no comment
+  public static final double LOOP_PERIOD_SECS = 0.01;
+                             ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:18: warning: no comment
+  public static final Mode SIM_MODE = Mode.SIM;
+                           ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:76: warning: no comment
+    public static final String CANBUS = "rio";
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:84: warning: no comment
+    public static final double CRITICAL_VOLTAGE = 7.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:77: warning: no comment
+    public static final double GEAR_RATIO = 50.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:80: warning: no comment
+    public static final boolean INVERTED = false;
+                                ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:85: warning: no comment
+    public static final double MAX_CURRENT_AMPS = 60.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:86: warning: no comment
+    public static final double MIN_CURRENT_AMPS = 20.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:75: warning: no comment
+    public static final int MOTOR_ID = 21;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:83: warning: no comment
+    public static final double NOMINAL_VOLTAGE = 10.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:79: warning: no comment
+    public static final double SIM_LENGTH = 0.6;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:78: warning: no comment
+    public static final double SIM_MOI = 1.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:138: warning: no comment
+    public static final double ALIGN_ROTATION_MAX_ACCEL_RAD_PER_SEC2 = Math.PI * 4;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:137: warning: no comment
+    public static final double ALIGN_ROTATION_MAX_VELOCITY_RAD_PER_SEC = Math.PI * 2;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:141: warning: no comment
+    public static final double ALIGN_ROTATION_TOLERANCE_RAD = 0.05;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:133: warning: no comment
+    public static final double ALIGN_THETA_KP = 5.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:132: warning: no comment
+    public static final double ALIGN_TRANSLATION_KP = 5.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:136: warning: no comment
+    public static final double ALIGN_TRANSLATION_MAX_ACCEL_MPS2 = 3.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:135: warning: no comment
+    public static final double ALIGN_TRANSLATION_MAX_VELOCITY_MPS = 3.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:140: warning: no comment
+    public static final double ALIGN_TRANSLATION_TOLERANCE_METERS = 0.05;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:129: warning: no comment
+    public static final String GHOST_MACRO_FILE_PATH =
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:126: warning: no comment
+    public static final double MAX_ACCELERATION_MPS2 = 2.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:128: warning: no comment
+    public static final double MAX_ANGULAR_ACCELERATION_RAD_PER_SEC2 = Math.PI / 2.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:127: warning: no comment
+    public static final double MAX_ANGULAR_VELOCITY_RAD_PER_SEC = Math.PI;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:125: warning: no comment
+    public static final double MAX_VELOCITY_MPS = 3.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:43: warning: no comment
+    public static final int BL_DRIVE_ID = 5;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:44: warning: no comment
+    public static final int BL_TURN_ID = 6;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:46: warning: no comment
+    public static final int BR_DRIVE_ID = 7;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:47: warning: no comment
+    public static final int BR_TURN_ID = 8;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:34: warning: no comment
+    public static final String CANBUS = "rio";
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:37: warning: no comment
+    public static final int FL_DRIVE_ID = 1;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:38: warning: no comment
+    public static final int FL_TURN_ID = 2;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:40: warning: no comment
+    public static final int FR_DRIVE_ID = 3;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:41: warning: no comment
+    public static final int FR_TURN_ID = 4;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:53: warning: no comment
+    public static final double HEADING_KP = 5.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:56: warning: no comment
+    public static final double ODOMETRY_HZ = 250.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:49: warning: no comment
+    public static final int PIGEON2_ID = 9;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:55: warning: no comment
+    public static final double TELEMETRY_HZ = 50.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:51: warning: no comment
+    public static final double TELEOP_LINEAR_ACCEL_LIMIT = 15.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:52: warning: no comment
+    public static final double TELEOP_OMEGA_ACCEL_LIMIT = Math.PI * 6.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:61: warning: no comment
+    public static final String CANBUS = "rio";
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:69: warning: no comment
+    public static final double CRITICAL_VOLTAGE = 7.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:62: warning: no comment
+    public static final double GEAR_RATIO = 10.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:65: warning: no comment
+    public static final boolean INVERTED = false;
+                                ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:70: warning: no comment
+    public static final double MAX_CURRENT_AMPS = 60.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:71: warning: no comment
+    public static final double MIN_CURRENT_AMPS = 20.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:60: warning: no comment
+    public static final int MOTOR_ID = 20;
+                            ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:68: warning: no comment
+    public static final double NOMINAL_VOLTAGE = 10.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:64: warning: no comment
+    public static final double SIM_MASS_KG = 5.0;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:63: warning: no comment
+    public static final double SPOOL_DIAMETER_METERS = 0.05;
+                               ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\Constants.java:215: warning: no comment
+    public static final edu.wpi.first.math.geometry.Translation2d BLUE_HUB_POS =
+                                                                  ^
+5 errors
+100 warnings
+
+> Task :javadoc FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':javadoc'.
+> Javadoc generation failed. Generated Javadoc options file (useful for troubleshooting): 'C:\Users\david\dev\robotics\frc\MARSLib\build\tmp\javadoc\javadoc.options'
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 11s
+13 actionable tasks: 6 executed, 7 up-to-date

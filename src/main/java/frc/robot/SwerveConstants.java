@@ -114,7 +114,7 @@ public final class SwerveConstants {
   // ---- Current Limits ----
 
   /** Nominal stator current limit for drive motors (amps). */
-  public static final double DRIVE_STATOR_CURRENT_LIMIT = 80.0;
+  public static final double DRIVE_STATOR_CURRENT_LIMIT = 60.0;
 
   /** Nominal stator current limit for turn motors (amps). */
   public static final double TURN_STATOR_CURRENT_LIMIT = 40.0;

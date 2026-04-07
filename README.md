@@ -1,31 +1,97 @@
-# MARSLib Workspace
+<div align="center">
 
-Welcome to the MARSLib Advanced Simulation and Abstraction Library.
+# 🪐 MARSLib
+### Elite FRC AdvantageKit Abstraction & Physics Template
 
-This architecture is designed to enforce consistent AdvantageKit input abstraction across hardware components. It enables immediate, real-time physics simulations of robot mechanisms (Elevators, Arms, Swerve Drivetrains) using Dyn4J while still allowing high-performance mapping to real hardware devices (e.g. TalonFX/CANSparkMax).
+[![CI Build](https://github.com/thehomelessguy/MARSLib/actions/workflows/ci.yml/badge.svg)](https://github.com/thehomelessguy/MARSLib/actions/workflows/ci.yml)
+[![Spotless](https://img.shields.io/badge/style-spotless-brightgreen)](https://github.com/diffplug/spotless)
+[![Team](https://img.shields.io/badge/FRC-2614-orange)](https://www.thebluealliance.com/team/2614)
+[![AdvantageKit](https://img.shields.io/badge/Powered%20By-AdvantageKit-yellow)](https://github.com/Mechanical-Advantage/AdvantageKit)
+[![Dyn4j](https://img.shields.io/badge/Physics-Dyn4j-blue)](https://dyn4j.org/)
 
-## Project Structure
+**A championship-tier software template for FRC Team 2614.**
+</div>
 
-Your logic is segmented into two spheres:
+---
 
-1. `com.marslib.*`: This is the inner library. It contains the abstraction interfaces (`LinearMechanismIO`, `RotaryMechanismIO`), the Dyn4j physics simulation wrappers (`LinearMechanismIOSim`, `RotaryMechanismIOSim`), Fault Management (`MARSFaultManager`), HMI interfaces, and Vision interfaces.
-   - Do **NOT** write specific robot logic here. This is the hardware engine.
-2. `frc.robot.*`: This is the standard WPILib competition code footprint. You will create your Subsystems, Commands, and RobotContainer directly in here.
+Welcome to MARSLib, an aggressively hardened framework that enables pure, deterministic AdvantageKit logging while bridging seamless 2D physics simulations via `dyn4j`.
 
-## How to use Subsystems
+This architecture is built so that students can develop completely offline. Our simulation logic doesn't just run mathematical encoders—it simulates hexagonal REBUILT obstacles, voltage sag limits, and bounding box superstructure collisions.
 
-MARSLib uses AdvantageKit IO layers. When writing a new subsystem, you will create:
-1. `MySubsystemIO` (Interface defining the inputs like `position`, `velocity`, `currentAmps`)
-2. `MySubsystemIOReal` (Reads actual CAN bus data from physical motors)
-3. `MySubsystemIOSim` (Optionally use MARSLib's Dyn4j wrappers if available, or write custom physics)
-4. `MySubsystem` (The SubsystemBase class that takes `MySubsystemIO` in its constructor and executes control logic)
+## 🚀 Key Features
 
-## Simulating the Robot
+*   **100% Simulated Logic:** Run `./gradlew simulateJava` and visualize your robot mathematically navigating the REBUILT field before you even touch a real battery.
+*   **Time-Of-Flight Aiming:** Native quadratic kinematic intersections mean the robot shoots accurately while pulling full-speed swerve maneuvers.
+*   **Ghost Manager:** Press a button to record your entire teleop driving sequence to disk. Press another to play it perfectly back into PathPlanner as an autonomous macro.
+*   **Voltage Load-Shedding:** A native Stator Current allocation daemon statically bounds TalonFX modules to actively prevent robotic brownouts when pushing against defense.
+*   **Continuous Automation:** Every push to GitHub runs a spotless lint check and validates over 100 JUnit Mockito tests before compiling and logging an uploadable JAR.
 
-Because MARSLib overrides the IO layer, running `Simulate Robot` in VS Code/Antigravity will automatically bridge the subsystem commands into `MARSPhysicsWorld`. AdvantageScope can then connect via NetworkTables to visualize the robot's odometry and states instantly.
+## 🧬 Architecture Diagram
 
-## Building and Deploying
+The codebase strictly enforces the AdvantageKit **Dependency Injection** pattern, isolating the logical robot from the physical/simulated hardware.
 
-- **Build Code:** `./gradlew build`
-- **Deploy to Robot:** `./gradlew deploy`
-- **Run Simulation:** `./gradlew simulateJava`
+```mermaid
+graph TD
+    classDef io fill:#2b66a2,stroke:#1f4a76,stroke-width:2px,color:white;
+    classDef logic fill:#003f00,stroke:#002900,stroke-width:2px,color:white;
+    classDef ext fill:#4a4a4a,stroke:#333333,stroke-width:2px,color:white;
+
+    Subsystem[Subsystem Logic / State Machines]:::logic
+    IO[SubsystemIO Interface]:::io
+    Real[SubsystemIOReal: TalonFX/CANSparkMax]:::ext
+    Sim[SubsystemIOSim: Dyn4j Physics Engine]:::ext
+    Log[(AdvantageKit Logger)]:::ext
+
+    Subsystem -->|Injects| IO
+    IO -.->|Physical Robot| Real
+    IO -.->|Desktop Sim| Sim
+    Subsystem -->|Records State| Log
+```
+
+## 📂 Repository Layout
+
+```text
+MARSLib/
+├── .github/                 # CI Pipelines, Dependabot, and PR Templates
+├── .wpilib/                 # FRC 2614 Team Radio Configurations
+├── com.marslib/             # Inner Architecture (Do Not Edit Routine Logic Here)
+│   ├── simulation/          # Dyn4j World Bounds and Hexagonal Meshes
+│   ├── swerve/              # 250Hz Odometry Thread & Odometry Computations
+│   └── util/                # Time-Of-Flight Interpolation
+└── frc.robot/               # Competition Logic (Edit Your Logic Here!)
+    ├── commands/            # PathPlanner routines and Teleop Commands
+    ├── subsystems/          # Implementations of your Superstructure/Arm
+    └── RobotContainer.java  # Controller Mapping and Subsystem bindings
+```
+
+## 🛠 Usage & Setup
+
+### 1. Developer Formatting
+To ensure your code never gets rejected by GitHub's automated CI, run the included batch script to initialize a spotless Git Hook!
+```bash
+# Windows
+.\install-git-hooks.bat
+```
+*(This forces your VS Code to auto-format `build.gradle` structures before you push!)*
+
+### 2. Creating Subsystems
+MARSLib abstracts the `Real` hardware from the `Sim` hardware using pure Dependency Injection interfaces.
+1. `SubsystemIO` - The Interface (What data does this mechanism need?)
+2. `SubsystemIOReal` - The Hardware (TalonFX / CANSparkMax / NavX)
+3. `SubsystemIOSim` - The Physics (Dyn4j wrappers, friction calculations)
+
+### 3. Firing up AdvantageScope
+Want to analyze a bug or watch your ghost-mode playback?
+1. Open AdvantageScope
+2. Click `File > Open Layout` and select the `advantagescope_layout.json` located at the root of this repository!
+3. You now have a fully operational 3D Dashboard monitoring battery voltage limits alongside Hexagonal Field boundaries.
+
+## 🐛 Found a Bug?
+Use our customized [GitHub Issue Templates](.github/ISSUE_TEMPLATE) to let the software leads know exactly what went wrong in your simulation or physical robot code! Whether it's a new PathPlanner routine request or an odometry jitter bug, the templates will automatically guide you through attaching your `.wpilog` telemetry data.
+
+## ⚖️ Open Source Acknowledgements
+This mathematical architecture leverages the shoulders of giants. We explicitly attribute and bundle the following open-source resources according to their respective MIT/BSD constraints:
+- [Mechanical Advantage (AdvantageKit)](AdvantageKit-License.md)
+- [WPILib Core](WPILib-License.md)
+- [Dyn4j Collision Physics](Dyn4j-License.md)
+- [PathPlanner](PathPlanner-License.md)

@@ -9,7 +9,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
  *
  * <p>NOTE: This class uses a naive ToF (Time of Flight) approximation (distance / speed). It is
  * useful for learning the basics of kinematic leading. For production use on the real robot, use
- * {@link ShootOnTheMoveCommand} which implements the superior quadratic trajectory solver.
+ * {@link com.marslib.auto.ShootOnTheMoveCommand} which implements the superior quadratic trajectory
+ * solver.
  */
 public class KinematicAiming {
 
