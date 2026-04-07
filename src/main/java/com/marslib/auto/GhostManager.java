@@ -171,6 +171,16 @@ public class GhostManager {
           // Write CSV header synchronously (single write, negligible cost)
           pw.println("time,ly,lx,rx,a,b,x,y,lb,rb,up,down,left,right");
 
+          // Safely terminate any existing writer thread from a previous recording
+          if (writerThread != null && writerThread.isAlive()) {
+            recording = false; // Signal the old thread to drain and finish
+            writerThread.interrupt();
+            try {
+              writerThread.join(100); // Wait up to 100ms for clean shutdown
+            } catch (InterruptedException ignored) {
+            }
+          }
+
           recording = true;
           writeBuffer.clear();
           startWriterThread(pw);

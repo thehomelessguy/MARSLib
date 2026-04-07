@@ -5,6 +5,12 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructSubscriber;
 import edu.wpi.first.networktables.TimestampedObject;
 
+/**
+ * Real hardware implementation of {@link VIOSlamIO} sourcing poses from a ROS2 coprocessor.
+ *
+ * <p>Subscribes to a {@link Pose3d} struct topic published by a Jetson/Pi running a ROS2 SLAM node.
+ * Timestamps are converted from NT4 microseconds to WPILib seconds for fusion compatibility.
+ */
 public class VIOSlamIOROS2 implements VIOSlamIO {
 
   private final StructSubscriber<Pose3d> poseSub;

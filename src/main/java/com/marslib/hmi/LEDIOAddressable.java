@@ -10,13 +10,7 @@ public class LEDIOAddressable implements LEDIO {
   private final AddressableLEDBuffer buffer;
   private final int length;
 
-  public enum State {
-    DEFAULT,
-    LOAD_SHEDDING,
-    CRITICAL_FAULT
-  }
-
-  private State currentState = State.DEFAULT;
+  private LEDIO.State currentState = LEDIO.State.DEFAULT;
 
   public LEDIOAddressable(int pwmPort, int length) {
     this.length = length;
@@ -30,19 +24,19 @@ public class LEDIOAddressable implements LEDIO {
   /** Sets the LEDs to their default color state (e.g., solid blue). */
   @Override
   public void setDefaultColors() {
-    currentState = State.DEFAULT;
+    currentState = LEDIO.State.DEFAULT;
   }
 
   /** Sets the LEDs to a load shedding warning color (e.g., solid orange). */
   @Override
   public void setLoadSheddingColors() {
-    currentState = State.LOAD_SHEDDING;
+    currentState = LEDIO.State.LOAD_SHEDDING;
   }
 
   /** Sets the LEDs to a critical fault warning color (e.g., flashing red). */
   @Override
   public void setCriticalFaultFlash() {
-    currentState = State.CRITICAL_FAULT;
+    currentState = LEDIO.State.CRITICAL_FAULT;
   }
 
   /** Periodically updates the underlying LED buffer based on the current state. */

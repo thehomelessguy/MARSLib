@@ -322,6 +322,20 @@ public class SwerveDrive extends SubsystemBase {
   }
 
   /**
+   * Directly commands the swerve modules to the specified states. Useful for hardware testing and
+   * SystemCheck diagnostics.
+   *
+   * @param states Array of 4 SwerveModuleStates.
+   */
+  public void setModuleStates(SwerveModuleState[] states) {
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.MAX_LINEAR_SPEED_MPS);
+    for (int i = 0; i < 4; i++) {
+      modules[i].setDesiredState(states[i]);
+    }
+    Logger.recordOutput("SwerveDrive/DesiredStates", states);
+  }
+
+  /**
    * Generates a SysId Quasistatic characterization command.
    *
    * @param direction The direction of the quasistatic routine (Forward/Reverse).

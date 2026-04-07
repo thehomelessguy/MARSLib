@@ -105,6 +105,28 @@ To fix formatting automatically, run this command in your VS Code terminal befor
 3. Once satisfied, execute `.\gradlew build` to ensure no compile errors exist.
 4. Stage, commit, and push your branch.
 5. Create a Pull Request (PR) against the `master` branch.
-6. The CI pipeline will automatically run over 100 JUnit integration tests. If the tests pass and the code is formatted properly, you can request a review from a Robotics Lead.
+6. The CI pipeline will automatically run all JUnit physics-integration tests. If the tests pass and the code is formatted properly, you can request a review from a Robotics Lead.
+
+---
+
+## 5. Writing Tests (Mandatory Hygiene)
+
+All subsystem tests use **physics-backed `IOSim` implementations** and the `dyn4j` engine—never Mockito for mechanism behavior. Every test's `@BeforeEach` **must** include this cleanup block to prevent static state bleed:
+
+```java
+@BeforeEach
+public void setUp() {
+    HAL.initialize(500, 0);
+    CommandScheduler.getInstance().cancelAll();
+    MARSPhysicsWorld.resetInstance();
+    Alert.resetAll();
+    MARSFaultManager.clear();
+}
+```
+
+> [!WARNING]
+> Omitting `MARSFaultManager.clear()` will cause phantom critical-fault flags to leak between test methods, causing random assertion failures that only appear when the full suite runs.
+
+---
 
 Happy Coding! 🪐

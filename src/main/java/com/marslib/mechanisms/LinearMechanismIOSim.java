@@ -52,7 +52,7 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
     anchorBody = new Body();
     anchorBody.addFixture(Geometry.createRectangle(0.5, 0.1));
     anchorBody.setMass(MassType.INFINITE);
-    anchorBody.translate(0.0, 0.0);
+    anchorBody.translate(0.0, 5.0);
 
     // Carriage body (Dynamic)
     carriageBody = new Body();
@@ -63,28 +63,29 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
     carriageBody.addFixture(
         Geometry.createRectangle(carriageWidth, carriageHeight), massKg / area, 0.2, 0.0);
     carriageBody.setMass(MassType.NORMAL);
-    carriageBody.translate(0.0, 0.0);
+    carriageBody.translate(0.0, 5.0);
 
     // Joint allows only vertical translation
     joint =
         new PrismaticJoint<Body>(
-            anchorBody, carriageBody, new Vector2(0.0, 0.0), new Vector2(0.0, 1.0));
+            anchorBody, carriageBody, new Vector2(0.0, 5.0), new Vector2(0.0, 1.0));
+    joint.setCollisionAllowed(false);
 
     MARSPhysicsWorld.getInstance().getWorld().addBody(anchorBody);
     MARSPhysicsWorld.getInstance().registerMechanismBody(mechanismName, carriageBody);
     MARSPhysicsWorld.getInstance().getWorld().addJoint(joint);
 
     // Internal profiled PID mimics the TalonFX Motion Magic controller in sim.
-    // kP=5.0 provides stiff tracking; constraints model a typical FRC elevator profile:
+    // kP=500.0 provides stiff tracking without ff; constraints model FRC elevator profile:
     //   maxVelocity = 2.0 m/s, maxAcceleration = 4.0 m/s²
     internalController =
-        new ProfiledPIDController(5.0, 0.0, 0.0, new TrapezoidProfile.Constraints(2.0, 4.0));
+        new ProfiledPIDController(500.0, 0.0, 0.0, new TrapezoidProfile.Constraints(2.0, 4.0));
   }
 
   @Override
   public void updateInputs(LinearMechanismIOInputs inputs) {
-    // Current state mappings. Elevator only moves in Y axis perfectly.
-    double currentPosMeters = carriageBody.getTransform().getTranslationY();
+    // Current state mappings. Elevator only moves in Y axis perfectly. Offset anchor height 5.0m
+    double currentPosMeters = carriageBody.getTransform().getTranslationY() - 5.0;
     double currentVelocityMetersPerSec = carriageBody.getLinearVelocity().y;
 
     if (closedLoop) {
@@ -110,6 +111,20 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
 
     // Apply linear force directly to the body upwards
     carriageBody.applyForce(new Vector2(0.0, linearForceNewtons));
+
+    System.out.println(
+        "ElevatorSim | Pos: "
+            + currentPosMeters
+            + " | Vel: "
+            + currentVelocityMetersPerSec
+            + " | Motor Torque: "
+            + motorTorque
+            + " | Force: "
+            + linearForceNewtons
+            + " | Applied Volts: "
+            + appliedVolts
+            + " | Target Pos: "
+            + internalController.getGoal().position);
 
     // Compute effective motor terminal voltage after current limiting
     // V_effective = I·R + ω/Kv (what the motor controller actually applies)

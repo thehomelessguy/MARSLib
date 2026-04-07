@@ -15,6 +15,14 @@ import org.photonvision.simulation.PhotonCameraSim;
 import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.simulation.VisionSystemSim;
 
+/**
+ * Desktop simulation implementation of {@link AprilTagVisionIO} using PhotonVision's simulation
+ * framework.
+ *
+ * <p>Renders synthetic camera views of the AprilTag field layout from the robot's true pose,
+ * injecting realistic calibration error, latency, and optional occlusion dropout to stress-test the
+ * pose estimator fusion pipeline without physical hardware.
+ */
 public class AprilTagVisionIOSim implements AprilTagVisionIO {
   private static VisionSystemSim visionSim;
   private static AprilTagFieldLayout fieldLayout;

@@ -28,7 +28,6 @@ public void setUp() {
 
   // 3. Clear WPILib's internal scheduler tracking
   CommandScheduler.getInstance().cancelAll();
-  CommandScheduler.getInstance().clearButtons();
 
   // 4. Reset dyn4j physics state so robots don't stack infinitely at (0,0) across tests
   com.marslib.simulation.MARSPhysicsWorld.resetInstance();
@@ -78,3 +77,8 @@ For exact functional examples of FRC-grade digital-twin tests running purely on 
 - `src/test/java/com/marslib/auto/ShootOnTheMoveCommandTest.java`
 
 You must follow these rules strictly to prevent static physics bleed, false-timeout disabling, and bulk-suite test failures.
+
+## 5. Test Hygiene & Static State
+- **Alert System:** The `Alert` class uses a static `Map` of alert groups. Call `Alert.resetAll()` in your `@BeforeEach` block to prevent alert state from bleeding across tests.
+- **Scratch Files:** Do not commit debug utilities (e.g., tag extractors, enum printers) as `@Test` methods. They pollute CI output and confuse students. Store one-off utilities in `/tmp/` or a `scratch/` directory outside the test tree.
+- **MARSFaultManager:** This is also static. After tests that trigger faults, call `MARSFaultManager.clearNewCriticalFault()` to prevent downstream test contamination.

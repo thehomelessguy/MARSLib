@@ -8,6 +8,17 @@ package com.marslib.hmi;
  * current state (default, load shedding, or critical fault).
  */
 public interface LEDIO {
+
+  /** The discrete visual states an LED strip can render. */
+  public enum State {
+    /** Default idle pattern (e.g., solid team color). */
+    DEFAULT,
+    /** Warning pattern indicating active power load shedding. */
+    LOAD_SHEDDING,
+    /** Critical fault flash pattern (e.g., flashing red). */
+    CRITICAL_FAULT
+  }
+
   /** Sets the LED strip to its default idle color pattern (e.g., solid team color). */
   public void setDefaultColors();
 

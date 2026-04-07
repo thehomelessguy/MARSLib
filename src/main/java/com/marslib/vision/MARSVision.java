@@ -27,7 +27,6 @@ public class MARSVision extends SubsystemBase {
   private final List<VIOSlamIO> slamIOs;
   private final VIOSlamIOInputsAutoLogged[] slamInputs;
 
-  // Base standard deviation multiplier for AprilTags
   /**
    * Constructs the absolute Vision mapping structure.
    *

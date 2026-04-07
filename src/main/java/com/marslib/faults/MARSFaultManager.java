@@ -14,6 +14,13 @@ public class MARSFaultManager {
   private static boolean hasNewCriticalFault = false;
   private static int activeCriticalFaults = 0;
 
+  /** Resets all fault state. Required for JUnit test isolation. */
+  public static void clear() {
+    hasNewCriticalFault = false;
+    activeCriticalFaults = 0;
+    disconnectAlerts.clear();
+  }
+
   /** Reports that a new critical fault has occurred. */
   private static void reportNewCriticalFault() {
     hasNewCriticalFault = true;

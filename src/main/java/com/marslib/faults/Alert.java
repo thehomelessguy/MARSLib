@@ -11,6 +11,11 @@ import org.littletonrobotics.junction.Logger;
 public class Alert {
   private static Map<String, SendableAlerts> groups = new HashMap<>();
 
+  /** Clears all alert groups. Required for JUnit test isolation to prevent state bleed. */
+  public static void resetAll() {
+    groups.clear();
+  }
+
   private final AlertType type;
   private final String group;
   private boolean active = false;

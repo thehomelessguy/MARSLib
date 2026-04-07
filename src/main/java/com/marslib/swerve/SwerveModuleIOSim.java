@@ -100,8 +100,15 @@ public class SwerveModuleIOSim implements SwerveModuleIO {
     turnSim.setInputVoltage(volts);
   }
 
+  private double lastCurrentLimitAmps = 0.0;
+
   @Override
   public void setCurrentLimit(double amps) {
     // Current limiting is enforced at the physics engine level via battery voltage clamping
+    lastCurrentLimitAmps = amps;
+  }
+
+  public double getCurrentLimitAmps() {
+    return lastCurrentLimitAmps;
   }
 }

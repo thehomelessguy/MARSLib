@@ -2,6 +2,13 @@ package com.marslib.swerve;
 
 import org.littletonrobotics.junction.AutoLog;
 
+/**
+ * Hardware abstraction interface for a single swerve module (drive + turn motors).
+ *
+ * <p>Students: Implement this interface once for real hardware ({@code SwerveModuleIOTalonFX}) and
+ * once for desktop physics simulation ({@code SwerveModuleIOSim}). The {@link SwerveModule}
+ * subsystem is injected with one or the other and never knows the difference.
+ */
 public interface SwerveModuleIO {
 
   @AutoLog

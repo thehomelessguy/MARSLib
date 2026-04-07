@@ -10,6 +10,12 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+/**
+ * Real hardware implementation of {@link FlywheelIO} using a CTRE TalonFX motor controller.
+ *
+ * <p>Supports open-loop voltage control and closed-loop velocity control via Phoenix 6 onboard PID.
+ * Used for shooter and intake flywheels on the physical robot.
+ */
 public class FlywheelIOTalonFX implements FlywheelIO {
   private final TalonFX motor;
 

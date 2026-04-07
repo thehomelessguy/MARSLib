@@ -103,17 +103,19 @@ public class MARSSuperstructure extends SubsystemBase {
     elevator.setTargetPosition(safeElevatorHeight);
     arm.setTargetPosition(safeArmAngle);
 
-    // 4. Simulate Generic Intake logic mapped natively to Physics Engine
-    if (frc.robot.Robot.isSimulation()
-        && currentState == SuperstructureState.INTAKE_FLOOR
-        && !hasPiece) {
-      boolean swallow =
-          com.marslib.simulation.MARSPhysicsWorld.getInstance()
-              .checkIntake(
-                  poseSupplier.get(),
-                  frc.robot.Constants.FieldConstants.INTAKE_COLLECTION_RADIUS_METERS);
-      if (swallow) {
-        hasPiece = true;
+    // 4. Intake logic — works in both Sim and Replay by guarding on physics world availability
+    if (currentState == SuperstructureState.INTAKE_FLOOR && !hasPiece) {
+      try {
+        boolean swallow =
+            com.marslib.simulation.MARSPhysicsWorld.getInstance()
+                .checkIntake(
+                    poseSupplier.get(),
+                    frc.robot.Constants.FieldConstants.INTAKE_COLLECTION_RADIUS_METERS);
+        if (swallow) {
+          hasPiece = true;
+        }
+      } catch (Exception e) {
+        // Physics world not available (Real hardware) — intake detection handled by sensor IO
       }
     } else if (currentState == SuperstructureState.SCORE_HIGH) {
       hasPiece = false; // Dump piece when scoring

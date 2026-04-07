@@ -55,3 +55,18 @@ When writing unit tests for MARSLib commands or subsystems, do NOT use `Mockito`
 - **Physics Resetting**: The `MARSPhysicsWorld` is a static singleton. In a multi-test JUnit suite, failing to clear it causes chassis instances to stack up at `(0,0)`, locking the engine due to infinite friction bounds. ALWAYS manually hook `com.marslib.simulation.MARSPhysicsWorld.resetInstance();` in your `@BeforeEach` `setUp()` block alongside `CommandScheduler.getInstance().cancelAll()`.
 - **DriverStation Timeouts**: WPILib implements intrinsic disabling loops if `DriverStationSim` heartbeat timeouts drop. Inside any 150-tick integration loop where `SimHooks.stepTiming(LOOP_PERIOD_SECS)` and `CommandScheduler.getInstance().run()` are stepped, you MUST continuously call `DriverStationSim.notifyNewData();` to ensure virtual target commands don't abruptly terminate.
 - **Config Crash Bypassing**: Ensure elements like PathPlanner's `AutoBuilder.configure()` gracefully catch and ignore static-linked crashes (e.g. `already been configured`) which natively persist across JUnit runner instances.
+
+## 8. Creating New Game Simulations
+When configuring MARSLib for a new FRC season (e.g., the 2026 REBUILT game):
+- **Collision Boundaries:** Never assume a blank field. Inject rigid body obstacles directly into `MARSPhysicsWorld.java`. Use methods like `MARSPhysicsWorld.buildStaticHexagon()` or standard `dyn4j` geometry functions to map solid CAD structures.
+- **Material Properties:** Configure `dyn4j` materials accurately. Field perimeters should have high friction (`0.8`) and low restitution/bounciness (`0.1`) to prevent physics clipping when swerve drives ram into them.
+- **Field Constants:** Store all obstacle radii, coordinates, and origin mappings in `Constants.FieldConstants` so they remain globally accessible across standard robot logic and the physics engine.
+- **Dynamic Interaction:** If game pieces are ingestible, define mathematically bound ranges (e.g., `checkIntake(pose, radius)`) and log their 3D states sequentially to `AdvantageScope` so students visually confirm interactions.
+
+## 9. Game Piece Physical Constants
+When configuring game piece properties for a new season, update `Constants.FieldConstants`:
+- **`GAME_PIECE_RADIUS_METERS`** — The physical radius (e.g., `0.0635` for 5" diameter REBUILT Fuel).
+- **`GAME_PIECE_MASS_KG`** — The mass (e.g., `0.05` for foam balls).
+- **`INTAKE_COLLECTION_RADIUS_METERS`** — The proximity threshold for `checkIntake()`.
+
+For 2026 REBUILT, the field stages **168 total Fuel**: 24 per alliance Depot (4×6 grid) and 120 in the Neutral Zone midline (5×24 grid with row-alternating jitter). See `MARSPhysicsWorld.spawnInitialGamePieces()` for the canonical implementation. For deeper simulation guidance, refer to the `marslib-simulation` skill.

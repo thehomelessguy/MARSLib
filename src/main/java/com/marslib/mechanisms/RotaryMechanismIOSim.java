@@ -4,6 +4,7 @@ import com.marslib.simulation.MARSPhysicsWorld;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import org.dyn4j.collision.CategoryFilter;
 import org.dyn4j.dynamics.Body;
 import org.dyn4j.dynamics.joint.RevoluteJoint;
 import org.dyn4j.geometry.Geometry;
@@ -69,6 +70,10 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
     // Joint binds at origin
     joint = new RevoluteJoint<Body>(anchorBody, armBody, new Vector2(0.0, 0.0));
 
+    // Collision filtering to prevent the arm colliding with abstract simulation bounds (e.g. floor)
+    anchorBody.getFixture(0).setFilter(new CategoryFilter(4, 4));
+    armBody.getFixture(0).setFilter(new CategoryFilter(4, 4));
+
     // Register into the singleton Physics world
     MARSPhysicsWorld.getInstance().getWorld().addBody(anchorBody);
     MARSPhysicsWorld.getInstance().registerMechanismBody(mechanismName, armBody);
@@ -105,6 +110,18 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
 
     // Apply strictly to Dyn4j body
     armBody.applyTorque(mechanismTorque);
+
+    System.out.println(
+        "ArmSim | Pos: "
+            + currentAngleRad
+            + " | Vel: "
+            + currentVelocityRadPerSec
+            + " | Motor Torque: "
+            + motorTorque
+            + " | Applied Volts: "
+            + appliedVolts
+            + " | Target Pos: "
+            + internalController.getGoal().position);
 
     // Compute effective motor terminal voltage after current limiting
     double motorSpeedRadPerSec = currentVelocityRadPerSec * gearRatio;

@@ -17,14 +17,8 @@ public class LEDIOCANdle implements LEDIO {
   private final CANdle candle;
   private final SolidColor solidColorRequest;
 
-  public enum State {
-    DEFAULT,
-    LOAD_SHEDDING,
-    CRITICAL_FAULT
-  }
-
-  private State currentState = State.DEFAULT;
-  private State lastState = null;
+  private LEDIO.State currentState = LEDIO.State.DEFAULT;
+  private LEDIO.State lastState = null;
 
   /**
    * Constructs a CANdle LED IO layer.
@@ -41,23 +35,23 @@ public class LEDIOCANdle implements LEDIO {
 
   @Override
   public void setDefaultColors() {
-    currentState = State.DEFAULT;
+    currentState = LEDIO.State.DEFAULT;
   }
 
   @Override
   public void setLoadSheddingColors() {
-    currentState = State.LOAD_SHEDDING;
+    currentState = LEDIO.State.LOAD_SHEDDING;
   }
 
   @Override
   public void setCriticalFaultFlash() {
-    currentState = State.CRITICAL_FAULT;
+    currentState = LEDIO.State.CRITICAL_FAULT;
   }
 
   @Override
   public void update() {
     // Only push new commands when state changes (except critical which flashes continuously)
-    if (currentState == lastState && currentState != State.CRITICAL_FAULT) {
+    if (currentState == lastState && currentState != LEDIO.State.CRITICAL_FAULT) {
       return;
     }
     lastState = currentState;

@@ -4,6 +4,13 @@ import com.limelight.LimelightHelpers;
 import com.limelight.LimelightHelpers.PoseEstimate;
 import edu.wpi.first.math.geometry.Pose3d;
 
+/**
+ * Real hardware implementation of {@link AprilTagVisionIO} using a Limelight camera.
+ *
+ * <p>Fetches MegaTag2 pose estimates via the {@link LimelightHelpers} JSON API. Ambiguity is
+ * defaulted to 0.0 because Limelight does not expose per-target pose ambiguity natively; downstream
+ * quality control relies on distance-based standard deviation scaling in {@link MARSVision}.
+ */
 public class AprilTagVisionIOLimelight implements AprilTagVisionIO {
 
   private final String cameraName;

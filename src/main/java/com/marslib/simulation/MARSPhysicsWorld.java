@@ -106,15 +106,53 @@ public class MARSPhysicsWorld {
     spawnInitialGamePieces();
   }
 
-  /** Places the initial set of game pieces at their starting field positions. */
+  /** Places the initial set of 72 Fuel game pieces according to official 2026 REBUILT rules. */
   private void spawnInitialGamePieces() {
-    double midX = FieldConstants.FIELD_LENGTH_METERS / 2.0;
-    double midY = FieldConstants.FIELD_WIDTH_METERS / 2.0;
+    double fuelDiameter = frc.robot.Constants.FieldConstants.GAME_PIECE_RADIUS_METERS * 2.0;
+    // Add small buffer to prevent dyn4j physics collision overlap on spawn
+    double spacing = fuelDiameter + 0.05;
 
-    new GamePieceSim("mid_1", new edu.wpi.first.math.geometry.Translation2d(midX, midY + 1.0));
-    new GamePieceSim("mid_2", new edu.wpi.first.math.geometry.Translation2d(midX, midY - 1.0));
-    new GamePieceSim("mid_3", new edu.wpi.first.math.geometry.Translation2d(midX + 1.0, midY));
-    new GamePieceSim("mid_4", new edu.wpi.first.math.geometry.Translation2d(midX - 1.0, midY));
+    // 1) Blue Alliance Depot (24 Fuel staged neatly in 4 rows, 6 columns)
+    double blueBaseX = 1.0;
+    double blueBaseY = 1.0;
+    int index = 0;
+    for (int row = 0; row < 4; row++) {
+      for (int col = 0; col < 6; col++) {
+        new GamePieceSim(
+            "blue_depot_" + index++,
+            new edu.wpi.first.math.geometry.Translation2d(
+                blueBaseX + (col * spacing), blueBaseY + (row * spacing)));
+      }
+    }
+
+    // 2) Red Alliance Depot (24 Fuel staged neatly in 4 rows, 6 columns)
+    // Shift slightly inward to keep them in Red territory away from corners
+    double redBaseX = FieldConstants.FIELD_LENGTH_METERS - 2.5;
+    double redBaseY = FieldConstants.FIELD_WIDTH_METERS - 2.5;
+    index = 0;
+    for (int row = 0; row < 4; row++) {
+      for (int col = 0; col < 6; col++) {
+        new GamePieceSim(
+            "red_depot_" + index++,
+            new edu.wpi.first.math.geometry.Translation2d(
+                redBaseX + (col * spacing), redBaseY + (row * spacing)));
+      }
+    }
+
+    // 3) Neutral Zone (120 Fuel staged massively down the midline)
+    double midX = FieldConstants.FIELD_LENGTH_METERS / 2.0;
+    // Distribute 120 pieces in a 5 columns x 24 rows block
+    int neutralIndex = 0;
+    for (int col = 0; col < 5; col++) {
+      for (int row = 0; row < 24; row++) {
+        // Vary x and y slightly to avoid rigid interlocking
+        double offsetX = (col * spacing) - (2 * spacing) + ((row % 2 == 0) ? 0.05 : -0.05);
+        double offsetY = (row * spacing * 1.5);
+        new GamePieceSim(
+            "neutral_fuel_" + neutralIndex++,
+            new edu.wpi.first.math.geometry.Translation2d(midX + offsetX, 1.0 + offsetY));
+      }
+    }
   }
 
   private Body buildStaticRectangle(double x, double y, double w, double h) {

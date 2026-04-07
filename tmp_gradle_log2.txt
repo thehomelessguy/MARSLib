@@ -1,0 +1,147 @@
+
+> Task :eventDeploy
+Not running deploy task, skipping commit
+
+> Task :createVersionFile
+createVersionFile called. Path C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot
+
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :spotlessGroovyGradle UP-TO-DATE
+> Task :spotlessGroovyGradleApply UP-TO-DATE
+> Task :spotlessJava
+> Task :spotlessJavaApply
+> Task :spotlessJson UP-TO-DATE
+> Task :spotlessJsonApply UP-TO-DATE
+> Task :spotlessMisc UP-TO-DATE
+> Task :spotlessMiscApply UP-TO-DATE
+> Task :spotlessApply
+> Task :compileJava
+> Task :processResources NO-SOURCE
+> Task :classes
+
+> Task :compileTestJava FAILED
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:141: error: cannot find symbol
+  @AfterEach
+   ^
+  symbol:   class AfterEach
+  location: class MARSSuperstructureTest
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:90: error: cannot find symbol
+                "DiagArm", ArmConstants.GEAR_RATIO, ArmConstants.J_KG_METERS_SQUARED, 0.5),
+                                                                ^
+  symbol:   variable J_KG_METERS_SQUARED
+  location: class ArmConstants
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:121: warning: [removal] schedule() in Command has been deprecated and marked for removal
+    check.schedule();
+         ^
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\LEDManagerTest.java:101: error: cannot find symbol
+    MARSFaultManager.reportCriticalFault("TestFault");
+                    ^
+  symbol:   method reportCriticalFault(String)
+  location: class MARSFaultManager
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\OperatorInterfaceTest.java:70: error: cannot find symbol
+    MARSFaultManager.reportCriticalFault("TestFault");
+                    ^
+  symbol:   method reportCriticalFault(String)
+  location: class MARSFaultManager
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:144: error: cannot find symbol
+    CommandScheduler.getInstance().clearButtons();
+                                  ^
+  symbol:   method clearButtons()
+  location: class CommandScheduler
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:54: error: constructor MARSVision in class MARSVision cannot be applied to given types;
+    MARSVision vision = new MARSVision(List.of(cam1, cam2), List.of());
+                        ^
+  required: SwerveDrive,List<AprilTagVisionIO>,List<VIOSlamIO>
+  found:    List<AprilTagVisionIO>,List<Object>
+  reason: actual and formal argument lists differ in length
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:75: error: constructor MARSVision in class MARSVision cannot be applied to given types;
+    MARSVision vision = new MARSVision(List.of(), List.of(slamIO));
+                        ^
+  required: SwerveDrive,List<AprilTagVisionIO>,List<VIOSlamIO>
+  found:    List<Object>,List<VIOSlamIO>
+  reason: actual and formal argument lists differ in length
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:96: error: constructor MARSVision in class MARSVision cannot be applied to given types;
+    MARSVision vision = new MARSVision(List.of(noisyCam), List.of());
+                        ^
+  required: SwerveDrive,List<AprilTagVisionIO>,List<VIOSlamIO>
+  found:    List<AprilTagVisionIO>,List<Object>
+  reason: actual and formal argument lists differ in length
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:109: error: constructor MARSVision in class MARSVision cannot be applied to given types;
+    MARSVision vision = new MARSVision(List.of(emptyCam), List.of(emptySlam));
+                        ^
+  required: SwerveDrive,List<AprilTagVisionIO>,List<VIOSlamIO>
+  found:    List<AprilTagVisionIO>,List<VIOSlamIO>
+  reason: actual and formal argument lists differ in length
+9 errors
+1 warning
+Compilation Error!
+GradleRIO detected this build failed due to a Compile Error (compileTestJava).
+Check that all your files are saved, then scroll up in this log for more information.
+[Incubating] Problems report is available at: file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileTestJava'.
+> Compilation failed; see the compiler output below.
+  C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:121: warning: [removal] schedule() in Command has been deprecated and marked for removal
+      check.schedule();
+           ^
+  C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:54: error: constructor MARSVision in class MARSVision cannot be applied to given types;
+      MARSVision vision = new MARSVision(List.of(cam1, cam2), List.of());
+                          ^
+13 actionable tasks: 6 executed, 7 up-to-date
+    required: SwerveDrive,List<AprilTagVisionIO>,List<VIOSlamIO>
+    found:    List<AprilTagVisionIO>,List<Object>
+    reason: actual and formal argument lists differ in length
+  C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:75: error: constructor MARSVision in class MARSVision cannot be applied to given types;
+      MARSVision vision = new MARSVision(List.of(), List.of(slamIO));
+                          ^
+    required: SwerveDrive,List<AprilTagVisionIO>,List<VIOSlamIO>
+    found:    List<Object>,List<VIOSlamIO>
+    reason: actual and formal argument lists differ in length
+  C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:96: error: constructor MARSVision in class MARSVision cannot be applied to given types;
+      MARSVision vision = new MARSVision(List.of(noisyCam), List.of());
+                          ^
+    required: SwerveDrive,List<AprilTagVisionIO>,List<VIOSlamIO>
+    found:    List<AprilTagVisionIO>,List<Object>
+    reason: actual and formal argument lists differ in length
+  C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:109: error: constructor MARSVision in class MARSVision cannot be applied to given types;
+      MARSVision vision = new MARSVision(List.of(emptyCam), List.of(emptySlam));
+                          ^
+    required: SwerveDrive,List<AprilTagVisionIO>,List<VIOSlamIO>
+    found:    List<AprilTagVisionIO>,List<VIOSlamIO>
+    reason: actual and formal argument lists differ in length
+  C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\LEDManagerTest.java:101: error: cannot find symbol
+      MARSFaultManager.reportCriticalFault("TestFault");
+                      ^
+    symbol:   method reportCriticalFault(String)
+    location: class MARSFaultManager
+  C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\OperatorInterfaceTest.java:70: error: cannot find symbol
+      MARSFaultManager.reportCriticalFault("TestFault");
+                      ^
+    symbol:   method reportCriticalFault(String)
+    location: class MARSFaultManager
+  C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:144: error: cannot find symbol
+      CommandScheduler.getInstance().clearButtons();
+                                    ^
+    symbol:   method clearButtons()
+    location: class CommandScheduler
+  C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:141: error: cannot find symbol
+    @AfterEach
+     ^
+    symbol:   class AfterEach
+    location: class MARSSuperstructureTest
+  C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:90: error: cannot find symbol
+                  "DiagArm", ArmConstants.GEAR_RATIO, ArmConstants.J_KG_METERS_SQUARED, 0.5),
+                                                                  ^
+    symbol:   variable J_KG_METERS_SQUARED
+    location: class ArmConstants
+  9 errors
+  1 warning
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 3s
