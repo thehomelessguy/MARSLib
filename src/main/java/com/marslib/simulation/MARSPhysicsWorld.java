@@ -37,26 +37,59 @@ import org.littletonrobotics.junction.Logger;
 public class MARSPhysicsWorld {
 
   private static MARSPhysicsWorld instance;
+  private static int accessCountSinceReset = 0;
+
+  /** Maximum getInstance() calls before a stale-state warning is logged. */
+  private static final int STALE_ACCESS_THRESHOLD = 500;
+
+  /** Body count above which stale-state warnings fire (avoids false alarms for fresh worlds). */
+  private static final int STALE_BODY_THRESHOLD = 20;
 
   /**
-   * Returns the singleton instance, creating it on first access.
+   * Returns the singleton instance, creating it on first access. Logs a stale-state warning if the
+   * instance has accumulated many bodies without being reset — a common test isolation bug.
    *
    * @return The global {@link MARSPhysicsWorld} instance.
    */
   public static MARSPhysicsWorld getInstance() {
     if (instance == null) {
       instance = new MARSPhysicsWorld();
+      accessCountSinceReset = 0;
+    }
+    accessCountSinceReset++;
+    if (accessCountSinceReset == STALE_ACCESS_THRESHOLD
+        && instance.world.getBodyCount() > STALE_BODY_THRESHOLD) {
+      Logger.recordOutput(
+          "PhysicsSim/StaleWarning",
+          String.format(
+              "WARNING: MARSPhysicsWorld has %d bodies after %d accesses without reset."
+                  + " Did you forget MARSPhysicsWorld.resetInstance() in @BeforeEach?",
+              instance.world.getBodyCount(), accessCountSinceReset));
     }
     return instance;
   }
 
-  /** Resets the singleton instance. Intended exclusively for test isolation environments. */
+  /**
+   * Resets the singleton instance. Intended exclusively for test isolation environments. Clears the
+   * stale-state access counter.
+   */
   public static void resetInstance() {
     instance = null;
+    accessCountSinceReset = 0;
   }
 
   public World<Body> getDyn4jWorld() {
     return world;
+  }
+
+  /**
+   * Returns the total number of active bodies in the physics world. Useful for test diagnostics and
+   * verifying singleton resets.
+   *
+   * @return The number of bodies currently registered in the dyn4j world.
+   */
+  public int getBodyCount() {
+    return world.getBodyCount();
   }
 
   private final World<Body> world;

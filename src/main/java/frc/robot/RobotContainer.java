@@ -286,11 +286,6 @@ public class RobotContainer {
         }
     }
 
-    // Students: To add cameras, pass lists of AprilTagVisionIO and VIOSlamIO implementations:
-    //   vision = new MARSVision(swerveDrive,
-    //       List.of(new AprilTagVisionIOLimelight("limelight")),
-    //       List.of(new VIOSlamIOQuestNav()));
-
     operatorInterface = new OperatorInterface(0, powerManager);
     superstructure = new MARSSuperstructure(elevator, arm, intake, shooter, swerveDrive::getPose);
 
