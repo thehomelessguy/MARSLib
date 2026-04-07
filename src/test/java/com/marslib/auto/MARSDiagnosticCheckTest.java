@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.marslib.faults.Alert;
 import com.marslib.hmi.LEDIO;
 import com.marslib.hmi.LEDManager;
+import com.marslib.mechanisms.FlywheelIOSim;
 import com.marslib.mechanisms.LinearMechanismIOSim;
 import com.marslib.mechanisms.MARSArm;
 import com.marslib.mechanisms.MARSElevator;
+import com.marslib.mechanisms.MARSShooter;
 import com.marslib.mechanisms.RotaryMechanismIOSim;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIO;
@@ -20,8 +22,6 @@ import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.ElevatorConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,8 +34,12 @@ import org.junit.jupiter.api.Test;
 public class MARSDiagnosticCheckTest {
 
   private SwerveDrive swerveDrive;
-  private MARSElevator elevator;
-  private MARSArm arm;
+  private MARSElevator fastClimber;
+  private MARSArm cowl;
+  private MARSArm intakePivot;
+  private MARSShooter floorIntake;
+  private MARSShooter shooter;
+  private MARSShooter feeder;
   private LEDManager ledManager;
 
   @BeforeEach
@@ -78,16 +82,24 @@ public class MARSDiagnosticCheckTest {
     };
     swerveDrive = new SwerveDrive(modules, new GyroIO() {}, power);
 
-    // Build physics-backed Elevator and Arm
-    elevator =
-        new MARSElevator(
-            new LinearMechanismIOSim("DiagElevator", ElevatorConstants.GEAR_RATIO, 0.05, 5.0),
-            power);
+    // Build physics-backed Subsystems
+    fastClimber = new MARSElevator(new LinearMechanismIOSim("Fast", 50.0, 0.5, 0.5), power);
 
-    arm =
-        new MARSArm(
-            new RotaryMechanismIOSim("DiagArm", ArmConstants.GEAR_RATIO, ArmConstants.SIM_MOI, 0.5),
-            power);
+    cowl = new MARSArm(new RotaryMechanismIOSim("DiagCowl", 50.0, 0.5, 0.5), power);
+    intakePivot = new MARSArm(new RotaryMechanismIOSim("DiagInt", 50.0, 0.5, 0.5), power);
+
+    floorIntake =
+        new MARSShooter(
+            new FlywheelIOSim(
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
+    shooter =
+        new MARSShooter(
+            new FlywheelIOSim(
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
+    feeder =
+        new MARSShooter(
+            new FlywheelIOSim(
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
 
     // Build LED manager with no-op IO
     LEDIO noopIO =
@@ -109,13 +121,17 @@ public class MARSDiagnosticCheckTest {
 
   @Test
   public void testDiagnosticCheckConstructs() {
-    MARSDiagnosticCheck check = new MARSDiagnosticCheck(swerveDrive, elevator, arm, ledManager);
+    MARSDiagnosticCheck check =
+        new MARSDiagnosticCheck(
+            swerveDrive, fastClimber, cowl, intakePivot, floorIntake, shooter, feeder, ledManager);
     assertNotNull(check, "DiagnosticCheck should construct without error.");
   }
 
   @Test
   public void testDiagnosticCheckRunsToCompletion() {
-    MARSDiagnosticCheck check = new MARSDiagnosticCheck(swerveDrive, elevator, arm, ledManager);
+    MARSDiagnosticCheck check =
+        new MARSDiagnosticCheck(
+            swerveDrive, fastClimber, cowl, intakePivot, floorIntake, shooter, feeder, ledManager);
 
     check.schedule();
 

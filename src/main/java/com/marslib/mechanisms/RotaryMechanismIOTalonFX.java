@@ -42,7 +42,7 @@ public class RotaryMechanismIOTalonFX implements RotaryMechanismIO {
   private final double gearRatio;
 
   /** Tracks the last CAN-applied stator current limit to avoid redundant writes. */
-  private double lastAppliedCurrentLimit = frc.robot.Constants.ArmConstants.MAX_CURRENT_AMPS;
+  private double lastAppliedCurrentLimit = 40.0;
 
   private final LoggedTunableNumber kP;
   private final LoggedTunableNumber kI;
@@ -67,7 +67,7 @@ public class RotaryMechanismIOTalonFX implements RotaryMechanismIO {
 
     TalonFXConfiguration config = new TalonFXConfiguration();
     config.CurrentLimits.StatorCurrentLimitEnable = true;
-    config.CurrentLimits.StatorCurrentLimit = frc.robot.Constants.ArmConstants.MAX_CURRENT_AMPS;
+    config.CurrentLimits.StatorCurrentLimit = 40.0;
     config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     config.MotorOutput.Inverted =
         inverted ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
@@ -153,6 +153,12 @@ public class RotaryMechanismIOTalonFX implements RotaryMechanismIO {
     double motorTargetRotations = positionRad / ((2 * Math.PI) / gearRatio);
     motor.setControl(
         motionMagicRequest.withPosition(motorTargetRotations).withFeedForward(feedforwardVolts));
+  }
+
+  @Override
+  public void setEncoderPosition(double positionRad) {
+    double motorTargetRotations = positionRad / ((2 * Math.PI) / gearRatio);
+    motor.setPosition(motorTargetRotations);
   }
 
   @Override

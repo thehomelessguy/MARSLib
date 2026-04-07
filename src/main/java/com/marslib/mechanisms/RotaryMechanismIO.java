@@ -21,6 +21,9 @@ public interface RotaryMechanismIO {
   /** Runs a low latency closed-loop profile on motor with external feedforward. */
   public default void setClosedLoopPosition(double positionRad, double feedforwardVolts) {}
 
+  /** Resets the internal encoder to a given position. */
+  public default void setEncoderPosition(double positionRad) {}
+
   public default void setCurrentLimit(double amps) {}
 
   public default void setBrakeMode(boolean enable) {}

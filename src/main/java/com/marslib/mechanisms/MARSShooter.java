@@ -1,7 +1,12 @@
 package com.marslib.mechanisms;
 
+import static edu.wpi.first.units.Units.Volts;
+
+import com.marslib.util.LoggedTunableNumber;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -19,6 +24,13 @@ public class MARSShooter extends SubsystemBase {
   private final FlywheelIO io;
   private final FlywheelIOInputsAutoLogged inputs = new FlywheelIOInputsAutoLogged();
 
+  private final LoggedTunableNumber kS = new LoggedTunableNumber("Shooter/kS", 0.0);
+  private final LoggedTunableNumber kV = new LoggedTunableNumber("Shooter/kV", 0.0);
+  private final LoggedTunableNumber kA = new LoggedTunableNumber("Shooter/kA", 0.0);
+
+  private SimpleMotorFeedforward feedforward;
+  private final SysIdRoutine sysIdRoutine;
+
   /**
    * Constructs the shooter subsystem.
    *
@@ -26,12 +38,36 @@ public class MARSShooter extends SubsystemBase {
    */
   public MARSShooter(FlywheelIO io) {
     this.io = io;
+    feedforward = new SimpleMotorFeedforward(kS.get(), kV.get(), kA.get());
+
+    this.sysIdRoutine =
+        new SysIdRoutine(
+            new SysIdRoutine.Config(
+                null,
+                null,
+                null,
+                (state) -> Logger.recordOutput("SysIdTestState", state.toString())),
+            new SysIdRoutine.Mechanism(
+                (edu.wpi.first.units.measure.Voltage volts) -> {
+                  io.setVoltage(volts.in(Volts));
+                },
+                null,
+                this));
   }
 
   @Override
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Shooter", inputs);
+
+    int id = this.hashCode();
+    boolean sChanged = kS.hasChanged(id);
+    boolean vChanged = kV.hasChanged(id);
+    boolean aChanged = kA.hasChanged(id);
+
+    if (sChanged || vChanged || aChanged) {
+      feedforward = new SimpleMotorFeedforward(kS.get(), kV.get(), kA.get());
+    }
   }
 
   /**
@@ -40,7 +76,7 @@ public class MARSShooter extends SubsystemBase {
    * @return A {@link Command} that runs the flywheel at ~400 rad/s using closed-loop control.
    */
   public Command spinUpCommand() {
-    return this.run(() -> io.setClosedLoopVelocity(400.0, 0.0));
+    return this.run(() -> setClosedLoopVelocity(400.0));
   }
 
   /**
@@ -52,14 +88,42 @@ public class MARSShooter extends SubsystemBase {
     io.setVoltage(volts);
   }
 
+  private double targetVelocityRadPerSec = 0.0;
+
   /**
-   * Runs the flywheel at a target velocity using the motor's internal closed-loop controller.
+   * Runs the flywheel at a target velocity using the motor's internal closed-loop controller and
+   * dynamically injects the calculated feedforward voltage.
    *
    * @param speed Target velocity in radians per second.
-   * @param ff Feedforward voltage to add to the closed-loop output.
    */
-  public void setClosedLoopVelocity(double speed, double ff) {
-    io.setClosedLoopVelocity(speed, ff);
+  public void setClosedLoopVelocity(double speed) {
+    this.targetVelocityRadPerSec = speed;
+    double ffVolts = feedforward.calculate(speed);
+    io.setClosedLoopVelocity(speed, ffVolts);
+  }
+
+  public boolean isAtTolerance() {
+    return Math.abs(inputs.velocityRadPerSec - targetVelocityRadPerSec) < 20.0;
+  }
+
+  /**
+   * Generates a SysId Quasistatic characterization command.
+   *
+   * @param direction The direction of the quasistatic routine (Forward/Reverse).
+   * @return The SysId Command to execute.
+   */
+  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return sysIdRoutine.quasistatic(direction);
+  }
+
+  /**
+   * Generates a SysId Dynamic characterization command.
+   *
+   * @param direction The direction of the dynamic routine (Forward/Reverse).
+   * @return The SysId Command to execute.
+   */
+  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return sysIdRoutine.dynamic(direction);
   }
 
   /**

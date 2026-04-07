@@ -9,13 +9,14 @@ import com.marslib.hmi.OperatorInterface;
 import com.marslib.mechanisms.FlywheelIO;
 import com.marslib.mechanisms.FlywheelIOSim;
 import com.marslib.mechanisms.FlywheelIOTalonFX;
+import com.marslib.mechanisms.LinearMechanismIO;
 import com.marslib.mechanisms.LinearMechanismIOSim;
 import com.marslib.mechanisms.LinearMechanismIOTalonFX;
 import com.marslib.mechanisms.MARSArm;
 import com.marslib.mechanisms.MARSElevator;
-import com.marslib.mechanisms.MARSIntake;
 import com.marslib.mechanisms.MARSShooter;
 import com.marslib.mechanisms.MARSSuperstructure;
+import com.marslib.mechanisms.RotaryMechanismIO;
 import com.marslib.mechanisms.RotaryMechanismIOSim;
 import com.marslib.mechanisms.RotaryMechanismIOTalonFX;
 import com.marslib.power.MARSPowerManager;
@@ -26,8 +27,10 @@ import com.marslib.swerve.GyroIOPigeon2;
 import com.marslib.swerve.GyroIOSim;
 import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
+import com.marslib.swerve.SwerveModuleIO;
 import com.marslib.swerve.SwerveModuleIOSim;
 import com.marslib.swerve.SwerveModuleIOTalonFX;
+import com.marslib.util.ShotSetup;
 import com.marslib.vision.AprilTagVisionIOLimelight;
 import com.marslib.vision.AprilTagVisionIOSim;
 import com.marslib.vision.MARSVision;
@@ -36,12 +39,15 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -58,10 +64,12 @@ public class RobotContainer {
   private final OperatorInterface operatorInterface;
 
   private final SwerveDrive swerveDrive;
-  private final MARSElevator elevator;
-  private final MARSArm arm;
-  private final MARSIntake intake;
+  private final MARSElevator fastClimber;
+  private final MARSArm cowl;
+  private final MARSArm intakePivot;
+  private final MARSShooter floorIntake;
   private final MARSShooter shooter;
+  private final MARSShooter feeder;
   private final MARSSuperstructure superstructure;
   private final GhostManager ghostManager = new GhostManager();
 
@@ -79,10 +87,6 @@ public class RobotContainer {
       new SlewRateLimiter(Constants.DriveConstants.TELEOP_OMEGA_ACCEL_LIMIT); // Fast rotation limit
   private final PIDController headingController =
       new PIDController(Constants.DriveConstants.HEADING_KP, 0, 0);
-
-  {
-    headingController.enableContinuousInput(-Math.PI, Math.PI);
-  }
 
   private Rotation2d targetHeading = new Rotation2d();
 
@@ -107,36 +111,43 @@ public class RobotContainer {
                   gyroSim,
                   powerManager);
 
-          elevator =
+          fastClimber =
               new MARSElevator(
                   new LinearMechanismIOSim(
-                      "Elevator",
-                      Constants.ElevatorConstants.GEAR_RATIO,
-                      Constants.ElevatorConstants.SPOOL_DIAMETER_METERS,
-                      Constants.ElevatorConstants.SIM_MASS_KG),
+                      "FastClimber", Constants.ClimberConstants.FAST_GEAR_RATIO, 0.05, 5.0),
                   powerManager);
-          arm =
+
+          cowl =
+              new MARSArm(
+                  new RotaryMechanismIOSim("Cowl", Constants.CowlConstants.GEAR_RATIO, 0.5, 0.5),
+                  powerManager);
+          intakePivot =
               new MARSArm(
                   new RotaryMechanismIOSim(
-                      "Arm",
-                      Constants.ArmConstants.GEAR_RATIO,
-                      Constants.ArmConstants.SIM_MOI,
-                      Constants.ArmConstants.SIM_LENGTH),
+                      "IntakePivot", Constants.IntakeConstants.PIVOT_GEAR_RATIO, 0.5, 0.5),
                   powerManager);
-          intake =
-              new MARSIntake(
+
+          floorIntake =
+              new MARSShooter(
                   new FlywheelIOSim(
-                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(1), 1.0, 0.01));
+                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(1), 1.0, 0.025));
           shooter =
               new MARSShooter(
                   new FlywheelIOSim(
-                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(2), 1.0, 0.05));
+                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(4), 1.0, 0.05));
+          feeder =
+              new MARSShooter(
+                  new FlywheelIOSim(
+                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(1),
+                      Constants.ShooterConstants.FEEDER_GEAR_RATIO,
+                      0.025));
 
-          // LED uses AddressableLED in sim
           ledManager =
               new LEDManager(
-                  new LEDIOAddressable(
-                      Constants.LEDConstants.PWM_PORT, Constants.LEDConstants.LENGTH),
+                  new com.marslib.hmi.LEDIOCANdle(
+                      Constants.LEDConstants.CANDLE_ID,
+                      Constants.LEDConstants.CANBUS,
+                      Constants.LEDConstants.LENGTH),
                   powerManager);
 
           vision =
@@ -192,42 +203,65 @@ public class RobotContainer {
                       Constants.DriveConstants.PIGEON2_ID, Constants.DriveConstants.CANBUS),
                   powerManager);
 
-          elevator =
+          fastClimber =
               new MARSElevator(
                   new LinearMechanismIOTalonFX(
-                      Constants.ElevatorConstants.MOTOR_ID,
-                      Constants.ElevatorConstants.CANBUS,
-                      Constants.ElevatorConstants.GEAR_RATIO,
-                      Constants.ElevatorConstants.SPOOL_DIAMETER_METERS,
-                      Constants.ElevatorConstants.INVERTED),
+                      Constants.ClimberConstants.FAST_MOTOR_ID,
+                      Constants.ClimberConstants.CANBUS,
+                      Constants.ClimberConstants.FAST_GEAR_RATIO,
+                      0.05,
+                      false),
                   powerManager);
-          arm =
+
+          cowl =
               new MARSArm(
                   new RotaryMechanismIOTalonFX(
-                      Constants.ArmConstants.MOTOR_ID,
-                      Constants.ArmConstants.CANBUS,
-                      Constants.ArmConstants.GEAR_RATIO,
-                      Constants.ArmConstants.INVERTED),
+                      Constants.CowlConstants.MOTOR_ID,
+                      Constants.CowlConstants.CANBUS,
+                      Constants.CowlConstants.GEAR_RATIO,
+                      Constants.CowlConstants.INVERTED),
                   powerManager);
-          intake =
-              new MARSIntake(
+          intakePivot =
+              new MARSArm(
+                  new RotaryMechanismIOTalonFX(
+                      Constants.IntakeConstants.PIVOT_MOTOR_ID,
+                      Constants.IntakeConstants.CANBUS,
+                      Constants.IntakeConstants.PIVOT_GEAR_RATIO,
+                      false),
+                  powerManager);
+
+          floorIntake =
+              new MARSShooter(
                   new FlywheelIOTalonFX(
-                      Constants.IntakeConstants.MOTOR_ID, Constants.IntakeConstants.CANBUS, false));
+                      Constants.IntakeConstants.FLOOR_MOTOR_ID,
+                      Constants.IntakeConstants.CANBUS,
+                      false));
+
           shooter =
               new MARSShooter(
                   new FlywheelIOTalonFX(
-                      Constants.ShooterConstants.MOTOR_ID,
+                      Constants.ShooterConstants.LM_MOTOR_ID,
+                      new int[] {
+                        Constants.ShooterConstants.LF_MOTOR_ID,
+                        Constants.ShooterConstants.RM_MOTOR_ID,
+                        Constants.ShooterConstants.RF_MOTOR_ID
+                      },
+                      new boolean[] {false, false, false},
+                      Constants.ShooterConstants.CANBUS,
+                      false));
+          feeder =
+              new MARSShooter(
+                  new FlywheelIOTalonFX(
+                      Constants.ShooterConstants.FEEDER_MOTOR_ID,
                       Constants.ShooterConstants.CANBUS,
                       false));
 
-          // LED uses AddressableLED on real robot
-          // Students: Replace with LEDIOCANdle if using a CTRE CANdle:
-          //   ledManager = new LEDManager(new LEDIOCANdle(30, "rio",
-          // Constants.LEDConstants.LENGTH), powerManager);
           ledManager =
               new LEDManager(
-                  new LEDIOAddressable(
-                      Constants.LEDConstants.PWM_PORT, Constants.LEDConstants.LENGTH),
+                  new com.marslib.hmi.LEDIOCANdle(
+                      Constants.LEDConstants.CANDLE_ID,
+                      Constants.LEDConstants.CANBUS,
+                      Constants.LEDConstants.LENGTH),
                   powerManager);
 
           vision =
@@ -249,37 +283,22 @@ public class RobotContainer {
           swerveDrive =
               new SwerveDrive(
                   new SwerveModule[] {
-                    new SwerveModule(0, new SwerveModuleIOSim(0)),
-                    new SwerveModule(1, new SwerveModuleIOSim(1)),
-                    new SwerveModule(2, new SwerveModuleIOSim(2)),
-                    new SwerveModule(3, new SwerveModuleIOSim(3))
+                    new SwerveModule(0, new SwerveModuleIO() {}),
+                    new SwerveModule(1, new SwerveModuleIO() {}),
+                    new SwerveModule(2, new SwerveModuleIO() {}),
+                    new SwerveModule(3, new SwerveModuleIO() {})
                   },
                   new GyroIO() {},
                   powerManager);
 
-          elevator =
-              new MARSElevator(
-                  new LinearMechanismIOSim(
-                      "Elevator",
-                      Constants.ElevatorConstants.GEAR_RATIO,
-                      Constants.ElevatorConstants.SPOOL_DIAMETER_METERS,
-                      Constants.ElevatorConstants.SIM_MASS_KG),
-                  powerManager);
-          arm =
-              new MARSArm(
-                  new RotaryMechanismIOSim(
-                      "Arm",
-                      Constants.ArmConstants.GEAR_RATIO,
-                      Constants.ArmConstants.SIM_MOI,
-                      Constants.ArmConstants.SIM_LENGTH),
-                  powerManager);
-          intake = new MARSIntake(new FlywheelIO() {});
+          fastClimber = new MARSElevator(new LinearMechanismIO() {}, powerManager);
+          cowl = new MARSArm(new RotaryMechanismIO() {}, powerManager);
+          intakePivot = new MARSArm(new RotaryMechanismIO() {}, powerManager);
+          floorIntake = new MARSShooter(new FlywheelIO() {});
           shooter = new MARSShooter(new FlywheelIO() {});
+          feeder = new MARSShooter(new FlywheelIO() {});
           ledManager =
-              new LEDManager(
-                  new LEDIOAddressable(
-                      Constants.LEDConstants.PWM_PORT, Constants.LEDConstants.LENGTH),
-                  powerManager);
+              new LEDManager(new LEDIOAddressable(0, Constants.LEDConstants.LENGTH), powerManager);
 
           vision = new MARSVision(swerveDrive, java.util.List.of(), java.util.List.of());
           break;
@@ -287,7 +306,54 @@ public class RobotContainer {
     }
 
     operatorInterface = new OperatorInterface(0, powerManager);
-    superstructure = new MARSSuperstructure(elevator, arm, intake, shooter, swerveDrive::getPose);
+
+    // Build the SOTM shot computation utility with REBUILT shooter characterization data
+    ShotSetup shotSetup =
+        new ShotSetup(
+            0.1, // phaseDelay — 100ms lookahead for mechanism latency
+            Math.PI / 2, // maxCowlPosition — 90° upper bound
+            6000.0, // maxFlywheelSpeedRPM
+            0.25, // recomputeThreshold — recalculate when distance changes by 0.25m
+            5, // convergenceIters
+            0.01, // convergenceEpsilon — 1cm convergence tolerance
+            0.1, // minTof — minimum time of flight 100ms
+            1.5, // maxTof — maximum time of flight 1.5s
+            new Transform2d(new Translation2d(0.0, 0.0), new Rotation2d()), // shooter at center
+            new Rotation2d() // operator forward = field forward
+            );
+
+    // Distance → (RPM, CowlAngle) interpolation map
+    shotSetup.addShotMapEntry(1.0, 2000.0, 0.15);
+    shotSetup.addShotMapEntry(3.0, 3000.0, 0.35);
+    shotSetup.addShotMapEntry(5.0, 4000.0, 0.55);
+    shotSetup.addShotMapEntry(7.0, 4800.0, 0.75);
+    shotSetup.addShotMapEntry(10.0, 5500.0, 1.0);
+
+    // Distance → Time-of-Flight (seconds) interpolation map
+    shotSetup.addTofMapEntry(1.0, 0.15);
+    shotSetup.addTofMapEntry(3.0, 0.25);
+    shotSetup.addTofMapEntry(5.0, 0.40);
+    shotSetup.addTofMapEntry(7.0, 0.60);
+    shotSetup.addTofMapEntry(10.0, 0.90);
+
+    superstructure =
+        new MARSSuperstructure(
+            cowl,
+            intakePivot,
+            floorIntake,
+            shooter,
+            feeder,
+            swerveDrive::getPose,
+            () -> {
+              // Alliance-aware distance: compute distance to our alliance's hub
+              Translation2d hub =
+                  DriverStation.getAlliance().isPresent()
+                          && DriverStation.getAlliance().get() == Alliance.Red
+                      ? Constants.FieldConstants.RED_HUB_POS
+                      : Constants.FieldConstants.BLUE_HUB_POS;
+              return swerveDrive.getPose().getTranslation().getDistance(hub);
+            },
+            shotSetup);
 
     // Configure PathPlanner AutoBuilder AFTER construction — composition root owns this
     swerveDrive.configurePathPlanner();
@@ -401,22 +467,106 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     CommandXboxController controller = operatorInterface.getController();
+    CommandXboxController coPilot = new CommandXboxController(1);
 
-    // DPad Up -> Score High State
+    // --- DRIVE PILOT BINDINGS ---
+
+    // Left Trigger -> Run Intake
     controller
-        .povUp()
-        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE_HIGH));
+        .leftTrigger()
+        .onTrue(
+            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_RUNNING))
+        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
-    // DPad Down -> Stow State
+    // Right Trigger -> Aim & Shoot On The Move
     controller
-        .povDown()
-        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
+        .rightTrigger()
+        .whileTrue(
+            new ShootOnTheMoveCommand(
+                swerveDrive,
+                () -> {
+                  double raw =
+                      -Math.pow(
+                              edu.wpi.first.math.MathUtil.applyDeadband(controller.getLeftY(), 0.1),
+                              3.0)
+                          * SwerveConstants.MAX_LINEAR_SPEED_MPS;
+                  if (edu.wpi.first.wpilibj.DriverStation.getAlliance().isPresent()
+                      && edu.wpi.first.wpilibj.DriverStation.getAlliance().get()
+                          == edu.wpi.first.wpilibj.DriverStation.Alliance.Red) {
+                    raw = -raw;
+                  }
+                  return raw;
+                },
+                () -> {
+                  double raw =
+                      -Math.pow(
+                              edu.wpi.first.math.MathUtil.applyDeadband(controller.getLeftX(), 0.1),
+                              3.0)
+                          * SwerveConstants.MAX_LINEAR_SPEED_MPS;
+                  if (edu.wpi.first.wpilibj.DriverStation.getAlliance().isPresent()
+                      && edu.wpi.first.wpilibj.DriverStation.getAlliance().get()
+                          == edu.wpi.first.wpilibj.DriverStation.Alliance.Red) {
+                    raw = -raw;
+                  }
+                  return raw;
+                }))
+        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
+        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
-    // DPad Right -> Intake State
+    // B Button -> Standard Stationary Shoot
+    controller
+        .b()
+        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
+        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
+
+    // Left Bumper -> Unjam
+    controller
+        .leftBumper()
+        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.UNJAM))
+        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
+
+    // Right Bumper -> Aim and Shuttle
+    controller
+        .rightBumper()
+        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
+        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
+
+    // DPad Right -> Deploy Intake Without Spinning
     controller
         .povRight()
         .onTrue(
-            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_FLOOR));
+            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_DOWN));
+
+    // DPad Left -> Retract Intake (Stow)
+    controller
+        .povLeft()
+        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
+
+    // A Button -> Slamtake (Deploy + Run)
+    controller
+        .a()
+        .onTrue(
+            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_RUNNING))
+        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
+
+    // Y Button -> Align to Climb Position (Stub)
+    // X Button -> Final Climb Lineup (Stub)
+
+    // DPad Up/Down -> Manual Climber Override
+    controller
+        .povUp()
+        .whileTrue(
+            Commands.startEnd(
+                () -> fastClimber.setVoltage(12.0),
+                () -> fastClimber.setVoltage(0.0),
+                fastClimber));
+    controller
+        .povDown()
+        .whileTrue(
+            Commands.startEnd(
+                () -> fastClimber.setVoltage(-12.0),
+                () -> fastClimber.setVoltage(0.0),
+                fastClimber));
 
     // Ghost Mode Triggers
     controller
@@ -439,34 +589,68 @@ public class RobotContainer {
                 controller.povRight()));
 
     // Start -> Diagnostic Hardware Check
-    controller.start().onTrue(new MARSDiagnosticCheck(swerveDrive, elevator, arm, ledManager));
-
-    // Left Bumper -> Velocity-Added Kinematic Leading (Shoot On The Move!)
     controller
-        .leftBumper()
-        .whileTrue(
-            new ShootOnTheMoveCommand(
+        .start()
+        .onTrue(
+            new MARSDiagnosticCheck(
                 swerveDrive,
+                fastClimber,
+                cowl,
+                intakePivot,
+                floorIntake,
+                shooter,
+                feeder,
+                ledManager));
+
+    // --- COPILOT BINDINGS ---
+
+    // CoPilot Left Trigger -> Manual Feed
+    coPilot
+        .leftTrigger()
+        .whileTrue(
+            Commands.startEnd(
                 () -> {
-                  double raw =
-                      -Math.pow(MathUtil.applyDeadband(controller.getLeftY(), 0.1), 3.0)
-                          * SwerveConstants.MAX_LINEAR_SPEED_MPS;
-                  if (DriverStation.getAlliance().isPresent()
-                      && DriverStation.getAlliance().get() == Alliance.Red) {
-                    raw = -raw;
-                  }
-                  return raw;
+                  feeder.setVoltage(6.0);
+                  floorIntake.setVoltage(6.0);
                 },
                 () -> {
-                  double raw =
-                      -Math.pow(MathUtil.applyDeadband(controller.getLeftX(), 0.1), 3.0)
-                          * SwerveConstants.MAX_LINEAR_SPEED_MPS;
-                  if (DriverStation.getAlliance().isPresent()
-                      && DriverStation.getAlliance().get() == Alliance.Red) {
-                    raw = -raw;
-                  }
-                  return raw;
-                }));
+                  feeder.setVoltage(0.0);
+                  floorIntake.setVoltage(0.0);
+                },
+                feeder,
+                floorIntake));
+
+    // CoPilot Right Trigger -> Fixed Target Score (Hub)
+    coPilot
+        .rightTrigger()
+        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
+        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
+
+    // CoPilot Right Bumper -> Fixed Target Score (Ladder)
+    coPilot
+        .rightBumper()
+        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
+        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
+
+    // CoPilot Left Bumper -> Cowl Home
+    coPilot.leftBumper().onTrue(cowl.home());
+
+    // CoPilot DPad Down -> Fast Climber Reverse Reverse
+    coPilot
+        .povDown()
+        .whileTrue(
+            Commands.startEnd(
+                () -> fastClimber.setVoltage(-12.0),
+                () -> fastClimber.setVoltage(0.0),
+                fastClimber));
+
+    // CoPilot X -> Swerve Stop
+    coPilot
+        .x()
+        .onTrue(
+            Commands.runOnce(
+                () -> swerveDrive.runVelocity(new edu.wpi.first.math.kinematics.ChassisSpeeds()),
+                swerveDrive));
   }
 
   public Command getAutonomousCommand() {

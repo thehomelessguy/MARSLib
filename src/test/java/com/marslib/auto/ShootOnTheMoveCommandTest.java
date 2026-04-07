@@ -63,7 +63,7 @@ public class ShootOnTheMoveCommandTest {
 
     CommandScheduler.getInstance().schedule(command);
 
-    for (int i = 0; i < 150; i++) {
+    for (int i = 0; i < 300; i++) {
       DriverStationSim.notifyNewData();
       SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
@@ -95,7 +95,7 @@ public class ShootOnTheMoveCommandTest {
 
     CommandScheduler.getInstance().schedule(command);
 
-    for (int i = 0; i < 150; i++) {
+    for (int i = 0; i < 300; i++) {
       DriverStationSim.notifyNewData();
       SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();

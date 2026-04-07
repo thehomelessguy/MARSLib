@@ -3,10 +3,7 @@ package com.marslib.integration;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.marslib.mechanisms.FlywheelIOSim;
-import com.marslib.mechanisms.LinearMechanismIOSim;
 import com.marslib.mechanisms.MARSArm;
-import com.marslib.mechanisms.MARSElevator;
-import com.marslib.mechanisms.MARSIntake;
 import com.marslib.mechanisms.MARSShooter;
 import com.marslib.mechanisms.MARSSuperstructure;
 import com.marslib.mechanisms.RotaryMechanismIOSim;
@@ -18,31 +15,26 @@ import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIOSim;
 import com.marslib.testing.MARSTestHarness;
+import com.marslib.util.ShotSetup;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants;
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.ElevatorConstants;
+import java.util.function.DoubleSupplier;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
- * Full robot lifecycle integration test. Constructs all subsystems in SIM mode and exercises the
- * auto → teleop → scoring → stow lifecycle through the physics engine.
- *
- * <p>This catches interaction bugs between subsystems that unit tests miss — the kind of failures
- * that appear at competition when multiple subsystems run concurrently.
- */
 public class RobotLifecycleTest {
 
   private SwerveDrive swerveDrive;
-  private MARSElevator elevator;
-  private MARSArm arm;
-  private MARSIntake intake;
+  private MARSArm cowl;
+  private MARSArm intakePivot;
+  private MARSShooter floorIntake;
   private MARSShooter shooter;
+  private MARSShooter feeder;
   private MARSSuperstructure superstructure;
   private MARSPowerManager powerManager;
 
@@ -65,27 +57,36 @@ public class RobotLifecycleTest {
     swerveDrive = new SwerveDrive(modules, gyroSim, powerManager);
     swerveDrive.resetPose(new Pose2d(2, 2, new edu.wpi.first.math.geometry.Rotation2d(0)));
 
-    elevator =
-        new MARSElevator(
-            new LinearMechanismIOSim(
-                "Elevator",
-                ElevatorConstants.GEAR_RATIO,
-                ElevatorConstants.SPOOL_DIAMETER_METERS,
-                ElevatorConstants.SIM_MASS_KG),
-            powerManager);
-    arm =
-        new MARSArm(
-            new RotaryMechanismIOSim(
-                "Arm", ArmConstants.GEAR_RATIO, ArmConstants.SIM_MOI, ArmConstants.SIM_LENGTH),
-            powerManager);
-    intake =
-        new MARSIntake(
-            new FlywheelIOSim(edu.wpi.first.math.system.plant.DCMotor.getFalcon500(1), 1.0, 0.01));
+    cowl = new MARSArm(new RotaryMechanismIOSim("Cowl", 50.0, 0.5, 0.5), powerManager);
+    intakePivot =
+        new MARSArm(new RotaryMechanismIOSim("IntakePivot", 50.0, 0.5, 0.5), powerManager);
+    floorIntake =
+        new MARSShooter(
+            new FlywheelIOSim(
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
     shooter =
         new MARSShooter(
-            new FlywheelIOSim(edu.wpi.first.math.system.plant.DCMotor.getFalcon500(2), 1.0, 0.05));
+            new FlywheelIOSim(
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
+    feeder =
+        new MARSShooter(
+            new FlywheelIOSim(
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
 
-    superstructure = new MARSSuperstructure(elevator, arm, intake, shooter, swerveDrive::getPose);
+    DoubleSupplier distSupplier = () -> 5.0; // Fixed dist
+    ShotSetup shotSetup =
+        new ShotSetup(0.0, 1.5, 6000, 0.1, 5, 0.01, 0.1, 1.0, new Transform2d(), new Rotation2d());
+
+    superstructure =
+        new MARSSuperstructure(
+            cowl,
+            intakePivot,
+            floorIntake,
+            shooter,
+            feeder,
+            swerveDrive::getPose,
+            distSupplier,
+            shotSetup);
   }
 
   @AfterEach
@@ -93,10 +94,6 @@ public class RobotLifecycleTest {
     MARSTestHarness.tearDown();
   }
 
-  /**
-   * Exercises the complete match lifecycle: construct → auto → teleop → score → stow. If any
-   * subsystem interaction causes an exception, this test catches it.
-   */
   @Test
   public void testFullLifecycleDoesNotCrash() {
     // PHASE 1: Validate all subsystems constructed successfully
@@ -111,9 +108,9 @@ public class RobotLifecycleTest {
       final int tick = i;
       assertDoesNotThrow(
           () -> {
-            SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+            SimHooks.stepTiming(0.02);
             CommandScheduler.getInstance().run();
-            MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+            MARSPhysicsWorld.getInstance().update(0.02);
           },
           "Crash during autonomous at tick " + tick);
     }
@@ -127,33 +124,32 @@ public class RobotLifecycleTest {
       final int tick = i;
       assertDoesNotThrow(
           () -> {
-            SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+            SimHooks.stepTiming(0.02);
             CommandScheduler.getInstance().run();
-            MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+            MARSPhysicsWorld.getInstance().update(0.02);
           },
           "Crash during teleop idle at tick " + tick);
     }
 
-    // PHASE 4: Command SCORE_HIGH and run for 3 seconds (300 ticks)
+    // PHASE 4: Command SCORE and run for 3 seconds (300 ticks)
     CommandScheduler.getInstance()
-        .schedule(
-            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE_HIGH));
+        .schedule(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE));
     CommandScheduler.getInstance().run();
 
     assertEquals(
-        MARSSuperstructure.SuperstructureState.SCORE_HIGH,
+        MARSSuperstructure.SuperstructureState.SCORE,
         superstructure.getCurrentState(),
-        "Superstructure should transition to SCORE_HIGH");
+        "Superstructure should transition to SCORE");
 
     for (int i = 0; i < 300; i++) {
       final int tick = i;
       assertDoesNotThrow(
           () -> {
-            SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+            SimHooks.stepTiming(0.02);
             CommandScheduler.getInstance().run();
-            MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+            MARSPhysicsWorld.getInstance().update(0.02);
           },
-          "Crash during SCORE_HIGH at tick " + tick);
+          "Crash during SCORE at tick " + tick);
     }
 
     // PHASE 5: Command STOW and settle for 2 seconds (200 ticks)
@@ -170,9 +166,9 @@ public class RobotLifecycleTest {
       final int tick = i;
       assertDoesNotThrow(
           () -> {
-            SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+            SimHooks.stepTiming(0.02);
             CommandScheduler.getInstance().run();
-            MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+            MARSPhysicsWorld.getInstance().update(0.02);
           },
           "Crash during STOW settle at tick " + tick);
     }
@@ -183,10 +179,5 @@ public class RobotLifecycleTest {
         MARSSuperstructure.SuperstructureState.STOWED,
         superstructure.getCurrentState(),
         "Should be STOWED at end");
-
-    // Elevator should have returned close to 0
-    assertTrue(
-        elevator.getPositionMeters() < 0.1,
-        "Elevator should have settled near 0m after STOW, was " + elevator.getPositionMeters());
   }
 }

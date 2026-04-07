@@ -9,7 +9,6 @@ import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.ArmConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +44,7 @@ public class MARSArmTest {
     RotaryMechanismIOSim physicalArmSim =
         new RotaryMechanismIOSim(
             "MARSArm_Test",
-            ArmConstants.GEAR_RATIO,
+            50.0,
             0.5, // 0.5 kg m^2 inertia
             1.2 // 1.2m length
             );
@@ -77,7 +76,7 @@ public class MARSArmTest {
   @Test
   public void testLoadSheddingDynamicRestoresAreAppliedUnderCriticalBrownoutConditions() {
     // Set simulated battery voltage strictly below critical levels
-    simulatedVoltageOverride = ArmConstants.CRITICAL_VOLTAGE - 0.5;
+    simulatedVoltageOverride = 9.0 - 0.5;
 
     // Simulate 20 ticks
     for (int i = 0; i < 20; i++) {
@@ -90,7 +89,7 @@ public class MARSArmTest {
     // Rather than mocking verify method, the Arm records metrics via subsystem flags.
     // However, since we injected a real PowerManager, the logic executes.
     // We can assert that the PowerManager actively fired warning triggers!
-    assertEquals(ArmConstants.CRITICAL_VOLTAGE - 0.5, simulatedVoltageOverride, 0.0);
+    assertEquals(9.0 - 0.5, simulatedVoltageOverride, 0.0);
     // Since we don't have direct getter for the limit inside MARSArm, we just verify simulation
     // doesn't crash
     // and internal algorithms completed.

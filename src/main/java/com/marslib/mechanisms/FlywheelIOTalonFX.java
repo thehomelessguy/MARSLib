@@ -28,8 +28,15 @@ public class FlywheelIOTalonFX implements FlywheelIO {
 
   private double targetVelocityRadPerSec = 0.0;
 
+  private final TalonFX[] followers;
+
   public FlywheelIOTalonFX(int motorId, String canBus, boolean invert) {
-    motor = new TalonFX(motorId, canBus);
+    this(motorId, new int[0], new boolean[0], canBus, invert);
+  }
+
+  public FlywheelIOTalonFX(
+      int leaderId, int[] followerIds, boolean[] opposeLeader, String canBus, boolean invert) {
+    motor = new TalonFX(leaderId, canBus);
 
     var config = new com.ctre.phoenix6.configs.TalonFXConfiguration();
     config.MotorOutput.Inverted =
@@ -50,6 +57,14 @@ public class FlywheelIOTalonFX implements FlywheelIO {
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0, velocitySignal, voltageSignal, statorCurrentSignal);
     motor.optimizeBusUtilization();
+
+    followers = new TalonFX[followerIds.length];
+    for (int i = 0; i < followerIds.length; i++) {
+      followers[i] = new TalonFX(followerIds[i], canBus);
+      followers[i].getConfigurator().apply(config);
+      followers[i].setControl(new com.ctre.phoenix6.controls.Follower(leaderId, opposeLeader[i]));
+      followers[i].optimizeBusUtilization();
+    }
   }
 
   @Override

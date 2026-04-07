@@ -101,10 +101,7 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
     // DC Motor Math
     double currentDrawAmps = gearbox.getCurrent(currentVelocityRadPerSec * gearRatio, appliedVolts);
     // Enforce stator current limit like real TalonFX firmware
-    currentDrawAmps =
-        Math.copySign(
-            Math.min(Math.abs(currentDrawAmps), frc.robot.Constants.ArmConstants.MAX_CURRENT_AMPS),
-            currentDrawAmps);
+    currentDrawAmps = Math.copySign(Math.min(Math.abs(currentDrawAmps), 40.0), currentDrawAmps);
     double motorTorque = gearbox.getTorque(currentDrawAmps);
     double mechanismTorque = motorTorque * gearRatio;
 

@@ -8,7 +8,6 @@ import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -30,11 +29,11 @@ public class MARSElevator extends SubsystemBase {
   private ElevatorFeedforward feedforward;
 
   // Bounds for active load shedding
-  private static final double NOMINAL_VOLTAGE = Constants.ElevatorConstants.NOMINAL_VOLTAGE;
-  private static final double CRITICAL_VOLTAGE = Constants.ElevatorConstants.CRITICAL_VOLTAGE;
+  private static final double NOMINAL_VOLTAGE = 12.0;
+  private static final double CRITICAL_VOLTAGE = 9.0;
 
-  private static final double MAX_CURRENT_AMPS = Constants.ElevatorConstants.MAX_CURRENT_AMPS;
-  private static final double MIN_CURRENT_AMPS = Constants.ElevatorConstants.MIN_CURRENT_AMPS;
+  private static final double MAX_CURRENT_AMPS = 40.0;
+  private static final double MIN_CURRENT_AMPS = 20.0;
 
   private final MARSPowerManager powerManager;
   private final SysIdRoutine sysIdRoutine;
@@ -71,10 +70,11 @@ public class MARSElevator extends SubsystemBase {
     Logger.processInputs("Elevator", inputs);
 
     // Update Feedforward if TUNING mode constants are changed
-    boolean sChanged = kS.hasChanged(kS.hashCode());
-    boolean gChanged = kG.hasChanged(kG.hashCode());
-    boolean vChanged = kV.hasChanged(kV.hashCode());
-    boolean aChanged = kA.hasChanged(kA.hashCode());
+    int id = this.hashCode();
+    boolean sChanged = kS.hasChanged(id);
+    boolean gChanged = kG.hasChanged(id);
+    boolean vChanged = kV.hasChanged(id);
+    boolean aChanged = kA.hasChanged(id);
 
     if (sChanged || gChanged || vChanged || aChanged) {
       feedforward = new ElevatorFeedforward(kS.get(), kG.get(), kV.get(), kA.get());
@@ -92,6 +92,10 @@ public class MARSElevator extends SubsystemBase {
 
     io.setCurrentLimit(currentLimit);
     Logger.recordOutput("Elevator/ActiveCurrentLimit", currentLimit);
+  }
+
+  public void setVoltage(double volts) {
+    io.setVoltage(volts);
   }
 
   /**

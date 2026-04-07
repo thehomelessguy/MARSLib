@@ -17,7 +17,8 @@ import edu.wpi.first.wpilibj.RobotBase;
 public final class Constants {
   public static final Mode SIM_MODE = Mode.SIM;
   public static final Mode CURRENT_MODE = RobotBase.isReal() ? Mode.REAL : SIM_MODE;
-  public static final double LOOP_PERIOD_SECS = 0.01;
+  /** Must match TimedRobot's loop period (default 20ms = 0.02s). */
+  public static final double LOOP_PERIOD_SECS = 0.02;
 
   public static enum Mode {
     /** Running on a real robot. */
@@ -34,17 +35,17 @@ public final class Constants {
     public static final String CANBUS = "rio";
 
     // Front Left
-    public static final int FL_DRIVE_ID = 1;
-    public static final int FL_TURN_ID = 2;
+    public static final int FL_DRIVE_ID = 8;
+    public static final int FL_TURN_ID = 7;
     // Front Right
-    public static final int FR_DRIVE_ID = 3;
-    public static final int FR_TURN_ID = 4;
+    public static final int FR_DRIVE_ID = 2;
+    public static final int FR_TURN_ID = 1;
     // Back Left
-    public static final int BL_DRIVE_ID = 5;
-    public static final int BL_TURN_ID = 6;
+    public static final int BL_DRIVE_ID = 6;
+    public static final int BL_TURN_ID = 5;
     // Back Right
-    public static final int BR_DRIVE_ID = 7;
-    public static final int BR_TURN_ID = 8;
+    public static final int BR_DRIVE_ID = 4;
+    public static final int BR_TURN_ID = 3;
 
     public static final int PIGEON2_ID = 9;
 
@@ -56,45 +57,42 @@ public final class Constants {
     public static final double ODOMETRY_HZ = 250.0;
   }
 
-  public static final class ElevatorConstants {
-    public static final int MOTOR_ID = 20;
-    public static final String CANBUS = "rio";
-    public static final double GEAR_RATIO = 10.0;
-    public static final double SPOOL_DIAMETER_METERS = 0.05;
-    public static final double SIM_MASS_KG = 5.0;
+  public static final class CowlConstants {
+    public static final int MOTOR_ID = 13;
+    public static final String CANBUS = "CAN2";
+    public static final double GEAR_RATIO = 1.0;
     public static final boolean INVERTED = false;
 
     // Load Shedding Bound Limits
-    public static final double NOMINAL_VOLTAGE = 10.0;
-    public static final double CRITICAL_VOLTAGE = 7.0;
-    public static final double MAX_CURRENT_AMPS = 60.0;
-    public static final double MIN_CURRENT_AMPS = 20.0;
-  }
-
-  public static final class ArmConstants {
-    public static final int MOTOR_ID = 21;
-    public static final String CANBUS = "rio";
-    public static final double GEAR_RATIO = 50.0;
-    public static final double SIM_MOI = 1.0;
-    public static final double SIM_LENGTH = 0.6;
-    public static final boolean INVERTED = false;
-
-    // Load Shedding Bound Limits
-    public static final double NOMINAL_VOLTAGE = 10.0;
-    public static final double CRITICAL_VOLTAGE = 7.0;
-    public static final double MAX_CURRENT_AMPS = 60.0;
     public static final double MIN_CURRENT_AMPS = 20.0;
   }
 
   public static final class IntakeConstants {
-    public static final int MOTOR_ID = 22;
-    public static final String CANBUS = "rio";
+    public static final int PIVOT_MOTOR_ID = 14;
+    public static final int ROLLER_MOTOR_ID = 15;
+    public static final int FLOOR_MOTOR_ID = 16;
+    public static final String CANBUS = "CAN2";
+    public static final double PIVOT_GEAR_RATIO = 4.0;
   }
 
   public static final class ShooterConstants {
-    public static final int MOTOR_ID = 23;
-    public static final String CANBUS = "rio";
+    public static final int LM_MOTOR_ID = 9;
+    public static final int LF_MOTOR_ID = 10;
+    public static final int RM_MOTOR_ID = 11;
+    public static final int RF_MOTOR_ID = 12;
+    public static final int FEEDER_MOTOR_ID = 20;
+    public static final String CANBUS = "CAN2";
     public static final double PROJECTILE_SPEED_MPS = 15.0;
+    public static final double FEEDER_GEAR_RATIO = 4.0;
+  }
+
+  public static final class ClimberConstants {
+    public static final int FAST_MOTOR_ID = 19;
+    public static final int FLIP_LEADER_ID = 17;
+    public static final int FLIP_FOLLOWER_ID = 18;
+    public static final String CANBUS = "CAN2";
+    public static final double FAST_GEAR_RATIO = 80.0;
+    public static final double FLIP_GEAR_RATIO = 80.0; // Estimate, update if known
   }
 
   public static final class SuperstructureConstants {
@@ -111,8 +109,9 @@ public final class Constants {
   }
 
   public static final class LEDConstants {
-    public static final int PWM_PORT = 0;
-    public static final int LENGTH = 60;
+    public static final int CANDLE_ID = 24;
+    public static final String CANBUS = "CAN2";
+    public static final int LENGTH = 70;
   }
 
   public static final class PowerConstants {
@@ -155,6 +154,9 @@ public final class Constants {
   }
 
   public static final class VisionConstants {
+    public static final String CAMERA_0_NAME = "limelight-shooter";
+    public static final String CAMERA_1_NAME = "limelight-back";
+
     /** Base linear standard deviation for single-tag AprilTag poses. */
     public static final double TAG_STD_BASE = 0.05;
 

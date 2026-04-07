@@ -89,7 +89,7 @@ public final class SwerveConstants {
   // ---- Drive Constraints ----
 
   /** Maximum achievable linear robot speed (m/s). */
-  public static final double MAX_LINEAR_SPEED_MPS = 4.5;
+  public static final double MAX_LINEAR_SPEED_MPS = 5.85;
 
   /** Maximum achievable angular robot speed (rad/s). */
   public static final double MAX_ANGULAR_SPEED_RAD_PER_SEC = Math.PI * 2;
@@ -106,10 +106,10 @@ public final class SwerveConstants {
   // ---- Gear Ratios ----
 
   /** Drive motor gear ratio (motor rotations per output rotation). L1 = 6.75:1. */
-  public static final double DRIVE_GEAR_RATIO = 6.75;
+  public static final double DRIVE_GEAR_RATIO = 5.27;
 
   /** Turn motor gear ratio (motor rotations per module rotation). */
-  public static final double TURN_GEAR_RATIO = 21.4;
+  public static final double TURN_GEAR_RATIO = 26.09;
 
   // ---- Current Limits ----
 

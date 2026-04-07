@@ -46,7 +46,7 @@ public class LinearMechanismIOTalonFX implements LinearMechanismIO {
   private final double spoolDiameterMeters;
 
   /** Tracks the last CAN-applied stator current limit to avoid redundant writes. */
-  private double lastAppliedCurrentLimit = frc.robot.Constants.ElevatorConstants.MAX_CURRENT_AMPS;
+  private double lastAppliedCurrentLimit = 40.0;
 
   private final LoggedTunableNumber kP;
   private final LoggedTunableNumber kI;
@@ -61,20 +61,32 @@ public class LinearMechanismIOTalonFX implements LinearMechanismIO {
    * @param spoolDiameterMeters The physical diameter of the output spool pulling the belt/string.
    * @param inverted Whether positive rotation extends the mechanism outward.
    */
+  private final TalonFX[] followers;
+
   public LinearMechanismIOTalonFX(
       int motorId, String canbus, double gearRatio, double spoolDiameterMeters, boolean inverted) {
+    this(motorId, new int[0], new boolean[0], canbus, gearRatio, spoolDiameterMeters, inverted);
+  }
+
+  public LinearMechanismIOTalonFX(
+      int leaderId,
+      int[] followerIds,
+      boolean[] opposeLeader,
+      String canbus,
+      double gearRatio,
+      double spoolDiameterMeters,
+      boolean inverted) {
     this.gearRatio = gearRatio;
     this.spoolDiameterMeters = spoolDiameterMeters;
-    this.motor = new TalonFX(motorId, canbus);
+    this.motor = new TalonFX(leaderId, canbus);
 
-    kP = new LoggedTunableNumber("LinearMechanism_" + motorId + "/kP", 2.0);
-    kI = new LoggedTunableNumber("LinearMechanism_" + motorId + "/kI", 0.0);
-    kD = new LoggedTunableNumber("LinearMechanism_" + motorId + "/kD", 0.0);
+    kP = new LoggedTunableNumber("LinearMechanism_" + leaderId + "/kP", 2.0);
+    kI = new LoggedTunableNumber("LinearMechanism_" + leaderId + "/kI", 0.0);
+    kD = new LoggedTunableNumber("LinearMechanism_" + leaderId + "/kD", 0.0);
 
     TalonFXConfiguration config = new TalonFXConfiguration();
     config.CurrentLimits.StatorCurrentLimitEnable = true;
-    config.CurrentLimits.StatorCurrentLimit =
-        frc.robot.Constants.ElevatorConstants.MAX_CURRENT_AMPS;
+    config.CurrentLimits.StatorCurrentLimit = 40.0;
     config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     config.MotorOutput.Inverted =
         inverted ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
@@ -101,6 +113,14 @@ public class LinearMechanismIOTalonFX implements LinearMechanismIO {
     closedLoopReferenceSlope.setUpdateFrequency(50.0);
 
     motor.optimizeBusUtilization();
+
+    followers = new TalonFX[followerIds.length];
+    for (int i = 0; i < followerIds.length; i++) {
+      followers[i] = new TalonFX(followerIds[i], canbus);
+      followers[i].getConfigurator().apply(config);
+      followers[i].setControl(new com.ctre.phoenix6.controls.Follower(leaderId, opposeLeader[i]));
+      followers[i].optimizeBusUtilization();
+    }
   }
 
   @Override

@@ -45,7 +45,7 @@ public class MARSShooterTest {
     var inputs = new FlywheelIOInputsAutoLogged();
 
     // Apply a target velocity mapping
-    shooter.setClosedLoopVelocity(500.0, 2.5);
+    shooter.setClosedLoopVelocity(500.0);
     shooter.periodic();
     io.updateInputs(inputs);
 

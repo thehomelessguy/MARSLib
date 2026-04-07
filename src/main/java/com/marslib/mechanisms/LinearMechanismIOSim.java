@@ -99,11 +99,7 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
     double motorSpeedRadsPerSec = (currentVelocityMetersPerSec / spoolRadiusMeters) * gearRatio;
     double currentDrawAmps = gearbox.getCurrent(motorSpeedRadsPerSec, appliedVolts);
     // Enforce stator current limit like real TalonFX firmware
-    currentDrawAmps =
-        Math.copySign(
-            Math.min(
-                Math.abs(currentDrawAmps), frc.robot.Constants.ElevatorConstants.MAX_CURRENT_AMPS),
-            currentDrawAmps);
+    currentDrawAmps = Math.copySign(Math.min(Math.abs(currentDrawAmps), 40.0), currentDrawAmps);
     double motorTorque = gearbox.getTorque(currentDrawAmps);
 
     // Torque / radius = Linear Force

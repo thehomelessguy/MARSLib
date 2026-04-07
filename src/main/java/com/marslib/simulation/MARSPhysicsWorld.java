@@ -139,7 +139,7 @@ public class MARSPhysicsWorld {
     spawnInitialGamePieces();
   }
 
-  /** Places the initial set of 72 Fuel game pieces according to official 2026 REBUILT rules. */
+  /** Places the initial set of 168 Fuel game pieces according to official 2026 REBUILT rules. */
   private void spawnInitialGamePieces() {
     double fuelDiameter = frc.robot.Constants.FieldConstants.GAME_PIECE_RADIUS_METERS * 2.0;
     // Add small buffer to prevent dyn4j physics collision overlap on spawn

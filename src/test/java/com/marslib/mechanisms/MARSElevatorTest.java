@@ -9,7 +9,6 @@ import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.ElevatorConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,7 +44,7 @@ public class MARSElevatorTest {
     LinearMechanismIOSim physicalElevatorSim =
         new LinearMechanismIOSim(
             "MARSElevator_Test",
-            ElevatorConstants.GEAR_RATIO,
+            50.0,
             0.05, // 5cm spool diameter
             5.0 // 5.0 kg physical carriage mass
             );
@@ -77,7 +76,7 @@ public class MARSElevatorTest {
 
   @Test
   public void testLoadSheddingDynamicRestoresAreAppliedUnderCriticalBrownoutConditions() {
-    simulatedVoltageOverride = ElevatorConstants.CRITICAL_VOLTAGE - 0.5;
+    simulatedVoltageOverride = 9.0 - 0.5;
 
     for (int i = 0; i < 20; i++) {
       DriverStationSim.notifyNewData();
@@ -87,7 +86,7 @@ public class MARSElevatorTest {
     }
 
     // Test that logic fully executes uninterrupted natively under simulated voltage caps
-    assertEquals(ElevatorConstants.CRITICAL_VOLTAGE - 0.5, simulatedVoltageOverride, 0.0);
+    assertEquals(9.0 - 0.5, simulatedVoltageOverride, 0.0);
     assertNotNull(elevator);
   }
 }
