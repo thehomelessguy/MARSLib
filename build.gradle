@@ -3,6 +3,11 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2026.2.1"
     id "com.peterabeles.gversion" version "1.10"
     id "com.diffplug.spotless" version "6.12.0"
+    id "jacoco"
+    id "pmd"
+    id "net.ltgt.errorprone" version "3.1.0"
+    id "com.adarshr.test-logger" version "4.0.0"
+    id "com.github.ben-manes.versions" version "0.51.0"
 }
 
 java {
@@ -101,11 +106,82 @@ dependencies {
 
     def akitJson = new groovy.json.JsonSlurper().parseText(new File(projectDir.getAbsolutePath() + "/vendordeps/AdvantageKit.json").text)
     annotationProcessor "org.littletonrobotics.akit:akit-autolog:$akitJson.version"
+
+    errorprone "com.google.errorprone:error_prone_core:2.26.1"
 }
 
 test {
     useJUnitPlatform()
     systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+}
+test.finalizedBy jacocoTestReport
+
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = false
+        csv.required = false
+        html.required = true
+    }
+}
+
+pmd {
+    consoleOutput = true
+    toolVersion = "6.55.0"
+    ignoreFailures = true
+    ruleSets = [
+        "category/java/errorprone.xml",
+        "category/java/bestpractices.xml"
+    ]
+}
+
+tasks.withType(Javadoc) {
+    options.addBooleanOption('Werror', true)
+    options.addStringOption('Xdoclint:all', '-quiet')
+}
+
+task installGitHooks {
+    doLast {
+        def hookDir = new File(rootProject.rootDir, '.git/hooks')
+        if (!hookDir.exists()) return
+            def hookFile = new File(hookDir, 'pre-commit')
+        hookFile.text = '''#!/bin/sh
+echo "Running spotlessApply and tests on staged files before commit..."
+
+# Get list of staged files
+staged_files=$(git diff --cached --name-only --diff-filter=ACM | grep '\\.java$')
+
+# If no java files are staged, just exit and allow commit
+if [ -z "$staged_files" ]; then
+    exit 0
+fi
+
+# Apply spotless and run tests
+./gradlew spotlessApply test
+if [ $? -ne 0 ]; then
+  echo "Tests or formatting failed. Please fix before committing."
+  exit 1
+fi
+
+# Re-stage only the files that were originally staged, in case spotless modified them
+for file in $staged_files; do
+    if [ -f "$file" ]; then
+        git add "$file"
+    fi
+done
+'''
+        if (!System.getProperty("os.name").toLowerCase().contains("windows")) {
+            [
+                'chmod',
+                '+x',
+                hookFile.absolutePath
+            ].execute()
+        }
+    }
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -134,10 +210,12 @@ wpi.java.configureTestTasks(test)
 // Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
+    options.errorprone.disableWarningsInGeneratedCode = true
 }
 
 // Create version file
 project.compileJava.dependsOn(createVersionFile)
+project.compileJava.dependsOn(installGitHooks)
 gversion {
     srcDir       = "src/main/java/"
     classPackage = "frc.robot"
@@ -148,21 +226,23 @@ gversion {
 }
 
 // Create commit with working changes on event branches
+def isDeployTask = gradle.startParameter.taskNames.any({ it.toLowerCase().contains("deploy") })
+def projectDirFile = projectDir
 task(eventDeploy) {
     doLast {
-        if (project.gradle.startParameter.taskNames.any({ it.toLowerCase().contains("deploy") })) {
+        if (isDeployTask) {
             def branchPrefix = "event"
             def branch = 'git branch --show-current'.execute().text.trim()
             def commitMessage = "Update at '${new Date().toString()}'"
 
             if (branch.startsWith(branchPrefix)) {
                 exec {
-                    workingDir(projectDir)
+                    workingDir(projectDirFile)
                     executable 'git'
                     args 'add', '-A'
                 }
                 exec {
-                    workingDir(projectDir)
+                    workingDir(projectDirFile)
                     executable 'git'
                     args 'commit', '-m', commitMessage
                     ignoreExitValue = true

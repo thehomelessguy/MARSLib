@@ -18,8 +18,7 @@ import com.marslib.swerve.GyroIO;
 import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIO;
-import edu.wpi.first.hal.HAL;
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,13 +43,7 @@ public class MARSDiagnosticCheckTest {
 
   @BeforeEach
   public void setUp() {
-    HAL.initialize(500, 0);
-    DriverStationSim.setAllianceStationId(edu.wpi.first.hal.AllianceStationID.Blue1);
-    DriverStationSim.setEnabled(true);
-    DriverStationSim.notifyNewData();
-
-    CommandScheduler.getInstance().cancelAll();
-    MARSPhysicsWorld.resetInstance();
+    MARSTestHarness.reset();
     Alert.resetAll();
 
     // Build PowerManager
@@ -138,7 +131,6 @@ public class MARSDiagnosticCheckTest {
     // Run for enough loops to complete the entire diagnostic sequence
     // Each phase is ~0.5s with a 2s waitUntil at the end = ~5s total
     for (int i = 0; i < 400; i++) {
-      DriverStationSim.notifyNewData();
       SimHooks.stepTiming(0.02);
       CommandScheduler.getInstance().run();
       MARSPhysicsWorld.getInstance().update(0.02);

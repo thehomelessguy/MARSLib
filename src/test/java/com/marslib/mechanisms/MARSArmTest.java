@@ -5,8 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIO;
 import com.marslib.simulation.MARSPhysicsWorld;
-import edu.wpi.first.hal.HAL;
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +18,7 @@ public class MARSArmTest {
 
   @BeforeEach
   public void setUp() {
-    HAL.initialize(500, 0);
-    DriverStationSim.setAllianceStationId(edu.wpi.first.hal.AllianceStationID.Blue1);
-    DriverStationSim.setEnabled(true);
-    DriverStationSim.notifyNewData();
-
-    CommandScheduler.getInstance().cancelAll();
-    MARSPhysicsWorld.resetInstance();
-
+    MARSTestHarness.reset();
     // Custom PowerIO allows injecting custom voltage scenarios to test the load shedding state
     // engine
     PowerIO spoofedVoltageIO =
@@ -59,7 +51,6 @@ public class MARSArmTest {
 
     // Fast-forward physics simulation by 1.5 seconds (75 ticks)
     for (int i = 0; i < 75; i++) {
-      DriverStationSim.notifyNewData();
       SimHooks.stepTiming(0.02);
       CommandScheduler.getInstance().run();
       MARSPhysicsWorld.getInstance().update(0.02);
@@ -80,7 +71,6 @@ public class MARSArmTest {
 
     // Simulate 20 ticks
     for (int i = 0; i < 20; i++) {
-      DriverStationSim.notifyNewData();
       SimHooks.stepTiming(0.02);
       CommandScheduler.getInstance().run();
       MARSPhysicsWorld.getInstance().update(0.02);

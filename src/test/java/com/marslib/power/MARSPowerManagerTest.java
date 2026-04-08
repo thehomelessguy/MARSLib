@@ -6,16 +6,9 @@ import com.marslib.swerve.GyroIO;
 import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIO;
-import edu.wpi.first.hal.HAL;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class MARSPowerManagerTest {
-
-  @BeforeAll
-  public static void setup() {
-    HAL.initialize(500, 0);
-  }
 
   @Test
   public void testLoadSheddingAtLowVoltage() {

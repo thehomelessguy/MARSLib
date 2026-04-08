@@ -2,7 +2,7 @@ package com.marslib.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.wpi.first.hal.HAL;
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,7 @@ public class LoggedTunableNumberTest {
 
   @BeforeEach
   public void setUp() {
-    HAL.initialize(500, 0);
-    // Reset NetworkTables state for test isolation
+    MARSTestHarness.reset(); // Reset NetworkTables state for test isolation
     NetworkTableInstance.getDefault().close();
     NetworkTableInstance.getDefault();
   }

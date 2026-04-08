@@ -2,6 +2,7 @@ package com.marslib.simulation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import org.dyn4j.dynamics.Body;
@@ -14,6 +15,7 @@ public class LidarIOSimTest {
 
   @BeforeEach
   public void setUp() {
+    MARSTestHarness.reset();
     // Clear out any old bodies from previous tests by re-initializing the internal world somehow
     // Actually, dyn4j provides world.removeAllBodiesAndJoints()
     World<Body> world = MARSPhysicsWorld.getInstance().getDyn4jWorld();

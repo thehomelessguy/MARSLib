@@ -18,6 +18,12 @@ public class MARSFaultManager {
   public static void clear() {
     hasNewCriticalFault = false;
     activeCriticalFaults = 0;
+
+    // Explicitly shut down all pending alert trackers to clear UI state
+    for (Alert alert : disconnectAlerts.values()) {
+      alert.set(false);
+    }
+
     disconnectAlerts.clear();
   }
 
@@ -27,9 +33,11 @@ public class MARSFaultManager {
   }
 
   /**
-   * Increments the critical fault counter and registers a dashboard flag state. Do not call
-   * directly; rely on instantiating an {@link Alert} object.
+   * Increments the critical fault counter and registers a dashboard flag state.
+   *
+   * @deprecated Do not call directly; rely on instantiating an {@link Alert} object.
    */
+  @Deprecated
   public static void registerCriticalFault() {
     activeCriticalFaults++;
     reportNewCriticalFault();

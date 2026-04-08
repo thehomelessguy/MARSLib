@@ -10,6 +10,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.marslib.faults.MARSFaultManager;
 import com.marslib.util.LoggedTunableNumber;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -52,6 +53,8 @@ public class LinearMechanismIOTalonFX implements LinearMechanismIO {
   private final LoggedTunableNumber kI;
   private final LoggedTunableNumber kD;
 
+  private final TalonFX[] followers;
+
   /**
    * Initializes the TalonFX hardware and pre-configures Linear MotionMagic parameters.
    *
@@ -61,8 +64,6 @@ public class LinearMechanismIOTalonFX implements LinearMechanismIO {
    * @param spoolDiameterMeters The physical diameter of the output spool pulling the belt/string.
    * @param inverted Whether positive rotation extends the mechanism outward.
    */
-  private final TalonFX[] followers;
-
   public LinearMechanismIOTalonFX(
       int motorId, String canbus, double gearRatio, double spoolDiameterMeters, boolean inverted) {
     this(motorId, new int[0], new boolean[0], canbus, gearRatio, spoolDiameterMeters, inverted);
@@ -125,10 +126,15 @@ public class LinearMechanismIOTalonFX implements LinearMechanismIO {
 
   @Override
   public void updateInputs(LinearMechanismIOInputs inputs) {
-    BaseStatusSignal.refreshAll(
-        position, velocity, appliedVolts, statorCurrent, closedLoopReferenceSlope);
+    boolean ok =
+        BaseStatusSignal.refreshAll(
+                position, velocity, appliedVolts, statorCurrent, closedLoopReferenceSlope)
+            .isOK();
 
-    inputs.hasHardwareConnected = true;
+    inputs.hasHardwareConnected = ok;
+    if (!ok) {
+      MARSFaultManager.reportHardwareDisconnect("LinearMechanism_" + motor.getDeviceID());
+    }
 
     double metersPerMotorRotation = (spoolDiameterMeters * Math.PI) / gearRatio;
 

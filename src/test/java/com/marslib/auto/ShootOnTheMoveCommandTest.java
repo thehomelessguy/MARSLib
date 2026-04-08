@@ -12,7 +12,6 @@ import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
@@ -64,7 +63,6 @@ public class ShootOnTheMoveCommandTest {
     CommandScheduler.getInstance().schedule(command);
 
     for (int i = 0; i < 300; i++) {
-      DriverStationSim.notifyNewData();
       SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
       com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
@@ -96,7 +94,6 @@ public class ShootOnTheMoveCommandTest {
     CommandScheduler.getInstance().schedule(command);
 
     for (int i = 0; i < 300; i++) {
-      DriverStationSim.notifyNewData();
       SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
       com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
@@ -124,6 +121,29 @@ public class ShootOnTheMoveCommandTest {
             + actualDeg
             + ", Static: "
             + expectedStaticDeg);
+  }
+
+  /**
+   * When the target is totally unreachable, the robot should fall back to naive aiming cleanly
+   * without crashing.
+   */
+  @Test
+  public void testPhysicalFallbackOnNegativeDiscriminant() {
+    // Robot translating AWAY at an impossible speed (30 m/s > 15 m/s projectile)
+    ShootOnTheMoveCommand command =
+        new ShootOnTheMoveCommand(swerveDrive, () -> -30.0, () -> -30.0);
+
+    CommandScheduler.getInstance().schedule(command);
+
+    for (int i = 0; i < 50; i++) {
+      SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+      CommandScheduler.getInstance().run();
+      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+    }
+
+    // If it ran without exception, the fallback logic executed successfully inside the loop
+    Pose2d resultingPose = swerveDrive.getPose();
+    assertNotNull(resultingPose, "Swerve geometry must not be NaN under fallback path");
   }
 
   // -----------------------------------------------

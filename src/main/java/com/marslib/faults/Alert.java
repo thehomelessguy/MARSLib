@@ -48,12 +48,18 @@ public class Alert {
       }
     }
     this.active = active;
+    if (!groups.containsKey(group)) {
+      groups.put(group, new SendableAlerts());
+    }
     groups.get(group).updateAlert(this);
   }
 
   public void setText(String text) {
     this.text = text;
     if (active) {
+      if (!groups.containsKey(group)) {
+        groups.put(group, new SendableAlerts());
+      }
       groups.get(group).updateAlert(this);
     }
   }

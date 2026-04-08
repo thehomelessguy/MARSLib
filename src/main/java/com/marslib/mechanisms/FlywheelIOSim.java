@@ -82,6 +82,13 @@ public class FlywheelIOSim implements FlywheelIO {
     double pidVolts =
         controller.calculate(sim.getAngularVelocityRadPerSec(), targetVelocityRadPerSec);
     appliedVolts = pidVolts + feedforwardVolts;
+    System.out.println(
+        "[SIM_INPUT] applying volts="
+            + appliedVolts
+            + "; PID="
+            + pidVolts
+            + " target="
+            + velocityRadPerSec);
     sim.setInputVoltage(appliedVolts);
   }
 }

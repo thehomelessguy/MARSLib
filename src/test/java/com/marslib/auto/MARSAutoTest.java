@@ -2,7 +2,7 @@ package com.marslib.auto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.wpi.first.hal.HAL;
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.wpilibj2.command.Command;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ public class MARSAutoTest {
 
   @BeforeEach
   public void setUp() {
-    HAL.initialize(500, 0);
+    MARSTestHarness.reset();
   }
 
   @Test

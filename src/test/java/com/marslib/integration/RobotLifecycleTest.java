@@ -43,8 +43,6 @@ public class RobotLifecycleTest {
     MARSTestHarness.reset();
 
     DriverStationSim.setAutonomous(true);
-    DriverStationSim.notifyNewData();
-
     // Construct all subsystems — same wiring as RobotContainer SIM mode
     powerManager = new MARSPowerManager(new PowerIOSim());
     GyroIOSim gyroSim = new GyroIOSim();
@@ -117,8 +115,6 @@ public class RobotLifecycleTest {
 
     // PHASE 3: Switch to teleop
     DriverStationSim.setAutonomous(false);
-    DriverStationSim.notifyNewData();
-
     // Run 50 ticks of teleop idle (0.5s)
     for (int i = 0; i < 50; i++) {
       final int tick = i;

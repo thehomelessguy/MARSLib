@@ -14,7 +14,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
@@ -140,7 +139,6 @@ public class ShotSetupTest {
 
     // Step physics a few times to settle
     for (int i = 0; i < 10; i++) {
-      DriverStationSim.notifyNewData();
       SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
       com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
@@ -188,7 +186,6 @@ public class ShotSetupTest {
     swerveDrive.runVelocity(new ChassisSpeeds(0, 0, 0));
 
     for (int i = 0; i < 10; i++) {
-      DriverStationSim.notifyNewData();
       SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
       com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);

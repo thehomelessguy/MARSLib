@@ -27,13 +27,31 @@ public class FlywheelIOTalonFX implements FlywheelIO {
   private final VelocityVoltage velocityRequest = new VelocityVoltage(0.0).withUpdateFreqHz(0);
 
   private double targetVelocityRadPerSec = 0.0;
+  private double lastAppliedCurrentLimit = 40.0;
 
   private final TalonFX[] followers;
 
+  /**
+   * Constructs a single Flywheel mechanism using a direct CTRE TalonFX.
+   *
+   * @param motorId The physical CAN ID of the primary TalonFX.
+   * @param canBus The CANBus string (e.g. "rio" or "canivore").
+   * @param invert Whether to invert the motor output.
+   */
   public FlywheelIOTalonFX(int motorId, String canBus, boolean invert) {
     this(motorId, new int[0], new boolean[0], canBus, invert);
   }
 
+  /**
+   * Constructs a master-follower Flywheel configuration (e.g., dual-motor shooter).
+   *
+   * @param leaderId The physical CAN ID of the master TalonFX.
+   * @param followerIds Array of CAN IDs for the follower motors.
+   * @param opposeLeader Array of booleans denoting if the follower should spin opposite to the
+   *     leader.
+   * @param canBus The CANBus string.
+   * @param invert Whether the leader is inverted.
+   */
   public FlywheelIOTalonFX(
       int leaderId, int[] followerIds, boolean[] opposeLeader, String canBus, boolean invert) {
     motor = new TalonFX(leaderId, canBus);
@@ -95,6 +113,10 @@ public class FlywheelIOTalonFX implements FlywheelIO {
 
   @Override
   public void setCurrentLimit(double amps) {
+    if (Math.abs(amps - lastAppliedCurrentLimit) < 1.0) {
+      return;
+    }
+    lastAppliedCurrentLimit = amps;
     CurrentLimitsConfigs config = new CurrentLimitsConfigs();
     motor.getConfigurator().refresh(config);
     config.StatorCurrentLimit = amps;

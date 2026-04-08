@@ -174,6 +174,9 @@ public final class Constants {
 
     /** Static standard deviation for VIO SLAM measurements (meters and radians). */
     public static final double SLAM_STD_DEV = 0.01;
+
+    /** Static standard deviation for VIO SLAM angular measurements (radians). */
+    public static final double SLAM_ANGULAR_STD_DEV = 0.5;
   }
 
   public static final class OperatorConstants {

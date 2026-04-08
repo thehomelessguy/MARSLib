@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -19,6 +20,7 @@ public class SwerveModuleTest {
 
   @BeforeEach
   public void setUp() {
+    MARSTestHarness.reset();
     mockIO = mock(SwerveModuleIO.class);
     module = new SwerveModule(0, mockIO);
   }

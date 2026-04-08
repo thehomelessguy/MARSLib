@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.ctre.phoenix6.BaseStatusSignal;
+import com.marslib.testing.MARSTestHarness;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -18,6 +19,7 @@ public class PhoenixOdometryThreadTest {
 
   @BeforeEach
   public void setUp() {
+    MARSTestHarness.reset();
     // Instantiate WITHOUT starting the thread to prevent infinite JNI-dependent loops
     thread = new PhoenixOdometryThread();
     mockDriveSignal = mock(BaseStatusSignal.class);

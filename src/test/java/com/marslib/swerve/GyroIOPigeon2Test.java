@@ -7,6 +7,7 @@ import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import org.junit.jupiter.api.AfterEach;
@@ -22,6 +23,7 @@ public class GyroIOPigeon2Test {
 
   @BeforeEach
   public void setUp() {
+    MARSTestHarness.reset();
     pigeonMockedConstruction =
         mockConstruction(
             Pigeon2.class,
@@ -43,6 +45,7 @@ public class GyroIOPigeon2Test {
 
   @AfterEach
   public void tearDown() {
+    MARSTestHarness.tearDown();
     pigeonMockedConstruction.close();
     mockThreadStatic.close();
   }

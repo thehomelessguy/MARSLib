@@ -110,7 +110,7 @@ public class MARSVision extends SubsystemBase {
             VecBuilder.fill(
                 frc.robot.Constants.VisionConstants.SLAM_STD_DEV,
                 frc.robot.Constants.VisionConstants.SLAM_STD_DEV,
-                frc.robot.Constants.VisionConstants.SLAM_STD_DEV);
+                frc.robot.Constants.VisionConstants.SLAM_ANGULAR_STD_DEV);
         Pose2d pose2d = pose3d.toPose2d();
 
         swerveDrive.addVisionMeasurement(pose2d, timestamp, stdDevs);

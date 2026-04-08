@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIO;
 import com.marslib.simulation.MARSPhysicsWorld;
+import com.marslib.testing.MARSTestHarness;
 import com.marslib.util.ShotSetup;
-import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -31,14 +31,7 @@ public class MARSSuperstructureTest {
 
   @BeforeEach
   public void setUp() {
-    HAL.initialize(500, 0);
-    DriverStationSim.setAllianceStationId(edu.wpi.first.hal.AllianceStationID.Blue1);
-    DriverStationSim.setEnabled(true);
-    DriverStationSim.notifyNewData();
-
-    CommandScheduler.getInstance().cancelAll();
-    MARSPhysicsWorld.resetInstance();
-
+    MARSTestHarness.reset();
     PowerIO spoofedVoltageIO =
         new PowerIO() {
           @Override
@@ -81,8 +74,7 @@ public class MARSSuperstructureTest {
 
   @AfterEach
   public void tearDown() {
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().unregisterAllSubsystems();
+    MARSTestHarness.tearDown();
   }
 
   @Test
@@ -92,7 +84,6 @@ public class MARSSuperstructureTest {
 
     for (int i = 0; i < 50; i++) {
       superstructure.periodic();
-      DriverStationSim.notifyNewData();
       edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(0.02);
       CommandScheduler.getInstance().run();
       MARSPhysicsWorld.getInstance().update(0.02);
@@ -122,5 +113,80 @@ public class MARSSuperstructureTest {
     superstructure.periodic();
     assertEquals(1, superstructure.getStateMachine().getTicksInCurrentState());
     assertEquals(1, superstructure.getStateMachine().getTotalTransitionCount());
+  }
+
+  @Test
+  public void testIntakeToStowedTransition() {
+    superstructure
+        .setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_RUNNING)
+        .initialize();
+
+    // Simulate INTAKE phase (some ticks)
+    for (int i = 0; i < 5; i++) {
+      superstructure.periodic();
+    }
+    assertEquals(
+        MARSSuperstructure.SuperstructureState.INTAKE_RUNNING, superstructure.getCurrentState());
+
+    // Switch to STOWED
+    superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED).initialize();
+    superstructure.periodic();
+    assertEquals(MARSSuperstructure.SuperstructureState.STOWED, superstructure.getCurrentState());
+  }
+
+  @Test
+  public void testFlywheelFrictionSpindown() {
+    // Assert flywheels properly spin down on STOW
+    superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE).initialize();
+    for (int i = 0; i < 50; i++) {
+      superstructure.periodic();
+      DriverStationSim.notifyNewData();
+      edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(0.02);
+      CommandScheduler.getInstance().run();
+      MARSPhysicsWorld.getInstance().update(0.02);
+    }
+
+    // Record current flywheel velocity
+    double highRpm = shooter.getVelocityRadPerSec() * 60.0 / (Math.PI * 2.0);
+    System.out.println(
+        "[DEBUG] highRpm = " + highRpm + ", velocityRadPerSec = " + shooter.getVelocityRadPerSec());
+    assertTrue(highRpm > 1000, "Shooter should rev up in SCORE state");
+
+    // STOW
+    superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED).initialize();
+    for (int i = 0; i < 50; i++) {
+      superstructure.periodic();
+      DriverStationSim.notifyNewData();
+      edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(0.02);
+      CommandScheduler.getInstance().run();
+      MARSPhysicsWorld.getInstance().update(0.02);
+    }
+
+    double lowRpm = shooter.getVelocityRadPerSec() * 60.0 / (Math.PI * 2.0);
+    assertTrue(lowRpm < highRpm, "Shooter should spin down in STOW state due to friction model");
+  }
+
+  @Test
+  public void testDebugShooter() {
+    superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE).initialize();
+    System.out.println(
+        "[TEST-DEBUG] Initial State after command: " + superstructure.getCurrentState());
+    for (int i = 0; i < 50; i++) {
+      superstructure.periodic();
+      DriverStationSim.notifyNewData();
+      edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(0.02);
+      CommandScheduler.getInstance().run();
+      MARSPhysicsWorld.getInstance().update(0.02);
+      System.out.println(
+          "[TICK "
+              + i
+              + "] Vel: "
+              + shooter.getVelocityRadPerSec()
+              + " State: "
+              + superstructure.getCurrentState());
+    }
+    System.out.println(
+        "[TEST-DEBUG] Integration 50 ticks -> velocityRadPerSec: "
+            + shooter.getVelocityRadPerSec());
   }
 }

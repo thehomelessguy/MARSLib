@@ -59,11 +59,11 @@ public final class MARSTestHarness {
     // 4. Vision sim — destroys shared VisionSystemSim and field layout cache
     AprilTagVisionIOSim.resetSimulation();
 
-    // 5. Alert system — clears static alert group map
-    Alert.resetAll();
-
-    // 6. Fault manager — clears critical fault state
+    // 5. Fault manager — clears critical fault state before destroying alert groups
     MARSFaultManager.clear();
+
+    // 6. Alert system — clears static alert group map
+    Alert.resetAll();
 
     // 7. DriverStation — configure sim heartbeat
     DriverStationSim.setAllianceStationId(edu.wpi.first.hal.AllianceStationID.Blue1);

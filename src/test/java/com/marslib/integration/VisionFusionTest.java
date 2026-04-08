@@ -54,8 +54,6 @@ public class VisionFusionTest {
   public void setUp() {
     MARSTestHarness.reset();
     DriverStationSim.setAutonomous(false);
-    DriverStationSim.notifyNewData();
-
     // Construct swerve
     powerManager = new MARSPowerManager(new PowerIOSim());
     GyroIOSim gyroSim = new GyroIOSim();
@@ -91,7 +89,6 @@ public class VisionFusionTest {
   @Test
   public void testVisionSwerveDoesNotCrash() {
     for (int i = 0; i < 250; i++) {
-      DriverStationSim.notifyNewData();
       SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
       assertDoesNotThrow(
           () -> CommandScheduler.getInstance().run(),
@@ -118,7 +115,6 @@ public class VisionFusionTest {
 
     // Run for 3 seconds (150 ticks) while stationary
     for (int i = 0; i < 150; i++) {
-      DriverStationSim.notifyNewData();
       SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
       MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);

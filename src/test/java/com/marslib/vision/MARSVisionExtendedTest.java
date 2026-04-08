@@ -6,12 +6,11 @@ import com.marslib.faults.Alert;
 import com.marslib.faults.MARSFaultManager;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIO;
-import com.marslib.simulation.MARSPhysicsWorld;
 import com.marslib.swerve.GyroIO;
 import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIO;
-import edu.wpi.first.hal.HAL;
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.Timer;
@@ -29,11 +28,9 @@ public class MARSVisionExtendedTest {
 
   @BeforeEach
   public void setUp() {
-    HAL.initialize(500, 0);
+    MARSTestHarness.reset();
     Alert.resetAll();
     MARSFaultManager.clear();
-    MARSPhysicsWorld.resetInstance();
-
     // Build a stub SwerveDrive for MARSVision's constructor
     PowerIO powerIO =
         new PowerIO() {

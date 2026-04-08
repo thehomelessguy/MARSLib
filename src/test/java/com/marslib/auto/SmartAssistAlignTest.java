@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.marslib.swerve.SwerveDrive;
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -17,6 +18,7 @@ public class SmartAssistAlignTest {
 
   @BeforeEach
   public void setUp() {
+    MARSTestHarness.reset();
     mockSwerveDrive = mock(SwerveDrive.class);
   }
 

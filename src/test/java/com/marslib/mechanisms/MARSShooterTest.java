@@ -2,9 +2,8 @@ package com.marslib.mechanisms;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.marslib.simulation.MARSPhysicsWorld;
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,10 +14,8 @@ public class MARSShooterTest {
 
   @BeforeEach
   public void setUp() {
+    MARSTestHarness.reset();
     // Reset hardware and physics state before test
-    CommandScheduler.getInstance().cancelAll();
-    MARSPhysicsWorld.getInstance().resetInstance();
-
     // Shooter uses standard flywheel simulation dynamics (Kraken X60, 1:1 reduction, 0.002 KgM^2)
     io = new FlywheelIOSim(DCMotor.getKrakenX60Foc(1), 1.0, 0.002);
     shooter = new MARSShooter(io);

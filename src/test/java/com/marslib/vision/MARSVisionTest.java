@@ -7,18 +7,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.marslib.swerve.SwerveDrive;
-import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.geometry.Pose3d;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class MARSVisionTest {
-
-  @BeforeAll
-  public static void setup() {
-    HAL.initialize(500, 0);
-  }
 
   @Test
   public void testAmbiguityRejection() {

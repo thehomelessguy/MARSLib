@@ -2,20 +2,13 @@ package com.marslib.swerve;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.SwerveConstants;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class SwerveKinematicsTest {
-
-  @BeforeAll
-  public static void setup() {
-    HAL.initialize(500, 0);
-  }
 
   @Test
   public void testForwardKinematics() {

@@ -2,6 +2,7 @@ package com.marslib.auto;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -29,7 +30,7 @@ import org.littletonrobotics.junction.Logger;
  */
 public class GhostManager {
 
-  private boolean isPlaying = false;
+  private volatile boolean isPlaying = false;
 
   private Timer timer = new Timer();
 
@@ -161,16 +162,16 @@ public class GhostManager {
       BooleanSupplier up,
       BooleanSupplier down,
       BooleanSupplier left,
-      BooleanSupplier right) {
+      BooleanSupplier right,
+      Subsystem... requirements) {
     return new Command() {
+      {
+        addRequirements(requirements);
+      }
+
       @Override
       public void initialize() {
         try {
-          File file = new File(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH);
-          PrintWriter pw = new PrintWriter(new FileWriter(file));
-          // Write CSV header synchronously (single write, negligible cost)
-          pw.println("time,ly,lx,rx,a,b,x,y,lb,rb,up,down,left,right");
-
           // Safely terminate any existing writer thread from a previous recording
           if (writerThread != null && writerThread.isAlive()) {
             recording = false; // Signal the old thread to drain and finish
@@ -180,6 +181,11 @@ public class GhostManager {
             } catch (InterruptedException ignored) {
             }
           }
+
+          File file = new File(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH);
+          PrintWriter pw = new PrintWriter(new FileWriter(file));
+          // Write CSV header synchronously (single write, negligible cost)
+          pw.println("time,ly,lx,rx,a,b,x,y,lb,rb,up,down,left,right");
 
           recording = true;
           writeBuffer.clear();
@@ -230,8 +236,12 @@ public class GhostManager {
   // ---------------------------------------------------------------------------
 
   /** Command used in Autonomous to deserialize the CSV and push it into the subsystems. */
-  public Command getPlaybackCommand() {
+  public Command getPlaybackCommand(Subsystem... requirements) {
     return new Command() {
+      {
+        addRequirements(requirements);
+      }
+
       @Override
       public void initialize() {
         frames.clear();

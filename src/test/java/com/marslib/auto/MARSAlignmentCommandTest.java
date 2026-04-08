@@ -8,10 +8,9 @@ import com.marslib.swerve.GyroIOSim;
 import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIOSim;
-import edu.wpi.first.hal.HAL;
+import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,13 +22,9 @@ public class MARSAlignmentCommandTest {
 
   @BeforeEach
   public void setUp() {
+    MARSTestHarness.reset();
     // Required to configure WPI standard HAL hooks for integrated physical Simulation tests
-    HAL.initialize(500, 0);
-    DriverStationSim.setEnabled(true);
-    DriverStationSim.notifyNewData();
-    CommandScheduler.getInstance().cancelAll();
-    com.marslib.simulation.MARSPhysicsWorld.resetInstance();
-
+    // com.marslib.simulation.
     // Construct genuine simulation architectures entirely decoupled from Mockito wrappers
     GyroIOSim gyroSim = new GyroIOSim();
     MARSPowerManager powerManager = new MARSPowerManager(new PowerIOSim());
@@ -48,7 +43,18 @@ public class MARSAlignmentCommandTest {
   @Test
   public void testCommandDrivesTowardsTargetPhysically() {
     Pose2d targetPose = new Pose2d(2.0, 2.0, Rotation2d.fromDegrees(90));
-    MARSAlignmentCommand command = new MARSAlignmentCommand(swerveDrive, () -> targetPose);
+    MARSAlignmentCommand command =
+        new MARSAlignmentCommand(
+            swerveDrive,
+            () -> targetPose,
+            5.0,
+            5.0,
+            3.0,
+            3.0,
+            Math.PI * 2,
+            Math.PI * 4,
+            0.05,
+            0.05);
 
     // Start physical controller pipeline
     CommandScheduler.getInstance().schedule(command);
@@ -86,7 +92,18 @@ public class MARSAlignmentCommandTest {
     Pose2d targetPose = new Pose2d(0.001, 0.001, Rotation2d.fromDegrees(0));
     swerveDrive.resetPose(targetPose);
 
-    MARSAlignmentCommand command = new MARSAlignmentCommand(swerveDrive, () -> targetPose);
+    MARSAlignmentCommand command =
+        new MARSAlignmentCommand(
+            swerveDrive,
+            () -> targetPose,
+            5.0,
+            5.0,
+            3.0,
+            3.0,
+            Math.PI * 2,
+            Math.PI * 4,
+            0.05,
+            0.05);
     CommandScheduler.getInstance().schedule(command);
 
     CommandScheduler.getInstance().run();

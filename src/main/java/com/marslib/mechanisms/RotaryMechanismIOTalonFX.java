@@ -10,6 +10,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.marslib.faults.MARSFaultManager;
 import com.marslib.util.LoggedTunableNumber;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -101,10 +102,15 @@ public class RotaryMechanismIOTalonFX implements RotaryMechanismIO {
 
   @Override
   public void updateInputs(RotaryMechanismIOInputs inputs) {
-    BaseStatusSignal.refreshAll(
-        position, velocity, appliedVolts, statorCurrent, closedLoopReferenceSlope);
+    boolean ok =
+        BaseStatusSignal.refreshAll(
+                position, velocity, appliedVolts, statorCurrent, closedLoopReferenceSlope)
+            .isOK();
 
-    inputs.hasHardwareConnected = true;
+    inputs.hasHardwareConnected = ok;
+    if (!ok) {
+      MARSFaultManager.reportHardwareDisconnect("RotaryMechanism_" + motor.getDeviceID());
+    }
 
     // Convert motor rotations -> mechanism rads
     double radsPerMotorRotation = (2 * Math.PI) / gearRatio;

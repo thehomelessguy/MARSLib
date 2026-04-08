@@ -91,6 +91,17 @@ public class SwerveChassisPhysicsTest {
     double[] volts = {10.0, 10.0, 10.0, 10.0};
     Rotation2d[] angles = {new Rotation2d(), new Rotation2d(), new Rotation2d(), new Rotation2d()};
 
+    // Run with full voltage (12V)
+    for (int i = 0; i < 25; i++) {
+      physics.applyModuleForces(volts, angles, 12.0, dt);
+      MARSPhysicsWorld.getInstance().update(dt);
+    }
+    double highBatterySpeed = physics.getConstrainedSpeeds().vxMetersPerSecond;
+
+    // Reset simulator
+    MARSTestHarness.reset();
+    physics = new SwerveChassisPhysics(new Pose2d(8, 4, new Rotation2d()));
+
     // Run with brownout voltage only (7V)
     for (int i = 0; i < 25; i++) {
       physics.applyModuleForces(volts, angles, 7.0, dt);
@@ -98,13 +109,16 @@ public class SwerveChassisPhysicsTest {
     }
     double lowBatterySpeed = physics.getConstrainedSpeeds().vxMetersPerSecond;
 
-    // With 10V commanded but only 7V available, the chassis should still move.
-    // The exact speed depends on game piece collisions and chassis friction, so we
-    // validate a wide but meaningful range: the robot moves, and noticeably less than
-    // what 12V would produce (~4+ m/s for 25 steps at full voltage).
     assertTrue(
         lowBatterySpeed > 0.0,
         "Robot should have positive velocity at brownout voltage. Speed: " + lowBatterySpeed);
+
+    assertTrue(
+        lowBatterySpeed < highBatterySpeed - 0.1,
+        "Brownout voltage should reduce acceleration. Low: "
+            + lowBatterySpeed
+            + ", High: "
+            + highBatterySpeed);
   }
 
   // -----------------------------------------------

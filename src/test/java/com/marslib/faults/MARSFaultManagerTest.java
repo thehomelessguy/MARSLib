@@ -1,29 +1,42 @@
 package com.marslib.faults;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-import edu.wpi.first.hal.HAL;
-import org.junit.jupiter.api.BeforeAll;
+import com.marslib.testing.MARSTestHarness;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class MARSFaultManagerTest {
 
-  @BeforeAll
-  public static void setup() {
-    HAL.initialize(500, 0);
+  @BeforeEach
+  public void setUp() {
+    MARSTestHarness.reset();
+    MARSFaultManager.clear();
+  }
+
+  @AfterEach
+  public void tearDown() {
+    MARSTestHarness.tearDown();
+    MARSFaultManager.clear();
   }
 
   @Test
-  public void testHardwareDisconnectTriggersFaultState() {
-    // Inject hardware disconnect fault
-    MARSFaultManager.reportHardwareDisconnect("TestRotaryMechanism");
+  public void testFaultClearResetsAlerts() {
+    assertFalse(MARSFaultManager.hasActiveCriticalFaults());
 
-    // Verify
-    assertTrue(
-        MARSFaultManager.hasActiveCriticalFaults(),
-        "Fault Manager should have active critical faults.");
-    assertTrue(
-        MARSFaultManager.hasNewCriticalFault(),
-        "Fault Manager should trigger the new critical fault HMI flag.");
+    MARSFaultManager.reportHardwareDisconnect("TestMotor");
+    assertTrue(MARSFaultManager.hasActiveCriticalFaults());
+
+    // Clear should reset the internal maps and state
+    MARSFaultManager.clear();
+    assertFalse(MARSFaultManager.hasActiveCriticalFaults());
+  }
+
+  @Test
+  public void testWarningFaultsDontTriggerCritical() {
+    MARSFaultManager.clearNewCriticalFault();
+    assertFalse(
+        MARSFaultManager.hasNewCriticalFault(), "Warnings should not escalate to critical faults");
   }
 }

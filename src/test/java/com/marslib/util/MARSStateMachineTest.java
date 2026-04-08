@@ -2,7 +2,7 @@ package com.marslib.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.wpi.first.hal.HAL;
+import com.marslib.testing.MARSTestHarness;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +23,7 @@ public class MARSStateMachineTest {
 
   @BeforeEach
   public void setUp() {
-    HAL.initialize(500, 0);
+    MARSTestHarness.reset();
     machine = new MARSStateMachine<>("Test", TestState.class, TestState.IDLE);
 
     // Define transitions: IDLE→ACTIVE, ACTIVE→SCORING, SCORING→IDLE

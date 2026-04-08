@@ -4,24 +4,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class MARSPhysicsWorldTest {
 
-  @BeforeAll
-  public static void setup() {
-    HAL.initialize(500, 0);
-  }
-
   @org.junit.jupiter.api.BeforeEach
   @org.junit.jupiter.api.AfterEach
   public void wipePhysicsWorld() {
-    MARSPhysicsWorld.resetInstance();
+    com.marslib.testing.MARSTestHarness.reset();
   }
 
   @Test
@@ -99,7 +92,7 @@ public class MARSPhysicsWorldTest {
     }
 
     // Ensure the resetInstance completely wipes the world and the access count
-    MARSPhysicsWorld.resetInstance();
+    com.marslib.testing.MARSTestHarness.reset();
     MARSPhysicsWorld newWorld = MARSPhysicsWorld.getInstance();
 
     assertEquals(

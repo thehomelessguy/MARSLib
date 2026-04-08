@@ -6,7 +6,7 @@ import com.marslib.faults.Alert;
 import com.marslib.faults.MARSFaultManager;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIO;
-import edu.wpi.first.hal.HAL;
+import com.marslib.testing.MARSTestHarness;
 import frc.robot.Constants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,7 +48,7 @@ public class LEDManagerTest {
 
   @BeforeEach
   public void setUp() {
-    HAL.initialize(500, 0);
+    MARSTestHarness.reset();
     Alert.resetAll();
     MARSFaultManager.clear();
 

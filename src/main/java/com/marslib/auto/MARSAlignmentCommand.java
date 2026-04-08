@@ -21,30 +21,36 @@ public class MARSAlignmentCommand extends Command {
   private final ProfiledPIDController yController;
   private final ProfiledPIDController thetaController;
 
-  public MARSAlignmentCommand(SwerveDrive swerveDrive, Supplier<Pose2d> targetPoseSupplier) {
+  private final double translationTolerance;
+  private final double rotationTolerance;
+
+  /** Constructs an alignment command with parameterized constants. */
+  public MARSAlignmentCommand(
+      SwerveDrive swerveDrive,
+      Supplier<Pose2d> targetPoseSupplier,
+      double kPTranslation,
+      double kPRotation,
+      double maxTranslationVelMps,
+      double maxTranslationAccelMps2,
+      double maxRotationVelRps,
+      double maxRotationAccelRps2,
+      double translationToleranceMeters,
+      double rotationToleranceRad) {
+
     this.swerveDrive = swerveDrive;
     this.targetPoseSupplier = targetPoseSupplier;
+    this.translationTolerance = translationToleranceMeters;
+    this.rotationTolerance = rotationToleranceRad;
 
-    // Default fast-response kinematic constraints for visual alignment
     TrapezoidProfile.Constraints translationConstraints =
-        new TrapezoidProfile.Constraints(
-            frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_MAX_VELOCITY_MPS,
-            frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_MAX_ACCEL_MPS2);
+        new TrapezoidProfile.Constraints(maxTranslationVelMps, maxTranslationAccelMps2);
     TrapezoidProfile.Constraints rotationConstraints =
-        new TrapezoidProfile.Constraints(
-            frc.robot.Constants.AutoConstants.ALIGN_ROTATION_MAX_VELOCITY_RAD_PER_SEC,
-            frc.robot.Constants.AutoConstants.ALIGN_ROTATION_MAX_ACCEL_RAD_PER_SEC2);
+        new TrapezoidProfile.Constraints(maxRotationVelRps, maxRotationAccelRps2);
 
-    xController =
-        new ProfiledPIDController(
-            frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_KP, 0, 0, translationConstraints);
-    yController =
-        new ProfiledPIDController(
-            frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_KP, 0, 0, translationConstraints);
+    xController = new ProfiledPIDController(kPTranslation, 0, 0, translationConstraints);
+    yController = new ProfiledPIDController(kPTranslation, 0, 0, translationConstraints);
 
-    thetaController =
-        new ProfiledPIDController(
-            frc.robot.Constants.AutoConstants.ALIGN_THETA_KP, 0, 0, rotationConstraints);
+    thetaController = new ProfiledPIDController(kPRotation, 0, 0, rotationConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     addRequirements(swerveDrive);
@@ -85,8 +91,7 @@ public class MARSAlignmentCommand extends Command {
     double rotationError =
         Math.abs(currentPos.getRotation().minus(target.getRotation()).getRadians());
 
-    return error.getNorm() < frc.robot.Constants.AutoConstants.ALIGN_TRANSLATION_TOLERANCE_METERS
-        && rotationError < frc.robot.Constants.AutoConstants.ALIGN_ROTATION_TOLERANCE_RAD;
+    return error.getNorm() < translationTolerance && rotationError < rotationTolerance;
   }
 
   @Override
