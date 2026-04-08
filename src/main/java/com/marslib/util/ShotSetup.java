@@ -177,8 +177,8 @@ public class ShotSetup {
     double omega = fieldSpeeds.omegaRadiansPerSecond;
 
     // Effective translational velocity at the shooter node
-    double velX = fieldSpeeds.vxMetersPerSecond + (-offsetY) * omega;
-    double velY = fieldSpeeds.vyMetersPerSecond + (offsetX) * omega;
+    double velX = fieldSpeeds.vxMetersPerSecond + -offsetY * omega;
+    double velY = fieldSpeeds.vyMetersPerSecond + offsetX * omega;
 
     // 3. Iterative convergence for Time of Flight
     Pose2d lookaheadPose = shotPose;

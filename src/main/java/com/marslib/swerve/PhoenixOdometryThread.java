@@ -165,14 +165,20 @@ public class PhoenixOdometryThread extends Thread {
     while (true) {
       BaseStatusSignal[] currentSignals;
       signalsLock.lock();
-      currentSignals = signals.toArray(new BaseStatusSignal[0]);
-      signalsLock.unlock();
+      try {
+        currentSignals = signals.toArray(new BaseStatusSignal[0]);
+      } finally {
+        signalsLock.unlock();
+      }
 
       if (currentSignals.length == 0) {
         try {
           Thread.sleep(100);
         } catch (InterruptedException e) {
-          e.printStackTrace();
+          org.littletonrobotics.junction.Logger.recordOutput(
+              "PhoenixOdometryThread/Error", e.toString());
+          Thread.currentThread().interrupt();
+          break;
         }
         continue;
       }

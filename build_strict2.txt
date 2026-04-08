@@ -1,0 +1,53 @@
+
+> Task :eventDeploy
+Not running deploy task, skipping commit
+
+> Task :createVersionFile
+createVersionFile called. Path C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot
+
+> Task :installGitHooks
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :spotlessGroovyGradle
+> Task :spotlessGroovyGradleApply
+> Task :spotlessJava
+> Task :spotlessJavaApply
+> Task :spotlessJson UP-TO-DATE
+> Task :spotlessJsonApply UP-TO-DATE
+> Task :spotlessMisc UP-TO-DATE
+> Task :spotlessMiscApply UP-TO-DATE
+> Task :spotlessApply
+> Task :validateVendordeps
+
+> Task :compileJava FAILED
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:43: warning: [deprecation] registerCriticalFault() in MARSFaultManager has been deprecated
+        MARSFaultManager.registerCriticalFault();
+                        ^
+error: warnings found and -Werror specified
+1 error
+1 warning
+Compilation Error!
+GradleRIO detected this build failed due to a Compile Error (compileJava).
+Check that all your files are saved, then scroll up in this log for more information.
+[Incubating] Problems report is available at: file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java:43: warning: [deprecation] registerCriticalFault() in MARSFaultManager has been deprecated
+          MARSFaultManager.registerCriticalFault();
+                          ^
+  error: warnings found and -Werror specified
+  1 error
+  1 warning
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+
+BUILD FAILED in 5s
+14 actionable tasks: 9 executed, 5 up-to-date
+
+Publishing build scan...
+https://gradle.com/s/fkzektwz2eezw
+

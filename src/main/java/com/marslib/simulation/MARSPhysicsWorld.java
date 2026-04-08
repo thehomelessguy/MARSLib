@@ -73,6 +73,7 @@ public class MARSPhysicsWorld {
    * Resets the singleton instance. Intended exclusively for test isolation environments. Clears the
    * stale-state access counter.
    */
+  @SuppressWarnings("PMD.NullAssignment")
   public static void resetInstance() {
     instance = null;
     accessCountSinceReset = 0;
@@ -102,6 +103,7 @@ public class MARSPhysicsWorld {
   /** Most recently computed battery voltage after load modeling (volts). */
   private double simulatedVoltage = 12.0;
 
+  @SuppressWarnings("PMD.AssignmentToNonFinalStatic")
   private MARSPhysicsWorld() {
     instance = this;
     world = new World<>();

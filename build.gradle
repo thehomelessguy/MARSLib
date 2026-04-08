@@ -132,21 +132,47 @@ jacocoTestReport {
 pmd {
     consoleOutput = true
     toolVersion = "6.55.0"
-    ignoreFailures = true
-    ruleSets = [
-        "category/java/errorprone.xml",
-        "category/java/bestpractices.xml"
-    ]
+    ignoreFailures = false
+    ruleSets = []
+    ruleSetFiles = files("config/pmd/ruleset.xml")
+}
+
+tasks.named("pmdTest").configure {
+    enabled = false
 }
 
 tasks.withType(Javadoc) {
     options.addBooleanOption('Werror', true)
-    options.addStringOption('Xdoclint:all', '-quiet')
+    options.addStringOption('Xdoclint:all,-missing', '-quiet')
 }
 
-task installGitHooks {
+// 2. Automated vendordeps/ JSON Validation
+task validateVendordeps {
+    description = "Validates the syntax of all JSON files in the vendordeps directory"
+    def vendordepsDirCaptured = file("vendordeps")
     doLast {
-        def hookDir = new File(rootProject.rootDir, '.git/hooks')
+        if (vendordepsDirCaptured.exists()) {
+            def slurper = new groovy.json.JsonSlurper()
+            vendordepsDirCaptured.listFiles().each { f ->
+                if (f.name.endsWith(".json")) {
+                    try {
+                        slurper.parseText(f.text)
+                    } catch (Exception e) {
+                        throw new GradleException("Found invalid JSON syntax in vendordep: ${f.name}\\n${e.getMessage()}")
+                    }
+                }
+            }
+        }
+    }
+}
+compileJava.dependsOn validateVendordeps
+
+
+task installGitHooks {
+    notCompatibleWithConfigurationCache("Modifies .git/hooks directory dynamically")
+    def rootDirString = rootProject.rootDir.absolutePath
+    doLast {
+        def hookDir = new File(rootDirString, '.git/hooks')
         if (!hookDir.exists()) return
             def hookFile = new File(hookDir, 'pre-commit')
         hookFile.text = '''#!/bin/sh
@@ -209,8 +235,15 @@ wpi.java.configureTestTasks(test)
 
 // Configure string concat to always inline compile
 tasks.withType(JavaCompile) {
-    options.compilerArgs.add '-XDstringConcat=inline'
+    options.compilerArgs.addAll([
+        '-XDstringConcat=inline',
+        '-Xlint:all,-processing,-serial,-path,-classfile'
+    ])
     options.errorprone.disableWarningsInGeneratedCode = true
+    options.errorprone.errorproneArgs.addAll([
+        '-XepAllErrorsAsWarnings',
+        '-XepDisableWarningsInGeneratedCode'
+    ])
 }
 
 // Create version file
@@ -223,6 +256,10 @@ gversion {
     dateFormat   = "yyyy-MM-dd HH:mm:ss z"
     timeZone     = "America/New_York"
     indent       = "  "
+}
+
+tasks.named("createVersionFile").configure {
+    notCompatibleWithConfigurationCache("Plugin relies on Project instance")
 }
 
 // Create commit with working changes on event branches
@@ -301,3 +338,4 @@ spotless {
         endWithNewline()
     }
 }
+tasks.named('pmdTest') { enabled = false }

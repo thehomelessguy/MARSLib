@@ -17,7 +17,7 @@ public class RotaryMechanismIOSimTest {
 
   @AfterEach
   public void tearDown() {
-    MARSTestHarness.tearDown();
+    MARSTestHarness.cleanup();
   }
 
   @Test

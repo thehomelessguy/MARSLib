@@ -1,11 +1,10 @@
 package com.marslib.auto;
 
-import com.marslib.hmi.LEDManager;
 import com.marslib.mechanisms.MARSArm;
 import com.marslib.mechanisms.MARSElevator;
-import com.marslib.mechanisms.MARSShooter;
 import com.marslib.swerve.SwerveDrive;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -27,25 +26,13 @@ public class MARSDiagnosticCheck extends SequentialCommandGroup {
    * @param swerveDrive The robot drivetrain.
    * @param fastClimber The main lifting/climbing mechanism.
    * @param cowl The shooter hood / adjustable angle mechanism.
-   * @param intakePivot The pivoting intake deployment mechanism.
-   * @param floorIntake The under-the-bumper floor roller intake.
-   * @param shooter The primary flywheel firing subsystem.
-   * @param feeder The serializer feeding game pieces into the shooter.
-   * @param ledManager The HMI feedback LED controller.
    */
-  public MARSDiagnosticCheck(
-      SwerveDrive swerveDrive,
-      MARSElevator fastClimber,
-      MARSArm cowl,
-      MARSArm intakePivot,
-      MARSShooter floorIntake,
-      MARSShooter shooter,
-      MARSShooter feeder,
-      LEDManager ledManager) {
+  public MARSDiagnosticCheck(SwerveDrive swerveDrive, MARSElevator fastClimber, MARSArm cowl) {
 
     addCommands(
         // Ensure standard telemetry begins
-        Commands.runOnce(() -> System.out.println("Starting Full Diagnostic Sweep...")),
+        Commands.runOnce(
+            () -> DriverStation.reportWarning("Starting Full Diagnostic Sweep...", false)),
 
         // Swerve Drive Translation Check (0.5m/s for 0.5 sec)
         Commands.run(() -> swerveDrive.runVelocity(new ChassisSpeeds(0.5, 0.0, 0.0)), swerveDrive)
@@ -66,6 +53,6 @@ public class MARSDiagnosticCheck extends SequentialCommandGroup {
         // Move target positions back to 0
         Commands.runOnce(() -> cowl.setTargetPosition(0.0), cowl),
         Commands.runOnce(() -> fastClimber.setTargetPosition(0.0), fastClimber),
-        Commands.runOnce(() -> System.out.println("Diagnostic Check Complete!")));
+        Commands.runOnce(() -> DriverStation.reportWarning("Diagnostic Check Complete!", false)));
   }
 }

@@ -79,7 +79,7 @@ public class VisionFusionTest {
 
   @AfterEach
   public void tearDown() {
-    MARSTestHarness.tearDown();
+    MARSTestHarness.cleanup();
   }
 
   /**

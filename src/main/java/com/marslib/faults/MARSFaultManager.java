@@ -11,12 +11,12 @@ import java.util.Map;
  * posts the Alert directly onto AdvantageScope's dashboard.
  */
 public class MARSFaultManager {
-  private static boolean hasNewCriticalFault = false;
+  private static boolean unacknowledgedCriticalFault = false;
   private static int activeCriticalFaults = 0;
 
   /** Resets all fault state. Required for JUnit test isolation. */
   public static void clear() {
-    hasNewCriticalFault = false;
+    unacknowledgedCriticalFault = false;
     activeCriticalFaults = 0;
 
     // Explicitly shut down all pending alert trackers to clear UI state
@@ -29,22 +29,17 @@ public class MARSFaultManager {
 
   /** Reports that a new critical fault has occurred. */
   private static void reportNewCriticalFault() {
-    hasNewCriticalFault = true;
+    unacknowledgedCriticalFault = true;
   }
 
-  /**
-   * Increments the critical fault counter and registers a dashboard flag state.
-   *
-   * @deprecated Do not call directly; rely on instantiating an {@link Alert} object.
-   */
-  @Deprecated
-  public static void registerCriticalFault() {
+  /** Increments the critical fault counter and registers a dashboard flag state. */
+  static void registerCriticalFault() {
     activeCriticalFaults++;
     reportNewCriticalFault();
   }
 
   /** Safely decrements the active fault tracker as sub-systems return online. */
-  public static void unregisterCriticalFault() {
+  static void unregisterCriticalFault() {
     activeCriticalFaults--;
     if (activeCriticalFaults < 0) activeCriticalFaults = 0;
   }
@@ -60,7 +55,7 @@ public class MARSFaultManager {
 
   /** Returns whether a new critical fault has occurred recently. */
   public static boolean hasNewCriticalFault() {
-    return hasNewCriticalFault;
+    return unacknowledgedCriticalFault;
   }
 
   /**
@@ -68,8 +63,10 @@ public class MARSFaultManager {
    * triggered the appropriate rumble/flash sequences.
    */
   public static void clearNewCriticalFault() {
-    hasNewCriticalFault = false;
+    unacknowledgedCriticalFault = false;
   }
+
+  private static final Map<String, Alert> disconnectAlerts = new HashMap<>();
 
   /**
    * Standard helper triggering an automatic CAN API structural error block.
@@ -77,8 +74,6 @@ public class MARSFaultManager {
    * @param deviceName Name of the specific controller/device throwing the timeout (e.g.
    *     "ElevatorTalon").
    */
-  private static final Map<String, Alert> disconnectAlerts = new HashMap<>();
-
   public static void reportHardwareDisconnect(String deviceName) {
     if (!disconnectAlerts.containsKey(deviceName)) {
       disconnectAlerts.put(

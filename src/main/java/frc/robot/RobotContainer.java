@@ -73,6 +73,7 @@ public class RobotContainer {
   private final MARSSuperstructure superstructure;
   private final GhostManager ghostManager = new GhostManager();
 
+  @SuppressWarnings({"PMD.UnusedPrivateField", "UnusedVariable"})
   private final LEDManager ledManager;
 
   private final MARSVision vision;
@@ -589,18 +590,7 @@ public class RobotContainer {
                 controller.povRight()));
 
     // Start -> Diagnostic Hardware Check
-    controller
-        .start()
-        .onTrue(
-            new MARSDiagnosticCheck(
-                swerveDrive,
-                fastClimber,
-                cowl,
-                intakePivot,
-                floorIntake,
-                shooter,
-                feeder,
-                ledManager));
+    controller.start().onTrue(new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl));
 
     // --- COPILOT BINDINGS ---
 

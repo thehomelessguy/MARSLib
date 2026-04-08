@@ -1,0 +1,1157 @@
+
+> Task :eventDeploy
+Not running deploy task, skipping commit
+
+> Task :createVersionFile
+createVersionFile called. Path C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot
+
+> Task :installGitHooks
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :spotlessGroovyGradle UP-TO-DATE
+> Task :spotlessGroovyGradleApply UP-TO-DATE
+> Task :spotlessJava
+> Task :spotlessJavaApply
+> Task :spotlessJson UP-TO-DATE
+> Task :spotlessJsonApply UP-TO-DATE
+> Task :spotlessMisc UP-TO-DATE
+> Task :spotlessMiscApply UP-TO-DATE
+> Task :spotlessApply
+> Task :validateVendordeps
+
+> Task :compileJava
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:140: warning: [DefaultCharset] Implicit use of the platform default charset, which can result in differing behaviour between JVM executions or incorrect behavior if the encoding of the data source doesn't match expectations.
+              try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
+                                                    ^
+    (see https://errorprone.info/bugpattern/DefaultCharset)
+  Did you mean 'try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(file.toPath(), UTF_8))) {' or 'try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(file.toPath(), Charset.defaultCharset()))) {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:201: warning: [EmptyCatch] Caught exceptions should not be ignored
+            } catch (InterruptedException ignored) {
+              ^
+    (see https://google.github.io/styleguide/javaguide.html#s6.2-caught-exceptions)
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:269: warning: [DefaultCharset] Implicit use of the platform default charset, which can result in differing behaviour between JVM executions or incorrect behavior if the encoding of the data source doesn't match expectations.
+                new FileReader(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH))) {
+                ^
+    (see https://errorprone.info/bugpattern/DefaultCharset)
+  Did you mean 'Files.newBufferedReader(Paths.get(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH), UTF_8)) {' or 'Files.newBufferedReader(Paths.get(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH), Charset.defaultCharset())) {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:273: warning: [StringSplitter] String.split(String) has surprising behavior
+            String[] v = line.split(",");
+                                   ^
+    (see https://errorprone.info/bugpattern/StringSplitter)
+  Did you mean 'List<String> v = Splitter.on(',').splitToList(line);'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\swerve\GyroIOInputsAutoLogged.java:25: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public GyroIOInputsAutoLogged clone() {
+                                ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public GyroIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\power\PowerIOInputsAutoLogged.java:27: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public PowerIOInputsAutoLogged clone() {
+                                 ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public PowerIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\swerve\SwerveModuleIOInputsAutoLogged.java:37: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public SwerveModuleIOInputsAutoLogged clone() {
+                                        ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public SwerveModuleIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\mechanisms\RotaryMechanismIOInputsAutoLogged.java:29: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public RotaryMechanismIOInputsAutoLogged clone() {
+                                           ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public RotaryMechanismIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\mechanisms\LinearMechanismIOInputsAutoLogged.java:29: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public LinearMechanismIOInputsAutoLogged clone() {
+                                           ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public LinearMechanismIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\MARSFaultManager.java:70: warning: [InvalidBlockTag] The tag @param is not allowed on this type of element.
+   * Standard helper triggering an automatic CAN API structural error block.
+     ^
+    (see https://errorprone.info/bugpattern/InvalidBlockTag)
+  Did you mean '*'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\mechanisms\FlywheelIOInputsAutoLogged.java:27: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public FlywheelIOInputsAutoLogged clone() {
+                                    ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public FlywheelIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\util\ShotSetup.java:180: warning: [UnnecessaryParentheses] These grouping parentheses are unnecessary; it is unlikely the code will be misinterpreted without them
+    double velX = fieldSpeeds.vxMetersPerSecond + (-offsetY) * omega;
+                                                  ^
+    (see https://errorprone.info/bugpattern/UnnecessaryParentheses)
+  Did you mean 'double velX = fieldSpeeds.vxMetersPerSecond +  -offsetY * omega;'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\util\ShotSetup.java:181: warning: [UnnecessaryParentheses] These grouping parentheses are unnecessary; it is unlikely the code will be misinterpreted without them
+    double velY = fieldSpeeds.vyMetersPerSecond + (offsetX) * omega;
+                                                  ^
+    (see https://errorprone.info/bugpattern/UnnecessaryParentheses)
+  Did you mean 'double velY = fieldSpeeds.vyMetersPerSecond +  offsetX * omega;'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\power\PowerIOSim.java:22: warning: [EmptyCatch] Caught exceptions should not be ignored
+        } catch (InterruptedException e) {
+          ^
+    (see https://google.github.io/styleguide/javaguide.html#s6.2-caught-exceptions)
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\swerve\PhoenixOdometryThread.java:167: warning: [LockNotBeforeTry] Prefer releasing the lock on signalsLock inside a finally block.
+      signalsLock.lock();
+                      ^
+    (see https://errorprone.info/bugpattern/LockNotBeforeTry)
+  Did you mean 'signalsLock.lock();try {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:52: warning: [StaticAssignmentInConstructor] This assignment is to a static field. Mutating static state from a constructor is highly error-prone.
+      visionSim = new VisionSystemSim("main");
+                ^
+    (see https://errorprone.info/bugpattern/StaticAssignmentInConstructor)
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:54: warning: [StaticAssignmentInConstructor] This assignment is to a static field. Mutating static state from a constructor is highly error-prone.
+        fieldLayout =
+                    ^
+    (see https://errorprone.info/bugpattern/StaticAssignmentInConstructor)
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:57: warning: [StaticAssignmentInConstructor] This assignment is to a static field. Mutating static state from a constructor is highly error-prone.
+        fieldLayout = new AprilTagFieldLayout(new java.util.ArrayList<>(), 16.54, 8.21);
+                    ^
+    (see https://errorprone.info/bugpattern/StaticAssignmentInConstructor)
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\vision\AprilTagVisionIOInputsAutoLogged.java:27: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public AprilTagVisionIOInputsAutoLogged clone() {
+                                          ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public AprilTagVisionIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\vision\VIOSlamIOInputsAutoLogged.java:21: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public VIOSlamIOInputsAutoLogged clone() {
+                                   ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public VIOSlamIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\RobotContainer.java:77: warning: [UnusedVariable] The field 'ledManager' is never read.
+  private final LEDManager ledManager;
+                           ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line or to remove this line?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\SwerveConstants.java:22: warning: [MutablePublicArray] Non-empty arrays are mutable, so this `public static final` array is not a constant and can be modified by clients of this class.  Prefer an ImmutableList, or provide an accessor method that returns a defensive copy.
+  public static final Translation2d[] MODULE_LOCATIONS =
+                                      ^
+    (see https://errorprone.info/bugpattern/MutablePublicArray)
+22 warnings
+
+> Task :processResources NO-SOURCE
+> Task :classes
+> Task :downloadDepsPreemptively
+> Task :jar
+> Task :assemble
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :spotlessGroovyGradleCheck UP-TO-DATE
+> Task :spotlessJavaCheck UP-TO-DATE
+> Task :spotlessJsonCheck UP-TO-DATE
+> Task :spotlessMiscCheck UP-TO-DATE
+> Task :spotlessCheck UP-TO-DATE
+> Task :extractReleaseNative UP-TO-DATE
+
+> Task :test
+
+
+HAL Extensions: No extensions found
+Error at com.marslib.auto.GhostManager$2.initialize(GhostManager.java:293): GHOST FILE NOT FOUND: Cannot play back.
+
+> Task :test
+com.marslib.auto.GhostManagerTest
+
+  Test testFieldOrderingPreservedAcrossRoundTrip() PASSED
+
+GhostManagerTest > testFieldOrderingPreservedAcrossRoundTrip() PASSED
+  Test testPlaybackInjectsValues() PASSED
+
+GhostManagerTest > testPlaybackInjectsValues() PASSED
+  Test testPlaybackWithMissingFileDoesNotCrash() PASSED
+
+GhostManagerTest > testPlaybackWithMissingFileDoesNotCrash() PASSED
+
+> Task :pmdMain
+Warning at edu.wpi.first.wpilibj.Tracer.lambda$printEpochs$0(Tracer.java:62): 	SwerveDrive.periodic(): 0.050733s
+	MARSPowerManager.periodic(): 0.001036s
+	buttons.run(): 0.000322s
+	MARSAlignmentCommand.end(false): 0.000105s
+	MARSAlignmentCommand.execute(): 0.001528s
+
+Error at java.base/java.io.FileInputStream.open0(Native Method): Failed to load Choreo trajectory: nonexistent_trajectory
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\deploy\choreo\nonexistent_trajectory.traj (The system cannot find the path specified)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:216)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at java.base/java.io.FileReader.<init>(FileReader.java:75)
+	at com.pathplanner.lib.path.PathPlannerPath.loadChoreoTrajectoryIntoCache(PathPlannerPath.java:339)
+	at com.pathplanner.lib.path.PathPlannerPath.fromChoreoTrajectory(PathPlannerPath.java:584)
+	at com.marslib.auto.MARSAuto.runChoreoTrajectory(MARSAuto.java:28)
+	at com.marslib.auto.MARSAutoTest.testRunChoreoTrajectoryReturnsFallbackForMissingFile(MARSAutoTest.java:26)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:728)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:218)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:214)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:139)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:121)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:71)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+
+Error at java.base/java.io.FileInputStream.open0(Native Method): Failed to load Choreo trajectory for pathfinding: nonexistent_trajectory
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\deploy\choreo\nonexistent_trajectory.traj (The system cannot find the path specified)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:216)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
+	at java.base/java.io.FileReader.<init>(FileReader.java:75)
+	at com.pathplanner.lib.path.PathPlannerPath.loadChoreoTrajectoryIntoCache(PathPlannerPath.java:339)
+	at com.pathplanner.lib.path.PathPlannerPath.fromChoreoTrajectory(PathPlannerPath.java:584)
+	at com.marslib.auto.MARSAuto.pathfindThenRunChoreoTrajectory(MARSAuto.java:47)
+	at com.marslib.auto.MARSAutoTest.testPathfindThenRunChoreoReturnsFallbackForMissingFile(MARSAutoTest.java:32)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:728)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:218)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:214)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:139)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
+	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:121)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:71)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+
+Warning at com.marslib.auto.MARSDiagnosticCheck.lambda$new$0(MARSDiagnosticCheck.java:35): Starting Full Diagnostic Sweep...
+
+> Task :pmdTest
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:22:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:45:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:45:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:90:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:91:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:97:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:97:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:115:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:116:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:117:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:118:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:119:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:134:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:134:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:162:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\GhostManagerTest.java:162:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSAlignmentCommandTest.java:19:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSAlignmentCommandTest.java:44:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSAlignmentCommandTest.java:44:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSAlignmentCommandTest.java:77:	SystemPrintln:	System.out.println is used
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSAlignmentCommandTest.java:91:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSAutoTest.java:16:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSAutoTest.java:24:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSAutoTest.java:31:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSAutoTest.java:37:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:33:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:38:	UnusedPrivateField:	Avoid unused private fields such as 'intakePivot'.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:39:	UnusedPrivateField:	Avoid unused private fields such as 'floorIntake'.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:40:	UnusedPrivateField:	Avoid unused private fields such as 'shooter'.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:41:	UnusedPrivateField:	Avoid unused private fields such as 'feeder'.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:42:	UnusedPrivateField:	Avoid unused private fields such as 'ledManager'.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:116:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\MARSDiagnosticCheckTest.java:122:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:29:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:60:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:91:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:91:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:131:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:158:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:158:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:182:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:206:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:235:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\ShootOnTheMoveCommandTest.java:235:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\SmartAssistAlignTest.java:15:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\SmartAssistAlignTest.java:26:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\auto\SmartAssistAlignTest.java:26:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\faults\MARSFaultManagerTest.java:10:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\faults\MARSFaultManagerTest.java:25:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\faults\MARSFaultManagerTest.java:25:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\faults\MARSFaultManagerTest.java:26:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\faults\MARSFaultManagerTest.java:29:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\faults\MARSFaultManagerTest.java:33:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\faults\MARSFaultManagerTest.java:37:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\LEDManagerTest.java:20:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\LEDManagerTest.java:72:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\LEDManagerTest.java:79:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\LEDManagerTest.java:98:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\OperatorInterfaceTest.java:20:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\OperatorInterfaceTest.java:45:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\OperatorInterfaceTest.java:45:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\OperatorInterfaceTest.java:51:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\OperatorInterfaceTest.java:64:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\hmi\OperatorInterfaceTest.java:76:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\integration\RobotLifecycleTest.java:30:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\integration\RobotLifecycleTest.java:96:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\integration\RobotLifecycleTest.java:96:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\integration\VisionFusionTest.java:40:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\integration\VisionFusionTest.java:43:	UnusedPrivateField:	Avoid unused private fields such as 'vision'.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\integration\VisionFusionTest.java:90:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\integration\VisionFusionTest.java:90:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\integration\VisionFusionTest.java:113:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\integration\VisionFusionTest.java:143:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSArmTest.java:14:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSArmTest.java:48:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSArmTest.java:68:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSArmTest.java:68:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSArmTest.java:82:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSArmTest.java:86:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSElevatorTest.java:14:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSElevatorTest.java:48:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSElevatorTest.java:58:	SystemPrintln:	System.out.println is used
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSElevatorTest.java:69:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSElevatorTest.java:69:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSElevatorTest.java:79:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSElevatorTest.java:80:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:10:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:25:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:25:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:31:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:37:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:43:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:47:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:47:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:52:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:64:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:71:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSIntakeTest.java:81:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:10:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:25:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:25:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:31:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:37:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:41:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:41:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:50:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:53:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:57:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:57:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:62:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:74:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSShooterTest.java:77:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:21:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:83:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:83:	JUnitTestsShouldIncludeAssert:	JUnit tests should include assert() or fail()
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:96:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:101:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:105:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:105:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:110:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:111:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:116:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:117:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:121:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:121:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:130:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:136:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:140:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\MARSSuperstructureTest.java:140:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\RotaryMechanismIOSimTest.java:11:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\RotaryMechanismIOSimTest.java:24:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\mechanisms\RotaryMechanismIOSimTest.java:24:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\power\MARSPowerManagerTest.java:11:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\power\MARSPowerManagerTest.java:14:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\LidarIOSimTest.java:14:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\LidarIOSimTest.java:28:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\LidarIOSimTest.java:28:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\LidarIOSimTest.java:53:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\MARSPhysicsWorldTest.java:12:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\MARSPhysicsWorldTest.java:21:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\MARSPhysicsWorldTest.java:37:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\MARSPhysicsWorldTest.java:46:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\MARSPhysicsWorldTest.java:46:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\MARSPhysicsWorldTest.java:75:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\MARSPhysicsWorldTest.java:75:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\SwerveChassisPhysicsTest.java:19:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\SwerveChassisPhysicsTest.java:40:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\SwerveChassisPhysicsTest.java:40:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\SwerveChassisPhysicsTest.java:65:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\SwerveChassisPhysicsTest.java:89:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\SwerveChassisPhysicsTest.java:89:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\SwerveChassisPhysicsTest.java:133:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\SwerveChassisPhysicsTest.java:157:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\simulation\SwerveChassisPhysicsTest.java:157:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:19:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:55:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:55:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:58:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:59:	CloseResource:	Ensure that resources like this Pigeon2 object are closed after use
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:77:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:80:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:83:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:84:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:85:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:91:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\GyroIOPigeon2Test.java:93:	CloseResource:	Ensure that resources like this Pigeon2 object are closed after use
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:14:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:30:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:30:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:34:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:35:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:45:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:45:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:50:	AvoidAccessibilityAlteration:	You should not modify visibility of constructors, methods or fields using setAccessible()
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:55:	AvoidAccessibilityAlteration:	You should not modify visibility of constructors, methods or fields using setAccessible()
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:60:	AvoidAccessibilityAlteration:	You should not modify visibility of constructors, methods or fields using setAccessible()
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:74:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:75:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:76:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:77:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:79:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:80:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:81:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:85:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:90:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:90:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:97:	AvoidAccessibilityAlteration:	You should not modify visibility of constructors, methods or fields using setAccessible()
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:105:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:106:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:107:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\PhoenixOdometryThreadTest.java:111:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveDriveTest.java:18:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveDriveTest.java:53:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveDriveTest.java:53:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveDriveTest.java:57:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveDriveTest.java:78:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveDriveTest.java:90:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveKinematicsTest.java:11:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveKinematicsTest.java:14:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveKinematicsTest.java:14:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveKinematicsTest.java:21:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveKinematicsTest.java:22:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveKinematicsTest.java:25:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveKinematicsTest.java:26:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveKinematicsTest.java:30:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveKinematicsTest.java:30:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:16:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:29:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:35:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:35:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:37:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:38:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:39:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:43:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:43:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:82:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\SwerveModuleTest.java:82:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:21:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:34:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:34:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:43:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:43:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:45:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:46:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:47:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:60:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:60:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:74:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:74:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:92:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:92:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:110:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:130:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:147:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\swerve\TeleopDrivePipelineTest.java:147:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\KinematicAimingTest.java:11:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\KinematicAimingTest.java:14:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\KinematicAimingTest.java:14:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\KinematicAimingTest.java:33:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\KinematicAimingTest.java:33:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\LoggedTunableNumberTest.java:11:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\LoggedTunableNumberTest.java:21:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\LoggedTunableNumberTest.java:27:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\LoggedTunableNumberTest.java:33:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\LoggedTunableNumberTest.java:39:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\LoggedTunableNumberTest.java:47:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\LoggedTunableNumberTest.java:47:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\LoggedTunableNumberTest.java:61:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:13:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:39:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:39:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:40:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:41:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:45:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:45:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:48:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:49:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:50:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:54:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:54:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:59:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:63:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:63:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:66:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:71:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:71:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:73:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:74:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:79:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:80:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:84:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:84:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:85:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:86:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:87:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:88:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:89:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:93:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:93:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:94:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:99:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:103:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:106:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:110:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:110:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:124:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:133:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:133:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:134:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:135:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:136:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:137:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:141:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:141:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:150:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\MARSStateMachineTest.java:151:	JUnitAssertionsShouldIncludeMessage:	JUnit assertions should include a message
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:28:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:87:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:87:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:95:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:95:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:104:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:113:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:121:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:136:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:136:	JUnitTestContainsTooManyAsserts:	Unit tests should not contain more than 1 assert(s).
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:167:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\util\ShotSetupTest.java:185:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:25:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:64:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:98:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:114:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionExtendedTest.java:133:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionTest.java:14:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+C:\Users\david\dev\robotics\frc\MARSLib\src\test\java\com\marslib\vision\MARSVisionTest.java:17:	JUnit5TestShouldBePackagePrivate:	JUnit 5 tests should be package-private.
+
+Warning at com.marslib.auto.MARSDiagnosticCheck.lambda$new$8(MARSDiagnosticCheck.java:56): Diagnostic Check Complete!
+
+> Task :pmdTest FAILED
+
+> Task :test
+  Test testRecordingDaemonThreadDrainsBuffer() PASSED
+
+GhostManagerTest > testRecordingDaemonThreadDrainsBuffer() PASSED
+
+MARSAlignmentCommandTest > testCommandFinishesWhenPhysicallyAligned() STANDARD_OUT
+    CommandScheduler loop overrun
+
+com.marslib.auto.MARSAlignmentCommandTest
+
+  Test testCommandFinishesWhenPhysicallyAligned() PASSED
+
+MARSAlignmentCommandTest > testCommandFinishesWhenPhysicallyAligned() PASSED
+
+MARSAlignmentCommandTest > testCommandDrivesTowardsTargetPhysically() STANDARD_OUT
+    Resulting Pose After Physics Ticks: Pose2d(Translation2d(X: 2.13, Y: 2.05), Rotation2d(Rads: 1.61, Deg: 91.99))
+  Test testCommandDrivesTowardsTargetPhysically() PASSED
+
+MARSAlignmentCommandTest > testCommandDrivesTowardsTargetPhysically() PASSED
+
+com.marslib.auto.MARSAutoTest
+
+  Test testRunChoreoTrajectoryReturnsFallbackForMissingFile() PASSED
+
+MARSAutoTest > testRunChoreoTrajectoryReturnsFallbackForMissingFile() PASSED
+  Test testPathfindThenRunChoreoReturnsFallbackForMissingFile() PASSED
+
+MARSAutoTest > testPathfindThenRunChoreoReturnsFallbackForMissingFile() PASSED
+  Test testPathfindObstacleAvoidanceDoesNotThrowWithoutAutoBuilder() PASSED
+
+MARSAutoTest > testPathfindObstacleAvoidanceDoesNotThrowWithoutAutoBuilder() PASSED
+
+com.marslib.auto.MARSDiagnosticCheckTest
+
+  Test testDiagnosticCheckConstructs() PASSED
+
+MARSDiagnosticCheckTest > testDiagnosticCheckConstructs() PASSED
+  Test testDiagnosticCheckRunsToCompletion() PASSED
+
+MARSDiagnosticCheckTest > testDiagnosticCheckRunsToCompletion() PASSED
+
+com.marslib.auto.ShootOnTheMoveCommandTest
+
+  Test testMovingAimCalculatesVirtualTarget() PASSED
+
+ShootOnTheMoveCommandTest > testMovingAimCalculatesVirtualTarget() PASSED
+  Test testTofSolverFallbackOnNegativeDiscriminant() PASSED
+
+ShootOnTheMoveCommandTest > testTofSolverFallbackOnNegativeDiscriminant() PASSED
+  Test testPhysicalFallbackOnNegativeDiscriminant() PASSED
+
+ShootOnTheMoveCommandTest > testPhysicalFallbackOnNegativeDiscriminant() PASSED
+  Test testAimAngleDivergesFromStaticWhenMoving() PASSED
+
+ShootOnTheMoveCommandTest > testAimAngleDivergesFromStaticWhenMoving() PASSED
+  Test testTofSolverLeadsTargetWhenMoving() PASSED
+
+ShootOnTheMoveCommandTest > testTofSolverLeadsTargetWhenMoving() PASSED
+  Test testTofSolverStationary() PASSED
+
+ShootOnTheMoveCommandTest > testTofSolverStationary() PASSED
+  Test testStationaryAim() PASSED
+
+ShootOnTheMoveCommandTest > testStationaryAim() PASSED
+
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+> Task :test
+
+com.marslib.auto.SmartAssistAlignTest
+
+  Test testSmartAssistAllowsXMovementButAutomatesYAndTheta() PASSED
+
+SmartAssistAlignTest > testSmartAssistAllowsXMovementButAutomatesYAndTheta() PASSED
+
+com.marslib.faults.MARSFaultManagerTest
+
+  Test testWarningFaultsDontTriggerCritical() PASSED
+
+MARSFaultManagerTest > testWarningFaultsDontTriggerCritical() PASSED
+  Test testFaultClearResetsAlerts() PASSED
+
+MARSFaultManagerTest > testFaultClearResetsAlerts() PASSED
+
+com.marslib.hmi.LEDManagerTest
+
+  Test testCriticalFaultOverridesVoltage() PASSED
+
+LEDManagerTest > testCriticalFaultOverridesVoltage() PASSED
+  Test testDefaultColorsUnderNormalVoltage() PASSED
+
+LEDManagerTest > testDefaultColorsUnderNormalVoltage() PASSED
+  Test testLoadSheddingUnderLowVoltage() PASSED
+
+LEDManagerTest > testLoadSheddingUnderLowVoltage() PASSED
+
+com.marslib.hmi.OperatorInterfaceTest
+
+  Test testPeriodicRunsWithoutExceptionAtNominalVoltage() PASSED
+
+OperatorInterfaceTest > testPeriodicRunsWithoutExceptionAtNominalVoltage() PASSED
+  Test testPeriodicRunsWithoutExceptionAtCriticalVoltage() PASSED
+
+OperatorInterfaceTest > testPeriodicRunsWithoutExceptionAtCriticalVoltage() PASSED
+  Test testPeriodicRunsWithoutExceptionUnderFault() PASSED
+
+OperatorInterfaceTest > testPeriodicRunsWithoutExceptionUnderFault() PASSED
+  Test testConstructionDoesNotThrow() PASSED
+
+OperatorInterfaceTest > testConstructionDoesNotThrow() PASSED
+
+com.marslib.integration.RobotLifecycleTest
+
+  Test testFullLifecycleDoesNotCrash() PASSED
+
+RobotLifecycleTest > testFullLifecycleDoesNotCrash() PASSED
+Warning at edu.wpi.first.wpilibj.Tracer.lambda$printEpochs$0(Tracer.java:62): 	SwerveDrive.periodic(): 0.000333s
+	MARSPowerManager.periodic(): 0.000147s
+	buttons.run(): 0.000004s
+
+VisionFusionTest > testStationaryPoseStability() STANDARD_OUT
+    CommandScheduler loop overrun
+
+	MARSVision.periodic(): 0.106484s
+
+
+> Task :test
+
+com.marslib.integration.VisionFusionTest
+
+  Test testStationaryPoseStability() PASSED
+
+VisionFusionTest > testStationaryPoseStability() PASSED
+  Test testPhysicsWorldResetVerification() PASSED
+
+VisionFusionTest > testPhysicsWorldResetVerification() PASSED
+  Test testVisionSwerveDoesNotCrash() PASSED
+
+VisionFusionTest > testVisionSwerveDoesNotCrash() PASSED
+
+com.marslib.mechanisms.MARSArmTest
+
+  Test testArmPhysicallyAttainsTargetAnglesUsingDyn4jMotorMath() PASSED
+
+MARSArmTest > testArmPhysicallyAttainsTargetAnglesUsingDyn4jMotorMath() PASSED
+  Test testLoadSheddingDynamicRestoresAreAppliedUnderCriticalBrownoutConditions() PASSED
+
+MARSArmTest > testLoadSheddingDynamicRestoresAreAppliedUnderCriticalBrownoutConditions() PASSED
+
+MARSElevatorTest > testElevatorPhysicallyAttainsTargetHeightUsingDyn4jMotorMath() STANDARD_OUT
+    ELEVATOR POS: 0.9660584306257389
+
+com.marslib.mechanisms.MARSElevatorTest
+
+  Test testElevatorPhysicallyAttainsTargetHeightUsingDyn4jMotorMath() PASSED
+
+MARSElevatorTest > testElevatorPhysicallyAttainsTargetHeightUsingDyn4jMotorMath() PASSED
+  Test testLoadSheddingDynamicRestoresAreAppliedUnderCriticalBrownoutConditions() PASSED
+
+MARSElevatorTest > testLoadSheddingDynamicRestoresAreAppliedUnderCriticalBrownoutConditions() PASSED
+
+com.marslib.mechanisms.MARSIntakeTest
+
+  Test testManualControlsVerifyPhysicalVoltage() PASSED
+
+MARSIntakeTest > testManualControlsVerifyPhysicalVoltage() PASSED
+  Test testCommandLifecyclePhysicallyAffectsSubsystem() PASSED
+
+MARSIntakeTest > testCommandLifecyclePhysicallyAffectsSubsystem() PASSED
+
+com.marslib.mechanisms.MARSShooterTest
+
+  Test testManualControlsVerifyPhysicalVoltage() PASSED
+
+MARSShooterTest > testManualControlsVerifyPhysicalVoltage() PASSED
+  Test testCommandLifecyclePhysicallyAffectsSubsystem() PASSED
+
+MARSShooterTest > testCommandLifecyclePhysicallyAffectsSubsystem() PASSED
+  Test testClosedLoopVelocityTargeting() PASSED
+
+MARSShooterTest > testClosedLoopVelocityTargeting() PASSED
+
+com.marslib.mechanisms.MARSSuperstructureTest
+
+  Test testScoreDumpingCommand() PASSED
+
+MARSSuperstructureTest > testScoreDumpingCommand() PASSED
+  Test testUnjamState() PASSED
+
+MARSSuperstructureTest > testUnjamState() PASSED
+  Test testFlywheelFrictionSpindown() PASSED
+
+MARSSuperstructureTest > testFlywheelFrictionSpindown() PASSED
+  Test testIntakeToStowedTransition() PASSED
+
+MARSSuperstructureTest > testIntakeToStowedTransition() PASSED
+  Test testStateMachineTicksAndTransitionCount() PASSED
+
+MARSSuperstructureTest > testStateMachineTicksAndTransitionCount() PASSED
+
+com.marslib.mechanisms.RotaryMechanismIOSimTest
+
+  Test testPidConvergence() PASSED
+
+RotaryMechanismIOSimTest > testPidConvergence() PASSED
+
+com.marslib.power.MARSPowerManagerTest
+
+  Test testLoadSheddingAtLowVoltage() PASSED
+
+MARSPowerManagerTest > testLoadSheddingAtLowVoltage() PASSED
+
+com.marslib.simulation.LidarIOSimTest
+
+  Test testLidarDetectsDyn4jWall() PASSED
+
+LidarIOSimTest > testLidarDetectsDyn4jWall() PASSED
+
+com.marslib.simulation.MARSPhysicsWorldTest
+
+  Test testStaleWarningDetectionAndReset() PASSED
+
+MARSPhysicsWorldTest > testStaleWarningDetectionAndReset() PASSED
+  Test testGamePieceInitialSpawning() PASSED
+
+MARSPhysicsWorldTest > testGamePieceInitialSpawning() PASSED
+  Test testIntakeRadiusEvaluation() PASSED
+
+MARSPhysicsWorldTest > testIntakeRadiusEvaluation() PASSED
+  Test testVoltageSagFloor() PASSED
+
+MARSPhysicsWorldTest > testVoltageSagFloor() PASSED
+
+com.marslib.simulation.SwerveChassisPhysicsTest
+
+  Test testForwardVoltageAcceleratesChassis() PASSED
+
+SwerveChassisPhysicsTest > testForwardVoltageAcceleratesChassis() PASSED
+  Test testSetPoseResetsAllState() PASSED
+
+SwerveChassisPhysicsTest > testSetPoseResetsAllState() PASSED
+  Test testHighVoltageInducesWheelSlip() PASSED
+
+SwerveChassisPhysicsTest > testHighVoltageInducesWheelSlip() PASSED
+  Test testZeroVoltageNoAcceleration() PASSED
+
+SwerveChassisPhysicsTest > testZeroVoltageNoAcceleration() PASSED
+  Test testLowBatteryReducesAcceleration() PASSED
+
+SwerveChassisPhysicsTest > testLowBatteryReducesAcceleration() PASSED
+
+com.marslib.swerve.GyroIOPigeon2Test
+
+  Test testPigeon2HandlesDisconnects() PASSED
+
+GyroIOPigeon2Test > testPigeon2HandlesDisconnects() PASSED
+  Test testPigeon2InitializesAndReadsCorrectly() PASSED
+
+GyroIOPigeon2Test > testPigeon2InitializesAndReadsCorrectly() PASSED
+
+com.marslib.swerve.PhoenixOdometryThreadTest
+
+  Test testGyroRegistrationAndDraining() PASSED
+
+PhoenixOdometryThreadTest > testGyroRegistrationAndDraining() PASSED
+  Test testGetSyncDataDrainsQueuesFull() PASSED
+
+PhoenixOdometryThreadTest > testGetSyncDataDrainsQueuesFull() PASSED
+  Test testRegisterModuleAllocatesQueues() PASSED
+
+PhoenixOdometryThreadTest > testRegisterModuleAllocatesQueues() PASSED
+
+com.marslib.swerve.SwerveDriveTest
+
+  Test testLoadSheddingRestrictsHardwareOutputs() PASSED
+
+SwerveDriveTest > testLoadSheddingRestrictsHardwareOutputs() PASSED
+  Test testSwerveDriveIntegrationPhysicallyMovesRobot() PASSED
+
+SwerveDriveTest > testSwerveDriveIntegrationPhysicallyMovesRobot() PASSED
+
+com.marslib.swerve.SwerveKinematicsTest
+
+  Test testRotationalAndTranslationKinematicsIterative() PASSED
+
+SwerveKinematicsTest > testRotationalAndTranslationKinematicsIterative() PASSED
+  Test testForwardKinematics() PASSED
+
+SwerveKinematicsTest > testForwardKinematics() PASSED
+
+com.marslib.swerve.SwerveModuleTest
+
+  Test testGetPositionDeltasDefaultsToEmpty() PASSED
+
+SwerveModuleTest > testGetPositionDeltasDefaultsToEmpty() PASSED
+  Test testSetDesiredStateCosineCompensation() PASSED
+
+SwerveModuleTest > testSetDesiredStateCosineCompensation() PASSED
+  Test testSetDesiredStateFlippingOptimization() PASSED
+
+SwerveModuleTest > testSetDesiredStateFlippingOptimization() PASSED
+  Test testPeriodicUpdatesInputs() PASSED
+
+SwerveModuleTest > testPeriodicUpdatesInputs() PASSED
+
+com.marslib.swerve.TeleopDrivePipelineTest
+
+  Test testDeadbandFiltersSmallInputs() PASSED
+
+TeleopDrivePipelineTest > testDeadbandFiltersSmallInputs() PASSED
+  Test testCubicScalingAtHalfDeflection() PASSED
+
+TeleopDrivePipelineTest > testCubicScalingAtHalfDeflection() PASSED
+  Test testZeroInputProducesZeroOutput() PASSED
+
+TeleopDrivePipelineTest > testZeroInputProducesZeroOutput() PASSED
+  Test testSlewRateLimiterCapsAcceleration() PASSED
+
+TeleopDrivePipelineTest > testSlewRateLimiterCapsAcceleration() PASSED
+  Test testAllianceFlipDoesNotAffectRotation() PASSED
+
+TeleopDrivePipelineTest > testAllianceFlipDoesNotAffectRotation() PASSED
+  Test testFullForwardRedAllianceFlipsSign() PASSED
+
+TeleopDrivePipelineTest > testFullForwardRedAllianceFlipsSign() PASSED
+  Test testAllianceFlipAffectsBothAxes() PASSED
+
+TeleopDrivePipelineTest > testAllianceFlipAffectsBothAxes() PASSED
+  Test testFullForwardBlueAlliance() PASSED
+
+TeleopDrivePipelineTest > testFullForwardBlueAlliance() PASSED
+
+com.marslib.util.KinematicAimingTest
+
+  Test testMovingAiming() PASSED
+
+KinematicAimingTest > testMovingAiming() PASSED
+  Test testStationaryAiming() PASSED
+
+KinematicAimingTest > testStationaryAiming() PASSED
+
+com.marslib.util.LoggedTunableNumberTest
+
+  Test testMultipleConsumersTrackIndependently() PASSED
+
+LoggedTunableNumberTest > testMultipleConsumersTrackIndependently() PASSED
+  Test testDefaultValueIsReturned() PASSED
+
+LoggedTunableNumberTest > testDefaultValueIsReturned() PASSED
+  Test testGetReturnsZeroWithoutDefault() PASSED
+
+LoggedTunableNumberTest > testGetReturnsZeroWithoutDefault() PASSED
+  Test testHasChangedReturnsTrueOnFirstCall() PASSED
+
+LoggedTunableNumberTest > testHasChangedReturnsTrueOnFirstCall() PASSED
+  Test testHasChangedReturnsFalseOnSubsequentCallWithSameValue() PASSED
+
+LoggedTunableNumberTest > testHasChangedReturnsFalseOnSubsequentCallWithSameValue() PASSED
+  Test testInitDefaultOnlyOnce() PASSED
+
+LoggedTunableNumberTest > testInitDefaultOnlyOnce() PASSED
+
+com.marslib.util.MARSStateMachineTest
+
+  Test testEntryActionNotFiredOnIllegalTransition() PASSED
+
+MARSStateMachineTest > testEntryActionNotFiredOnIllegalTransition() PASSED
+  Test testLegalTransition() PASSED
+
+MARSStateMachineTest > testLegalTransition() PASSED
+  Test testChainedTransitions() PASSED
+
+MARSStateMachineTest > testChainedTransitions() PASSED
+  Test testInitialState() PASSED
+
+MARSStateMachineTest > testInitialState() PASSED
+  Test testIllegalTransitionRejected() PASSED
+
+MARSStateMachineTest > testIllegalTransitionRejected() PASSED
+  Test testEntryAndExitActions() PASSED
+
+MARSStateMachineTest > testEntryAndExitActions() PASSED
+  Test testTickCounting() PASSED
+
+MARSStateMachineTest > testTickCounting() PASSED
+  Test testIsTransitionLegal() PASSED
+
+MARSStateMachineTest > testIsTransitionLegal() PASSED
+  Test testSelfTransitionIsNoOp() PASSED
+
+MARSStateMachineTest > testSelfTransitionIsNoOp() PASSED
+  Test testOnTransitionCallback() PASSED
+
+MARSStateMachineTest > testOnTransitionCallback() PASSED
+  Test testWildcardToReachableFromAnywhere() PASSED
+
+MARSStateMachineTest > testWildcardToReachableFromAnywhere() PASSED
+
+com.marslib.util.ShotSetupTest
+
+  Test testSOTMCacheHitOnSamePosition() PASSED
+
+ShotSetupTest > testSOTMCacheHitOnSamePosition() PASSED
+  Test testExactMapEntryReturnsExactValues() PASSED
+
+ShotSetupTest > testExactMapEntryReturnsExactValues() PASSED
+  Test testVirtualTargetAnglePointsAtTarget() PASSED
+
+ShotSetupTest > testVirtualTargetAnglePointsAtTarget() PASSED
+  Test testCowlClampedToMinZero() PASSED
+
+ShotSetupTest > testCowlClampedToMinZero() PASSED
+  Test testRpmClampedToMax() PASSED
+
+ShotSetupTest > testRpmClampedToMax() PASSED
+  Test testStationarySOTMMatchesStatic() PASSED
+
+ShotSetupTest > testStationarySOTMMatchesStatic() PASSED
+  Test testInterpolationBetweenEntries() PASSED
+
+ShotSetupTest > testInterpolationBetweenEntries() PASSED
+  Test testCowlClampedToMax() PASSED
+
+ShotSetupTest > testCowlClampedToMax() PASSED
+
+com.marslib.vision.MARSVisionExtendedTest
+
+  Test testSlamOnlyFallbackWhenNoCamerasPresent() PASSED
+
+MARSVisionExtendedTest > testSlamOnlyFallbackWhenNoCamerasPresent() PASSED
+  Test testHighAmbiguityEstimatesAreRejected() PASSED
+
+MARSVisionExtendedTest > testHighAmbiguityEstimatesAreRejected() PASSED
+  Test testEmptyInputsHandledGracefully() PASSED
+
+MARSVisionExtendedTest > testEmptyInputsHandledGracefully() PASSED
+  Test testMultiCameraAprilTagAggregation() PASSED
+
+MARSVisionExtendedTest > testMultiCameraAprilTagAggregation() PASSED
+
+com.marslib.vision.MARSVisionTest
+
+  Test testAmbiguityRejection() PASSED
+
+MARSVisionTest > testAmbiguityRejection() PASSED
+
+[phoenix] CANbus Connected: sim
+[phoenix] CANbus Network Up: sim
+[phoenix-diagnostics] Server shutdown cleanly. (dur:0)
+	
+[phoenix] Library shutdown cleanly
+	
+
+> Task :test
+
+SUCCESS: Executed 111 tests in 14s
+
+
+> Task :jacocoTestReport
+[Incubating] Problems report is available at: file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':pmdTest'.
+> A failure occurred while executing org.gradle.api.plugins.quality.internal.PmdAction
+   > 315 PMD rule violations were found. See the report at: file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/pmd/test.html
+
+BUILD FAILED in 27s
+26 actionable tasks: 13 executed, 13 up-to-date
+
+Publishing build scan...
+https://gradle.com/s/7thfkrmgiwip2
+

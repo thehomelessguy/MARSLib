@@ -164,7 +164,7 @@ public class MARSArm extends SubsystemBase {
             () -> {
               io.setVoltage(0.0);
               io.setEncoderPosition(0.0);
-              System.out.println("MARSArm: Homing Complete!");
+              Logger.recordOutput("MARSArm/Status", "Homing Complete!");
             });
   }
 

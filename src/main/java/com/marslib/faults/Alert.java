@@ -103,6 +103,8 @@ public class Alert {
           case CRITICAL:
             criticalStrings.add(a.text);
             break;
+          default:
+            break;
         }
       }
 

@@ -40,11 +40,16 @@ public class FlywheelIOSim implements FlywheelIO {
   public void updateInputs(FlywheelIOInputs inputs) {
     sim.update(0.02); // 50hz
 
+    // Apply artificial bearing friction (decay) when coasting at 0v
+    if (Math.abs(appliedVolts) < 0.05 && Math.abs(sim.getAngularVelocityRadPerSec()) > 1.0) {
+      double decayedV = sim.getAngularVelocityRadPerSec() * 0.90; // 10% loss per 20ms
+      sim.setState(edu.wpi.first.math.VecBuilder.fill(decayedV));
+    }
+
     // Compute effective motor terminal voltage after current limiting
     double statorCurrent = sim.getCurrentDrawAmps();
     double batteryVoltage = Math.max(MARSPhysicsWorld.getInstance().getSimulatedVoltage(), 0.01);
     double currentLimitAmps = 40.0;
-    boolean currentLimited = Math.abs(statorCurrent) > currentLimitAmps;
     double clampedCurrent =
         Math.copySign(Math.min(Math.abs(statorCurrent), currentLimitAmps), statorCurrent);
 
@@ -82,13 +87,6 @@ public class FlywheelIOSim implements FlywheelIO {
     double pidVolts =
         controller.calculate(sim.getAngularVelocityRadPerSec(), targetVelocityRadPerSec);
     appliedVolts = pidVolts + feedforwardVolts;
-    System.out.println(
-        "[SIM_INPUT] applying volts="
-            + appliedVolts
-            + "; PID="
-            + pidVolts
-            + " target="
-            + velocityRadPerSec);
     sim.setInputVoltage(appliedVolts);
   }
 }

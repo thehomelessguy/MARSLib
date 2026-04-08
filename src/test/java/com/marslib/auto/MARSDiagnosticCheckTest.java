@@ -114,17 +114,13 @@ public class MARSDiagnosticCheckTest {
 
   @Test
   public void testDiagnosticCheckConstructs() {
-    MARSDiagnosticCheck check =
-        new MARSDiagnosticCheck(
-            swerveDrive, fastClimber, cowl, intakePivot, floorIntake, shooter, feeder, ledManager);
+    MARSDiagnosticCheck check = new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl);
     assertNotNull(check, "DiagnosticCheck should construct without error.");
   }
 
   @Test
   public void testDiagnosticCheckRunsToCompletion() {
-    MARSDiagnosticCheck check =
-        new MARSDiagnosticCheck(
-            swerveDrive, fastClimber, cowl, intakePivot, floorIntake, shooter, feeder, ledManager);
+    MARSDiagnosticCheck check = new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl);
 
     check.schedule();
 

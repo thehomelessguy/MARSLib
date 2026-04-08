@@ -108,20 +108,6 @@ public class LinearMechanismIOSim implements LinearMechanismIO {
     // Apply linear force directly to the body upwards
     carriageBody.applyForce(new Vector2(0.0, linearForceNewtons));
 
-    System.out.println(
-        "ElevatorSim | Pos: "
-            + currentPosMeters
-            + " | Vel: "
-            + currentVelocityMetersPerSec
-            + " | Motor Torque: "
-            + motorTorque
-            + " | Force: "
-            + linearForceNewtons
-            + " | Applied Volts: "
-            + appliedVolts
-            + " | Target Pos: "
-            + internalController.getGoal().position);
-
     // Compute effective motor terminal voltage after current limiting
     // V_effective = I·R + ω/Kv (what the motor controller actually applies)
     double batteryVoltage = Math.max(MARSPhysicsWorld.getInstance().getSimulatedVoltage(), 0.01);

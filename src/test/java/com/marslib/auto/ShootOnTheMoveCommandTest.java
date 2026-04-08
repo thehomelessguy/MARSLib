@@ -48,7 +48,7 @@ public class ShootOnTheMoveCommandTest {
 
   @AfterEach
   public void tearDown() {
-    MARSTestHarness.tearDown();
+    MARSTestHarness.cleanup();
   }
 
   // -----------------------------------------------

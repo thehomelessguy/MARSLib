@@ -28,7 +28,7 @@ public class SwerveChassisPhysicsTest {
 
   @AfterEach
   public void tearDown() {
-    MARSTestHarness.tearDown();
+    MARSTestHarness.cleanup();
   }
 
   // -----------------------------------------------

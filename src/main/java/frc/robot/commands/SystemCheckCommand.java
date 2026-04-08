@@ -58,7 +58,7 @@ public class SystemCheckCommand extends Command {
   private double initialArmRads = 0.0;
 
   // -- Tolerances --
-  private static final double SWERVE_ANGLE_TOLERANCE_DEG = 10.0;
+
   private static final double ELEVATOR_POSITION_TOLERANCE_M = 0.05;
   private static final double ARM_POSITION_TOLERANCE_RAD = 0.08;
   private static final double FLYWHEEL_MIN_VELOCITY_RAD_S = 5.0;
@@ -192,7 +192,7 @@ public class SystemCheckCommand extends Command {
 
           if (elapsed > SWERVE_SETTLE_TIME) {
             // Read back actual module angles via the measured states log
-            boolean allGood = true;
+
             for (int i = 0; i < 4; i++) {
               // getLatestState called indirectly through the ChassisSpeeds pipeline
               // We trust the IO layer updated in periodic(); just check no CAN fault fired

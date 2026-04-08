@@ -75,7 +75,7 @@ public class ShotSetupTest {
 
   @AfterEach
   public void tearDown() {
-    MARSTestHarness.tearDown();
+    MARSTestHarness.cleanup();
   }
 
   // -----------------------------------------------

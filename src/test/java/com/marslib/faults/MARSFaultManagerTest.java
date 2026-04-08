@@ -17,7 +17,7 @@ public class MARSFaultManagerTest {
 
   @AfterEach
   public void tearDown() {
-    MARSTestHarness.tearDown();
+    MARSTestHarness.cleanup();
     MARSFaultManager.clear();
   }
 

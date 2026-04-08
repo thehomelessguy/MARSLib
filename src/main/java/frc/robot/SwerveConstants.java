@@ -19,6 +19,7 @@ public final class SwerveConstants {
   public static final double WHEELBASE_METERS = 0.6;
 
   /** Positions of each swerve module relative to robot center (FL, FR, BL, BR). */
+  @SuppressWarnings("MutablePublicArray")
   public static final Translation2d[] MODULE_LOCATIONS =
       new Translation2d[] {
         new Translation2d(WHEELBASE_METERS / 2.0, TRACK_WIDTH_METERS / 2.0), // Front-Left

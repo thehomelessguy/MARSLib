@@ -86,6 +86,7 @@ public class Robot extends LoggedRobot {
 
   /** This function is called once when the robot is disabled. */
   @Override
+  @SuppressWarnings("PMD.DoNotCallGarbageCollectionExplicitly")
   public void disabledInit() {
     // Clear out memory aggressively before a match starts
     System.gc();

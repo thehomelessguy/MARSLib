@@ -62,10 +62,12 @@ public class MARSSuperstructureTest {
     feeder = new MARSShooter(physicalFeederSim);
 
     Supplier<Pose2d> mockSupplier = () -> new Pose2d();
-    DoubleSupplier distSupplier = () -> 5.0; // Fixed dist
+    DoubleSupplier distSupplier = () -> 2.0; // Fixed dist
 
     ShotSetup shotSetup =
         new ShotSetup(0.0, 1.5, 6000, 0.1, 5, 0.01, 0.1, 1.0, new Transform2d(), new Rotation2d());
+    shotSetup.addShotMapEntry(2.0, 4000.0, 0.5); // Add required entry so it doesn't return 0.0 RPM
+    shotSetup.addShotMapEntry(5.0, 6000.0, 1.0);
 
     superstructure =
         new MARSSuperstructure(
@@ -74,7 +76,7 @@ public class MARSSuperstructureTest {
 
   @AfterEach
   public void tearDown() {
-    MARSTestHarness.tearDown();
+    MARSTestHarness.cleanup();
   }
 
   @Test
@@ -148,8 +150,6 @@ public class MARSSuperstructureTest {
 
     // Record current flywheel velocity
     double highRpm = shooter.getVelocityRadPerSec() * 60.0 / (Math.PI * 2.0);
-    System.out.println(
-        "[DEBUG] highRpm = " + highRpm + ", velocityRadPerSec = " + shooter.getVelocityRadPerSec());
     assertTrue(highRpm > 1000, "Shooter should rev up in SCORE state");
 
     // STOW
@@ -164,29 +164,5 @@ public class MARSSuperstructureTest {
 
     double lowRpm = shooter.getVelocityRadPerSec() * 60.0 / (Math.PI * 2.0);
     assertTrue(lowRpm < highRpm, "Shooter should spin down in STOW state due to friction model");
-  }
-
-  @Test
-  public void testDebugShooter() {
-    superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE).initialize();
-    System.out.println(
-        "[TEST-DEBUG] Initial State after command: " + superstructure.getCurrentState());
-    for (int i = 0; i < 50; i++) {
-      superstructure.periodic();
-      DriverStationSim.notifyNewData();
-      edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(0.02);
-      CommandScheduler.getInstance().run();
-      MARSPhysicsWorld.getInstance().update(0.02);
-      System.out.println(
-          "[TICK "
-              + i
-              + "] Vel: "
-              + shooter.getVelocityRadPerSec()
-              + " State: "
-              + superstructure.getCurrentState());
-    }
-    System.out.println(
-        "[TEST-DEBUG] Integration 50 ticks -> velocityRadPerSec: "
-            + shooter.getVelocityRadPerSec());
   }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="MARSLib PMD Ruleset"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>
+        Custom PMD ruleset for MARSLib.
+    </description>
+
+    <!-- Include Best Practices -->
+    <rule ref="category/java/bestpractices.xml" />
+
+    <!-- Include Error Prone but exclude noisy/unhelpful rules -->
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="DataflowAnomalyAnalysis" />
+        <exclude name="AvoidLiteralsInIfCondition" />
+        <exclude name="AvoidDuplicateLiterals" />
+        <exclude name="AvoidFieldNameMatchingMethodName" />
+    </rule>
+
+</ruleset>

@@ -108,18 +108,6 @@ public class RotaryMechanismIOSim implements RotaryMechanismIO {
     // Apply strictly to Dyn4j body
     armBody.applyTorque(mechanismTorque);
 
-    System.out.println(
-        "ArmSim | Pos: "
-            + currentAngleRad
-            + " | Vel: "
-            + currentVelocityRadPerSec
-            + " | Motor Torque: "
-            + motorTorque
-            + " | Applied Volts: "
-            + appliedVolts
-            + " | Target Pos: "
-            + internalController.getGoal().position);
-
     // Compute effective motor terminal voltage after current limiting
     double motorSpeedRadPerSec = currentVelocityRadPerSec * gearRatio;
     double batteryVoltage = Math.max(MARSPhysicsWorld.getInstance().getSimulatedVoltage(), 0.01);

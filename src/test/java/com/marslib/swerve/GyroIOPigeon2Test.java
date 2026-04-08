@@ -45,7 +45,7 @@ public class GyroIOPigeon2Test {
 
   @AfterEach
   public void tearDown() {
-    MARSTestHarness.tearDown();
+    MARSTestHarness.cleanup();
     pigeonMockedConstruction.close();
     mockThreadStatic.close();
   }

@@ -72,10 +72,10 @@ public final class MARSTestHarness {
   }
 
   /**
-   * Tears down test state after a test completes. Call this in {@code @AfterEach} to prevent
+   * Cleans up test state after a test completes. Call this in {@code @AfterEach} to prevent
    * subsystem references from leaking between tests.
    */
-  public static void tearDown() {
+  public static void cleanup() {
     CommandScheduler.getInstance().cancelAll();
     CommandScheduler.getInstance().unregisterAllSubsystems();
   }

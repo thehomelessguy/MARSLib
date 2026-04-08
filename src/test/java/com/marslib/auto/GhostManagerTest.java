@@ -34,7 +34,7 @@ public class GhostManagerTest {
 
   @AfterEach
   public void tearDown() {
-    MARSTestHarness.tearDown();
+    MARSTestHarness.cleanup();
     if (ghostFile.exists()) {
       ghostFile.delete();
     }

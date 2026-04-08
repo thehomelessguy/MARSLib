@@ -39,7 +39,7 @@ public class LoggedTunableNumber {
     initDefault(defaultValue);
   }
 
-  public void initDefault(double defaultValue) {
+  public final void initDefault(double defaultValue) {
     if (!hasDefault) {
       hasDefault = true;
       this.defaultValue = defaultValue;

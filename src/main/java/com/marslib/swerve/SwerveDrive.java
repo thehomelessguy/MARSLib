@@ -68,8 +68,9 @@ public class SwerveDrive extends SubsystemBase {
    * @param gyroIO The gyro IO layer (Pigeon2 or Sim) providing heading data.
    * @param powerManager The active MARSPowerManager for querying bus voltages for load shedding.
    */
+  @SuppressWarnings("PMD.NullAssignment")
   public SwerveDrive(SwerveModule[] modules, GyroIO gyroIO, MARSPowerManager powerManager) {
-    this.modules = modules;
+    this.modules = java.util.Arrays.copyOf(modules, modules.length);
     this.gyroIO = gyroIO;
     this.powerManager = powerManager;
 
@@ -342,7 +343,7 @@ public class SwerveDrive extends SubsystemBase {
    *
    * @param states Array of 4 SwerveModuleStates.
    */
-  public void setModuleStates(SwerveModuleState[] states) {
+  public void setModuleStates(SwerveModuleState... states) {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.MAX_LINEAR_SPEED_MPS);
     for (int i = 0; i < 4; i++) {
       modules[i].setDesiredState(states[i]);

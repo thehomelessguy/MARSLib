@@ -1,12 +1,11 @@
 package com.marslib.auto;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +48,22 @@ public class GhostManager {
     /** The timestamp of this frame, in seconds from start. */
     double time;
     /** Joystick axis values. */
-    double leftY, leftX, rightX;
+    double leftY;
+
+    double leftX;
+    double rightX;
     /** Button states. */
-    boolean a, b, x, y, lb, rb, up, down, left, right;
+    boolean a;
+
+    boolean b;
+    boolean x;
+    boolean y;
+    boolean lb;
+    boolean rb;
+    boolean up;
+    boolean down;
+    boolean left;
+    boolean right;
   }
 
   // ---------------------------------------------------------------------------
@@ -115,29 +127,38 @@ public class GhostManager {
   // ---------------------------------------------------------------------------
 
   /**
-   * Starts a daemon thread that continuously drains the write buffer to the given {@link
-   * PrintWriter}. The thread sleeps briefly between drain cycles to avoid busy-spinning while
-   * keeping latency well below one robot loop period.
+   * Starts a daemon thread that continuously drains the write buffer to the given {@link File}. The
+   * thread sleeps briefly between drain cycles to avoid busy-spinning while keeping latency well
+   * below one robot loop period.
    */
-  private void startWriterThread(PrintWriter pw) {
+  private void startWriterThread(File file) {
     writerThread =
         new Thread(
             () -> {
-              while (recording || !writeBuffer.isEmpty()) {
-                String line;
-                while ((line = writeBuffer.poll()) != null) {
-                  pw.println(line);
+              try (PrintWriter pw =
+                  new PrintWriter(
+                      java.nio.file.Files.newBufferedWriter(
+                          file.toPath(), java.nio.charset.StandardCharsets.UTF_8))) {
+                pw.println("time,ly,lx,rx,a,b,x,y,lb,rb,up,down,left,right");
+                while (recording || !writeBuffer.isEmpty()) {
+                  String line = writeBuffer.poll();
+                  while (line != null) {
+                    pw.println(line);
+                    line = writeBuffer.poll();
+                  }
+                  // Flush after each drain cycle to survive unexpected power-offs
+                  pw.flush();
+                  try {
+                    Thread.sleep(5); // ~200 Hz drain rate — far faster than 50 Hz production rate
+                  } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                  }
                 }
-                // Flush after each drain cycle to survive unexpected power-offs
-                pw.flush();
-                try {
-                  Thread.sleep(5); // ~200 Hz drain rate — far faster than 50 Hz production rate
-                } catch (InterruptedException e) {
-                  Thread.currentThread().interrupt();
-                  break;
-                }
+              } catch (Exception e) {
+                DriverStation.reportError(
+                    "GhostWriter failed: " + e.getMessage(), e.getStackTrace());
               }
-              pw.close();
             },
             "GhostWriter");
     writerThread.setDaemon(true);
@@ -178,23 +199,22 @@ public class GhostManager {
             writerThread.interrupt();
             try {
               writerThread.join(100); // Wait up to 100ms for clean shutdown
-            } catch (InterruptedException ignored) {
+            } catch (InterruptedException e) {
+              Thread.currentThread().interrupt();
             }
           }
 
           File file = new File(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH);
-          PrintWriter pw = new PrintWriter(new FileWriter(file));
-          // Write CSV header synchronously (single write, negligible cost)
-          pw.println("time,ly,lx,rx,a,b,x,y,lb,rb,up,down,left,right");
 
           recording = true;
           writeBuffer.clear();
-          startWriterThread(pw);
+          startWriterThread(file);
           timer.restart();
 
           Logger.recordOutput("Ghost/IsRecording", true);
         } catch (Exception e) {
-          e.printStackTrace();
+          DriverStation.reportError(
+              "Failed to initialize Ghost recording: " + e.getMessage(), e.getStackTrace());
         }
       }
 
@@ -247,11 +267,14 @@ public class GhostManager {
         frames.clear();
         playIndex = 0;
         try (BufferedReader br =
-            new BufferedReader(
-                new FileReader(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH))) {
-          String line = br.readLine(); // skip header
-          while ((line = br.readLine()) != null) {
-            String[] v = line.split(",");
+            java.nio.file.Files.newBufferedReader(
+                java.nio.file.Paths.get(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH),
+                java.nio.charset.StandardCharsets.UTF_8)) {
+          br.readLine(); // skip header
+          String line = br.readLine();
+          while (line != null) {
+            @SuppressWarnings("StringSplitter")
+            String[] v = line.split(",", -1);
             GhostFrame frame = new GhostFrame();
             frame.time = Double.parseDouble(v[0]);
             frame.leftY = Double.parseDouble(v[1]);
@@ -268,9 +291,10 @@ public class GhostManager {
             frame.left = Boolean.parseBoolean(v[12]);
             frame.right = Boolean.parseBoolean(v[13]);
             frames.add(frame);
+            line = br.readLine();
           }
         } catch (Exception e) {
-          System.err.println("GHOST FILE NOT FOUND: Cannot play back.");
+          DriverStation.reportError("GHOST FILE NOT FOUND: Cannot play back.", false);
           return; // failed
         }
 

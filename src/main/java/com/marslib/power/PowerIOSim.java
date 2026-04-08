@@ -20,6 +20,7 @@ public class PowerIOSim implements PowerIO {
         try {
           Thread.sleep(frc.robot.Constants.SimulationConstants.CAN_STARVATION_DELAY_MS);
         } catch (InterruptedException e) {
+          Thread.currentThread().interrupt();
         }
       }
     }

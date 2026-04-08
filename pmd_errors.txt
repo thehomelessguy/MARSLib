@@ -1,0 +1,179 @@
+Calculating task graph as no cached configuration is available for tasks: pmdMain
+
+> Task :eventDeploy
+Not running deploy task, skipping commit
+
+> Task :createVersionFile
+createVersionFile called. Path C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot
+
+> Task :installGitHooks
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :spotlessGroovyGradle UP-TO-DATE
+> Task :spotlessGroovyGradleApply UP-TO-DATE
+> Task :spotlessJava
+> Task :spotlessJavaApply
+> Task :spotlessJson UP-TO-DATE
+> Task :spotlessJsonApply UP-TO-DATE
+> Task :spotlessMisc UP-TO-DATE
+> Task :spotlessMiscApply UP-TO-DATE
+> Task :spotlessApply
+> Task :validateVendordeps
+
+> Task :compileJava
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:127: warning: [DefaultCharset] Implicit use of the platform default charset, which can result in differing behaviour between JVM executions or incorrect behavior if the encoding of the data source doesn't match expectations.
+              try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
+                                                    ^
+    (see https://errorprone.info/bugpattern/DefaultCharset)
+  Did you mean 'try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(file.toPath(), UTF_8))) {' or 'try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(file.toPath(), Charset.defaultCharset()))) {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:188: warning: [EmptyCatch] Caught exceptions should not be ignored
+            } catch (InterruptedException ignored) {
+              ^
+    (see https://google.github.io/styleguide/javaguide.html#s6.2-caught-exceptions)
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:256: warning: [DefaultCharset] Implicit use of the platform default charset, which can result in differing behaviour between JVM executions or incorrect behavior if the encoding of the data source doesn't match expectations.
+                new FileReader(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH))) {
+                ^
+    (see https://errorprone.info/bugpattern/DefaultCharset)
+  Did you mean 'Files.newBufferedReader(Paths.get(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH), UTF_8)) {' or 'Files.newBufferedReader(Paths.get(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH), Charset.defaultCharset())) {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:260: warning: [StringSplitter] String.split(String) has surprising behavior
+            String[] v = line.split(",");
+                                   ^
+    (see https://errorprone.info/bugpattern/StringSplitter)
+  Did you mean 'List<String> v = Splitter.on(',').splitToList(line);'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\swerve\GyroIOInputsAutoLogged.java:25: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public GyroIOInputsAutoLogged clone() {
+                                ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public GyroIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\power\PowerIOInputsAutoLogged.java:27: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public PowerIOInputsAutoLogged clone() {
+                                 ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public PowerIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\swerve\SwerveModuleIOInputsAutoLogged.java:37: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public SwerveModuleIOInputsAutoLogged clone() {
+                                        ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public SwerveModuleIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\mechanisms\RotaryMechanismIOInputsAutoLogged.java:29: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public RotaryMechanismIOInputsAutoLogged clone() {
+                                           ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public RotaryMechanismIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\mechanisms\LinearMechanismIOInputsAutoLogged.java:29: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public LinearMechanismIOInputsAutoLogged clone() {
+                                           ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public LinearMechanismIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\MARSFaultManager.java:75: warning: [InvalidBlockTag] The tag @param is not allowed on this type of element.
+   * Standard helper triggering an automatic CAN API structural error block.
+     ^
+    (see https://errorprone.info/bugpattern/InvalidBlockTag)
+  Did you mean '*'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\mechanisms\FlywheelIOInputsAutoLogged.java:27: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public FlywheelIOInputsAutoLogged clone() {
+                                    ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public FlywheelIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\util\ShotSetup.java:180: warning: [UnnecessaryParentheses] These grouping parentheses are unnecessary; it is unlikely the code will be misinterpreted without them
+    double velX = fieldSpeeds.vxMetersPerSecond + (-offsetY) * omega;
+                                                  ^
+    (see https://errorprone.info/bugpattern/UnnecessaryParentheses)
+  Did you mean 'double velX = fieldSpeeds.vxMetersPerSecond +  -offsetY * omega;'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\util\ShotSetup.java:181: warning: [UnnecessaryParentheses] These grouping parentheses are unnecessary; it is unlikely the code will be misinterpreted without them
+    double velY = fieldSpeeds.vyMetersPerSecond + (offsetX) * omega;
+                                                  ^
+    (see https://errorprone.info/bugpattern/UnnecessaryParentheses)
+  Did you mean 'double velY = fieldSpeeds.vyMetersPerSecond +  offsetX * omega;'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\power\PowerIOSim.java:22: warning: [EmptyCatch] Caught exceptions should not be ignored
+        } catch (InterruptedException e) {
+          ^
+    (see https://google.github.io/styleguide/javaguide.html#s6.2-caught-exceptions)
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\swerve\PhoenixOdometryThread.java:167: warning: [LockNotBeforeTry] Prefer releasing the lock on signalsLock inside a finally block.
+      signalsLock.lock();
+                      ^
+    (see https://errorprone.info/bugpattern/LockNotBeforeTry)
+  Did you mean 'signalsLock.lock();try {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\swerve\PhoenixOdometryThread.java:175: warning: [CatchAndPrintStackTrace] Logging or rethrowing exceptions should usually be preferred to catching and calling printStackTrace
+          e.printStackTrace();
+          ^
+    (see https://errorprone.info/bugpattern/CatchAndPrintStackTrace)
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:50: warning: [StaticAssignmentInConstructor] This assignment is to a static field. Mutating static state from a constructor is highly error-prone.
+      visionSim = new VisionSystemSim("main");
+                ^
+    (see https://errorprone.info/bugpattern/StaticAssignmentInConstructor)
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:52: warning: [StaticAssignmentInConstructor] This assignment is to a static field. Mutating static state from a constructor is highly error-prone.
+        fieldLayout =
+                    ^
+    (see https://errorprone.info/bugpattern/StaticAssignmentInConstructor)
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:55: warning: [StaticAssignmentInConstructor] This assignment is to a static field. Mutating static state from a constructor is highly error-prone.
+        fieldLayout = new AprilTagFieldLayout(new java.util.ArrayList<>(), 16.54, 8.21);
+                    ^
+    (see https://errorprone.info/bugpattern/StaticAssignmentInConstructor)
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\vision\AprilTagVisionIOInputsAutoLogged.java:27: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public AprilTagVisionIOInputsAutoLogged clone() {
+                                          ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public AprilTagVisionIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\build\generated\sources\annotationProcessor\java\main\com\marslib\vision\VIOSlamIOInputsAutoLogged.java:21: warning: [MissingOverride] clone overrides method in Object; expected @Override
+  public VIOSlamIOInputsAutoLogged clone() {
+                                   ^
+    (see https://errorprone.info/bugpattern/MissingOverride)
+  Did you mean '@Override public VIOSlamIOInputsAutoLogged clone() {'?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\RobotContainer.java:77: warning: [UnusedVariable] The field 'ledManager' is never read.
+  private final LEDManager ledManager;
+                           ^
+    (see https://errorprone.info/bugpattern/UnusedVariable)
+  Did you mean to remove this line or to remove this line?
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\frc\robot\SwerveConstants.java:22: warning: [MutablePublicArray] Non-empty arrays are mutable, so this `public static final` array is not a constant and can be modified by clients of this class.  Prefer an ImmutableList, or provide an accessor method that returns a defensive copy.
+  public static final Translation2d[] MODULE_LOCATIONS =
+                                      ^
+    (see https://errorprone.info/bugpattern/MutablePublicArray)
+Note: C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\faults\Alert.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+23 warnings
+
+> Task :processResources NO-SOURCE
+> Task :classes
+
+> Task :pmdMain
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:53:	OneDeclarationPerLine:	Use one line for each declaration, it enhances code readability.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\auto\GhostManager.java:55:	OneDeclarationPerLine:	Use one line for each declaration, it enhances code readability.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\mechanisms\MARSArm.java:167:	SystemPrintln:	System.out.println is used
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\simulation\MARSPhysicsWorld.java:77:	NullAssignment:	Assigning an Object to null is a code smell.  Consider refactoring.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\simulation\MARSPhysicsWorld.java:106:	AssignmentToNonFinalStatic:	Possible unsafe assignment to a non-final static field in a constructor.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\swerve\PhoenixOdometryThread.java:175:	AvoidPrintStackTrace:	Avoid printStackTrace(); use a logger call instead.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\swerve\SwerveDrive.java:77:	NullAssignment:	Assigning an Object to null is a code smell.  Consider refactoring.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\swerve\SwerveDrive.java:345:	UseVarargs:	Consider using varargs for methods or constructors which take an array the last parameter.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\testing\MARSTestHarness.java:78:	JUnit4TestShouldUseAfterAnnotation:	JUnit 4 tests that clean up tests should use the @After annotation, JUnit5 tests should use @AfterEach or @AfterAll
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\util\LoggedTunableNumber.java:39:	ConstructorCallsOverridableMethod:	Overridable method 'initDefault' called during object construction
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:35:	NullAssignment:	Assigning an Object to null is a code smell.  Consider refactoring.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:36:	NullAssignment:	Assigning an Object to null is a code smell.  Consider refactoring.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:50:	AssignmentToNonFinalStatic:	Possible unsafe assignment to a non-final static field in a constructor.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:52:	AssignmentToNonFinalStatic:	Possible unsafe assignment to a non-final static field in a constructor.
+C:\Users\david\dev\robotics\frc\MARSLib\src\main\java\com\marslib\vision\AprilTagVisionIOSim.java:55:	AssignmentToNonFinalStatic:	Possible unsafe assignment to a non-final static field in a constructor.
+15 PMD rule violations were found. See the report at: file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/pmd/main.html
+[Incubating] Problems report is available at: file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Configuration cache problems found in this build.
+
+1 problem was found storing the configuration cache.
+- Task `:createVersionFile` of type `org.gradle.api.DefaultTask`: cannot serialize object of type 'org.gradle.api.internal.project.DefaultProject', a subtype of 'org.gradle.api.Project', as these are not supported with the configuration cache.
+  See https://docs.gradle.org/8.11/userguide/configuration_cache.html#config_cache:requirements:disallowed_types
+
+See the complete report at file:///C:/Users/david/dev/robotics/frc/MARSLib/build/reports/configuration-cache/2nh0unsjhv9q4ou8gpnk2tp32/ch1hvhxlckibebvu09dutfp2p/configuration-cache-report.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 11s
+15 actionable tasks: 8 executed, 7 up-to-date
+
+Publishing build scan...
+https://gradle.com/s/g3aedwiqqqbew
+
+Configuration cache entry discarded with 1 problem.

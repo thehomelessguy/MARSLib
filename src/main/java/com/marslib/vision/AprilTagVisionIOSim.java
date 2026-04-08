@@ -31,6 +31,7 @@ public class AprilTagVisionIOSim implements AprilTagVisionIO {
    * Resets the shared VisionSystemSim singleton. Must be called in test {@code @BeforeEach} to
    * prevent stale camera state from leaking between test classes.
    */
+  @SuppressWarnings("PMD.NullAssignment")
   public static void resetSimulation() {
     visionSim = null;
     fieldLayout = null;
@@ -41,6 +42,7 @@ public class AprilTagVisionIOSim implements AprilTagVisionIO {
   private final PhotonPoseEstimator poseEstimator;
   private final Supplier<Pose2d> poseSupplier;
 
+  @SuppressWarnings({"PMD.AssignmentToNonFinalStatic", "StaticAssignmentInConstructor"})
   public AprilTagVisionIOSim(
       String cameraName, Transform3d robotToCamera, Supplier<Pose2d> poseSupplier) {
     this.poseSupplier = poseSupplier;

@@ -1,12 +1,10 @@
-import org.gradle.internal.os.OperatingSystem
-
 pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
         String frcYear = '2026'
         File frcHome
-        if (OperatingSystem.current().isWindows()) {
+        if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
             String publicFolder = System.getenv('PUBLIC')
             if (publicFolder == null) {
                 publicFolder = "C:\\Users\\Public"
@@ -23,6 +21,17 @@ pluginManagement {
             name 'frcHome'
             url frcHomeMaven
         }
+    }
+}
+
+plugins {
+    id "com.gradle.develocity" version "3.17"
+}
+
+develocity {
+    buildScan {
+        termsOfUseUrl = "https://gradle.com/terms-of-service"
+        termsOfUseAgree = "yes"
     }
 }
 

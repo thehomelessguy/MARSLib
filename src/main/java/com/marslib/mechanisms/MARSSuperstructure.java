@@ -3,7 +3,6 @@ package com.marslib.mechanisms;
 import com.marslib.util.MARSStateMachine;
 import com.marslib.util.ShotSetup;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -37,10 +36,6 @@ public class MARSSuperstructure extends SubsystemBase {
 
   private double goalCowlAngle = 0.0;
   private double goalIntakeAngle = 0.0;
-
-  // Constants mapping based on original MXIX bindings
-  private static final double INTAKE_DEPLOY_ANGLE =
-      Units.degreesToRadians(45.0); // Replace with your exact deployment angle
 
   public MARSSuperstructure(
       MARSArm cowl,

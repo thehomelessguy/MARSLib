@@ -89,7 +89,7 @@ public class RobotLifecycleTest {
 
   @AfterEach
   public void tearDown() {
-    MARSTestHarness.tearDown();
+    MARSTestHarness.cleanup();
   }
 
   @Test
