@@ -88,8 +88,7 @@ public class GhostManagerTest {
     // Header + 5 data lines (+ potentially empty line from last println)
     assertTrue(lines.length >= 6, "Should write header and 5 execution frames");
     assertTrue(lines[0].contains("time,ly,lx,rx,a,b,x,y,lb,rb,up,down,left,right"));
-    assertTrue(
-        lines[1].contains("1.000,1.000,1.000,true,true,true,true,true,true,true,true,true,true"));
+    assertTrue(lines[1].contains("1.0,1.0,1.0,true,true,true,true,true,true,true,true,true,true"));
   }
 
   /** Full round-trip: writes CSV manually, plays it back, asserts the GhostManager returns it. */

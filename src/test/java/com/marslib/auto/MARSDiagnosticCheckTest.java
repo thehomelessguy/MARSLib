@@ -35,10 +35,20 @@ public class MARSDiagnosticCheckTest {
   private SwerveDrive swerveDrive;
   private MARSElevator fastClimber;
   private MARSArm cowl;
+
+  @SuppressWarnings("unused")
   private MARSArm intakePivot;
+
+  @SuppressWarnings("unused")
   private MARSShooter floorIntake;
+
+  @SuppressWarnings("unused")
   private MARSShooter shooter;
+
+  @SuppressWarnings("unused")
   private MARSShooter feeder;
+
+  @SuppressWarnings("unused")
   private LEDManager ledManager;
 
   @BeforeEach
@@ -122,7 +132,7 @@ public class MARSDiagnosticCheckTest {
   public void testDiagnosticCheckRunsToCompletion() {
     MARSDiagnosticCheck check = new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl);
 
-    check.schedule();
+    CommandScheduler.getInstance().schedule(check);
 
     // Run for enough loops to complete the entire diagnostic sequence
     // Each phase is ~0.5s with a 2s waitUntil at the end = ~5s total

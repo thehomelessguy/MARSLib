@@ -24,6 +24,10 @@ import org.photonvision.simulation.VisionSystemSim;
  * pose estimator fusion pipeline without physical hardware.
  */
 public class AprilTagVisionIOSim implements AprilTagVisionIO {
+  private static final Pose3d[] EMPTY_POSES = new Pose3d[0];
+  private static final double[] EMPTY_DOUBLES = new double[0];
+  private static final int[] EMPTY_INTS = new int[0];
+
   private static VisionSystemSim visionSim;
   private static AprilTagFieldLayout fieldLayout;
 
@@ -120,10 +124,10 @@ public class AprilTagVisionIOSim implements AprilTagVisionIO {
       }
     }
 
-    inputs.estimatedPoses = new Pose3d[0];
-    inputs.timestamps = new double[0];
-    inputs.tagCounts = new int[0];
-    inputs.averageDistancesMeters = new double[0];
-    inputs.ambiguities = new double[0];
+    inputs.estimatedPoses = EMPTY_POSES;
+    inputs.timestamps = EMPTY_DOUBLES;
+    inputs.tagCounts = EMPTY_INTS;
+    inputs.averageDistancesMeters = EMPTY_DOUBLES;
+    inputs.ambiguities = EMPTY_DOUBLES;
   }
 }

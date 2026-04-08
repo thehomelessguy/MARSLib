@@ -40,7 +40,10 @@ import org.junit.jupiter.api.Test;
 public class VisionFusionTest {
 
   private SwerveDrive swerveDrive;
+
+  @SuppressWarnings("unused")
   private MARSVision vision;
+
   private MARSPowerManager powerManager;
 
   /**

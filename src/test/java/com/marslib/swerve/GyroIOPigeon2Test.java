@@ -28,7 +28,9 @@ public class GyroIOPigeon2Test {
         mockConstruction(
             Pigeon2.class,
             (mock, context) -> {
+              @SuppressWarnings("unchecked")
               StatusSignal<Angle> mockYaw = mock(StatusSignal.class);
+              @SuppressWarnings("unchecked")
               StatusSignal<AngularVelocity> mockYawVel = mock(StatusSignal.class);
 
               when(mock.getYaw()).thenReturn(mockYaw);
@@ -51,7 +53,6 @@ public class GyroIOPigeon2Test {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   public void testPigeon2InitializesAndReadsCorrectly() {
     GyroIOPigeon2 gyro = new GyroIOPigeon2(0, "rio");
 
@@ -87,7 +88,6 @@ public class GyroIOPigeon2Test {
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   public void testPigeon2HandlesDisconnects() {
     GyroIOPigeon2 gyro = new GyroIOPigeon2(0, "rio");
     Pigeon2 mockPigeon = pigeonMockedConstruction.constructed().get(0);

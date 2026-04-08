@@ -38,6 +38,9 @@ public class GhostManager {
   private final ConcurrentLinkedQueue<String> writeBuffer = new ConcurrentLinkedQueue<>();
   private Thread writerThread;
 
+  @SuppressWarnings("PMD.AvoidStringBufferField")
+  private final StringBuilder rowBuilder = new StringBuilder(128);
+
   // --- Playback Cache ---
   private List<GhostFrame> frames = new ArrayList<>();
   private int playIndex = 0;
@@ -221,24 +224,38 @@ public class GhostManager {
       @Override
       public void execute() {
         if (recording) {
+          rowBuilder.setLength(0);
+          rowBuilder
+              .append(Math.round(timer.get() * 1000.0) / 1000.0)
+              .append(',')
+              .append(Math.round(leftY.getAsDouble() * 1000.0) / 1000.0)
+              .append(',')
+              .append(Math.round(leftX.getAsDouble() * 1000.0) / 1000.0)
+              .append(',')
+              .append(Math.round(rightX.getAsDouble() * 1000.0) / 1000.0)
+              .append(',')
+              .append(a.getAsBoolean())
+              .append(',')
+              .append(b.getAsBoolean())
+              .append(',')
+              .append(x.getAsBoolean())
+              .append(',')
+              .append(y.getAsBoolean())
+              .append(',')
+              .append(lb.getAsBoolean())
+              .append(',')
+              .append(rb.getAsBoolean())
+              .append(',')
+              .append(up.getAsBoolean())
+              .append(',')
+              .append(down.getAsBoolean())
+              .append(',')
+              .append(left.getAsBoolean())
+              .append(',')
+              .append(right.getAsBoolean());
+
           // Enqueue to the lock-free buffer — zero blocking on the main thread
-          writeBuffer.offer(
-              String.format(
-                  "%.3f,%.3f,%.3f,%.3f,%b,%b,%b,%b,%b,%b,%b,%b,%b,%b",
-                  timer.get(),
-                  leftY.getAsDouble(),
-                  leftX.getAsDouble(),
-                  rightX.getAsDouble(),
-                  a.getAsBoolean(),
-                  b.getAsBoolean(),
-                  x.getAsBoolean(),
-                  y.getAsBoolean(),
-                  lb.getAsBoolean(),
-                  rb.getAsBoolean(),
-                  up.getAsBoolean(),
-                  down.getAsBoolean(),
-                  left.getAsBoolean(),
-                  right.getAsBoolean()));
+          writeBuffer.offer(rowBuilder.toString());
         }
       }
 

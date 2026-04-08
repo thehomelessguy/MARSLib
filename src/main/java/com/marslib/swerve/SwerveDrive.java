@@ -138,6 +138,12 @@ public class SwerveDrive extends SubsystemBase {
   private LoggedTunableNumber cachedRotKP;
   private LoggedTunableNumber cachedRotKD;
 
+  // Reusable GC-free arrays for periodic loop to prevent massive RoboRIO heap churn
+  private final double[] simVolts = new double[4];
+  private final Rotation2d[] simAngles = new Rotation2d[4];
+  private final SwerveModulePosition[] positionsForFrame = new SwerveModulePosition[4];
+  private final SwerveModulePosition[] currentPositions = new SwerveModulePosition[4];
+
   /**
    * Configures PathPlanner's AutoBuilder for autonomous path following. Must be called exactly once
    * by {@code RobotContainer} after construction.
@@ -231,18 +237,18 @@ public class SwerveDrive extends SubsystemBase {
 
       // Inject into generic physics boundary solver
       if (simPhysics != null) {
-        double[] driveVolts =
-            new double[] {
-              modules[0].getSimDriveVoltage(), modules[1].getSimDriveVoltage(),
-              modules[2].getSimDriveVoltage(), modules[3].getSimDriveVoltage()
-            };
-        Rotation2d[] angles =
-            new Rotation2d[] {
-              modules[0].getLatestState().angle, modules[1].getLatestState().angle,
-              modules[2].getLatestState().angle, modules[3].getLatestState().angle
-            };
+        simVolts[0] = modules[0].getSimDriveVoltage();
+        simVolts[1] = modules[1].getSimDriveVoltage();
+        simVolts[2] = modules[2].getSimDriveVoltage();
+        simVolts[3] = modules[3].getSimDriveVoltage();
+
+        simAngles[0] = modules[0].getLatestState().angle;
+        simAngles[1] = modules[1].getLatestState().angle;
+        simAngles[2] = modules[2].getLatestState().angle;
+        simAngles[3] = modules[3].getLatestState().angle;
+
         simPhysics.applyModuleForces(
-            driveVolts, angles, powerManager.getVoltage(), Constants.LOOP_PERIOD_SECS);
+            simVolts, simAngles, powerManager.getVoltage(), Constants.LOOP_PERIOD_SECS);
 
         // We override the "measured speeds" with what the physics world says is actually happening
         measuredSpeeds = simPhysics.getConstrainedSpeeds();
@@ -259,13 +265,10 @@ public class SwerveDrive extends SubsystemBase {
     double[] timestamps = modules[0].getOdometryTimestamps();
 
     for (int i = 0; i < sampleCount; i++) {
-      SwerveModulePosition[] positionsForFrame =
-          new SwerveModulePosition[] {
-            modules[0].getPositionDeltas()[i],
-            modules[1].getPositionDeltas()[i],
-            modules[2].getPositionDeltas()[i],
-            modules[3].getPositionDeltas()[i]
-          };
+      positionsForFrame[0] = modules[0].getPositionDeltas()[i];
+      positionsForFrame[1] = modules[1].getPositionDeltas()[i];
+      positionsForFrame[2] = modules[2].getPositionDeltas()[i];
+      positionsForFrame[3] = modules[3].getPositionDeltas()[i];
 
       Rotation2d frameYaw;
       if (gyroInputs.connected && gyroInputs.odometryYawPositions.length > 0) {
@@ -290,11 +293,11 @@ public class SwerveDrive extends SubsystemBase {
     // heavily
     if (simPhysics != null && frc.robot.Robot.isSimulation()) {
       Pose2d simBoundedPose = simPhysics.getPose();
-      SwerveModulePosition[] currentPositions =
-          new SwerveModulePosition[] {
-            modules[0].getLatestPosition(), modules[1].getLatestPosition(),
-            modules[2].getLatestPosition(), modules[3].getLatestPosition()
-          };
+      currentPositions[0] = modules[0].getLatestPosition();
+      currentPositions[1] = modules[1].getLatestPosition();
+      currentPositions[2] = modules[2].getLatestPosition();
+      currentPositions[3] = modules[3].getLatestPosition();
+
       poseEstimator.resetPosition(
           gyroInputs.connected
               ? new Rotation2d(gyroInputs.yawPositionRad)

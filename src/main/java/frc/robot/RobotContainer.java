@@ -73,7 +73,7 @@ public class RobotContainer {
   private final MARSSuperstructure superstructure;
   private final GhostManager ghostManager = new GhostManager();
 
-  @SuppressWarnings({"PMD.UnusedPrivateField", "UnusedVariable"})
+  @SuppressWarnings({"PMD.UnusedPrivateField", "unused"})
   private final LEDManager ledManager;
 
   private final MARSVision vision;
