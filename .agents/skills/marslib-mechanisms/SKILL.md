@@ -38,9 +38,8 @@ PID runs on the motor controller (TalonFX Motion Magic). Feedforward (kS, kG, kV
 ### Rule C: Power Shedding is Mandatory
 Every mechanism subsystem accepts a `MARSPowerManager` in its constructor. In `periodic()`, it continuously scales current limits based on battery voltage:
 ```java
-double currentLimit = MathUtil.interpolate(
-    MIN_CURRENT_AMPS, MAX_CURRENT_AMPS,
-    (powerManager.getVoltage() - CRITICAL_VOLTAGE) / (NOMINAL_VOLTAGE - CRITICAL_VOLTAGE));
+double currentLimit = powerManager.calculateLoadSheddedLimit(
+    MAX_CURRENT_AMPS, MIN_CURRENT_AMPS, NOMINAL_VOLTAGE, CRITICAL_VOLTAGE);
 io.setCurrentLimit(currentLimit);
 ```
 If you skip this, the mechanism will brownout the robot during matches.

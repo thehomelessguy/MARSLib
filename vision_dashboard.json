@@ -1,0 +1,91 @@
+{
+  "version": "26.0.0",
+  "hubs": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 720,
+      "state": {
+        "sidebar": {
+          "width": 160,
+          "expanded": []
+        },
+        "tabs": {
+          "selected": 0,
+          "tabs": [
+            {
+              "type": 0,
+              "title": "",
+              "controller": null,
+              "controllerUUID": "kmyd8joeliv25g5g682tgethysjep95k",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 4,
+              "title": "Constants",
+              "controller": [
+                "NT/TunableNumbers/Vision/TAG_STD_BASE",
+                "NT/TunableNumbers/Vision/MAX_AMBIGUITY",
+                "NT/TunableNumbers/Vision/MAX_Z_HEIGHT",
+                "NT/TunableNumbers/Vision/MULTI_TAG_STD_MULTIPLIER",
+                "NT/TunableNumbers/Vision/ANGULAR_STD_MULTIPLIER",
+                "NT/TunableNumbers/Vision/SLAM_STD_DEV",
+                "NT/TunableNumbers/Vision/SLAM_ANGULAR_STD_DEV"
+              ],
+              "controllerUUID": "gfkk515zpeu6r6nsotywvnr9wpddmn9z",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 3,
+              "title": "3D Field",
+              "controller": {
+                "sources": [
+                  {
+                    "type": "robot",
+                    "logKey": "/RealOutputs/Swerve/Pose",
+                    "logType": "Pose2d",
+                    "visible": true,
+                    "options": {}
+                  },
+                  {
+                    "type": "ghost",
+                    "logKey": "/RealOutputs/Vision/ValidPoses/0",
+                    "logType": "Pose2d",
+                    "visible": true,
+                    "options": {
+                      "color": "#00FF00"
+                    }
+                  },
+                  {
+                    "type": "ghost",
+                    "logKey": "/RealOutputs/Vision/ValidPoses/1",
+                    "logType": "Pose2d",
+                    "visible": true,
+                    "options": {
+                      "color": "#FFFF00"
+                    }
+                  }
+                ]
+              },
+              "controllerUUID": "ig4cgl64bbpfswqwtyqrx226rx7qao4z",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 1,
+              "title": "Ambiguity Graph",
+              "controller": null,
+              "controllerUUID": "0soh767s4l3fwqjels17r4rvpspv0d2m",
+              "renderer": null,
+              "controlsHeight": 0
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "satellites": []
+}

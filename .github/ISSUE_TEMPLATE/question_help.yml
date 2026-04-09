@@ -1,0 +1,16 @@
+name: Question / Help
+description: Ask a question or get help with implementation
+title: "[HELP] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before asking for help, please make sure you've read through the documentation.
+  - type: textarea
+    id: question
+    attributes:
+      label: Question / Issue
+      description: Provide clear details about what you need help with. Include code snippets if possible.
+    validations:
+      required: true

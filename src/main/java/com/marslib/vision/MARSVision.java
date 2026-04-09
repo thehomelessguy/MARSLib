@@ -70,23 +70,24 @@ public class MARSVision extends SubsystemBase {
 
         // Dynamic Filtering & Ambiguity Rejection
         if (tagCount == 1
-            && (ambiguity > frc.robot.Constants.VisionConstants.MAX_AMBIGUITY
-                || Math.abs(pose3d.getZ()) > frc.robot.Constants.VisionConstants.MAX_Z_HEIGHT)) {
+            && (ambiguity > frc.robot.Constants.VisionConstants.MAX_AMBIGUITY.get()
+                || Math.abs(pose3d.getZ())
+                    > frc.robot.Constants.VisionConstants.MAX_Z_HEIGHT.get())) {
           continue; // Reject noisy single tag or flying robot
         }
 
         // Quadratic scaling based on distance
         // The further away, the exponentially less we trust it (squared)
         double linearStdDev =
-            frc.robot.Constants.VisionConstants.TAG_STD_BASE * Math.pow(avgDist, 2);
+            frc.robot.Constants.VisionConstants.TAG_STD_BASE.get() * Math.pow(avgDist, 2);
 
         // MegaTag2 Boost: Dramatically tighten bounds when multiple tags are visible
         if (tagCount > 1) {
-          linearStdDev *= frc.robot.Constants.VisionConstants.MULTI_TAG_STD_MULTIPLIER;
+          linearStdDev *= frc.robot.Constants.VisionConstants.MULTI_TAG_STD_MULTIPLIER.get();
         }
 
         double angularStdDev =
-            linearStdDev * frc.robot.Constants.VisionConstants.ANGULAR_STD_MULTIPLIER;
+            linearStdDev * frc.robot.Constants.VisionConstants.ANGULAR_STD_MULTIPLIER.get();
 
         Matrix<N3, N1> stdDevs = VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev);
         Pose2d pose2d = pose3d.toPose2d();
@@ -108,9 +109,9 @@ public class MARSVision extends SubsystemBase {
         // Tight static covariance for reliable VIO odometry
         Matrix<N3, N1> stdDevs =
             VecBuilder.fill(
-                frc.robot.Constants.VisionConstants.SLAM_STD_DEV,
-                frc.robot.Constants.VisionConstants.SLAM_STD_DEV,
-                frc.robot.Constants.VisionConstants.SLAM_ANGULAR_STD_DEV);
+                frc.robot.Constants.VisionConstants.SLAM_STD_DEV.get(),
+                frc.robot.Constants.VisionConstants.SLAM_STD_DEV.get(),
+                frc.robot.Constants.VisionConstants.SLAM_ANGULAR_STD_DEV.get());
         Pose2d pose2d = pose3d.toPose2d();
 
         swerveDrive.addVisionMeasurement(pose2d, timestamp, stdDevs);

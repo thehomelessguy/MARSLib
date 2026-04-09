@@ -62,14 +62,9 @@ public class MARSIntake extends SubsystemBase {
     Logger.processInputs("Intake", inputs);
 
     // Active Load Shedding via MARSPowerManager
-    double sysVoltage = powerManager.getVoltage();
-    double currentLimit = MAX_CURRENT_AMPS;
-
-    if (sysVoltage < NOMINAL_VOLTAGE) {
-      double slope = (MAX_CURRENT_AMPS - MIN_CURRENT_AMPS) / (NOMINAL_VOLTAGE - CRITICAL_VOLTAGE);
-      currentLimit = MIN_CURRENT_AMPS + slope * (sysVoltage - CRITICAL_VOLTAGE);
-      currentLimit = Math.max(MIN_CURRENT_AMPS, Math.min(MAX_CURRENT_AMPS, currentLimit));
-    }
+    double currentLimit =
+        powerManager.calculateLoadSheddedLimit(
+            MAX_CURRENT_AMPS, MIN_CURRENT_AMPS, NOMINAL_VOLTAGE, CRITICAL_VOLTAGE);
 
     io.setCurrentLimit(currentLimit);
     Logger.recordOutput("Intake/ActiveCurrentLimit", currentLimit);

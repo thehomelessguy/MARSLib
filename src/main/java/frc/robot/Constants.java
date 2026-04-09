@@ -7,12 +7,14 @@
 
 package frc.robot;
 
+import com.marslib.util.LoggedTunableNumber;
 import edu.wpi.first.wpilibj.RobotBase;
 
 /**
  * This class defines the runtime mode used by AdvantageKit. The mode is always "real" when running
- * on a roboRIO. Change the value of "SIM_MODE" to switch between "sim" (physics sim) and "replay"
- * (log replay from a file).
+ *
+ * <p>on a roboRIO. Change the value of "SIM_MODE" to switch between "sim" (physics sim) and
+ * "replay" (log replay from a file).
  */
 public final class Constants {
   public static final Mode SIM_MODE = Mode.SIM;
@@ -152,25 +154,32 @@ public final class Constants {
     public static final String CAMERA_1_NAME = "limelight-back";
 
     /** Base linear standard deviation for single-tag AprilTag poses. */
-    public static final double TAG_STD_BASE = 0.05;
+    public static final LoggedTunableNumber TAG_STD_BASE =
+        new LoggedTunableNumber("Vision/TAG_STD_BASE", 0.05);
 
     /** Maximum acceptable ambiguity ratio for single-tag observations. */
-    public static final double MAX_AMBIGUITY = 0.2;
+    public static final LoggedTunableNumber MAX_AMBIGUITY =
+        new LoggedTunableNumber("Vision/MAX_AMBIGUITY", 0.2);
 
     /** Maximum acceptable Z-height offset (meters) to reject 'flying robot' hallucinations. */
-    public static final double MAX_Z_HEIGHT = 0.5;
+    public static final LoggedTunableNumber MAX_Z_HEIGHT =
+        new LoggedTunableNumber("Vision/MAX_Z_HEIGHT", 0.5);
 
     /** Multiplier applied to linear StdDev when multiple tags are simultaneously visible. */
-    public static final double MULTI_TAG_STD_MULTIPLIER = 0.1;
+    public static final LoggedTunableNumber MULTI_TAG_STD_MULTIPLIER =
+        new LoggedTunableNumber("Vision/MULTI_TAG_STD_MULTIPLIER", 0.1);
 
     /** Multiplier to convert linear StdDev to angular StdDev for the pose estimator. */
-    public static final double ANGULAR_STD_MULTIPLIER = 2.0;
+    public static final LoggedTunableNumber ANGULAR_STD_MULTIPLIER =
+        new LoggedTunableNumber("Vision/ANGULAR_STD_MULTIPLIER", 2.0);
 
     /** Static standard deviation for VIO SLAM measurements (meters and radians). */
-    public static final double SLAM_STD_DEV = 0.01;
+    public static final LoggedTunableNumber SLAM_STD_DEV =
+        new LoggedTunableNumber("Vision/SLAM_STD_DEV", 0.01);
 
     /** Static standard deviation for VIO SLAM angular measurements (radians). */
-    public static final double SLAM_ANGULAR_STD_DEV = 0.5;
+    public static final LoggedTunableNumber SLAM_ANGULAR_STD_DEV =
+        new LoggedTunableNumber("Vision/SLAM_ANGULAR_STD_DEV", 0.5);
   }
 
   public static final class OperatorConstants {

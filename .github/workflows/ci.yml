@@ -3,8 +3,16 @@ name: MARSLib FRC CI
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - '**.md'
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - '**.md'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -37,6 +45,16 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "style: auto-format code with spotless"
+
+    - name: Run Reviewdog PMD Annotations
+      uses: reviewdog/action-pmd@v3
+      if: github.event_name == 'pull_request'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        pmd_version: "6.55.0"
+        workdir: ./
+        reporter: github-pr-review
+        fail_on_error: false
       
     - name: Build with Gradle and Coverage
       run: ./gradlew build jacocoTestReport

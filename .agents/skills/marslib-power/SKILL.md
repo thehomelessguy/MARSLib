@@ -46,10 +46,9 @@ Only position, velocity, and stator current should run at full frequency (250Hz)
 ### Rule C: Every Mechanism Must Implement Load Shedding
 Every subsystem accepting a `MARSPowerManager` MUST dynamically scale its current limit based on system voltage:
 ```java
-double currentLimit = MathUtil.interpolate(
-    MIN_CURRENT_AMPS, MAX_CURRENT_AMPS,
-    (powerManager.getVoltage() - CRITICAL_VOLTAGE) / (NOMINAL_VOLTAGE - CRITICAL_VOLTAGE));
-io.setCurrentLimit(Math.max(currentLimit, MIN_CURRENT_AMPS));
+double currentLimit = powerManager.calculateLoadSheddedLimit(
+    MAX_CURRENT_AMPS, MIN_CURRENT_AMPS, NOMINAL_VOLTAGE, CRITICAL_VOLTAGE);
+io.setCurrentLimit(currentLimit);
 ```
 This is non-negotiable — it's the difference between a working robot and a brownout during eliminations.
 

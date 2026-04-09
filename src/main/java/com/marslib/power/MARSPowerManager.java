@@ -1,6 +1,7 @@
 package com.marslib.power;
 
 import com.marslib.faults.Alert;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
@@ -71,5 +72,19 @@ public class MARSPowerManager extends SubsystemBase {
    */
   public double getVoltage() {
     return inputs.voltage;
+  }
+
+  /**
+   * Helper function for mechanisms to compute their dynamically shedded current limit based on bus
+   * voltage. Linearly scales current limits back when voltage sags between NOMINAL and CRITICAL.
+   */
+  public double calculateLoadSheddedLimit(
+      double maxCurrent, double minCurrent, double nominalVoltage, double criticalVoltage) {
+    if (inputs.voltage >= nominalVoltage) {
+      return maxCurrent;
+    }
+    double slope = (maxCurrent - minCurrent) / (nominalVoltage - criticalVoltage);
+    double limit = minCurrent + slope * (inputs.voltage - criticalVoltage);
+    return MathUtil.clamp(limit, minCurrent, maxCurrent);
   }
 }
