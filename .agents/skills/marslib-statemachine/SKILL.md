@@ -101,16 +101,7 @@ SCORE_HIGH → INTAKE_FLOOR ❌ ILLEGAL
 See the `marslib-superstructure` skill for collision clamping details.
 
 ## 5. When to Use MARSStateMachine
-
-**Use it when:**
-- A subsystem has 3+ discrete modes that need explicit sequencing
-- You need to prevent illegal transitions (e.g., arm can't extend before elevator clears)
-- You want post-match diagnostic data about state timing and rejected inputs
-
-**Don't use it for:**
-- Simple on/off mechanisms (just use a boolean)
-- Continuous control loops (use PID/feedforward directly)
-- Autonomous path sequencing (use PathPlanner/Commands)
+Use it when a subsystem has 3+ discrete modes needing explicit sequencing, illegal transition prevention, or post-match diagnostic data. Do NOT use it for simple on/off toggles (use a boolean), continuous control loops (use PID), or autonomous sequencing (use PathPlanner/Commands).
 
 ## 6. Telemetry (per machine instance)
 All keys are prefixed with the `name` passed to the constructor:

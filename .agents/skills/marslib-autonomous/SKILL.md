@@ -60,7 +60,7 @@ autoChooser.addOption("3 Piece", MARSAuto.build3PieceAuto(drive, superstructure)
 
 // Teleop assist bindings:
 controller.leftBumper().whileTrue(new MARSAlignmentCommand(drive, targetPose));
-controller.rightBumper().whileTrue(new ShootOnTheMoveCommand(drive, shooter, targetPose));
+controller.rightTrigger().whileTrue(new ShootOnTheMoveCommand(drive, vxSupplier, vySupplier));
 ```
 
 ## 5. Telemetry

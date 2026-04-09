@@ -19,6 +19,12 @@ The operator interface spans `com.marslib.hmi` and `frc.robot.RobotContainer`:
 | `LEDIOAddressable` | WPILib AddressableLED implementation |
 | `LEDIOCANdle` | CTRE CANdle implementation |
 | `RobotContainer` | Command bindings, auto chooser, controller configuration |
+| `TeleopDriveMath` | Pure-function joystick→ChassisSpeeds math (tested separately) |
+
+### Dual Controller Layout
+MARSLib uses a **pilot + copilot** controller setup:
+- **Port 0** — Drive pilot (translation, rotation, intake, shooting, climb, ghost recording)
+- **Port 1** — Copilot (manual feed, fixed scoring, cowl home, climber reverse, swerve stop)
 
 ### LED Priority System
 ```
@@ -37,15 +43,9 @@ Drivers can't watch the screen during matches. Fire controller rumble for:
 - Game piece collected (intake sensor triggered)
 - `GhostManager` macro recording complete
 - Alignment locked on target (PID converged)
-```java
-controller.rumble(0.5, 0.3); // 50% intensity, 300ms duration
-```
 
 ### Rule C: Use LoggedTunableNumber for Manual Overrides
-Any driver-adjustable value (arm offset, shot angle trim) MUST use `LoggedTunableNumber`. This allows pit crew to adjust without recompiling:
-```java
-private final LoggedTunableNumber armOffset = new LoggedTunableNumber("Operator/ArmOffset", 0.0);
-```
+Any driver-adjustable value (arm offset, shot angle trim) MUST use `LoggedTunableNumber`. This allows pit crew to adjust without recompiling.
 
 ### Rule D: Dashboard Minimalism
 The main driving AdvantageScope tab shows ONLY:
@@ -54,30 +54,66 @@ The main driving AdvantageScope tab shows ONLY:
 - Game piece possession
 - Active faults/alerts
 
-Raw encoder values, PID errors, and current draws go on a separate debugging tab. Drivers need clarity, not data.
+Raw encoder values, PID errors, and current draws go on a separate debugging tab.
 
-## 3. Adding New Controller Bindings
+## 3. Current Button Bindings
 
-1. Define the binding in `RobotContainer.configureButtonBindings()`.
-2. Use `controller.{button}().onTrue/whileTrue/toggleOnTrue()` patterns.
-3. Ensure the command `requires()` the correct subsystems.
-4. Add haptic feedback for events the driver can't see.
-5. Add rumble cancelation when the event expires.
-6. Document the binding in the team's driver cheat sheet.
+### Pilot (Port 0)
+| Input | Action |
+|---|---|
+| Left Stick | Translation (field-relative, slew-limited) |
+| Right Stick X | Rotation (with gyro-lock when idle) |
+| Left Trigger | Intake deploy + run → STOWED on release |
+| Right Trigger | Shoot-On-The-Move + SCORE → STOWED on release |
+| A | Slamtake (INTAKE_RUNNING) → STOWED on release |
+| B | Stationary SCORE → STOWED on release |
+| Left Bumper | UNJAM → STOWED on release |
+| Right Bumper | SCORE → STOWED on release |
+| DPad Right | Deploy intake (INTAKE_DOWN, no spin) |
+| DPad Left | Retract intake (STOWED) |
+| DPad Up | Manual climber extend (12V) |
+| DPad Down | Manual climber retract (-12V) |
+| Back + Start | Ghost recording (records all axes and buttons) |
+| Start | Diagnostic hardware check |
 
-## 4. Command API
+### Copilot (Port 1)
+| Input | Action |
+|---|---|
+| Left Trigger | Manual feed (feeder + floor intake at 6V) |
+| Right Trigger | Fixed target SCORE → STOWED on release |
+| Right Bumper | Fixed target SCORE → STOWED on release |
+| Left Bumper | Cowl home position |
+| DPad Down | Climber reverse (-12V) |
+| X | Emergency swerve stop |
+
+## 4. Adding New Bindings
+1. Define the command binding in `RobotContainer` using `controller.{button}().onTrue/whileTrue(...)`.
+2. Ensure the command `requires()` every subsystem it actuates.
+3. If the action pairs with a release (e.g., intake → stowed), use `.onFalse(superstructure.setAbsoluteState(STOWED))`.
+4. Add rumble feedback if the event is invisible to the driver (see Rule B).
+5. Update the button map table in this skill's §3 section.
+6. Add a test validating the command sequence in `RobotContainerTest` or the relevant subsystem test.
+
+## 5. Command API
 ```java
 // Standard bindings in RobotContainer:
-driver.a().onTrue(superstructure.setAbsoluteState(INTAKE_FLOOR));
-driver.b().onTrue(superstructure.setAbsoluteState(SCORE_HIGH));
-driver.x().onTrue(superstructure.setAbsoluteState(STOWED));
-driver.leftBumper().whileTrue(new MARSAlignmentCommand(drive, target));
-driver.rightBumper().whileTrue(new ShootOnTheMoveCommand(drive, shooter, target));
+controller.leftTrigger()
+    .onTrue(superstructure.setAbsoluteState(SuperstructureState.INTAKE_RUNNING))
+    .onFalse(superstructure.setAbsoluteState(SuperstructureState.STOWED));
+
+controller.rightTrigger()
+    .whileTrue(new ShootOnTheMoveCommand(drive, vxSupplier, vySupplier))
+    .onTrue(superstructure.setAbsoluteState(SuperstructureState.SCORE))
+    .onFalse(superstructure.setAbsoluteState(SuperstructureState.STOWED));
 ```
 
-## 5. Telemetry
-- `Operator/ArmOffset` — Manual arm trim value
-- `Operator/ControllerConnected` — Boolean: driver controller detected
+## 6. Telemetry
+- `Teleop/RawJoystickX` — Raw left stick Y axis
+- `Teleop/RawJoystickY` — Raw left stick X axis
+- `Teleop/RawJoystickOmega` — Raw right stick X axis
+- `Teleop/PostDeadband` — Post-deadband values [x, y, omega]
+- `Teleop/FieldRelSpeeds` — Field-relative speeds [vx, vy, omega]
+- `Teleop/RobotRelSpeeds` — Robot-relative speeds [vx, vy, omega]
+- `Teleop/GyroLockActive` — Boolean: heading hold active
 - `LED/CurrentPattern` — Active LED pattern name
 - `LED/FaultFlashActive` — Boolean: fault flash override active
-- `Haptics/LastRumbleTime` — Timestamp of last rumble event

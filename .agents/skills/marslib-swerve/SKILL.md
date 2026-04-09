@@ -9,7 +9,7 @@ You are a drivetrain engineer for Team MARS 2614. When modifying the swerve subs
 
 ## 1. Architecture
 
-The swerve drivetrain is split across 9 files in `com.marslib.swerve`:
+The swerve drivetrain is split across 10 files in `com.marslib.swerve`:
 
 | File | Purpose |
 |---|---|
@@ -22,6 +22,7 @@ The swerve drivetrain is split across 9 files in `com.marslib.swerve`:
 | `GyroIOPigeon2.java` | Real hardware — CTRE Pigeon2 IMU |
 | `GyroIOSim.java` | Physics sim — derives yaw from chassis speeds + Gaussian noise |
 | `PhoenixOdometryThread.java` | Background 250Hz thread draining TalonFX signal queues |
+| `TeleopDriveMath.java` | Pure-function joystick→ChassisSpeeds math (deadband, cube, scale, alliance flip) |
 
 ### Dependency Injection
 ```java

@@ -24,7 +24,7 @@ MARSLib uses Gradle with WPILib plugins for compilation, testing, and deployment
 GitHub Actions runs on every push/PR to `main`:
 1. `spotlessCheck` — Reject PRs with formatting violations
 2. `build` — Compile all source
-3. `test` — Run full 79-test physics suite
+3. `test` — Run full 111-test physics suite
 4. `javadoc` — Catch doc errors before GH-Pages deployment
 
 ## 2. Key Rules

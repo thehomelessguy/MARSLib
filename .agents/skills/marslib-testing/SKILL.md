@@ -18,6 +18,7 @@ MARSLib uses **Digital Twin** testing — real subsystems with simulated IO, not
 | `CommandScheduler` | WPILib's real scheduler — same as on the robot |
 | `SimHooks.stepTiming()` | Advances HAL clock for deterministic timing |
 | `DriverStationSim` | Simulates DS heartbeat and mode (auto/teleop/test) |
+| `MARSTestHarness` | Centralized reset utility for all static singletons |
 
 ### Test Execution Loop
 ```java
@@ -32,44 +33,47 @@ for (int i = 0; i < 150; i++) {
 ## 2. Key Rules
 
 ### Rule A: Never Mock Hardware
-Do NOT use Mockito to mock IO layers. Instantiate real subsystems with `*IOSim` implementations. Mocks hide physics bugs that only appear under real dynamics (wheel slip, gravity, inertia).
+Do NOT use Mockito to mock IO layers. Instantiate real subsystems with `*IOSim` implementations. Mocks hide physics bugs that only appear under real dynamics (wheel slip, gravity, inertia). The `mockito-core` dependency is intentionally excluded from `build.gradle`.
 
-### Rule B: Reset ALL Singletons in @BeforeEach
-The following singletons MUST be reset before every test:
+### Rule B: Use MARSTestHarness for Singleton Resets
+The `MARSTestHarness` class (`com.marslib.testing`) centralizes all 7 singleton resets into one call. EVERY test class MUST use it:
 ```java
+import com.marslib.testing.MARSTestHarness;
+
 @BeforeEach
 public void setUp() {
-    HAL.initialize(500, 0);
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().unregisterAllSubsystems();
-    MARSPhysicsWorld.resetInstance();
-    AprilTagVisionIOSim.resetSimulation();
-    Alert.resetAll();
-    MARSFaultManager.clear();
-    DriverStationSim.setEnabled(true);
-    DriverStationSim.notifyNewData();
+    MARSTestHarness.reset();
+    // ... construct your subsystems here
+}
+
+@AfterEach
+public void tearDown() {
+    MARSTestHarness.cleanup();
 }
 ```
+
+`MARSTestHarness.reset()` handles:
+1. `HAL.initialize()` — WPILib Hardware Abstraction Layer
+2. `CommandScheduler` — cancel all commands, unregister all subsystems
+3. `MARSPhysicsWorld.resetInstance()` — destroy dyn4j world and bodies
+4. `AprilTagVisionIOSim.resetSimulation()` — destroy shared VisionSystemSim
+5. `MARSFaultManager.clear()` — clear fault state
+6. `Alert.resetAll()` — clear alert groups
+7. `DriverStationSim` — set Blue1 alliance, enable, beat heartbeat
+
 Skipping ANY of these causes cross-test contamination: stacked physics bodies, stale alerts, leaked commands.
 
 ### Rule C: Beat the DS Heartbeat Continuously
 WPILib silently disables the robot if `DriverStationSim.notifyNewData()` isn't called every ~0.5s. In any loop stepping the scheduler, call it EVERY iteration. If you only call it once before the loop, the robot will disable mid-test at tick ~25.
 
 ### Rule D: Use @AfterEach for Cleanup
-Always unregister subsystems after tests to prevent WPILib from leaking subsystem references:
-```java
-@AfterEach
-public void tearDown() {
-    CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().unregisterAllSubsystems();
-}
-```
+Always call `MARSTestHarness.cleanup()` in `@AfterEach` to prevent WPILib from leaking subsystem references between tests.
 
 ## 3. Adding New Tests
 
 1. Create the test in the matching test package (e.g., `com.marslib.mechanisms.MARSClimberTest`).
-2. In `@BeforeEach`: reset all singletons (see Rule B), construct subsystems with `*IOSim`.
-3. In `@AfterEach`: cancel commands, unregister subsystems.
+2. In `@BeforeEach`: call `MARSTestHarness.reset()`, then construct subsystems with `*IOSim`.
+3. In `@AfterEach`: call `MARSTestHarness.cleanup()`.
 4. For physics tests: use the standard execution loop (Section 1 Architecture).
 5. Assert against physical positions, not command states — test what the mechanism actually did.
 6. For integration tests spanning multiple subsystems, see `RobotLifecycleTest` as the reference.
@@ -81,22 +85,24 @@ public void tearDown() {
 | Unit | `MARSElevatorTest` | Single-mechanism physics and control |
 | Integration | `RobotLifecycleTest` | Multi-subsystem coordination bugs |
 | Diagnostics | `MARSDiagnosticCheckTest` | Pre-match sweep validation |
-| Math | `KinematicAimingTest` | Pure algorithm correctness |
+| Math | `KinematicAimingTest`, `ShotSetupTest` | Pure algorithm correctness |
 | State Machine | `MARSStateMachineTest` | Transition validation logic |
+| Pipeline | `TeleopDrivePipelineTest` | Joystick→ChassisSpeeds math |
 
 ## 5. Telemetry
 Tests don't emit AdvantageKit telemetry, but you can assert against Logger output keys:
 ```java
 // The state machine logs transitions — verify the key was set
-assertEquals(SuperstructureState.SCORE_HIGH, superstructure.getCurrentState());
+assertEquals(SuperstructureState.SCORE, superstructure.getCurrentState());
 assertEquals(1, superstructure.getStateMachine().getTotalTransitionCount());
 ```
 
 ## Reference Implementations
-- `MARSSuperstructureTest` — Physics-backed collision constraint verification
+- `MARSSuperstructureTest` — Physics-backed state transition and scoring verification
 - `RobotLifecycleTest` — Full auto→teleop→score→stow lifecycle
 - `MARSStateMachineTest` — FSM transition validation and rejection
 - `MARSAlignmentCommandTest` — PID convergence under physics simulation
+- `TeleopDrivePipelineTest` — Joystick→ChassisSpeeds pipeline regression test
 
 ---
 

@@ -54,3 +54,6 @@ These rules are **non-negotiable** across all MARSLib code:
 | Testing | `marslib-testing` | JUnit 5, singleton resets, physics loops |
 | CI/CD | `marslib-ci` | Gradle, Spotless, GitHub Actions |
 | Skill Authoring | `marslib-skill-authoring` | How to create new skills |
+
+## 4. Telemetry
+See each domain skill's **Telemetry** section for exhaustive log key listings. The root skill does not emit its own telemetry.

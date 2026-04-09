@@ -34,12 +34,11 @@ If a motor drops off CAN mid-match, the IO layer MUST catch the Phoenix 6 `Statu
 Use `com.marslib.faults.Alert`, NOT `edu.wpi.first.wpilibj.Alert`. MARSLib's version has `resetAll()` for test cleanup. If you use WPILib's Alert, test suites will leak state.
 
 ### Rule C: Faults Are Static — Reset in Tests
-`MARSFaultManager` and `Alert` both use static state. EVERY test `@BeforeEach` block MUST call:
+`MARSFaultManager` and `Alert` both use static state. EVERY test `@BeforeEach` block MUST call `MARSTestHarness.reset()` which handles both resets (plus 5 other singletons):
 ```java
-Alert.resetAll();
-MARSFaultManager.clear();
+MARSTestHarness.reset(); // Clears MARSFaultManager, Alert, PhysicsWorld, etc.
 ```
-Failing to do this causes fault state to bleed across tests, producing false failures.
+Failing to reset causes fault state to bleed across tests, producing false failures.
 
 ### Rule D: System Sweeps Test Physical Motion
 `MARSDiagnosticCheck` doesn't just check connectivity — it commands mechanisms to physical positions and asserts encoder deltas match expected travel. If the elevator is commanded to 0.5m but only reads 0.01m, the gearbox is stripped.
