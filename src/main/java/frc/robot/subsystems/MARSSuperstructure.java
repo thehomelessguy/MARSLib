@@ -153,7 +153,7 @@ public class MARSSuperstructure extends SubsystemBase {
         if (staticShot.isValid) {
           goalCowlAngle = staticShot.hoodRadians;
         } else {
-          goalCowlAngle = frc.robot.constants.SuperstructureConstants.SCORE_HIGH_ARM_ANGLE;
+          goalCowlAngle = frc.robot.constants.SuperstructureConstants.SCORE_FALLBACK_COWL_ANGLE;
         }
         break;
       case STOWED:
