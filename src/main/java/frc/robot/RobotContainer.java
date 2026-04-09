@@ -27,7 +27,6 @@ import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIO;
 import com.marslib.swerve.SwerveModuleIOSim;
 import com.marslib.swerve.SwerveModuleIOTalonFX;
-import com.marslib.util.ShotSetup;
 import com.marslib.vision.AprilTagVisionIOLimelight;
 import com.marslib.vision.AprilTagVisionIOSim;
 import com.marslib.vision.MARSVision;
@@ -35,7 +34,6 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.ShotSetupFactory;
 import frc.robot.constants.*;
 import frc.robot.constants.ClimberConstants;
 import frc.robot.constants.CowlConstants;
@@ -309,9 +307,6 @@ public class RobotContainer {
 
     operatorInterface = new OperatorInterface(0, powerManager);
 
-    // Build the SOTM shot computation utility with REBUILT shooter characterization data
-    ShotSetup shotSetup = ShotSetupFactory.createDefault();
-
     superstructure =
         new MARSSuperstructure(
             cowl,
@@ -320,8 +315,7 @@ public class RobotContainer {
             shooter,
             feeder,
             swerveDrive::getPose,
-            vision::getBestTargetTranslation,
-            shotSetup);
+            vision::getBestTargetTranslation);
 
     // Configure PathPlanner AutoBuilder AFTER construction — composition root owns this
     swerveDrive.configurePathPlanner();
@@ -339,6 +333,7 @@ public class RobotContainer {
         superstructure,
         climber,
         cowl,
+        shooter,
         feeder,
         floorIntake);
   }

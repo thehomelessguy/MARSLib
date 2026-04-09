@@ -24,6 +24,7 @@ public final class RobotBindings {
       MARSSuperstructure superstructure,
       MARSClimber climber,
       MARSCowl cowl,
+      MARSShooter shooter,
       MARSShooter feeder,
       MARSShooter floorIntake) {
 
@@ -55,6 +56,8 @@ public final class RobotBindings {
             "Aim And Shoot On Move",
             new ShootOnTheMoveCommand(
                 swerveDrive,
+                cowl,
+                shooter,
                 () -> {
                   double raw =
                       -Math.pow(

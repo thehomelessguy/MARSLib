@@ -13,10 +13,7 @@ import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIOSim;
 import com.marslib.testing.MARSTestHarness;
-import com.marslib.util.ShotSetup;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -80,19 +77,9 @@ public class RobotLifecycleTest {
 
     java.util.function.Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
         distSupplier = () -> java.util.Optional.empty(); // Fixed dist
-    ShotSetup shotSetup =
-        new ShotSetup(0.0, 1.5, 6000, 0.1, 5, 0.01, 0.1, 1.0, new Transform2d(), new Rotation2d());
-
     superstructure =
         new MARSSuperstructure(
-            cowl,
-            intakePivot,
-            floorIntake,
-            shooter,
-            feeder,
-            swerveDrive::getPose,
-            distSupplier,
-            shotSetup);
+            cowl, intakePivot, floorIntake, shooter, feeder, swerveDrive::getPose, distSupplier);
   }
 
   @AfterEach

@@ -20,7 +20,8 @@ import frc.robot.constants.FieldConstants;
 import frc.robot.constants.ModeConstants;
 import frc.robot.constants.ShooterConstants;
 import frc.robot.simulation.*;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.MARSCowl;
+import frc.robot.subsystems.MARSShooter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,9 @@ import org.junit.jupiter.api.Test;
 public class ShootOnTheMoveCommandTest {
 
   private SwerveDrive swerveDrive;
+  private MARSCowl cowl;
+  private MARSShooter shooter;
+  private MARSPowerManager powerManager;
 
   @BeforeEach
   public void setUp() {
@@ -50,6 +54,15 @@ public class ShootOnTheMoveCommandTest {
 
     swerveDrive = new SwerveDrive(modules, gyroSim, powerManager);
     swerveDrive.resetPose(new Pose2d(0, 0, new Rotation2d()));
+
+    cowl =
+        new MARSCowl(
+            new com.marslib.mechanisms.RotaryMechanismIOSim("Cowl", 50.0, 0.5, 0.5), powerManager);
+    shooter =
+        new MARSShooter(
+            new com.marslib.mechanisms.FlywheelIOSim(
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05),
+            powerManager);
   }
 
   @AfterEach
@@ -64,7 +77,8 @@ public class ShootOnTheMoveCommandTest {
   /** When the robot is stationary, the aim heading should point directly at the target hub. */
   @Test
   public void testStationaryAim() {
-    ShootOnTheMoveCommand command = new ShootOnTheMoveCommand(swerveDrive, () -> 0.0, () -> 0.0);
+    ShootOnTheMoveCommand command =
+        new ShootOnTheMoveCommand(swerveDrive, cowl, shooter, () -> 0.0, () -> 0.0);
 
     CommandScheduler.getInstance().schedule(command);
 
@@ -95,7 +109,8 @@ public class ShootOnTheMoveCommandTest {
   /** When the robot is translating, the aim should lead the target (diverge from static aim). */
   @Test
   public void testMovingAimCalculatesVirtualTarget() {
-    ShootOnTheMoveCommand command = new ShootOnTheMoveCommand(swerveDrive, () -> 2.0, () -> 0.0);
+    ShootOnTheMoveCommand command =
+        new ShootOnTheMoveCommand(swerveDrive, cowl, shooter, () -> 2.0, () -> 0.0);
 
     CommandScheduler.getInstance().schedule(command);
 
@@ -137,7 +152,7 @@ public class ShootOnTheMoveCommandTest {
   public void testPhysicalFallbackOnNegativeDiscriminant() {
     // Robot translating AWAY at an impossible speed (30 m/s > 15 m/s projectile)
     ShootOnTheMoveCommand command =
-        new ShootOnTheMoveCommand(swerveDrive, () -> -30.0, () -> -30.0);
+        new ShootOnTheMoveCommand(swerveDrive, cowl, shooter, () -> -30.0, () -> -30.0);
 
     CommandScheduler.getInstance().schedule(command);
 

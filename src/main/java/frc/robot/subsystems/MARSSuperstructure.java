@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
 import com.marslib.mechanisms.*;
+import com.marslib.util.EliteShooterMath;
 import com.marslib.util.MARSStateMachine;
-import com.marslib.util.ShotSetup;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -22,7 +22,6 @@ public class MARSSuperstructure extends SubsystemBase {
   private final Supplier<Pose2d> poseSupplier;
   private final Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
       visionTargetSupplier;
-  private final ShotSetup shotSetup;
 
   public enum SuperstructureState {
     STOWED,
@@ -45,8 +44,8 @@ public class MARSSuperstructure extends SubsystemBase {
       MARSShooter shooter,
       MARSShooter feeder,
       Supplier<Pose2d> poseSupplier,
-      Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>> visionTargetSupplier,
-      ShotSetup shotSetup) {
+      Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
+          visionTargetSupplier) {
 
     this.cowl = cowl;
     this.intakePivot = intakePivot;
@@ -55,7 +54,6 @@ public class MARSSuperstructure extends SubsystemBase {
     this.feeder = feeder;
     this.poseSupplier = poseSupplier;
     this.visionTargetSupplier = visionTargetSupplier;
-    this.shotSetup = shotSetup;
 
     stateMachine =
         new MARSStateMachine<>(
@@ -134,9 +132,26 @@ public class MARSSuperstructure extends SubsystemBase {
         break;
       case SCORE:
         goalIntakeAngle = 0.0;
-        // Dynamically compute cowl angle based on distance
-        if (shotSetup != null) {
-          goalCowlAngle = shotSetup.getStaticShotInfo(currentDistance).cowlPosition;
+        // Calculate static shot using EliteShooterMath with zero velocity
+        edu.wpi.first.math.geometry.Translation2d hub =
+            edu.wpi.first.wpilibj.DriverStation.getAlliance().isPresent()
+                    && edu.wpi.first.wpilibj.DriverStation.getAlliance().get()
+                        == edu.wpi.first.wpilibj.DriverStation.Alliance.Red
+                ? frc.robot.constants.FieldConstants.RED_HUB_POS
+                : frc.robot.constants.FieldConstants.BLUE_HUB_POS;
+
+        EliteShooterMath.EliteShooterSetpoint staticShot =
+            EliteShooterMath.calculateShotOnTheMove(
+                poseSupplier.get(),
+                new edu.wpi.first.math.kinematics.ChassisSpeeds(),
+                new edu.wpi.first.math.geometry.Translation3d(
+                    hub.getX(), hub.getY(), frc.robot.constants.FieldConstants.HUB_SIZE_METERS),
+                frc.robot.constants.FieldConstants.GAME_PIECE_REST_HEIGHT_METERS,
+                frc.robot.constants.ShooterConstants.PROJECTILE_SPEED_MPS,
+                -9.81,
+                0.1);
+        if (staticShot.isValid) {
+          goalCowlAngle = staticShot.hoodRadians;
         } else {
           goalCowlAngle = frc.robot.constants.SuperstructureConstants.SCORE_HIGH_ARM_ANGLE;
         }
@@ -179,12 +194,32 @@ public class MARSSuperstructure extends SubsystemBase {
     }
 
     if (currentState == SuperstructureState.SCORE) {
-      double targetRPM = 4000.0; // Default fallback
-      if (visionTargetSupplier != null && shotSetup != null) {
-        targetRPM = shotSetup.getStaticShotInfo(currentDistance).shot.shooterRPM;
+      double targetRadPerSec = 4000.0 * Math.PI * 2.0 / 60.0; // Default fallback
+
+      edu.wpi.first.math.geometry.Translation2d hubForRPM =
+          edu.wpi.first.wpilibj.DriverStation.getAlliance().isPresent()
+                  && edu.wpi.first.wpilibj.DriverStation.getAlliance().get()
+                      == edu.wpi.first.wpilibj.DriverStation.Alliance.Red
+              ? frc.robot.constants.FieldConstants.RED_HUB_POS
+              : frc.robot.constants.FieldConstants.BLUE_HUB_POS;
+
+      EliteShooterMath.EliteShooterSetpoint staticShotRpm =
+          EliteShooterMath.calculateShotOnTheMove(
+              poseSupplier.get(),
+              new edu.wpi.first.math.kinematics.ChassisSpeeds(),
+              new edu.wpi.first.math.geometry.Translation3d(
+                  hubForRPM.getX(),
+                  hubForRPM.getY(),
+                  frc.robot.constants.FieldConstants.HUB_SIZE_METERS),
+              frc.robot.constants.FieldConstants.GAME_PIECE_REST_HEIGHT_METERS,
+              frc.robot.constants.ShooterConstants.PROJECTILE_SPEED_MPS,
+              -9.81,
+              0.1);
+
+      if (staticShotRpm.isValid) {
+        targetRadPerSec = staticShotRpm.launchSpeedMetersPerSec * 30.0;
       }
 
-      double targetRadPerSec = targetRPM * Math.PI * 2.0 / 60.0;
       shooter.setClosedLoopVelocity(targetRadPerSec);
 
       // Wait for flywheel and cowl to be at tolerance before transferring

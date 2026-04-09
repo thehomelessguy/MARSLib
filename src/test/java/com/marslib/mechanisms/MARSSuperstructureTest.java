@@ -6,10 +6,7 @@ import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIO;
 import com.marslib.simulation.MARSPhysicsWorld;
 import com.marslib.testing.MARSTestHarness;
-import com.marslib.util.ShotSetup;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.*;
@@ -67,14 +64,9 @@ public class MARSSuperstructureTest {
     java.util.function.Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
         distSupplier = () -> java.util.Optional.empty(); // Fixed dist
 
-    ShotSetup shotSetup =
-        new ShotSetup(0.0, 1.5, 6000, 0.1, 5, 0.01, 0.1, 1.0, new Transform2d(), new Rotation2d());
-    shotSetup.addShotMapEntry(2.0, 4000.0, 0.5); // Add required entry so it doesn't return 0.0 RPM
-    shotSetup.addShotMapEntry(5.0, 6000.0, 1.0);
-
     superstructure =
         new MARSSuperstructure(
-            cowl, intakePivot, floorIntake, shooter, feeder, mockSupplier, distSupplier, shotSetup);
+            cowl, intakePivot, floorIntake, shooter, feeder, mockSupplier, distSupplier);
   }
 
   @AfterEach

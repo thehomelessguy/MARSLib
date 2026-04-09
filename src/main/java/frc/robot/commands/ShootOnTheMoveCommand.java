@@ -1,38 +1,33 @@
 package frc.robot.commands;
 
-import com.marslib.mechanisms.*;
 import com.marslib.swerve.SwerveDrive;
+import com.marslib.util.EliteShooterMath;
+import com.marslib.util.EliteShooterMath.EliteShooterSetpoint;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.MARSCowl;
+import frc.robot.subsystems.MARSShooter;
 import java.util.function.DoubleSupplier;
 
 /**
  * Overrides the driver's rotational (Theta) control to perfectly track a specific field coordinate
- * using Velocity-Added Kinematic Leading, while allowing them to freely strafe and sprint in X and
- * Y simultaneously.
+ * using Velocity-Added Kinematic Leading, while allowing them to freely strafe and sprint in X/Y.
  *
- * <p><b>Mathematical Architecture</b> This command utilizes a true-vector Newton-Raphson
- * approximation intersecting with a Quadratic Time-Of-Flight polynomial solver. It calculates
- * precisely where the target WILL be relative to the game piece the exact moment the bullet
- * connects in 2D space, by mapping:
- *
- * <pre>{@code
- * a = (s² - (v_x² + v_y²))
- * b = -2 (d_x·v_x + d_y·v_y)
- * c = -(d_x² + d_y²)
- * }</pre>
- *
- * It acts as an absolute counter-measure to "aim lag" where traditional PIDs always track behind
- * moving targets.
+ * <p><b>Mathematical Architecture:</b> Replaced entirely by the robust EliteShooterMath engine
+ * ported from Team 254. Solves exact Time-of-Flight quadratics and natively outputs required Cowl
+ * pitches, Flywheel speeds, and Chassis angular feedforwards.
  */
 public class ShootOnTheMoveCommand extends Command {
 
   private final SwerveDrive swerveDrive;
+  private final MARSCowl cowl;
+  private final MARSShooter shooter;
   private final DoubleSupplier joystickX;
   private final DoubleSupplier joystickY;
 
@@ -41,10 +36,20 @@ public class ShootOnTheMoveCommand extends Command {
       new com.marslib.swerve.TractionControlLimiter(
           frc.robot.constants.DriveConstants.TELEOP_LINEAR_ACCEL_LIMIT);
 
-  // Approximate game piece exit velocity (Tune this matching your shooter mechanisms!)
+  // Conversion scalar to turn linear velocity of the game piece into angular velocity for the
+  // shooter
+  // (Tune this parameter based on wheel radius and surface slip!)
+  private static final double VELOCITY_TO_RAD_PER_SEC = 30.0;
+
   public ShootOnTheMoveCommand(
-      SwerveDrive swerveDrive, DoubleSupplier joystickX, DoubleSupplier joystickY) {
+      SwerveDrive swerveDrive,
+      MARSCowl cowl,
+      MARSShooter shooter,
+      DoubleSupplier joystickX,
+      DoubleSupplier joystickY) {
     this.swerveDrive = swerveDrive;
+    this.cowl = cowl;
+    this.shooter = shooter;
     this.joystickX = joystickX;
     this.joystickY = joystickY;
 
@@ -52,7 +57,7 @@ public class ShootOnTheMoveCommand extends Command {
         new PIDController(frc.robot.constants.AutoConstants.ALIGN_THETA_KP, 0, 0);
     this.thetaAlignController.enableContinuousInput(-Math.PI, Math.PI);
 
-    addRequirements(swerveDrive);
+    addRequirements(swerveDrive, cowl, shooter);
   }
 
   @Override
@@ -63,64 +68,64 @@ public class ShootOnTheMoveCommand extends Command {
     double fieldVx = joystickX.getAsDouble();
     double fieldVy = joystickY.getAsDouble();
 
-    // 2. Extract true robot instantaneous momentum for Time-Of-Flight math
+    // 2. Extract true robot instantaneous momentum for math
     ChassisSpeeds currentSpeeds = swerveDrive.getChassisSpeeds();
     ChassisSpeeds currentFieldSpeeds =
         ChassisSpeeds.fromRobotRelativeSpeeds(currentSpeeds, currentPose.getRotation());
 
-    // Determine dynamic target based on alliance
-    Translation2d targetNode = frc.robot.constants.FieldConstants.BLUE_HUB_POS;
+    // 3. Determine dynamic target based on alliance
+    Translation2d targetNode2d = frc.robot.constants.FieldConstants.BLUE_HUB_POS;
     if (DriverStation.getAlliance().isPresent()
         && DriverStation.getAlliance().get() == Alliance.Red) {
-      targetNode = frc.robot.constants.FieldConstants.RED_HUB_POS;
+      targetNode2d = frc.robot.constants.FieldConstants.RED_HUB_POS;
     }
 
-    // 3. Exact True-Vector Quadratic Time-Of-Flight Intersection Solver
-    double dx = targetNode.getX() - currentPose.getX();
-    double dy = targetNode.getY() - currentPose.getY();
-    double vx = currentFieldSpeeds.vxMetersPerSecond;
-    double vy = currentFieldSpeeds.vyMetersPerSecond;
-    double s = frc.robot.constants.ShooterConstants.PROJECTILE_SPEED_MPS;
+    Translation3d targetNode =
+        new Translation3d(
+            targetNode2d.getX(),
+            targetNode2d.getY(),
+            frc.robot.constants.FieldConstants.HUB_SIZE_METERS);
 
-    double a = (s * s) - ((vx * vx) + (vy * vy));
-    double b = -2.0 * ((dx * vx) + (dy * vy));
-    double c = -((dx * dx) + (dy * dy));
+    // 4. Exact True-Vector Quadratic Time-Of-Flight Intersection Solver
+    EliteShooterSetpoint setpoint =
+        EliteShooterMath.calculateShotOnTheMove(
+            currentPose,
+            currentFieldSpeeds,
+            targetNode,
+            frc.robot.constants.FieldConstants.GAME_PIECE_REST_HEIGHT_METERS,
+            frc.robot.constants.ShooterConstants.PROJECTILE_SPEED_MPS,
+            -9.81,
+            0.1 // Fuel aerodynamic lift coefficient
+            );
 
-    double discriminant = (b * b) - (4.0 * a * c);
-    double timeOfFlight;
-
-    if (discriminant < 0.0 || a == 0.0) {
-      // Fallback to naive approximation if physically impossible to mathematically solve
-      timeOfFlight = currentPose.getTranslation().getDistance(targetNode) / Math.max(s, 0.01);
-    } else {
-      double t1 = (-b + Math.sqrt(discriminant)) / (2.0 * a);
-      double t2 = (-b - Math.sqrt(discriminant)) / (2.0 * a);
-
-      if (t1 > 0.0 && t2 > 0.0) timeOfFlight = Math.min(t1, t2);
-      else if (t1 > 0.0) timeOfFlight = t1;
-      else if (t2 > 0.0) timeOfFlight = t2;
-      else timeOfFlight = currentPose.getTranslation().getDistance(targetNode) / Math.max(s, 0.01);
-    }
-
-    // Shift the target backwards opposite to our momentum so the game piece sweeps in perfectly
-    double virtualTargetX = targetNode.getX() - (vx * timeOfFlight);
-    double virtualTargetY = targetNode.getY() - (vy * timeOfFlight);
-
-    // Calculate heading intercept
+    // 5. Calculate heading intercept (with feedforward)
     double aimTheta =
-        Math.atan2(virtualTargetY - currentPose.getY(), virtualTargetX - currentPose.getX());
+        setpoint.isValid
+            ? setpoint.robotAimYawRadians
+            : Math.atan2(
+                targetNode.getY() - currentPose.getY(), targetNode.getX() - currentPose.getX());
 
-    // 4. Automate rotation to track the moving virtual intercept
-    double omega = thetaAlignController.calculate(currentPose.getRotation().getRadians(), aimTheta);
+    double pidOmega =
+        thetaAlignController.calculate(currentPose.getRotation().getRadians(), aimTheta);
+    double feedforwardOmega = setpoint.isValid ? setpoint.chassisAngularFeedforward : 0.0;
 
-    // 5. Package field-centric commands into kinematics
+    // Combine PID stabilization with dynamic target kinematic tracking
+    double finalOmega = pidOmega + feedforwardOmega;
+
+    // 6. Package field-centric commands into kinematics
     Translation2d limitedTrans = tractionLimiter.calculate(new Translation2d(fieldVx, fieldVy));
 
     ChassisSpeeds robotSpeeds =
         ChassisSpeeds.fromFieldRelativeSpeeds(
-            limitedTrans.getX(), limitedTrans.getY(), omega, currentPose.getRotation());
+            limitedTrans.getX(), limitedTrans.getY(), finalOmega, currentPose.getRotation());
 
     swerveDrive.runVelocity(robotSpeeds);
+
+    // 7. Auto-adjust Cowl and Flywheel on-the-fly!
+    if (setpoint.isValid) {
+      cowl.setTargetPosition(setpoint.hoodRadians);
+      shooter.setClosedLoopVelocity(setpoint.launchSpeedMetersPerSec * VELOCITY_TO_RAD_PER_SEC);
+    }
   }
 
   @Override
