@@ -32,7 +32,7 @@ public class MARSSuperstructure extends SubsystemBase {
   }
 
   private final MARSStateMachine<SuperstructureState> stateMachine;
-  private boolean hasPiece = false;
+  private int gamePieceCount = 0;
 
   private double goalCowlAngle = 0.0;
   private double goalIntakeAngle = 0.0;
@@ -69,7 +69,6 @@ public class MARSSuperstructure extends SubsystemBase {
     stateMachine.setEntryAction(
         SuperstructureState.SCORE,
         () -> {
-          hasPiece = false;
           Logger.recordOutput("Superstructure/EntryAction", "SCORE: Readying shot");
         });
 
@@ -78,12 +77,12 @@ public class MARSSuperstructure extends SubsystemBase {
             Logger.recordOutput(
                 "Superstructure/TransitionDetail",
                 String.format(
-                    "%s→%s at cowl=%.3frad intake=%.3frad hasPiece=%b",
+                    "%s→%s at cowl=%.3frad intake=%.3frad gamePieceCount=%d",
                     from.name(),
                     to.name(),
                     cowl.getPositionRads(),
                     intakePivot.getPositionRads(),
-                    hasPiece)));
+                    gamePieceCount)));
   }
 
   public Command setAbsoluteState(SuperstructureState targetState) {
@@ -138,22 +137,25 @@ public class MARSSuperstructure extends SubsystemBase {
     intakePivot.setTargetPosition(goalIntakeAngle);
 
     // Collision check from physics engine
-    if (currentState == SuperstructureState.INTAKE_RUNNING && !hasPiece) {
-      try {
-        boolean swallow =
-            com.marslib.simulation.MARSPhysicsWorld.getInstance()
-                .checkIntake(
-                    poseSupplier.get(),
-                    frc.robot.Constants.FieldConstants.INTAKE_COLLECTION_RADIUS_METERS);
-        if (swallow) hasPiece = true;
-      } catch (Exception e) {
-        Logger.recordOutput(
-            "Superstructure/IntakeError", e.getClass().getSimpleName() + ": " + e.getMessage());
+    if (currentState == SuperstructureState.INTAKE_RUNNING && gamePieceCount < 40) {
+      if (intakePivot.isAtTolerance()) {
+        try {
+          int swallowed =
+              com.marslib.simulation.MARSPhysicsWorld.getInstance()
+                  .checkIntake(
+                      poseSupplier.get(),
+                      frc.robot.Constants.FieldConstants.INTAKE_COLLECTION_RADIUS_METERS,
+                      40 - gamePieceCount);
+          gamePieceCount += swallowed;
+        } catch (Exception e) {
+          Logger.recordOutput(
+              "Superstructure/IntakeError", e.getClass().getSimpleName() + ": " + e.getMessage());
+        }
       }
     }
 
     // Run intake motors
-    if (currentState == SuperstructureState.INTAKE_RUNNING && !hasPiece) {
+    if (currentState == SuperstructureState.INTAKE_RUNNING && gamePieceCount < 40) {
       floorIntake.setVoltage(12.0);
     } else if (currentState != SuperstructureState.SCORE
         && currentState != SuperstructureState.UNJAM) {
@@ -174,6 +176,50 @@ public class MARSSuperstructure extends SubsystemBase {
       if (shooter.isAtTolerance() && cowl.isAtTolerance()) {
         feeder.setVoltage(12.0);
         floorIntake.setVoltage(12.0);
+
+        if (gamePieceCount > 0) {
+          Pose2d robotPose = poseSupplier.get();
+          var alliance = edu.wpi.first.wpilibj.DriverStation.getAlliance();
+          boolean isBlue =
+              alliance.isPresent()
+                  && alliance.get() == edu.wpi.first.wpilibj.DriverStation.Alliance.Blue;
+          edu.wpi.first.math.geometry.Translation2d targetHub =
+              isBlue
+                  ? frc.robot.Constants.FieldConstants.BLUE_HUB_POS
+                  : frc.robot.Constants.FieldConstants.RED_HUB_POS;
+
+          // Ensure on the correct side (182.11 inches or 4.625594 m from end of field)
+          double allowedDistance = 4.625594;
+          boolean correctSide =
+              isBlue
+                  ? (robotPose.getX() <= allowedDistance)
+                  : (robotPose.getX()
+                      >= frc.robot.Constants.FieldConstants.FIELD_LENGTH_METERS - allowedDistance);
+
+          // Ensure aligned at the goal
+          double angleToGoal =
+              Math.atan2(targetHub.getY() - robotPose.getY(), targetHub.getX() - robotPose.getX());
+          double angleDiff =
+              edu.wpi.first.math.MathUtil.angleModulus(
+                  angleToGoal - robotPose.getRotation().getRadians());
+          boolean isAligned = Math.abs(angleDiff) < Math.toRadians(15.0);
+
+          if (correctSide && isAligned) {
+            // Shoot the piece
+            double vx = 15.0 * Math.cos(robotPose.getRotation().getRadians());
+            double vy = 15.0 * Math.sin(robotPose.getRotation().getRadians());
+            double vz = 5.0;
+
+            com.marslib.simulation.MARSPhysicsWorld.getInstance()
+                .launchGamePiece(
+                    robotPose.getTranslation(),
+                    vx,
+                    vy,
+                    vz,
+                    frc.robot.Constants.SuperstructureConstants.SCORE_HIGH_ELEVATOR_HEIGHT);
+            gamePieceCount--;
+          }
+        }
       } else {
         feeder.setVoltage(0.0);
         floorIntake.setVoltage(0.0);
@@ -196,7 +242,7 @@ public class MARSSuperstructure extends SubsystemBase {
       shooter.setVoltage(-6.0);
     }
 
-    Logger.recordOutput("Superstructure/HasPiece", hasPiece);
+    Logger.recordOutput("Superstructure/GamePieceCount", gamePieceCount);
     Logger.recordOutput("Superstructure/GoalCowlAngle", goalCowlAngle);
     Logger.recordOutput("Superstructure/GoalIntakeAngle", goalIntakeAngle);
     Logger.recordOutput("Superstructure/CurrentState", currentState.name());

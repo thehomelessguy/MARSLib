@@ -94,7 +94,7 @@ To fix formatting automatically, run this command in your VS Code terminal befor
 ```
 
 > [!TIP]
-> Run the `install-git-hooks.bat` file in the root folder! It forces your computer to automatically run `spotlessApply` locally every time you type `git commit`.
+> Run `./gradlew installGitHooks` in your terminal! It forces your computer to automatically run `spotlessApply` locally every time you type `git commit`.
 
 ---
 

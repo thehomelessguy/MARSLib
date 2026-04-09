@@ -61,10 +61,11 @@ public class MARSPhysicsWorldTest {
     // Spoof robot pose exactly on top of the game piece to enforce a collision trigger
     Pose2d spoofedRobotPose = new Pose2d(targetPiece.getPosition(), new Rotation2d());
 
-    boolean gotPiece = world.checkIntake(spoofedRobotPose, 0.5); // 0.5m radius collection zone
+    int gotPiece =
+        world.checkIntake(spoofedRobotPose, 0.5, 40); // 0.5m radius collection zone, max 40 pieces
 
     assertTrue(
-        gotPiece,
+        gotPiece > 0,
         "World physics failed to evaluate checkIntake properly; game piece should have been intaked.");
     assertTrue(
         targetPiece.isIntaked(),

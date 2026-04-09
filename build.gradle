@@ -90,7 +90,7 @@ dependencies {
     roborioRelease wpi.java.vendor.jniRelease(wpi.platforms.roborio)
 
     nativeDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.desktop)
-    nativeDebug wpi.java.vendor.jniDebug(wpi.platforms.desktop)
+    nativeDebug wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationDebug wpi.sim.enableDebug()
 
     nativeRelease wpi.java.deps.wpilibJniRelease(wpi.platforms.desktop)

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.simulation.RoboRioSim;
 import frc.robot.Constants.FieldConstants;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.dyn4j.dynamics.Body;
@@ -138,6 +137,15 @@ public class MARSPhysicsWorld {
     buildStaticHexagon(
         FieldConstants.RED_HUB_POS.getX(), FieldConstants.RED_HUB_POS.getY(), hubSize);
 
+    /*
+     * PLACEHOLDERS: 2026 REBUILT Field Elements (Bumps & Trenches)
+     * Once the Kickoff 2026 Game Manual is released, manually inject the X, Y, Width,
+     * and Height dimensions from the CAD drawings into the buildStaticRectangle calls below.
+     * Ensure Trench roofs also establish a Z-height collision check in MARSSuperstructure.
+     */
+    // buildStaticRectangle(10.0, 4.0, 0.5, FieldConstants.FIELD_WIDTH_METERS); // Bump Placeholder
+    // buildStaticRectangle(12.0, 1.0, 2.0, 1.0); // Trench Placeholder
+
     spawnInitialGamePieces();
   }
 
@@ -174,15 +182,15 @@ public class MARSPhysicsWorld {
       }
     }
 
-    // 3) Neutral Zone (120 Fuel staged massively down the midline)
+    // 3) Neutral Zone (120 Fuel compacted sequentially on the midline)
     double midX = FieldConstants.FIELD_LENGTH_METERS / 2.0;
-    // Distribute 120 pieces in a 5 columns x 24 rows block
+    // Distribute 120 pieces in a tightly compacted 10 cols x 12 rows stagger grid
     int neutralIndex = 0;
-    for (int col = 0; col < 5; col++) {
-      for (int row = 0; row < 24; row++) {
-        // Vary x and y slightly to avoid rigid interlocking
-        double offsetX = (col * spacing) - (2 * spacing) + ((row % 2 == 0) ? 0.05 : -0.05);
-        double offsetY = (row * spacing * 1.5);
+    for (int col = 0; col < 10; col++) {
+      for (int row = 0; row < 12; row++) {
+        // Hexagonal compact staggering
+        double offsetX = (col * spacing) - (5 * spacing) + ((row % 2 == 0) ? (spacing / 2.0) : 0.0);
+        double offsetY = (row * spacing * 0.866); // sin(60) for tight hexagon packing
         new GamePieceSim(
             "neutral_fuel_" + neutralIndex++,
             new edu.wpi.first.math.geometry.Translation2d(midX + offsetX, 1.0 + offsetY));
@@ -256,18 +264,20 @@ public class MARSPhysicsWorld {
    *
    * @param currentRobotPose The robot's current field-relative pose.
    * @param collectionRadiusMeters The effective intake collection radius (meters).
-   * @return {@code true} if at least one piece was collected this frame.
+   * @param maxToIntake The maximum number of pieces to ingest this frame.
+   * @return The number of pieces collected this frame.
    */
-  public boolean checkIntake(Pose2d currentRobotPose, double collectionRadiusMeters) {
-    Iterator<GamePieceSim> iterator = gamePieces.iterator();
-    boolean swallowed = false;
-    while (iterator.hasNext()) {
-      GamePieceSim piece = iterator.next();
+  public int checkIntake(Pose2d currentRobotPose, double collectionRadiusMeters, int maxToIntake) {
+    int swallowed = 0;
+    for (GamePieceSim piece : gamePieces) {
       if (!piece.isIntaked()) {
         double dist = piece.getPosition().getDistance(currentRobotPose.getTranslation());
         if (dist <= collectionRadiusMeters) {
           piece.setIntaked();
-          swallowed = true;
+          swallowed++;
+          if (swallowed >= maxToIntake) {
+            break;
+          }
         }
       }
     }
@@ -312,6 +322,12 @@ public class MARSPhysicsWorld {
   public void update(double dtSeconds) {
     // Step dyn4j world
     world.step(1, dtSeconds);
+
+    for (GamePieceSim piece : gamePieces) {
+      if (!piece.isIntaked()) {
+        piece.update(dtSeconds);
+      }
+    }
 
     // Compute battery voltage sag from total current draw
     Logger.recordOutput("PhysicsWorld/FrameCurrentDraw_A", frameCurrentDrawAmps);
@@ -364,16 +380,31 @@ public class MARSPhysicsWorld {
     Pose3d[] piecePoses =
         gamePieces.stream()
             .filter(piece -> !piece.isIntaked())
-            .map(
-                piece -> {
-                  Pose2d pose2d = piece.getPose();
-                  return new Pose3d(
-                      pose2d.getX(),
-                      pose2d.getY(),
-                      FieldConstants.GAME_PIECE_REST_HEIGHT_METERS,
-                      new Rotation3d(0, 0, pose2d.getRotation().getRadians()));
-                })
+            .map(GamePieceSim::getPose3d)
             .toArray(Pose3d[]::new);
     Logger.recordOutput("PhysicsWorld/GamePieces", piecePoses);
+  }
+
+  /**
+   * Finds an intaked game piece and launches it into the physics world.
+   *
+   * @param origin Starting X/Y position of the launch (end-effector).
+   * @param vx X-axis floor velocity out of the shooter (m/s).
+   * @param vy Y-axis floor velocity out of the shooter (m/s).
+   * @param vz Z-axis vertical velocity component (m/s).
+   * @param initialZHeight The shooter's Z height above the ground.
+   */
+  public void launchGamePiece(
+      edu.wpi.first.math.geometry.Translation2d origin,
+      double vx,
+      double vy,
+      double vz,
+      double initialZHeight) {
+    for (GamePieceSim piece : gamePieces) {
+      if (piece.isIntaked()) {
+        piece.launch(origin, vx, vy, vz, initialZHeight);
+        return; // Only launch 1 piece
+      }
+    }
   }
 }

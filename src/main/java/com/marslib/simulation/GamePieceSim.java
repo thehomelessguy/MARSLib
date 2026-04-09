@@ -23,6 +23,8 @@ public class GamePieceSim {
   private final Body gamePieceBody;
   private final String name;
   private boolean isIntaked = false;
+  private double zHeightMeters = FieldConstants.GAME_PIECE_REST_HEIGHT_METERS;
+  private double zVelocityMetersPerSecond = 0.0;
 
   /**
    * Creates a new game piece and registers it with the {@link MARSPhysicsWorld}.
@@ -114,5 +116,70 @@ public class GamePieceSim {
   public void setIntaked() {
     this.isIntaked = true;
     MARSPhysicsWorld.getInstance().getWorld().removeBody(gamePieceBody);
+  }
+
+  /**
+   * Called automatically by MARSPhysicsWorld every simulation frame to update gravity and Z height.
+   */
+  public void update(double dtSeconds) {
+    if (zHeightMeters > FieldConstants.GAME_PIECE_REST_HEIGHT_METERS
+        || zVelocityMetersPerSecond != 0.0) {
+      zVelocityMetersPerSecond -= 9.81 * dtSeconds;
+      zHeightMeters += zVelocityMetersPerSecond * dtSeconds;
+
+      // Floor collision
+      if (zHeightMeters <= FieldConstants.GAME_PIECE_REST_HEIGHT_METERS) {
+        zHeightMeters = FieldConstants.GAME_PIECE_REST_HEIGHT_METERS;
+
+        Translation2d pos = getPosition();
+        if (pos.getDistance(FieldConstants.BLUE_HUB_POS) < FieldConstants.HUB_SIZE_METERS
+            || pos.getDistance(FieldConstants.RED_HUB_POS) < FieldConstants.HUB_SIZE_METERS) {
+
+          // Roll out towards the center of the field
+          Translation2d center =
+              new Translation2d(
+                  FieldConstants.FIELD_LENGTH_METERS / 2.0,
+                  FieldConstants.FIELD_WIDTH_METERS / 2.0);
+          Translation2d diff = center.minus(pos);
+          double length = diff.getNorm();
+          if (length > 0.01) {
+            zVelocityMetersPerSecond = 0.0;
+            gamePieceBody.setLinearVelocity(diff.getX() / length * 2.5, diff.getY() / length * 2.5);
+          }
+        } else {
+          // Basic inelastic bounce
+          zVelocityMetersPerSecond = -zVelocityMetersPerSecond * 0.3;
+          // Settle when velocity drops low enough
+          if (Math.abs(zVelocityMetersPerSecond) < 0.5) {
+            zVelocityMetersPerSecond = 0.0;
+          }
+        }
+      }
+    }
+  }
+
+  /** Returns full pose in 3D (including simulated faked Z height). */
+  public edu.wpi.first.math.geometry.Pose3d getPose3d() {
+    Pose2d pose = getPose();
+    return new edu.wpi.first.math.geometry.Pose3d(
+        pose.getX(),
+        pose.getY(),
+        zHeightMeters,
+        new edu.wpi.first.math.geometry.Rotation3d(0, 0, pose.getRotation().getRadians()));
+  }
+
+  /**
+   * Respawns this (previously intaked) game piece into the physics world and applies initial
+   * velocities.
+   */
+  public void launch(Translation2d origin, double vx, double vy, double vz, double initialZHeight) {
+    this.isIntaked = false;
+    this.zHeightMeters = initialZHeight;
+    this.zVelocityMetersPerSecond = vz;
+
+    this.gamePieceBody.getTransform().setTranslation(origin.getX(), origin.getY());
+    this.gamePieceBody.setLinearVelocity(vx, vy);
+
+    MARSPhysicsWorld.getInstance().getWorld().addBody(this.gamePieceBody);
   }
 }
