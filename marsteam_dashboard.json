@@ -143,6 +143,35 @@
               "controllerUUID": "axixr9edg436casxn63hs3cnhn2c7f6n",
               "renderer": null,
               "controlsHeight": 0
+            },
+            {
+              "type": 4,
+              "title": "Gamepad Bindings",
+              "controller": [
+                "GamepadBindings/DrivePilot/A",
+                "GamepadBindings/DrivePilot/B",
+                "GamepadBindings/DrivePilot/X",
+                "GamepadBindings/DrivePilot/Y",
+                "GamepadBindings/DrivePilot/LeftTrigger",
+                "GamepadBindings/DrivePilot/RightTrigger",
+                "GamepadBindings/DrivePilot/LeftBumper",
+                "GamepadBindings/DrivePilot/RightBumper",
+                "GamepadBindings/DrivePilot/DPad_Up",
+                "GamepadBindings/DrivePilot/DPad_Down",
+                "GamepadBindings/DrivePilot/DPad_Left",
+                "GamepadBindings/DrivePilot/DPad_Right",
+                "GamepadBindings/DrivePilot/Start",
+                "GamepadBindings/DrivePilot/Back_And_Start",
+                "GamepadBindings/CoPilot/LeftTrigger",
+                "GamepadBindings/CoPilot/RightTrigger",
+                "GamepadBindings/CoPilot/RightBumper",
+                "GamepadBindings/CoPilot/LeftBumper",
+                "GamepadBindings/CoPilot/X",
+                "GamepadBindings/CoPilot/DPad_Down"
+              ],
+              "controllerUUID": "80rqt7midks2kl7z360ey9hpsulhfj6f",
+              "renderer": null,
+              "controlsHeight": 0
             }
           ]
         }

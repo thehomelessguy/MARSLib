@@ -4,14 +4,13 @@ import com.marslib.faults.MARSFaultManager;
 import com.marslib.power.MARSPowerManager;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * Subsystem handling driver and operator input, including intelligent rumble feedback for faults
  * and voltage sags.
  */
 public class OperatorInterface extends SubsystemBase {
-  private final CommandXboxController controller;
+  private final TelemetryGamepad controller;
   private final MARSPowerManager powerManager;
 
   // Pulse parameters
@@ -23,11 +22,11 @@ public class OperatorInterface extends SubsystemBase {
       frc.robot.Constants.OperatorConstants.PULSE_INTERVAL_LOOPS;
 
   public OperatorInterface(int port, MARSPowerManager powerManager) {
-    this.controller = new CommandXboxController(port);
+    this.controller = new TelemetryGamepad(port, "DrivePilot");
     this.powerManager = powerManager;
   }
 
-  public CommandXboxController getController() {
+  public TelemetryGamepad getController() {
     return controller;
   }
 

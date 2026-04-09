@@ -7,6 +7,7 @@ import com.marslib.auto.ShotSetupFactory;
 import com.marslib.hmi.LEDIOAddressable;
 import com.marslib.hmi.LEDManager;
 import com.marslib.hmi.OperatorInterface;
+import com.marslib.hmi.TelemetryGamepad;
 import com.marslib.mechanisms.FlywheelIO;
 import com.marslib.mechanisms.FlywheelIOSim;
 import com.marslib.mechanisms.FlywheelIOTalonFX;
@@ -44,7 +45,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -335,7 +335,7 @@ public class RobotContainer {
   }
 
   private void configureDefaultCommands() {
-    CommandXboxController controller = operatorInterface.getController();
+    TelemetryGamepad controller = operatorInterface.getController();
 
     // Drive with left thumbstick (translation) and right thumbstick X (rotation)
     swerveDrive.setDefaultCommand(
@@ -348,22 +348,26 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    CommandXboxController controller = operatorInterface.getController();
-    CommandXboxController coPilot = new CommandXboxController(1);
+    TelemetryGamepad controller = operatorInterface.getController();
+    TelemetryGamepad coPilot = new TelemetryGamepad(1, "CoPilot");
 
     // --- DRIVE PILOT BINDINGS ---
 
     // Left Trigger -> Run Intake
     controller
-        .leftTrigger()
-        .onTrue(
+        .bindOnTrue(
+            controller.leftTrigger(),
+            "LeftTrigger",
+            "Run Intake",
             superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_RUNNING))
         .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
     // Right Trigger -> Aim & Shoot On The Move
     controller
-        .rightTrigger()
-        .whileTrue(
+        .bindWhileTrue(
+            controller.rightTrigger(),
+            "RightTrigger",
+            "Aim & Shoot On Move",
             new ShootOnTheMoveCommand(
                 swerveDrive,
                 () -> {
@@ -397,37 +401,51 @@ public class RobotContainer {
 
     // B Button -> Standard Stationary Shoot
     controller
-        .b()
-        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
+        .bindOnTrue(
+            controller.b(),
+            "B",
+            "Stationary Shoot",
+            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
         .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
     // Left Bumper -> Unjam
     controller
-        .leftBumper()
-        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.UNJAM))
+        .bindOnTrue(
+            controller.leftBumper(),
+            "LeftBumper",
+            "Unjam",
+            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.UNJAM))
         .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
     // Right Bumper -> Aim and Shuttle
     controller
-        .rightBumper()
-        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
+        .bindOnTrue(
+            controller.rightBumper(),
+            "RightBumper",
+            "Aim & Shuttle",
+            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
         .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
     // DPad Right -> Deploy Intake Without Spinning
-    controller
-        .povRight()
-        .onTrue(
-            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_DOWN));
+    controller.bindOnTrue(
+        controller.povRight(),
+        "DPad_Right",
+        "Deploy Intake Only",
+        superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_DOWN));
 
     // DPad Left -> Retract Intake (Stow)
-    controller
-        .povLeft()
-        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
+    controller.bindOnTrue(
+        controller.povLeft(),
+        "DPad_Left",
+        "Retract Intake",
+        superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
     // A Button -> Slamtake (Deploy + Run)
     controller
-        .a()
-        .onTrue(
+        .bindOnTrue(
+            controller.a(),
+            "A",
+            "Slamtake",
             superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_RUNNING))
         .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
@@ -435,93 +453,102 @@ public class RobotContainer {
     // X Button -> Final Climb Lineup (Stub)
 
     // DPad Up/Down -> Manual Climber Override
-    controller
-        .povUp()
-        .whileTrue(
-            Commands.startEnd(
-                () -> fastClimber.setVoltage(12.0),
-                () -> fastClimber.setVoltage(0.0),
-                fastClimber));
-    controller
-        .povDown()
-        .whileTrue(
-            Commands.startEnd(
-                () -> fastClimber.setVoltage(-12.0),
-                () -> fastClimber.setVoltage(0.0),
-                fastClimber));
+    controller.bindWhileTrue(
+        controller.povUp(),
+        "DPad_Up",
+        "Manual Climber Up",
+        Commands.startEnd(
+            () -> fastClimber.setVoltage(12.0), () -> fastClimber.setVoltage(0.0), fastClimber));
+    controller.bindWhileTrue(
+        controller.povDown(),
+        "DPad_Down",
+        "Manual Climber Down",
+        Commands.startEnd(
+            () -> fastClimber.setVoltage(-12.0), () -> fastClimber.setVoltage(0.0), fastClimber));
 
     // Ghost Mode Triggers
-    controller
-        .back()
-        .and(controller.start())
-        .onTrue(
-            ghostManager.registerRecordCommand(
-                () -> controller.getLeftY(),
-                () -> controller.getLeftX(),
-                () -> controller.getRightX(),
-                controller.a(),
-                controller.b(),
-                controller.x(),
-                controller.y(),
-                controller.leftBumper(),
-                controller.rightBumper(),
-                controller.povUp(),
-                controller.povDown(),
-                controller.povLeft(),
-                controller.povRight()));
+    controller.bindOnTrue(
+        controller.back().and(controller.start()),
+        "Back_And_Start",
+        "Ghost Record",
+        ghostManager.registerRecordCommand(
+            () -> controller.getLeftY(),
+            () -> controller.getLeftX(),
+            () -> controller.getRightX(),
+            controller.a(),
+            controller.b(),
+            controller.x(),
+            controller.y(),
+            controller.leftBumper(),
+            controller.rightBumper(),
+            controller.povUp(),
+            controller.povDown(),
+            controller.povLeft(),
+            controller.povRight()));
 
     // Start -> Diagnostic Hardware Check
-    controller.start().onTrue(new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl));
+    controller.bindOnTrue(
+        controller.start(),
+        "Start",
+        "Diagnostic Check",
+        new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl));
 
     // --- COPILOT BINDINGS ---
 
     // CoPilot Left Trigger -> Manual Feed
-    coPilot
-        .leftTrigger()
-        .whileTrue(
-            Commands.startEnd(
-                () -> {
-                  feeder.setVoltage(6.0);
-                  floorIntake.setVoltage(6.0);
-                },
-                () -> {
-                  feeder.setVoltage(0.0);
-                  floorIntake.setVoltage(0.0);
-                },
-                feeder,
-                floorIntake));
+    coPilot.bindWhileTrue(
+        coPilot.leftTrigger(),
+        "LeftTrigger",
+        "Manual Feed",
+        Commands.startEnd(
+            () -> {
+              feeder.setVoltage(6.0);
+              floorIntake.setVoltage(6.0);
+            },
+            () -> {
+              feeder.setVoltage(0.0);
+              floorIntake.setVoltage(0.0);
+            },
+            feeder,
+            floorIntake));
 
     // CoPilot Right Trigger -> Fixed Target Score (Hub)
     coPilot
-        .rightTrigger()
-        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
+        .bindOnTrue(
+            coPilot.rightTrigger(),
+            "RightTrigger",
+            "Fixed Score (Hub)",
+            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
         .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
     // CoPilot Right Bumper -> Fixed Target Score (Ladder)
     coPilot
-        .rightBumper()
-        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
+        .bindOnTrue(
+            coPilot.rightBumper(),
+            "RightBumper",
+            "Fixed Score (Ladder)",
+            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
         .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
     // CoPilot Left Bumper -> Cowl Home
-    coPilot.leftBumper().onTrue(cowl.home());
+    coPilot.bindOnTrue(coPilot.leftBumper(), "LeftBumper", "Cowl Home", cowl.home());
 
     // CoPilot DPad Down -> Fast Climber Reverse Reverse
-    coPilot
-        .povDown()
-        .whileTrue(
-            Commands.startEnd(
-                () -> fastClimber.setVoltage(-12.0),
-                () -> fastClimber.setVoltage(0.0),
-                fastClimber));
+    coPilot.bindWhileTrue(
+        coPilot.povDown(),
+        "DPad_Down",
+        "Climber Reverse",
+        Commands.startEnd(
+            () -> fastClimber.setVoltage(-12.0), () -> fastClimber.setVoltage(0.0), fastClimber));
 
     // CoPilot X -> Swerve Stop
-    coPilot
-        .x()
-        .onTrue(
-            Commands.runOnce(
-                () -> swerveDrive.runVelocity(new edu.wpi.first.math.kinematics.ChassisSpeeds()),
-                swerveDrive));
+    coPilot.bindOnTrue(
+        coPilot.x(),
+        "X",
+        "Drivetrain Stop",
+        Commands.runOnce(
+            () -> swerveDrive.runVelocity(new edu.wpi.first.math.kinematics.ChassisSpeeds()),
+            swerveDrive));
   }
 
   public Command getAutonomousCommand() {
