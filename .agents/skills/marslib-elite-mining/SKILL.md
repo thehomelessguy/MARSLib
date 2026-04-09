@@ -1,6 +1,6 @@
 ---
 name: marslib-elite-mining
-description: Helps ingest, analyze, and port advanced algorithmic control code from World Champion and Elite FRC teams directly into the MARSLib architecture. Use when extracting custom trajectory math, state-machine layouts, vision fusion systems, or tuning parameters from specific high-performing repositories like 1690, 254, 6328, 2910, etc.
+description: Helps ingest, analyze, and port advanced code from World Champion and Elite FRC teams directly into the MARSLib architecture. Use when extracting custom trajectory math, state-machine layouts, vision fusion systems, user interfaces, data logging, control frameworks, and any other sub-systems you'd program for an FRC robot. Validates and translates from specific high-performing repositories like 1690, 254, 6328, 2910, etc.
 ---
 
 # MARSLib Elite Repository Mining Agent
@@ -35,6 +35,9 @@ Top-tier teams have notoriously large repositories. Avoid getting lost by anchor
 *   Search for `SwerveModuleState`, `ChassisSpeeds`, or `Phoenix6` logic when auditing drivetrain movement.
 *   Search for `PoseEstimator`, `Vision`, `LimelightHelpers`, or `PhotonCamera` when identifying localization math.
 *   Search for `StateSpace`, `Matrix`, `LQR`, or `EKF` when looking for pure control theory loop structures.
+*   Search for `Dashboard`, `Shuffleboard`, `NetworkTable`, `AdvantageScope`, or `Elastic` when investigating User Interfaces and telemetry layouts.
+*   Search for `Logger`, `AdvantageKit`, `AutoLog`, or `DataLogManager` when parsing data logging and telemetry backends.
+*   Search for `Controller`, `HID`, `Joystick`, `Haptic`, or `Rumble` when investigating operator input and control systems.
 *   **Cross-Team Issue Analysis:** If asked to see how all teams solved a *specific issue* for a given year (e.g. "how did teams score in the Trap in 2024?"), you must clone the relevant yearly repositories for *multiple* teams from the manifest. Systematically grep across all of them for game-specific keywords (e.g., `Trap`, `Elevator`, `Score`) and synthesize a comparative analysis of their differing approaches.
 *   *Mandate Cross-Referencing:* If you identify a game-changing Vision configuration in 1690's repository, check it against 6328's approach before considering it generalized best-practice.
 *   *WPILib Validation:* If you discover a heavily modified WPILib wrapper (like `CodeOrangePoseEstimator`), you must trace the source back upstream (`github.com/wpilibsuite/allwpilib`) to verify exactly what WPILib limitations caused the team to fork the math.
