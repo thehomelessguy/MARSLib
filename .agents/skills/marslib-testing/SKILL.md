@@ -97,3 +97,17 @@ assertEquals(1, superstructure.getStateMachine().getTotalTransitionCount());
 - `RobotLifecycleTest` — Full auto→teleop→score→stow lifecycle
 - `MARSStateMachineTest` — FSM transition validation and rejection
 - `MARSAlignmentCommandTest` — PID convergence under physics simulation
+
+---
+
+## 6. AI Execution Workflow: Selective Testing (CRITICAL)
+
+When you (the AI) are modifying code and want to compile/validate your changes:
+**Never run the full test suite (`./gradlew build` or `./gradlew test`) blindly unless doing a final distribution audit.**
+
+To save time, **always use selective testing** to run tests only for the specific classes you modified:
+```bash
+# E.g., if you modified MARSPhysicsWorld.java, run its respective test class:
+./gradlew test --tests *MARSPhysicsWorldTest
+```
+If you change an interface or a deep architecture file, run tests on the handful of core subclasses affected. This keeps iteration cycles fast!
