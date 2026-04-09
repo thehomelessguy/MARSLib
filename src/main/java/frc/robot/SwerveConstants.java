@@ -129,5 +129,19 @@ public final class SwerveConstants {
   /** Proportional gain for the module turn voltage controller. */
   public static final double TURN_KP = 5.0;
 
+  // ---- Autonomous PID ----
+
+  /** Proportional gain for autonomous translation path following. */
+  public static final double AUTO_TRANSLATION_KP = 5.0;
+
+  /** Derivative gain for autonomous translation path following. */
+  public static final double AUTO_TRANSLATION_KD = 0.0;
+
+  /** Proportional gain for autonomous rotation path following. */
+  public static final double AUTO_ROTATION_KP = 5.0;
+
+  /** Derivative gain for autonomous rotation path following. */
+  public static final double AUTO_ROTATION_KD = 0.0;
+
   private SwerveConstants() {}
 }

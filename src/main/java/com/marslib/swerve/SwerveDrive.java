@@ -5,13 +5,10 @@ import static frc.robot.constants.ModeConstants.*;
 
 import com.marslib.power.MARSPowerManager;
 import com.marslib.simulation.SwerveChassisPhysics;
-import com.marslib.util.LoggedTunableNumber;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
-import com.pathplanner.lib.controllers.PathFollowingController;
-import com.pathplanner.lib.trajectory.PathPlannerTrajectoryState;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -60,7 +57,6 @@ public class SwerveDrive extends SubsystemBase {
   private final SwerveDrivePoseEstimator poseEstimator;
   private final MARSPowerManager powerManager;
   private final SysIdRoutine sysIdRoutine;
-  private volatile PPHolonomicDriveController holonomicController;
 
   private final SwerveChassisPhysics simPhysics;
   private final com.marslib.simulation.LidarIOSim lidarSim;
@@ -126,23 +122,7 @@ public class SwerveDrive extends SubsystemBase {
                 null, // Log is handled implicitly via AdvantageKit's @AutoLog IO capturing the
                 // voltages & velocities natively
                 this));
-
-    // Dynamic PID configuration for Trajectory Following
-    LoggedTunableNumber transKP = new LoggedTunableNumber("Auto/Translation_kP", 5.0);
-    LoggedTunableNumber transKD = new LoggedTunableNumber("Auto/Translation_kD", 0.0);
-    LoggedTunableNumber rotKP = new LoggedTunableNumber("Auto/Rotation_kP", 5.0);
-    LoggedTunableNumber rotKD = new LoggedTunableNumber("Auto/Rotation_kD", 0.0);
-    this.cachedTransKP = transKP;
-    this.cachedTransKD = transKD;
-    this.cachedRotKP = rotKP;
-    this.cachedRotKD = rotKD;
   }
-
-  // Cached tunable numbers for PathPlanner PID (populated in constructor)
-  private LoggedTunableNumber cachedTransKP;
-  private LoggedTunableNumber cachedTransKD;
-  private LoggedTunableNumber cachedRotKP;
-  private LoggedTunableNumber cachedRotKD;
 
   // Reusable GC-free arrays for periodic loop to prevent massive RoboRIO heap churn
   private final double[] simVolts = new double[4];
@@ -180,33 +160,16 @@ public class SwerveDrive extends SubsystemBase {
               moduleConfig,
               SwerveConstants.MODULE_LOCATIONS);
 
-      this.holonomicController =
-          new PPHolonomicDriveController(
-              new PIDConstants(cachedTransKP.get(), 0.0, cachedTransKD.get()),
-              new PIDConstants(cachedRotKP.get(), 0.0, cachedRotKD.get()));
-
       AutoBuilder.configure(
           this::getPose,
           this::resetPose,
           this::getChassisSpeeds,
           (speeds, feedforwards) -> runVelocity(speeds),
-          new PathFollowingController() {
-            @Override
-            public ChassisSpeeds calculateRobotRelativeSpeeds(
-                Pose2d currentPose, PathPlannerTrajectoryState targetState) {
-              return holonomicController.calculateRobotRelativeSpeeds(currentPose, targetState);
-            }
-
-            @Override
-            public void reset(Pose2d targetPose, ChassisSpeeds currentSpeeds) {
-              holonomicController.reset(targetPose, currentSpeeds);
-            }
-
-            @Override
-            public boolean isHolonomic() {
-              return true;
-            }
-          },
+          new PPHolonomicDriveController(
+              new PIDConstants(
+                  SwerveConstants.AUTO_TRANSLATION_KP, 0.0, SwerveConstants.AUTO_TRANSLATION_KD),
+              new PIDConstants(
+                  SwerveConstants.AUTO_ROTATION_KP, 0.0, SwerveConstants.AUTO_ROTATION_KD)),
           config,
           () -> false, // Mirroring
           this // Subsystem requirement
@@ -227,10 +190,6 @@ public class SwerveDrive extends SubsystemBase {
     for (SwerveModule module : modules) {
       module.periodic();
     }
-
-    // Update PathPlanner PID constants if they've changed in AdvantageScope
-    // Note: PathPlanner 2025 PPHolonomicDriveController is immutable.
-    // Live tuning would require re-configuring AutoBuilder or using a custom controller.
 
     // Active Dynamic Load Shedding — only write to CAN when the limit actually changes
     double voltage = powerManager.getVoltage();
