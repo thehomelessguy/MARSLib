@@ -26,6 +26,8 @@ When tasked with "seeing how X team solved Y problem," use the following catalog
 ## 2. Ingestion Rules (Safety First)
 
 Do **NOT** clone external elite code directly into the workspace root.
+*   **Multi-Team Sourcing:** You must ALWAYS attempt to ingest and analyze code from at least TWO DIFFERENT TEAMS (whenever applicable) for any given architectural or implementation question, rather than relying on a single source of truth.
+*   **Exhaustive Search & Follow-Up:** If you cannot find a satisfactory answer or implementation within the initially cloned repositories, you MUST execute a follow-up action: autonomously expand your search to additional teams on the manifest, or prompt the user with a plan to use `search_web` to discover other relevant elite repositories. Do not stop at the first failure.
 *   **Targeting a Specific Year:** FRC teams typically create a new repository for each season (e.g., `Robot-2024`, `ChargedUp`, `Crescendo`). If the user asks to investigate a given year's code, you must first search the team's GitHub organization (or use `search_web`) to find the exact repository URL for that specific year before cloning.
 *   **Isolated Cloning:** Always execute an automated `git clone --depth 1 [EXACT_YEAR_REPO_URL] <appDataDir>\brain\<conversation-id>/scratch/[TEAM_NAME]_[YEAR]` to create an isolated sandbox to read from.
 
