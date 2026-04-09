@@ -1,7 +1,11 @@
 package com.marslib.mechanisms;
 
+import static edu.wpi.first.units.Units.Volts;
+
+import com.marslib.power.MARSPowerManager;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -18,19 +22,57 @@ public class MARSIntake extends SubsystemBase {
   private final FlywheelIO io;
   private final FlywheelIOInputsAutoLogged inputs = new FlywheelIOInputsAutoLogged();
 
+  // Bounds for active load shedding
+  private static final double NOMINAL_VOLTAGE = 12.0;
+  private static final double CRITICAL_VOLTAGE = 9.0;
+  private static final double MAX_CURRENT_AMPS = 40.0;
+  private static final double MIN_CURRENT_AMPS = 20.0;
+
+  private final MARSPowerManager powerManager;
+  private final SysIdRoutine sysIdRoutine;
+
   /**
    * Constructs the intake subsystem.
    *
    * @param io The hardware abstraction layer for the intake roller motor.
+   * @param powerManager The active power manager for load-shedding voltage queries.
    */
-  public MARSIntake(FlywheelIO io) {
+  public MARSIntake(FlywheelIO io, MARSPowerManager powerManager) {
     this.io = io;
+    this.powerManager = powerManager;
+
+    this.sysIdRoutine =
+        new SysIdRoutine(
+            new SysIdRoutine.Config(
+                null,
+                null,
+                null,
+                (state) -> Logger.recordOutput("SysIdTestState", state.toString())),
+            new SysIdRoutine.Mechanism(
+                (edu.wpi.first.units.measure.Voltage volts) -> {
+                  io.setVoltage(volts.in(Volts));
+                },
+                null,
+                this));
   }
 
   @Override
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("Intake", inputs);
+
+    // Active Load Shedding via MARSPowerManager
+    double sysVoltage = powerManager.getVoltage();
+    double currentLimit = MAX_CURRENT_AMPS;
+
+    if (sysVoltage < NOMINAL_VOLTAGE) {
+      double slope = (MAX_CURRENT_AMPS - MIN_CURRENT_AMPS) / (NOMINAL_VOLTAGE - CRITICAL_VOLTAGE);
+      currentLimit = MIN_CURRENT_AMPS + slope * (sysVoltage - CRITICAL_VOLTAGE);
+      currentLimit = Math.max(MIN_CURRENT_AMPS, Math.min(MAX_CURRENT_AMPS, currentLimit));
+    }
+
+    io.setCurrentLimit(currentLimit);
+    Logger.recordOutput("Intake/ActiveCurrentLimit", currentLimit);
   }
 
   /**
@@ -63,5 +105,25 @@ public class MARSIntake extends SubsystemBase {
   /** Stops the intake motor immediately. */
   public void stop() {
     io.setVoltage(0.0);
+  }
+
+  /**
+   * Generates a SysId Quasistatic characterization command.
+   *
+   * @param direction The direction of the quasistatic routine (Forward/Reverse).
+   * @return The SysId Command to execute.
+   */
+  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+    return sysIdRoutine.quasistatic(direction);
+  }
+
+  /**
+   * Generates a SysId Dynamic characterization command.
+   *
+   * @param direction The direction of the dynamic routine (Forward/Reverse).
+   * @return The SysId Command to execute.
+   */
+  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+    return sysIdRoutine.dynamic(direction);
   }
 }

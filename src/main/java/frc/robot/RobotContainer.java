@@ -131,17 +131,20 @@ public class RobotContainer {
           floorIntake =
               new MARSShooter(
                   new FlywheelIOSim(
-                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(1), 1.0, 0.025));
+                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(1), 1.0, 0.025),
+                  powerManager);
           shooter =
               new MARSShooter(
                   new FlywheelIOSim(
-                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(4), 1.0, 0.05));
+                      edu.wpi.first.math.system.plant.DCMotor.getFalcon500(4), 1.0, 0.05),
+                  powerManager);
           feeder =
               new MARSShooter(
                   new FlywheelIOSim(
                       edu.wpi.first.math.system.plant.DCMotor.getFalcon500(1),
                       Constants.ShooterConstants.FEEDER_GEAR_RATIO,
-                      0.025));
+                      0.025),
+                  powerManager);
 
           ledManager =
               new LEDManager(
@@ -236,7 +239,8 @@ public class RobotContainer {
                   new FlywheelIOTalonFX(
                       Constants.IntakeConstants.FLOOR_MOTOR_ID,
                       Constants.IntakeConstants.CANBUS,
-                      false));
+                      false),
+                  powerManager);
 
           shooter =
               new MARSShooter(
@@ -249,13 +253,15 @@ public class RobotContainer {
                       },
                       new boolean[] {false, false, false},
                       Constants.ShooterConstants.CANBUS,
-                      false));
+                      false),
+                  powerManager);
           feeder =
               new MARSShooter(
                   new FlywheelIOTalonFX(
                       Constants.ShooterConstants.FEEDER_MOTOR_ID,
                       Constants.ShooterConstants.CANBUS,
-                      false));
+                      false),
+                  powerManager);
 
           ledManager =
               new LEDManager(
@@ -295,9 +301,9 @@ public class RobotContainer {
           fastClimber = new MARSElevator(new LinearMechanismIO() {}, powerManager);
           cowl = new MARSArm(new RotaryMechanismIO() {}, powerManager);
           intakePivot = new MARSArm(new RotaryMechanismIO() {}, powerManager);
-          floorIntake = new MARSShooter(new FlywheelIO() {});
-          shooter = new MARSShooter(new FlywheelIO() {});
-          feeder = new MARSShooter(new FlywheelIO() {});
+          floorIntake = new MARSShooter(new FlywheelIO() {}, powerManager);
+          shooter = new MARSShooter(new FlywheelIO() {}, powerManager);
+          feeder = new MARSShooter(new FlywheelIO() {}, powerManager);
           ledManager =
               new LEDManager(new LEDIOAddressable(0, Constants.LEDConstants.LENGTH), powerManager);
 

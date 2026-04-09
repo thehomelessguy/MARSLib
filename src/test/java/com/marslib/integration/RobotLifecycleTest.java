@@ -61,15 +61,18 @@ public class RobotLifecycleTest {
     floorIntake =
         new MARSShooter(
             new FlywheelIOSim(
-                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05),
+            powerManager);
     shooter =
         new MARSShooter(
             new FlywheelIOSim(
-                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05),
+            powerManager);
     feeder =
         new MARSShooter(
             new FlywheelIOSim(
-                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05),
+            powerManager);
 
     DoubleSupplier distSupplier = () -> 5.0; // Fixed dist
     ShotSetup shotSetup =

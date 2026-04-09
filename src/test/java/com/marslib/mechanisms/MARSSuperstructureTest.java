@@ -51,15 +51,15 @@ public class MARSSuperstructureTest {
 
     FlywheelIOSim physicalShooterSim =
         new FlywheelIOSim(edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.002);
-    shooter = new MARSShooter(physicalShooterSim);
+    shooter = new MARSShooter(physicalShooterSim, powerManager);
 
     FlywheelIOSim physicalFloorSim =
         new FlywheelIOSim(edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.002);
-    floorIntake = new MARSShooter(physicalFloorSim);
+    floorIntake = new MARSShooter(physicalFloorSim, powerManager);
 
     FlywheelIOSim physicalFeederSim =
         new FlywheelIOSim(edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.002);
-    feeder = new MARSShooter(physicalFeederSim);
+    feeder = new MARSShooter(physicalFeederSim, powerManager);
 
     Supplier<Pose2d> mockSupplier = () -> new Pose2d();
     DoubleSupplier distSupplier = () -> 2.0; // Fixed dist

@@ -94,15 +94,18 @@ public class MARSDiagnosticCheckTest {
     floorIntake =
         new MARSShooter(
             new FlywheelIOSim(
-                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05),
+            power);
     shooter =
         new MARSShooter(
             new FlywheelIOSim(
-                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05),
+            power);
     feeder =
         new MARSShooter(
             new FlywheelIOSim(
-                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05));
+                edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05),
+            power);
 
     // Build LED manager with no-op IO
     LEDIO noopIO =

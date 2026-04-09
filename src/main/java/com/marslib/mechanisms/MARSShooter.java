@@ -2,6 +2,7 @@ package com.marslib.mechanisms;
 
 import static edu.wpi.first.units.Units.Volts;
 
+import com.marslib.power.MARSPowerManager;
 import com.marslib.util.LoggedTunableNumber;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,13 +32,23 @@ public class MARSShooter extends SubsystemBase {
   private SimpleMotorFeedforward feedforward;
   private final SysIdRoutine sysIdRoutine;
 
+  // Bounds for active load shedding
+  private static final double NOMINAL_VOLTAGE = 12.0;
+  private static final double CRITICAL_VOLTAGE = 9.0;
+  private static final double MAX_CURRENT_AMPS = 60.0;
+  private static final double MIN_CURRENT_AMPS = 30.0;
+
+  private final MARSPowerManager powerManager;
+
   /**
    * Constructs the shooter subsystem.
    *
    * @param io The hardware abstraction layer for the shooter flywheel motor.
+   * @param powerManager The active power manager for load-shedding voltage queries.
    */
-  public MARSShooter(FlywheelIO io) {
+  public MARSShooter(FlywheelIO io, MARSPowerManager powerManager) {
     this.io = io;
+    this.powerManager = powerManager;
     feedforward = new SimpleMotorFeedforward(kS.get(), kV.get(), kA.get());
 
     this.sysIdRoutine =
@@ -68,6 +79,19 @@ public class MARSShooter extends SubsystemBase {
     if (sChanged || vChanged || aChanged) {
       feedforward = new SimpleMotorFeedforward(kS.get(), kV.get(), kA.get());
     }
+
+    // Active Load Shedding via MARSPowerManager
+    double sysVoltage = powerManager.getVoltage();
+    double currentLimit = MAX_CURRENT_AMPS;
+
+    if (sysVoltage < NOMINAL_VOLTAGE) {
+      double slope = (MAX_CURRENT_AMPS - MIN_CURRENT_AMPS) / (NOMINAL_VOLTAGE - CRITICAL_VOLTAGE);
+      currentLimit = MIN_CURRENT_AMPS + slope * (sysVoltage - CRITICAL_VOLTAGE);
+      currentLimit = Math.max(MIN_CURRENT_AMPS, Math.min(MAX_CURRENT_AMPS, currentLimit));
+    }
+
+    io.setCurrentLimit(currentLimit);
+    Logger.recordOutput("Shooter/ActiveCurrentLimit", currentLimit);
   }
 
   /**
