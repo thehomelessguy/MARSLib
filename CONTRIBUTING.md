@@ -104,23 +104,27 @@ To fix formatting automatically, run this command in your VS Code terminal befor
 2. Do not hesitate to use the desktop simulator (`.\gradlew simulateJava`) to verify your logic offline.
 3. Once satisfied, execute `.\gradlew build` to ensure no compile errors exist.
 4. Stage, commit, and push your branch.
-5. Create a Pull Request (PR) against the `master` branch.
+5. Create a Pull Request (PR) against the `main` branch.
 6. The CI pipeline will automatically run all JUnit physics-integration tests. If the tests pass and the code is formatted properly, you can request a review from a Robotics Lead.
 
 ---
 
 ## 5. Writing Tests (Mandatory Hygiene)
 
-All subsystem tests use **physics-backed `IOSim` implementations** and the `dyn4j` engine—never Mockito for mechanism behavior. Every test's `@BeforeEach` **must** include this cleanup block to prevent static state bleed:
+All subsystem tests use **physics-backed `IOSim` implementations** and the `dyn4j` engine—never Mockito for mechanism behavior. Every test's `@BeforeEach` **must** call `MARSTestHarness.reset()` to prevent static state bleed:
 
 ```java
+import com.marslib.testing.MARSTestHarness;
+
 @BeforeEach
 public void setUp() {
-    HAL.initialize(500, 0);
-    CommandScheduler.getInstance().cancelAll();
-    MARSPhysicsWorld.resetInstance();
-    Alert.resetAll();
-    MARSFaultManager.clear();
+    MARSTestHarness.reset();
+    // ... construct your subsystems here
+}
+
+@AfterEach
+public void tearDown() {
+    MARSTestHarness.cleanup();
 }
 ```
 

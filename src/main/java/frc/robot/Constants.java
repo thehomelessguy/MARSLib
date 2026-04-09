@@ -96,12 +96,6 @@ public final class Constants {
   }
 
   public static final class SuperstructureConstants {
-    public static final double SAFE_ELEVATOR_HEIGHT_METERS_MIN = 0.6;
-    public static final double SAFE_ELEVATOR_HEIGHT_METERS_MAX_STOW = 0.5;
-    public static final double SAFE_ARM_ANGLE_RAD_MAX_STOW = 0.2;
-    public static final double SAFE_ARM_ANGLE_RAD_MIN_EXTEND = 0.3;
-
-    public static final double INTAKE_ELEVATOR_HEIGHT = 0.2;
     public static final double INTAKE_ARM_ANGLE = Math.PI / 4;
 
     public static final double SCORE_HIGH_ELEVATOR_HEIGHT = 1.5;
