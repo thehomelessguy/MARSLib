@@ -19,7 +19,7 @@ When tasked with "seeing how X team solved Y problem," use the following catalog
 *   **Team 3005 (RoboChargers):** `https://github.com/frc3005` - *AdvantageKit Native*.
 *   **Team 125 (NUTRONs):** `https://github.com/nutrons` - *AdvantageKit Native*.
 *   **Team 4099 (The Falcons):** `https://github.com/Team4099` - *AdvantageKit Native*.
-*   **Team 364 (BaseFalconSwerve):** `https://github.com/Team364` - *Phoenix Swerve Architectures*. 
+*   **Team 364 (BaseFalconSwerve):** `https://github.com/Team364` - *Phoenix Swerve Architectures*.
 *   **Team 1323 (MadTown Robotics):** `https://github.com/Team1323` - *Cycle Optimization*.
 *   **Team 3476 (Code Orange):** `https://github.com/Team3476` - *Advanced WPILib Extensions*.
 
