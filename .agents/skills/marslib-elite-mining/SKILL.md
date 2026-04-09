@@ -26,7 +26,8 @@ When tasked with "seeing how X team solved Y problem," use the following catalog
 ## 2. Ingestion Rules (Safety First)
 
 Do **NOT** clone external elite code directly into the workspace root.
-*   Always execute an automated `git clone --depth 1 [URL] <appDataDir>\brain\<conversation-id>/scratch/[TEAM_NAME]` to create an isolated sandbox to read from.
+*   **Targeting a Specific Year:** FRC teams typically create a new repository for each season (e.g., `Robot-2024`, `ChargedUp`, `Crescendo`). If the user asks to investigate a given year's code, you must first search the team's GitHub organization (or use `search_web`) to find the exact repository URL for that specific year before cloning.
+*   **Isolated Cloning:** Always execute an automated `git clone --depth 1 [EXACT_YEAR_REPO_URL] <appDataDir>\brain\<conversation-id>/scratch/[TEAM_NAME]_[YEAR]` to create an isolated sandbox to read from.
 
 ## 3. Pattern Matching Heuristics (Astute Grepping)
 
@@ -34,6 +35,7 @@ Top-tier teams have notoriously large repositories. Avoid getting lost by anchor
 *   Search for `SwerveModuleState`, `ChassisSpeeds`, or `Phoenix6` logic when auditing drivetrain movement.
 *   Search for `PoseEstimator`, `Vision`, `LimelightHelpers`, or `PhotonCamera` when identifying localization math.
 *   Search for `StateSpace`, `Matrix`, `LQR`, or `EKF` when looking for pure control theory loop structures.
+*   **Cross-Team Issue Analysis:** If asked to see how all teams solved a *specific issue* for a given year (e.g. "how did teams score in the Trap in 2024?"), you must clone the relevant yearly repositories for *multiple* teams from the manifest. Systematically grep across all of them for game-specific keywords (e.g., `Trap`, `Elevator`, `Score`) and synthesize a comparative analysis of their differing approaches.
 *   *Mandate Cross-Referencing:* If you identify a game-changing Vision configuration in 1690's repository, check it against 6328's approach before considering it generalized best-practice.
 *   *WPILib Validation:* If you discover a heavily modified WPILib wrapper (like `CodeOrangePoseEstimator`), you must trace the source back upstream (`github.com/wpilibsuite/allwpilib`) to verify exactly what WPILib limitations caused the team to fork the math.
 
