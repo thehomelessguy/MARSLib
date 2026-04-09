@@ -9,8 +9,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.MARSArm;
-import frc.robot.subsystems.MARSElevator;
+import frc.robot.subsystems.MARSClimber;
+import frc.robot.subsystems.MARSCowl;
 import frc.robot.subsystems.MARSIntake;
 import frc.robot.subsystems.MARSShooter;
 import org.littletonrobotics.junction.Logger;
@@ -29,10 +29,10 @@ import org.littletonrobotics.junction.Logger;
  *   <li><b>Swerve Module Steering:</b> Command all 4 modules to 90°, read back angles, assert
  *       within tolerance.
  *   <li><b>Swerve Module Zeroing:</b> Command all 4 modules back to 0°, read back, assert.
- *   <li><b>Elevator Sweep:</b> Raise elevator 0.1m from current position, verify encoder delta.
- *   <li><b>Elevator Return:</b> Lower elevator back to starting position, verify encoder delta.
- *   <li><b>Arm Sweep:</b> Rotate arm by 0.15 rad (~8.6°), verify encoder delta.
- *   <li><b>Arm Return:</b> Return arm to starting position, verify encoder delta.
+ *   <li><b>Climber Sweep:</b> Raise climber 0.1m from current position, verify encoder delta.
+ *   <li><b>Climber Return:</b> Lower climber back to starting position, verify encoder delta.
+ *   <li><b>Cowl Sweep:</b> Rotate cowl by 0.15 rad (~8.6°), verify encoder delta.
+ *   <li><b>Cowl Return:</b> Return cowl to starting position, verify encoder delta.
  *   <li><b>Intake Spin:</b> Run intake at 6V for 0.5s, verify flywheel velocity is non-zero.
  *   <li><b>Shooter Spin:</b> Run shooter at 6V for 0.5s, verify flywheel velocity is non-zero.
  *   <li><b>Final Report:</b> Log pass/fail summary to AdvantageScope.
@@ -43,8 +43,8 @@ import org.littletonrobotics.junction.Logger;
 public class SystemCheckCommand extends Command {
   // -- Subsystems --
   private final SwerveDrive swerve;
-  private final MARSElevator elevator;
-  private final MARSArm arm;
+  private final MARSClimber climber;
+  private final MARSCowl cowl;
   private final MARSIntake intake;
   private final MARSShooter shooter;
 
@@ -55,13 +55,13 @@ public class SystemCheckCommand extends Command {
   private int passCount = 0;
 
   // -- Captured Initial Positions --
-  private double initialElevatorMeters = 0.0;
-  private double initialArmRads = 0.0;
+  private double initialClimberMeters = 0.0;
+  private double initialCowlRads = 0.0;
 
   // -- Tolerances --
 
-  private static final double ELEVATOR_POSITION_TOLERANCE_M = 0.05;
-  private static final double ARM_POSITION_TOLERANCE_RAD = 0.08;
+  private static final double CLIMBER_POSITION_TOLERANCE_M = 0.05;
+  private static final double COWL_POSITION_TOLERANCE_RAD = 0.08;
   private static final double FLYWHEEL_MIN_VELOCITY_RAD_S = 5.0;
   private static final double MINIMUM_BATTERY_VOLTAGE = 12.0;
 
@@ -78,29 +78,29 @@ public class SystemCheckCommand extends Command {
       new Alert("SystemCheck: Swerve module(s) failed to reach 90°.", AlertType.CRITICAL);
   private final Alert swerveZeroAlert =
       new Alert("SystemCheck: Swerve module(s) failed to return to 0°.", AlertType.CRITICAL);
-  private final Alert elevatorUpAlert =
-      new Alert("SystemCheck: Elevator did not move upward. Check belt/CAN.", AlertType.CRITICAL);
-  private final Alert elevatorReturnAlert =
-      new Alert("SystemCheck: Elevator did not return to start.", AlertType.CRITICAL);
-  private final Alert armSweepAlert =
-      new Alert("SystemCheck: Arm did not rotate. Check CAN/gearbox.", AlertType.CRITICAL);
-  private final Alert armReturnAlert =
-      new Alert("SystemCheck: Arm did not return to start.", AlertType.CRITICAL);
+  private final Alert climberUpAlert =
+      new Alert("SystemCheck: Climber did not move upward. Check belt/CAN.", AlertType.CRITICAL);
+  private final Alert climberReturnAlert =
+      new Alert("SystemCheck: Climber did not return to start.", AlertType.CRITICAL);
+  private final Alert cowlSweepAlert =
+      new Alert("SystemCheck: Cowl did not rotate. Check CAN/gearbox.", AlertType.CRITICAL);
+  private final Alert cowlReturnAlert =
+      new Alert("SystemCheck: Cowl did not return to start.", AlertType.CRITICAL);
   private final Alert intakeAlert =
       new Alert("SystemCheck: Intake flywheel not spinning. Check wiring.", AlertType.CRITICAL);
   private final Alert shooterAlert =
       new Alert("SystemCheck: Shooter flywheel not spinning. Check wiring.", AlertType.CRITICAL);
   private final Alert successAlert = new Alert("SystemCheck: ALL SYSTEMS NOMINAL", AlertType.INFO);
 
-  // -- Total steps (0-indexed): 0=battery, 1=steer90, 2=steerZero, 3=elevUp, 4=elevReturn,
-  //    5=armSweep, 6=armReturn, 7=intake, 8=shooter, 9=report --
+  // -- Total steps (0-indexed): 0=battery, 1=steer90, 2=steerZero, 3=climberUp, 4=climberReturn,
+  //    5=cowlSweep, 6=cowlReturn, 7=intake, 8=shooter, 9=report --
   private static final int STEP_BATTERY = 0;
   private static final int STEP_SWERVE_STEER = 1;
   private static final int STEP_SWERVE_ZERO = 2;
-  private static final int STEP_ELEVATOR_UP = 3;
-  private static final int STEP_ELEVATOR_RETURN = 4;
-  private static final int STEP_ARM_SWEEP = 5;
-  private static final int STEP_ARM_RETURN = 6;
+  private static final int STEP_CLIMBER_UP = 3;
+  private static final int STEP_CLIMBER_RETURN = 4;
+  private static final int STEP_COWL_SWEEP = 5;
+  private static final int STEP_COWL_RETURN = 6;
   private static final int STEP_INTAKE = 7;
   private static final int STEP_SHOOTER = 8;
   private static final int STEP_REPORT = 9;
@@ -111,23 +111,23 @@ public class SystemCheckCommand extends Command {
    * Constructs the complete system diagnostic command.
    *
    * @param swerve The swerve drivetrain subsystem.
-   * @param elevator The elevator subsystem.
-   * @param arm The arm subsystem.
+   * @param climber The climber subsystem.
+   * @param cowl The cowl subsystem.
    * @param intake The intake subsystem.
    * @param shooter The shooter subsystem.
    */
   public SystemCheckCommand(
       SwerveDrive swerve,
-      MARSElevator elevator,
-      MARSArm arm,
+      MARSClimber climber,
+      MARSCowl cowl,
       MARSIntake intake,
       MARSShooter shooter) {
     this.swerve = swerve;
-    this.elevator = elevator;
-    this.arm = arm;
+    this.climber = climber;
+    this.cowl = cowl;
     this.intake = intake;
     this.shooter = shooter;
-    addRequirements(swerve, elevator, arm, intake, shooter);
+    addRequirements(swerve, climber, cowl, intake, shooter);
   }
 
   @Override
@@ -141,17 +141,17 @@ public class SystemCheckCommand extends Command {
     batteryAlert.set(false);
     swerveSteerAlert.set(false);
     swerveZeroAlert.set(false);
-    elevatorUpAlert.set(false);
-    elevatorReturnAlert.set(false);
-    armSweepAlert.set(false);
-    armReturnAlert.set(false);
+    climberUpAlert.set(false);
+    climberReturnAlert.set(false);
+    cowlSweepAlert.set(false);
+    cowlReturnAlert.set(false);
     intakeAlert.set(false);
     shooterAlert.set(false);
     successAlert.set(false);
 
     // Capture starting positions
-    initialElevatorMeters = elevator.getPositionMeters();
-    initialArmRads = arm.getPositionRads();
+    initialClimberMeters = climber.getPositionMeters();
+    initialCowlRads = cowl.getPositionRads();
 
     Logger.recordOutput("SystemCheck/Active", true);
     Logger.recordOutput("SystemCheck/Step", currentStep);
@@ -228,79 +228,79 @@ public class SystemCheckCommand extends Command {
             } else {
               passCount++;
             }
-            advanceStep(STEP_ELEVATOR_UP, "Elevator Up +0.1m");
+            advanceStep(STEP_CLIMBER_UP, "Climber Up +0.1m");
           }
           break;
         }
 
         // ---------------------------------------------------------------
-        // STEP 3: Raise the elevator 0.1m
+        // STEP 3: Raise the climber 0.1m
         // ---------------------------------------------------------------
-      case STEP_ELEVATOR_UP:
-        elevator.setTargetPosition(initialElevatorMeters + 0.1);
+      case STEP_CLIMBER_UP:
+        climber.setTargetPosition(initialClimberMeters + 0.1);
 
         if (elapsed > MECHANISM_SETTLE_TIME) {
-          double delta = Math.abs(elevator.getPositionMeters() - (initialElevatorMeters + 0.1));
-          Logger.recordOutput("SystemCheck/ElevatorDelta", delta);
-          if (delta > ELEVATOR_POSITION_TOLERANCE_M) {
-            elevatorUpAlert.set(true);
+          double delta = Math.abs(climber.getPositionMeters() - (initialClimberMeters + 0.1));
+          Logger.recordOutput("SystemCheck/ClimberDelta", delta);
+          if (delta > CLIMBER_POSITION_TOLERANCE_M) {
+            climberUpAlert.set(true);
             failCount++;
           } else {
             passCount++;
           }
-          advanceStep(STEP_ELEVATOR_RETURN, "Elevator Return");
+          advanceStep(STEP_CLIMBER_RETURN, "Climber Return");
         }
         break;
 
         // ---------------------------------------------------------------
-        // STEP 4: Return the elevator to starting position
+        // STEP 4: Return the climber to starting position
         // ---------------------------------------------------------------
-      case STEP_ELEVATOR_RETURN:
-        elevator.setTargetPosition(initialElevatorMeters);
+      case STEP_CLIMBER_RETURN:
+        climber.setTargetPosition(initialClimberMeters);
 
         if (elapsed > RETURN_SETTLE_TIME) {
-          double returnDelta = Math.abs(elevator.getPositionMeters() - initialElevatorMeters);
-          Logger.recordOutput("SystemCheck/ElevatorReturnDelta", returnDelta);
-          if (returnDelta > ELEVATOR_POSITION_TOLERANCE_M) {
-            elevatorReturnAlert.set(true);
+          double returnDelta = Math.abs(climber.getPositionMeters() - initialClimberMeters);
+          Logger.recordOutput("SystemCheck/ClimberReturnDelta", returnDelta);
+          if (returnDelta > CLIMBER_POSITION_TOLERANCE_M) {
+            climberReturnAlert.set(true);
             failCount++;
           } else {
             passCount++;
           }
-          advanceStep(STEP_ARM_SWEEP, "Arm Sweep +0.15 rad");
+          advanceStep(STEP_COWL_SWEEP, "Cowl Sweep +0.15 rad");
         }
         break;
 
         // ---------------------------------------------------------------
-        // STEP 5: Rotate arm by 0.15 rad (~8.6 degrees)
+        // STEP 5: Rotate cowl by 0.15 rad (~8.6 degrees)
         // ---------------------------------------------------------------
-      case STEP_ARM_SWEEP:
-        arm.setTargetPosition(initialArmRads + 0.15);
+      case STEP_COWL_SWEEP:
+        cowl.setTargetPosition(initialCowlRads + 0.15);
 
         if (elapsed > MECHANISM_SETTLE_TIME) {
-          double armDelta = Math.abs(arm.getPositionRads() - (initialArmRads + 0.15));
-          Logger.recordOutput("SystemCheck/ArmDelta", armDelta);
-          if (armDelta > ARM_POSITION_TOLERANCE_RAD) {
-            armSweepAlert.set(true);
+          double cowlDelta = Math.abs(cowl.getPositionRads() - (initialCowlRads + 0.15));
+          Logger.recordOutput("SystemCheck/CowlDelta", cowlDelta);
+          if (cowlDelta > COWL_POSITION_TOLERANCE_RAD) {
+            cowlSweepAlert.set(true);
             failCount++;
           } else {
             passCount++;
           }
-          advanceStep(STEP_ARM_RETURN, "Arm Return");
+          advanceStep(STEP_COWL_RETURN, "Cowl Return");
         }
         break;
 
         // ---------------------------------------------------------------
-        // STEP 6: Return arm to starting position
+        // STEP 6: Return cowl to starting position
         // ---------------------------------------------------------------
-      case STEP_ARM_RETURN:
-        arm.setTargetPosition(initialArmRads);
+      case STEP_COWL_RETURN:
+        cowl.setTargetPosition(initialCowlRads);
 
         if (elapsed > RETURN_SETTLE_TIME) {
-          double armReturnDelta = Math.abs(arm.getPositionRads() - initialArmRads);
-          Logger.recordOutput("SystemCheck/ArmReturnDelta", armReturnDelta);
-          if (armReturnDelta > ARM_POSITION_TOLERANCE_RAD) {
-            armReturnAlert.set(true);
+          double cowlReturnDelta = Math.abs(cowl.getPositionRads() - initialCowlRads);
+          Logger.recordOutput("SystemCheck/CowlReturnDelta", cowlReturnDelta);
+          if (cowlReturnDelta > COWL_POSITION_TOLERANCE_RAD) {
+            cowlReturnAlert.set(true);
             failCount++;
           } else {
             passCount++;

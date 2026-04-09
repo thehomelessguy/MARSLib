@@ -44,9 +44,9 @@ import frc.robot.constants.IntakeConstants;
 import frc.robot.constants.LEDConstants;
 import frc.robot.constants.ModeConstants;
 import frc.robot.constants.ShooterConstants;
-import frc.robot.subsystems.MARSArm;
 import frc.robot.subsystems.MARSClimber;
-import frc.robot.subsystems.MARSElevator;
+import frc.robot.subsystems.MARSCowl;
+import frc.robot.subsystems.MARSIntakePivot;
 import frc.robot.subsystems.MARSShooter;
 import frc.robot.subsystems.MARSSuperstructure;
 import frc.robot.subsystems.OperatorInterface;
@@ -65,8 +65,8 @@ public class RobotContainer {
 
   private final SwerveDrive swerveDrive;
   private final MARSClimber climber;
-  private final MARSArm cowl;
-  private final MARSArm intakePivot;
+  private final MARSCowl cowl;
+  private final MARSIntakePivot intakePivot;
   private final MARSShooter floorIntake;
   private final MARSShooter shooter;
   private final MARSShooter feeder;
@@ -99,20 +99,17 @@ public class RobotContainer {
                   gyroSim,
                   powerManager);
 
-          MARSElevator fastClimber =
-              new MARSElevator(
-                  new LinearMechanismIOSim(
-                      "FastClimber", ClimberConstants.FAST_GEAR_RATIO, 0.05, 5.0),
+          climber =
+              new MARSClimber(
+                  new LinearMechanismIOSim("Climber", ClimberConstants.FAST_GEAR_RATIO, 0.05, 5.0),
                   powerManager);
 
-          climber = new MARSClimber(fastClimber);
-
           cowl =
-              new MARSArm(
+              new MARSCowl(
                   new RotaryMechanismIOSim("Cowl", CowlConstants.GEAR_RATIO, 0.5, 0.5),
                   powerManager);
           intakePivot =
-              new MARSArm(
+              new MARSIntakePivot(
                   new RotaryMechanismIOSim(
                       "IntakePivot", IntakeConstants.PIVOT_GEAR_RATIO, 0.5, 0.5),
                   powerManager);
@@ -193,8 +190,8 @@ public class RobotContainer {
                   new GyroIOPigeon2(DriveConstants.PIGEON2_ID, DriveConstants.CANBUS),
                   powerManager);
 
-          MARSElevator fastClimber =
-              new MARSElevator(
+          climber =
+              new MARSClimber(
                   new LinearMechanismIOTalonFX(
                       ClimberConstants.FAST_MOTOR_ID,
                       ClimberConstants.CANBUS,
@@ -203,10 +200,8 @@ public class RobotContainer {
                       false),
                   powerManager);
 
-          climber = new MARSClimber(fastClimber);
-
           cowl =
-              new MARSArm(
+              new MARSCowl(
                   new RotaryMechanismIOTalonFX(
                       CowlConstants.MOTOR_ID,
                       CowlConstants.CANBUS,
@@ -214,7 +209,7 @@ public class RobotContainer {
                       CowlConstants.INVERTED),
                   powerManager);
           intakePivot =
-              new MARSArm(
+              new MARSIntakePivot(
                   new RotaryMechanismIOTalonFX(
                       IntakeConstants.PIVOT_MOTOR_ID,
                       IntakeConstants.CANBUS,
@@ -284,17 +279,16 @@ public class RobotContainer {
                   com.marslib.util.ReplayIOFactory.createProxy(GyroIO.class),
                   powerManager);
 
-          MARSElevator fastClimber =
-              new MARSElevator(
+          climber =
+              new MARSClimber(
                   com.marslib.util.ReplayIOFactory.createProxy(LinearMechanismIO.class),
                   powerManager);
-          climber = new MARSClimber(fastClimber);
           cowl =
-              new MARSArm(
+              new MARSCowl(
                   com.marslib.util.ReplayIOFactory.createProxy(RotaryMechanismIO.class),
                   powerManager);
           intakePivot =
-              new MARSArm(
+              new MARSIntakePivot(
                   com.marslib.util.ReplayIOFactory.createProxy(RotaryMechanismIO.class),
                   powerManager);
           floorIntake =

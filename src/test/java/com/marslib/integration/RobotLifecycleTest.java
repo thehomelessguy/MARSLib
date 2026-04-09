@@ -23,7 +23,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.*;
 import frc.robot.simulation.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.MARSArm;
+import frc.robot.subsystems.MARSCowl;
+import frc.robot.subsystems.MARSIntakePivot;
 import frc.robot.subsystems.MARSShooter;
 import frc.robot.subsystems.MARSSuperstructure;
 import org.junit.jupiter.api.AfterEach;
@@ -33,8 +34,8 @@ import org.junit.jupiter.api.Test;
 public class RobotLifecycleTest {
 
   private SwerveDrive swerveDrive;
-  private MARSArm cowl;
-  private MARSArm intakePivot;
+  private MARSCowl cowl;
+  private MARSIntakePivot intakePivot;
   private MARSShooter floorIntake;
   private MARSShooter shooter;
   private MARSShooter feeder;
@@ -58,9 +59,9 @@ public class RobotLifecycleTest {
     swerveDrive = new SwerveDrive(modules, gyroSim, powerManager);
     swerveDrive.resetPose(new Pose2d(2, 2, new edu.wpi.first.math.geometry.Rotation2d(0)));
 
-    cowl = new MARSArm(new RotaryMechanismIOSim("Cowl", 50.0, 0.5, 0.5), powerManager);
+    cowl = new MARSCowl(new RotaryMechanismIOSim("Cowl", 50.0, 0.5, 0.5), powerManager);
     intakePivot =
-        new MARSArm(new RotaryMechanismIOSim("IntakePivot", 50.0, 0.5, 0.5), powerManager);
+        new MARSIntakePivot(new RotaryMechanismIOSim("IntakePivot", 50.0, 0.5, 0.5), powerManager);
     floorIntake =
         new MARSShooter(
             new FlywheelIOSim(

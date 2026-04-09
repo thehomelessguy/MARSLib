@@ -12,20 +12,20 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.littletonrobotics.junction.Logger;
 
 /**
- * High-level subsystem representing a rotating single-jointed arm.
+ * High-level subsystem representing the shooter cowl rotating joint.
  *
  * <p>Handles physics simulation, angular position tracking, and dynamic load shedding to prevent
  * battery brownouts using MARSPowerManager data.
  */
-public class MARSArm extends SubsystemBase {
+public class MARSCowl extends SubsystemBase {
 
   private final RotaryMechanismIO io;
   private final RotaryMechanismIOInputsAutoLogged inputs = new RotaryMechanismIOInputsAutoLogged();
 
-  private final LoggedTunableNumber kS = new LoggedTunableNumber("Arm/kS", 0.0);
-  private final LoggedTunableNumber kG = new LoggedTunableNumber("Arm/kG", 0.0);
-  private final LoggedTunableNumber kV = new LoggedTunableNumber("Arm/kV", 0.0);
-  private final LoggedTunableNumber kA = new LoggedTunableNumber("Arm/kA", 0.0);
+  private final LoggedTunableNumber kS = new LoggedTunableNumber("Cowl/kS", 0.0);
+  private final LoggedTunableNumber kG = new LoggedTunableNumber("Cowl/kG", 0.0);
+  private final LoggedTunableNumber kV = new LoggedTunableNumber("Cowl/kV", 0.0);
+  private final LoggedTunableNumber kA = new LoggedTunableNumber("Cowl/kA", 0.0);
 
   private ArmFeedforward feedforward;
 
@@ -39,7 +39,7 @@ public class MARSArm extends SubsystemBase {
   private final MARSPowerManager powerManager;
   private final SysIdRoutine sysIdRoutine;
 
-  public MARSArm(RotaryMechanismIO io, MARSPowerManager powerManager) {
+  public MARSCowl(RotaryMechanismIO io, MARSPowerManager powerManager) {
     this.io = io;
     this.powerManager = powerManager;
     feedforward = new ArmFeedforward(kS.get(), kG.get(), kV.get(), kA.get());
@@ -62,7 +62,7 @@ public class MARSArm extends SubsystemBase {
   @Override
   public void periodic() {
     io.updateInputs(inputs);
-    Logger.processInputs("Arm", inputs);
+    Logger.processInputs("Cowl", inputs);
 
     // Update Feedforward if TUNING mode constants are changed
     int id = this.hashCode();
@@ -81,27 +81,27 @@ public class MARSArm extends SubsystemBase {
             MAX_CURRENT_AMPS, MIN_CURRENT_AMPS, NOMINAL_VOLTAGE, CRITICAL_VOLTAGE);
 
     io.setCurrentLimit(currentLimit);
-    Logger.recordOutput("Arm/ActiveCurrentLimit", currentLimit);
+    Logger.recordOutput("Cowl/ActiveCurrentLimit", currentLimit);
   }
 
   private double targetPositionRads = 0.0;
 
   /**
-   * Commands the arm to a target angular position using Motion Magic with dynamic feedforward.
+   * Commands the cowl to a target angular position using Motion Magic with dynamic feedforward.
    *
-   * <p>The feedforward voltage is computed using the current arm angle (for gravity compensation)
+   * <p>The feedforward voltage is computed using the current cowl angle (for gravity compensation)
    * and the instantaneous Motion Magic profile velocity (for kV contribution).
    *
-   * @param positionRads Target arm angle in radians.
+   * @param positionRads Target cowl angle in radians.
    */
   public void setTargetPosition(double positionRads) {
     this.targetPositionRads = positionRads;
-    // Dynamic FF using actual arm physical angle and instantaneous profile target velocity from
+    // Dynamic FF using actual physical angle and instantaneous profile target velocity from
     // CTRE Motion Magic
     double currentAngleRads = inputs.positionRad;
     double ffVolts = feedforward.calculate(currentAngleRads, inputs.targetVelocityRadPerSec);
     io.setClosedLoopPosition(positionRads, ffVolts);
-    Logger.recordOutput("Arm/TargetPositionRads", positionRads);
+    Logger.recordOutput("Cowl/TargetPositionRads", positionRads);
   }
 
   public boolean isAtTolerance() {
@@ -110,9 +110,9 @@ public class MARSArm extends SubsystemBase {
   }
 
   /**
-   * Returns the current measured arm angle.
+   * Returns the current measured cowl angle.
    *
-   * @return Current arm position in radians.
+   * @return Current cowl position in radians.
    */
   public double getPositionRads() {
     return inputs.positionRad;
@@ -139,7 +139,7 @@ public class MARSArm extends SubsystemBase {
   }
 
   /**
-   * Homes the arm by driving at a constant voltage and checking the stator current. It resets the
+   * Homes the cowl by driving at a constant voltage and checking the stator current. It resets the
    * encoder to 0.0 radians upon reaching the hard stop.
    *
    * @param homingVoltage Voltage to drive the motor (negative for downwards).
@@ -160,12 +160,12 @@ public class MARSArm extends SubsystemBase {
             () -> {
               io.setVoltage(0.0);
               io.setEncoderPosition(0.0);
-              Logger.recordOutput("MARSArm/Status", "Homing Complete!");
+              Logger.recordOutput("MARSCowl/Status", "Homing Complete!");
             });
   }
 
   /**
-   * Homes the arm using a standard default threshold (-2.0V, 15.0A).
+   * Homes the cowl using a standard default threshold (-2.0V, 15.0A).
    *
    * @return The home command.
    */

@@ -13,8 +13,8 @@ import org.littletonrobotics.junction.Logger;
 /** Superstructure orchestrator using a validated finite state machine. */
 public class MARSSuperstructure extends SubsystemBase {
 
-  private final MARSArm cowl;
-  private final MARSArm intakePivot;
+  private final MARSCowl cowl;
+  private final MARSIntakePivot intakePivot;
   private final MARSShooter floorIntake;
   private final MARSShooter shooter;
   private final MARSShooter feeder;
@@ -39,8 +39,8 @@ public class MARSSuperstructure extends SubsystemBase {
   private double goalIntakeAngle = 0.0;
 
   public MARSSuperstructure(
-      MARSArm cowl,
-      MARSArm intakePivot,
+      MARSCowl cowl,
+      MARSIntakePivot intakePivot,
       MARSShooter floorIntake,
       MARSShooter shooter,
       MARSShooter feeder,

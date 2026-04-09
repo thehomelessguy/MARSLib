@@ -22,8 +22,8 @@ import org.junit.jupiter.api.Test;
 
 public class MARSSuperstructureTest {
 
-  private MARSArm cowl;
-  private MARSArm intakePivot;
+  private MARSCowl cowl;
+  private MARSIntakePivot intakePivot;
   private MARSShooter floorIntake;
   private MARSShooter shooter;
   private MARSShooter feeder;
@@ -46,10 +46,10 @@ public class MARSSuperstructureTest {
     MARSPowerManager powerManager = new MARSPowerManager(spoofedVoltageIO);
 
     RotaryMechanismIOSim cowlSim = new RotaryMechanismIOSim("Cowl", 50.0, 0.5, 0.5);
-    cowl = new MARSArm(cowlSim, powerManager);
+    cowl = new MARSCowl(cowlSim, powerManager);
 
     RotaryMechanismIOSim intakePivotSim = new RotaryMechanismIOSim("IntakePivot", 50.0, 0.5, 0.5);
-    intakePivot = new MARSArm(intakePivotSim, powerManager);
+    intakePivot = new MARSIntakePivot(intakePivotSim, powerManager);
 
     FlywheelIOSim physicalShooterSim =
         new FlywheelIOSim(edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.002);

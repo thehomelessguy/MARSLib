@@ -7,8 +7,8 @@ import com.marslib.swerve.TeleopDriveCommand;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.MARSDiagnosticCheck;
 import frc.robot.commands.ShootOnTheMoveCommand;
-import frc.robot.subsystems.MARSArm;
 import frc.robot.subsystems.MARSClimber;
+import frc.robot.subsystems.MARSCowl;
 import frc.robot.subsystems.MARSShooter;
 import frc.robot.subsystems.MARSSuperstructure;
 import frc.robot.subsystems.OperatorInterface;
@@ -23,7 +23,7 @@ public final class RobotBindings {
       GhostManager ghostManager,
       MARSSuperstructure superstructure,
       MARSClimber climber,
-      MARSArm cowl,
+      MARSCowl cowl,
       MARSShooter feeder,
       MARSShooter floorIntake) {
 
@@ -132,19 +132,13 @@ public final class RobotBindings {
         controller.povUp(),
         "DPad_Up",
         "Manual Climber Up",
-        Commands.startEnd(
-            () -> climber.setFastClimbVoltage(12.0),
-            () -> climber.setFastClimbVoltage(0.0),
-            climber));
+        Commands.startEnd(() -> climber.setVoltage(12.0), () -> climber.setVoltage(0.0), climber));
 
     controller.bindWhileTrue(
         controller.povDown(),
         "DPad_Down",
         "Manual Climber Down",
-        Commands.startEnd(
-            () -> climber.setFastClimbVoltage(-12.0),
-            () -> climber.setFastClimbVoltage(0.0),
-            climber));
+        Commands.startEnd(() -> climber.setVoltage(-12.0), () -> climber.setVoltage(0.0), climber));
 
     controller.bindOnTrue(
         controller.back().and(controller.start()),
@@ -210,10 +204,7 @@ public final class RobotBindings {
         coPilot.povDown(),
         "DPad_Down",
         "Climber Reverse",
-        Commands.startEnd(
-            () -> climber.setFastClimbVoltage(-12.0),
-            () -> climber.setFastClimbVoltage(0.0),
-            climber));
+        Commands.startEnd(() -> climber.setVoltage(-12.0), () -> climber.setVoltage(0.0), climber));
 
     coPilot.bindOnTrue(
         coPilot.x(),

@@ -22,8 +22,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.*;
 import frc.robot.simulation.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.MARSArm;
-import frc.robot.subsystems.MARSElevator;
+import frc.robot.subsystems.MARSClimber;
+import frc.robot.subsystems.MARSCowl;
+import frc.robot.subsystems.MARSIntakePivot;
 import frc.robot.subsystems.MARSShooter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,11 +38,11 @@ import org.junit.jupiter.api.Test;
 public class MARSDiagnosticCheckTest {
 
   private SwerveDrive swerveDrive;
-  private MARSElevator fastClimber;
-  private MARSArm cowl;
+  private MARSClimber fastClimber;
+  private MARSCowl cowl;
 
   @SuppressWarnings("unused")
-  private MARSArm intakePivot;
+  private MARSIntakePivot intakePivot;
 
   @SuppressWarnings("unused")
   private MARSShooter floorIntake;
@@ -90,10 +91,10 @@ public class MARSDiagnosticCheckTest {
     swerveDrive = new SwerveDrive(modules, new GyroIO() {}, power);
 
     // Build physics-backed Subsystems
-    fastClimber = new MARSElevator(new LinearMechanismIOSim("Fast", 50.0, 0.5, 0.5), power);
+    fastClimber = new MARSClimber(new LinearMechanismIOSim("Fast", 50.0, 0.5, 0.5), power);
 
-    cowl = new MARSArm(new RotaryMechanismIOSim("DiagCowl", 50.0, 0.5, 0.5), power);
-    intakePivot = new MARSArm(new RotaryMechanismIOSim("DiagInt", 50.0, 0.5, 0.5), power);
+    cowl = new MARSCowl(new RotaryMechanismIOSim("DiagCowl", 50.0, 0.5, 0.5), power);
+    intakePivot = new MARSIntakePivot(new RotaryMechanismIOSim("DiagInt", 50.0, 0.5, 0.5), power);
 
     floorIntake =
         new MARSShooter(
@@ -131,17 +132,13 @@ public class MARSDiagnosticCheckTest {
 
   @Test
   public void testDiagnosticCheckConstructs() {
-    MARSDiagnosticCheck check =
-        new MARSDiagnosticCheck(
-            swerveDrive, new frc.robot.subsystems.MARSClimber(fastClimber), cowl);
+    MARSDiagnosticCheck check = new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl);
     assertNotNull(check, "DiagnosticCheck should construct without error.");
   }
 
   @Test
   public void testDiagnosticCheckRunsToCompletion() {
-    MARSDiagnosticCheck check =
-        new MARSDiagnosticCheck(
-            swerveDrive, new frc.robot.subsystems.MARSClimber(fastClimber), cowl);
+    MARSDiagnosticCheck check = new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl);
 
     CommandScheduler.getInstance().schedule(check);
 

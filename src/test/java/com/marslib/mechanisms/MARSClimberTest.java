@@ -14,16 +14,14 @@ import frc.robot.subsystems.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MARSElevatorTest {
+public class MARSClimberTest {
 
-  private MARSElevator elevator;
+  private MARSClimber climber;
   private double simulatedVoltageOverride = 12.0;
 
   @BeforeEach
   public void setUp() {
     MARSTestHarness.reset();
-    // Custom PowerIO allows injecting custom voltage scenarios to test the load shedding state
-    // engine
     PowerIO spoofedVoltageIO =
         new PowerIO() {
           @Override
@@ -35,35 +33,30 @@ public class MARSElevatorTest {
 
     MARSPowerManager powerManager = new MARSPowerManager(spoofedVoltageIO);
 
-    // Initialize physical IO Twin explicitly
-    LinearMechanismIOSim physicalElevatorSim =
+    LinearMechanismIOSim physicalClimberSim =
         new LinearMechanismIOSim(
-            "MARSElevator_Test",
+            "MARSClimber_Test",
             50.0,
             0.05, // 5cm spool diameter
             5.0 // 5.0 kg physical carriage mass
             );
 
-    elevator = new MARSElevator(physicalElevatorSim, powerManager);
+    climber = new MARSClimber(physicalClimberSim, powerManager);
   }
 
   @Test
-  public void testElevatorPhysicallyAttainsTargetHeightUsingDyn4jMotorMath() {
-    // Actuate target
-    elevator.setTargetPosition(1.0); // 1.0 Meters
+  public void testClimberPhysicallyAttainsTargetHeightUsingDyn4jMotorMath() {
+    climber.setTargetPosition(1.0); // 1.0 Meters
 
-    // Fast-forward physics simulation by 3.0 seconds (150 ticks)
     for (int i = 0; i < 150; i++) {
       SimHooks.stepTiming(0.02);
       CommandScheduler.getInstance().run();
       MARSPhysicsWorld.getInstance().update(0.02);
     }
-    System.out.println("ELEVATOR POS: " + elevator.getPositionMeters());
 
-    // Verify actual physical tracking instead of fake boolean wrappers
     assertEquals(
         1.0,
-        elevator.getPositionMeters(),
+        climber.getPositionMeters(),
         0.05,
         "Authentic physics carriage should reach 1.0M target position.");
   }
@@ -78,8 +71,7 @@ public class MARSElevatorTest {
       MARSPhysicsWorld.getInstance().update(0.02);
     }
 
-    // Test that logic fully executes uninterrupted natively under simulated voltage caps
     assertEquals(9.0 - 0.5, simulatedVoltageOverride, 0.0);
-    assertNotNull(elevator);
+    assertNotNull(climber);
   }
 }
