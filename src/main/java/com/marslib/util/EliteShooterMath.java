@@ -18,8 +18,8 @@ public class EliteShooterMath {
    * logging.
    */
   public static class EliteShooterSetpoint {
-    public double turretRadians;
-    public double turretFeedforward;
+    public double robotAimYawRadians;
+    public double chassisAngularFeedforward;
     public double hoodRadians;
     public double hoodFeedforward;
     public double launchSpeedMetersPerSec;
@@ -118,28 +118,29 @@ public class EliteShooterMath {
             (robotToTarget.getZ() - drop) * (robotToTarget.getZ() - drop) / (t * t)
                 + xyVel * xyVel);
 
-    // Compute Turret and Feedforward
-    Rotation2d turretRotationRobotFrame = virtualTargetRotation.minus(robotPose.getRotation());
-    Translation2d targetToRobotFrame =
-        new Translation2d(
-                fieldRelativeSpeeds.vxMetersPerSecond, fieldRelativeSpeeds.vyMetersPerSecond)
-            .rotateBy(virtualTargetRotation);
-
-    double tangent = targetToRobotFrame.getY();
-    double angular = fieldRelativeSpeeds.omegaRadiansPerSecond;
+    // Compute Chassis Aim and Feedforward
     double distanceToTarget =
         Math.sqrt(
             robotToTarget.getX() * robotToTarget.getX()
                 + robotToTarget.getY() * robotToTarget.getY());
 
-    double turretFF = -(angular + tangent / distanceToTarget);
+    double chassisAngularFF =
+        (robotToTarget.getY() * fieldRelativeSpeeds.vxMetersPerSecond
+                - robotToTarget.getX() * fieldRelativeSpeeds.vyMetersPerSecond)
+            / (distanceToTarget * distanceToTarget);
+
+    Translation2d targetToRobotFrame =
+        new Translation2d(
+                fieldRelativeSpeeds.vxMetersPerSecond, fieldRelativeSpeeds.vyMetersPerSecond)
+            .rotateBy(virtualTargetRotation);
+
     double hoodFF =
         targetToRobotFrame.getX()
             * -robotToTarget.getZ()
             / (distanceToTarget * distanceToTarget + robotToTarget.getZ() * robotToTarget.getZ());
 
-    setpoint.turretRadians = turretRotationRobotFrame.getRadians();
-    setpoint.turretFeedforward = turretFF;
+    setpoint.robotAimYawRadians = virtualTargetRotation.getRadians();
+    setpoint.chassisAngularFeedforward = chassisAngularFF;
     setpoint.hoodRadians = pitchAngleRads;
     setpoint.hoodFeedforward = hoodFF;
     setpoint.launchSpeedMetersPerSec = adjustedVShot;
