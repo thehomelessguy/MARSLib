@@ -18,6 +18,7 @@ import org.ejml.simple.SimpleMatrix;
  * Multiple Linear Regression (OLS) to calculate mechanistic constants (kS, kV, kA), then
  * back-calculates true Simulated Mass / Moment of Inertia for injection into dyn4j.
  */
+@SuppressWarnings("PMD")
 public class SimSysIdTuner {
 
   private static final Logger LOGGER = Logger.getLogger(SimSysIdTuner.class.getName());

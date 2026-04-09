@@ -111,7 +111,7 @@ public class MARSSuperstructure extends SubsystemBase {
     stateMachine.update();
     SuperstructureState currentState = stateMachine.getState();
 
-    double currentDistance = 0.0;
+    double currentDistance;
     java.util.Optional<edu.wpi.first.math.geometry.Translation2d> targetOpt =
         visionTargetSupplier != null ? visionTargetSupplier.get() : java.util.Optional.empty();
     if (targetOpt.isPresent()) {

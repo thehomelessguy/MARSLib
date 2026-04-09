@@ -22,7 +22,7 @@ public final class ReplayIOFactory {
    * @param <T> The type of the IO interface.
    * @return A no-op instance of the interface.
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "PMD.UseProperClassLoader"})
   public static <T> T createProxy(Class<T> ioInterface) {
     return (T)
         Proxy.newProxyInstance(
