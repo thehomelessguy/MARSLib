@@ -1,0 +1,153 @@
+{
+  "version": "26.0.0",
+  "hubs": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 720,
+      "state": {
+        "sidebar": {
+          "width": 160,
+          "expanded": []
+        },
+        "tabs": {
+          "selected": 0,
+          "tabs": [
+            {
+              "type": 0,
+              "title": "",
+              "controller": null,
+              "controllerUUID": "iz1eawaghg89p8i0a1hwynql2micnvjj",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 3,
+              "title": "3D Field",
+              "controller": {
+                "sources": [
+                  {
+                    "type": "robot",
+                    "logKey": "/RealOutputs/SwerveDrive/Pose",
+                    "logType": "Pose2d",
+                    "visible": true,
+                    "options": {}
+                  },
+                  {
+                    "type": "ghost",
+                    "logKey": "/RealOutputs/Vision/ValidPoses/0",
+                    "logType": "Pose2d",
+                    "visible": true,
+                    "options": {
+                      "color": "#00FF00"
+                    }
+                  },
+                  {
+                    "type": "ghost",
+                    "logKey": "/RealOutputs/Vision/ValidPoses/1",
+                    "logType": "Pose2d",
+                    "visible": true,
+                    "options": {
+                      "color": "#FFFF00"
+                    }
+                  }
+                ]
+              },
+              "controllerUUID": "gbswwl14zk3grvj0r5yz6mwpkvvyyals",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 9,
+              "title": "Swerve Diagnostics",
+              "controller": {
+                "sources": [
+                  {
+                    "type": "states",
+                    "logKey": "/RealOutputs/SwerveDrive/MeasuredStates",
+                    "logType": "SwerveModuleState[]",
+                    "visible": true,
+                    "options": {
+                      "color": "#0000FF"
+                    }
+                  },
+                  {
+                    "type": "states",
+                    "logKey": "/RealOutputs/SwerveDrive/DesiredStates",
+                    "logType": "SwerveModuleState[]",
+                    "visible": true,
+                    "options": {
+                      "color": "#FF0000"
+                    }
+                  }
+                ]
+              },
+              "controllerUUID": "vig97zqk4v7x8prun51jtsjf8dwj1nfl",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 1,
+              "title": "Power & Telemetry",
+              "controller": {
+                "discreteSources": [
+                  {
+                    "type": "stepped",
+                    "logKey": "/RealOutputs/PhysicsWorld/ComputedVoltage",
+                    "logType": "Number",
+                    "visible": true,
+                    "options": {
+                      "color": "#FF8C00"
+                    }
+                  }
+                ],
+                "rightSources": [
+                  {
+                    "type": "smooth",
+                    "logKey": "/RealOutputs/PhysicsWorld/FrameCurrentDraw_A",
+                    "logType": "Number",
+                    "visible": true,
+                    "options": {
+                      "color": "#FF0000"
+                    }
+                  }
+                ]
+              },
+              "controllerUUID": "m2y84rxqtyqe7kmwgzuhnl85d43881to",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 8,
+              "title": "Driver Inputs",
+              "controller": [
+                "Teleop/RawJoystickX",
+                "Teleop/RawJoystickY",
+                "Teleop/RawJoystickOmega"
+              ],
+              "controllerUUID": "qn8s0tvn957ku5tkb29anjwj52b8x6s7",
+              "renderer": null,
+              "controlsHeight": 0
+            },
+            {
+              "type": 4,
+              "title": "System State & Constants",
+              "controller": [
+                "SwerveDrive/LoadShedLimitAmps",
+                "Teleop/GyroLockActive",
+                "SystemCheck/Active",
+                "PhysicsWorld/ComputedVoltage",
+                "NT/TunableNumbers/Vision/TAG_STD_BASE"
+              ],
+              "controllerUUID": "axixr9edg436casxn63hs3cnhn2c7f6n",
+              "renderer": null,
+              "controlsHeight": 0
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "satellites": []
+}
