@@ -204,7 +204,7 @@ public class MARSSuperstructure extends SubsystemBase {
                   angleToGoal - robotPose.getRotation().getRadians());
           boolean isAligned = Math.abs(angleDiff) < Math.toRadians(15.0);
 
-          if (correctSide && isAligned) {
+          if (isAligned) {
             // Shoot the piece
             double vx = 15.0 * Math.cos(robotPose.getRotation().getRadians());
             double vy = 15.0 * Math.sin(robotPose.getRotation().getRadians());
@@ -216,7 +216,8 @@ public class MARSSuperstructure extends SubsystemBase {
                     vx,
                     vy,
                     vz,
-                    frc.robot.Constants.SuperstructureConstants.SCORE_HIGH_ELEVATOR_HEIGHT);
+                    frc.robot.Constants.SuperstructureConstants.SCORE_HIGH_ELEVATOR_HEIGHT,
+                    correctSide);
             gamePieceCount--;
           }
         }

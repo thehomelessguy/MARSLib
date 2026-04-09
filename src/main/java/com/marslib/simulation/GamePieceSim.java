@@ -23,6 +23,7 @@ public class GamePieceSim {
   private final Body gamePieceBody;
   private final String name;
   private boolean isIntaked = false;
+  private boolean isLegalShot = false;
   private double zHeightMeters = FieldConstants.GAME_PIECE_REST_HEIGHT_METERS;
   private double zVelocityMetersPerSecond = 0.0;
 
@@ -132,8 +133,9 @@ public class GamePieceSim {
         zHeightMeters = FieldConstants.GAME_PIECE_REST_HEIGHT_METERS;
 
         Translation2d pos = getPosition();
-        if (pos.getDistance(FieldConstants.BLUE_HUB_POS) < FieldConstants.HUB_SIZE_METERS
-            || pos.getDistance(FieldConstants.RED_HUB_POS) < FieldConstants.HUB_SIZE_METERS) {
+        if (isLegalShot
+            && (pos.getDistance(FieldConstants.BLUE_HUB_POS) < FieldConstants.HUB_SIZE_METERS
+                || pos.getDistance(FieldConstants.RED_HUB_POS) < FieldConstants.HUB_SIZE_METERS)) {
 
           // Roll out towards the center of the field
           Translation2d center =
@@ -172,8 +174,15 @@ public class GamePieceSim {
    * Respawns this (previously intaked) game piece into the physics world and applies initial
    * velocities.
    */
-  public void launch(Translation2d origin, double vx, double vy, double vz, double initialZHeight) {
+  public void launch(
+      Translation2d origin,
+      double vx,
+      double vy,
+      double vz,
+      double initialZHeight,
+      boolean isLegalShot) {
     this.isIntaked = false;
+    this.isLegalShot = isLegalShot;
     this.zHeightMeters = initialZHeight;
     this.zVelocityMetersPerSecond = vz;
 

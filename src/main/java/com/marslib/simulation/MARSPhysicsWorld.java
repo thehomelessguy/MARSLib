@@ -399,10 +399,11 @@ public class MARSPhysicsWorld {
       double vx,
       double vy,
       double vz,
-      double initialZHeight) {
+      double initialZHeight,
+      boolean isLegalShot) {
     for (GamePieceSim piece : gamePieces) {
       if (piece.isIntaked()) {
-        piece.launch(origin, vx, vy, vz, initialZHeight);
+        piece.launch(origin, vx, vy, vz, initialZHeight, isLegalShot);
         return; // Only launch 1 piece
       }
     }
