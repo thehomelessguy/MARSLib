@@ -1,6 +1,7 @@
 {
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.server.launchMode": "Standard",
+  "java.import.gradle.java.home": "C:/Users/Public/wpilib/2026/jdk",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
