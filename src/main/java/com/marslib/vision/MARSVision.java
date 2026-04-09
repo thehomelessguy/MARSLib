@@ -61,8 +61,20 @@ public class MARSVision extends SubsystemBase {
     latestTargetTranslation =
         java.util.Optional.empty(); // Reset each loop unless a target is found
 
+    com.marslib.swerve.GyroIOInputsAutoLogged gyro = swerveDrive.getGyroInputs();
+
     // Process AprilTags
     for (int i = 0; i < aprilTagIOs.size(); i++) {
+
+      if (gyro.connected) {
+        aprilTagIOs
+            .get(i)
+            .setRobotOrientation(
+                gyro.yawPositionRad, gyro.yawVelocityRadPerSec,
+                gyro.pitchPositionRad, gyro.pitchVelocityRadPerSec,
+                gyro.rollPositionRad, gyro.rollVelocityRadPerSec);
+      }
+
       aprilTagIOs.get(i).updateInputs(aprilTagInputs[i]);
       Logger.processInputs("Vision/AprilTag/" + i, aprilTagInputs[i]);
 

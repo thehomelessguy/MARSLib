@@ -16,4 +16,8 @@ public interface AprilTagVisionIO {
   }
 
   public default void updateInputs(AprilTagVisionIOInputs inputs) {}
+
+  /** Updates the camera configuration with the robot's current gyroscope orientation */
+  public default void setRobotOrientation(
+      double yaw, double yawRate, double pitch, double pitchRate, double roll, double rollRate) {}
 }

@@ -71,11 +71,16 @@ public class RobotLifecycleTest {
                 edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05),
             powerManager);
 
-    java.util.function.Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
-        distSupplier = () -> java.util.Optional.empty(); // Fixed dist
     superstructure =
         new MARSSuperstructure(
-            cowl, intakePivot, floorIntake, shooter, feeder, swerveDrive::getPose, distSupplier);
+            cowl,
+            intakePivot,
+            floorIntake,
+            shooter,
+            feeder,
+            swerveDrive::getPose,
+            () -> java.util.Optional.empty(),
+            () -> 0.0);
   }
 
   @AfterEach

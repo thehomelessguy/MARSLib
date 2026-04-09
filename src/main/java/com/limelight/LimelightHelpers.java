@@ -1,6 +1,7 @@
 package com.limelight;
 
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class LimelightHelpers {
   public static class PoseEstimate {
@@ -20,5 +21,24 @@ public class LimelightHelpers {
 
   public static PoseEstimate getBotPoseEstimate_wpiBlue(String limelightName) {
     return new PoseEstimate();
+  }
+
+  /**
+   * Pushes the robot's orientation directly to the Limelight over NetworkTables. This is required
+   * for accurate Megatag 2 solve generation and pitch correction.
+   */
+  public static void SetRobotOrientation(
+      String limelightName,
+      double yaw,
+      double yawRate,
+      double pitch,
+      double pitchRate,
+      double roll,
+      double rollRate) {
+    double[] entries = new double[] {yaw, yawRate, pitch, pitchRate, roll, rollRate};
+    NetworkTableInstance.getDefault()
+        .getTable(limelightName)
+        .getEntry("robot_orientation_set")
+        .setDoubleArray(entries);
   }
 }

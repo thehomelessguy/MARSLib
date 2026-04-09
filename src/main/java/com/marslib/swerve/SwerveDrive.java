@@ -459,8 +459,25 @@ public class SwerveDrive extends SubsystemBase {
       Pose2d visionRobotPoseMeters,
       double timestampSeconds,
       Matrix<N3, N1> visionMeasurementStdDevs) {
+
+    // 254 Vision Rejection Logic: Reject if angular velocities are too high (e.g. going over bumps)
+    double maxAngularVelocity =
+        Math.max(
+            Math.abs(gyroInputs.pitchVelocityRadPerSec),
+            Math.abs(gyroInputs.rollVelocityRadPerSec));
+    if (Math.toDegrees(maxAngularVelocity) > 10.0) {
+      Logger.recordOutput("SwerveDrive/VisionRejectedAngularVelocity", true);
+      return;
+    }
+    Logger.recordOutput("SwerveDrive/VisionRejectedAngularVelocity", false);
+
     poseEstimator.addVisionMeasurement(
         visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
+  }
+
+  /** Gets the current hardware or simulated Gyro inputs. */
+  public GyroIOInputsAutoLogged getGyroInputs() {
+    return gyroInputs;
   }
 
   /**

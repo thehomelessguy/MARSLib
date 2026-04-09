@@ -20,6 +20,8 @@ public class GyroIOPigeon2 implements GyroIO {
   private final StatusSignal<Angle> pitch;
   private final StatusSignal<Angle> roll;
   private final StatusSignal<AngularVelocity> yawVelocity;
+  private final StatusSignal<AngularVelocity> pitchVelocity;
+  private final StatusSignal<AngularVelocity> rollVelocity;
 
   /**
    * Constructs a Pigeon2 gyro IO layer.
@@ -34,8 +36,12 @@ public class GyroIOPigeon2 implements GyroIO {
     pitch = pigeon.getPitch();
     roll = pigeon.getRoll();
     yawVelocity = pigeon.getAngularVelocityZWorld();
+    pitchVelocity = pigeon.getAngularVelocityXWorld();
+    rollVelocity = pigeon.getAngularVelocityYWorld();
 
     yawVelocity.setUpdateFrequency(100.0);
+    pitchVelocity.setUpdateFrequency(100.0);
+    rollVelocity.setUpdateFrequency(100.0);
     // yaw frequency is managed by the OdometryThread
 
     PhoenixOdometryThread.getInstance().registerGyro(yaw);
@@ -45,12 +51,14 @@ public class GyroIOPigeon2 implements GyroIO {
 
   @Override
   public void updateInputs(GyroIOInputs inputs) {
-    BaseStatusSignal.refreshAll(yaw, pitch, roll, yawVelocity);
+    BaseStatusSignal.refreshAll(yaw, pitch, roll, yawVelocity, pitchVelocity, rollVelocity);
     inputs.connected = yaw.getStatus().isOK();
     inputs.yawPositionRad = Units.degreesToRadians(yaw.getValueAsDouble());
     inputs.pitchPositionRad = Units.degreesToRadians(pitch.getValueAsDouble());
     inputs.rollPositionRad = Units.degreesToRadians(roll.getValueAsDouble());
     inputs.yawVelocityRadPerSec = Units.degreesToRadians(yawVelocity.getValueAsDouble());
+    inputs.pitchVelocityRadPerSec = Units.degreesToRadians(pitchVelocity.getValueAsDouble());
+    inputs.rollVelocityRadPerSec = Units.degreesToRadians(rollVelocity.getValueAsDouble());
 
     double[] rawOdometryYaw = PhoenixOdometryThread.getInstance().getGyroYawData();
     // In MARSLib, we'll need to store this in GyroIOInputs. Let's assume there's a field for

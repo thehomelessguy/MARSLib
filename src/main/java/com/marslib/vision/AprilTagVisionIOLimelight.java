@@ -20,6 +20,19 @@ public class AprilTagVisionIOLimelight implements AprilTagVisionIO {
   }
 
   @Override
+  public void setRobotOrientation(
+      double yaw, double yawRate, double pitch, double pitchRate, double roll, double rollRate) {
+    LimelightHelpers.SetRobotOrientation(
+        cameraName,
+        Math.toDegrees(yaw),
+        Math.toDegrees(yawRate),
+        Math.toDegrees(pitch),
+        Math.toDegrees(pitchRate),
+        Math.toDegrees(roll),
+        Math.toDegrees(rollRate));
+  }
+
+  @Override
   public void updateInputs(AprilTagVisionIOInputs inputs) {
     // Utilize traditional MegaTag2 / BotPose wpiBlue
     PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(cameraName);

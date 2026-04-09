@@ -82,7 +82,14 @@ public class MatchReplayIntegrationTest {
         distSupplier = () -> java.util.Optional.empty();
     superstructure =
         new MARSSuperstructure(
-            cowl, intakePivot, floorIntake, shooter, feeder, swerveDrive::getPose, distSupplier);
+            cowl,
+            intakePivot,
+            floorIntake,
+            shooter,
+            feeder,
+            swerveDrive::getPose,
+            distSupplier,
+            () -> 0.0);
 
     ghostManager = new GhostManager();
   }

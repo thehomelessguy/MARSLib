@@ -46,6 +46,9 @@ public class GyroIOSim implements GyroIO {
 
     inputs.yawPositionRad = noisyYaw;
     inputs.yawVelocityRadPerSec = yawVelocityRadPerSec;
+    // Set simulated pitch/roll velocities to 0 for now as dyn4j 2D doesn't naturally provide them
+    inputs.pitchVelocityRadPerSec = 0.0;
+    inputs.rollVelocityRadPerSec = 0.0;
     // Provide per-frame yaw data so the pose estimator drain loop uses interpolated
     // yaw instead of a single scalar — prevents rotational aliasing during fast turns.
     inputs.odometryYawPositions = new double[] {noisyYaw};

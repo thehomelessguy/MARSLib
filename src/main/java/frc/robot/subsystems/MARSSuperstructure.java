@@ -29,7 +29,8 @@ public class MARSSuperstructure extends SubsystemBase {
     INTAKE_DOWN,
     INTAKE_RUNNING,
     SCORE,
-    UNJAM
+    UNJAM,
+    BEACHED
   }
 
   private final MARSStateMachine<SuperstructureState> stateMachine;
@@ -38,6 +39,8 @@ public class MARSSuperstructure extends SubsystemBase {
   private double goalCowlAngle = 0.0;
   private double goalIntakeAngle = 0.0;
 
+  private final Supplier<Double> tiltRadiansSupplier;
+
   public MARSSuperstructure(
       MARSCowl cowl,
       MARSIntakePivot intakePivot,
@@ -45,8 +48,8 @@ public class MARSSuperstructure extends SubsystemBase {
       MARSShooter shooter,
       MARSShooter feeder,
       Supplier<Pose2d> poseSupplier,
-      Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
-          visionTargetSupplier) {
+      Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>> visionTargetSupplier,
+      Supplier<Double> tiltRadiansSupplier) {
 
     this.cowl = cowl;
     this.intakePivot = intakePivot;
@@ -55,6 +58,7 @@ public class MARSSuperstructure extends SubsystemBase {
     this.feeder = feeder;
     this.poseSupplier = poseSupplier;
     this.visionTargetSupplier = visionTargetSupplier;
+    this.tiltRadiansSupplier = tiltRadiansSupplier;
 
     stateMachine =
         new MARSStateMachine<>(
@@ -65,6 +69,13 @@ public class MARSSuperstructure extends SubsystemBase {
         SuperstructureState.INTAKE_DOWN, SuperstructureState.INTAKE_RUNNING);
     stateMachine.addValidBidirectional(SuperstructureState.STOWED, SuperstructureState.SCORE);
     stateMachine.addValidBidirectional(SuperstructureState.STOWED, SuperstructureState.UNJAM);
+    stateMachine.addValidBidirectional(SuperstructureState.STOWED, SuperstructureState.BEACHED);
+    stateMachine.addValidBidirectional(
+        SuperstructureState.INTAKE_DOWN, SuperstructureState.BEACHED);
+    stateMachine.addValidBidirectional(
+        SuperstructureState.INTAKE_RUNNING, SuperstructureState.BEACHED);
+    stateMachine.addValidBidirectional(SuperstructureState.SCORE, SuperstructureState.BEACHED);
+    stateMachine.addValidBidirectional(SuperstructureState.UNJAM, SuperstructureState.BEACHED);
 
     stateMachine.setEntryAction(
         SuperstructureState.SCORE,
@@ -107,6 +118,11 @@ public class MARSSuperstructure extends SubsystemBase {
 
   @Override
   public void periodic() {
+    double tiltDegrees = Math.toDegrees(Math.abs(tiltRadiansSupplier.get()));
+    if (tiltDegrees > 25.0 && stateMachine.getState() != SuperstructureState.BEACHED) {
+      forceState(SuperstructureState.BEACHED);
+    }
+
     stateMachine.update();
     SuperstructureState currentState = stateMachine.getState();
 
@@ -144,6 +160,7 @@ public class MARSSuperstructure extends SubsystemBase {
         break;
       case STOWED:
       case UNJAM:
+      case BEACHED:
       default:
         goalIntakeAngle = 0.0;
         goalCowlAngle = 0.0;
@@ -247,7 +264,8 @@ public class MARSSuperstructure extends SubsystemBase {
         feeder.setVoltage(0.0);
         floorIntake.setVoltage(0.0);
       }
-    } else if (currentState != SuperstructureState.UNJAM) {
+    } else if (currentState != SuperstructureState.UNJAM
+        && currentState != SuperstructureState.BEACHED) {
       double currentRPM = shooter.getVelocityRadPerSec() * 60.0 / (Math.PI * 2.0);
       if (currentRPM > 1600.0) {
         shooter.setVoltage(0.0); // Coast down via friction
@@ -255,6 +273,9 @@ public class MARSSuperstructure extends SubsystemBase {
         double idleRadPerSec = 1500.0 * Math.PI * 2.0 / 60.0;
         shooter.setClosedLoopVelocity(idleRadPerSec); // Maintain idle speed
       }
+      feeder.setVoltage(0.0);
+    } else if (currentState == SuperstructureState.BEACHED) {
+      shooter.setVoltage(0.0);
       feeder.setVoltage(0.0);
     }
 

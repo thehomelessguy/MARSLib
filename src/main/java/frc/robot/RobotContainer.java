@@ -310,7 +310,11 @@ public class RobotContainer {
             shooter,
             feeder,
             swerveDrive::getPose,
-            vision::getBestTargetTranslation);
+            vision::getBestTargetTranslation,
+            () -> {
+              com.marslib.swerve.GyroIO.GyroIOInputs gyro = swerveDrive.getGyroInputs();
+              return Math.acos(Math.cos(gyro.pitchPositionRad) * Math.cos(gyro.rollPositionRad));
+            });
 
     // Configure PathPlanner AutoBuilder AFTER construction — composition root owns this
     swerveDrive.configurePathPlanner();

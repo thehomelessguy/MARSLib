@@ -58,13 +58,18 @@ public class MARSSuperstructureTest {
         new FlywheelIOSim(edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.002);
     feeder = new MARSShooter(physicalFeederSim, powerManager);
 
-    Supplier<Pose2d> mockSupplier = () -> new Pose2d();
-    java.util.function.Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
-        distSupplier = () -> java.util.Optional.empty(); // Fixed dist
+    Supplier<Pose2d> poseSupplier = () -> new Pose2d();
 
     superstructure =
         new MARSSuperstructure(
-            cowl, intakePivot, floorIntake, shooter, feeder, mockSupplier, distSupplier);
+            cowl,
+            intakePivot,
+            floorIntake,
+            shooter,
+            feeder,
+            poseSupplier,
+            () -> java.util.Optional.empty(),
+            () -> 0.0);
   }
 
   @AfterEach
