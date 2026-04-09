@@ -416,4 +416,44 @@ public class SwerveDrive extends SubsystemBase {
     poseEstimator.addVisionMeasurement(
         visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);
   }
+
+  /**
+   * Generates a command that automatically paths the robot to the specified target utilizing
+   * PathPlanner's physics-constrained solver to avoid field obstacles dynamically.
+   *
+   * @param target A supplier of the absolute field pose to navigate to.
+   * @return A Command orchestrating the autonomous drive.
+   */
+  public Command alignToPoint(java.util.function.Supplier<Pose2d> target) {
+    return edu.wpi.first.wpilibj2.command.Commands.defer(
+        () -> {
+          return AutoBuilder.pathfindToPose(
+              target.get(),
+              new com.pathplanner.lib.path.PathConstraints(
+                  SwerveConstants.MAX_LINEAR_SPEED_MPS,
+                  SwerveConstants.MAX_LINEAR_SPEED_MPS,
+                  SwerveConstants.MAX_ANGULAR_SPEED_RAD_PER_SEC,
+                  SwerveConstants.MAX_ANGULAR_SPEED_RAD_PER_SEC),
+              0.0 // goal end velocity
+              );
+        },
+        java.util.Set.of(this));
+  }
+
+  /**
+   * Open-loop dead-reckoning sequence designed to precisely lock the robot onto the climb chain
+   * using predefined translational bump limits.
+   *
+   * @return A Command sequencing forced chassis movement.
+   */
+  public Command finalClimbLineupCommand() {
+    return edu.wpi.first.wpilibj2.command.Commands.sequence(
+            edu.wpi.first.wpilibj2.command.Commands.run(
+                    () -> runVelocity(new ChassisSpeeds(0.0, -0.5, 0.0)), this)
+                .withTimeout(0.5),
+            edu.wpi.first.wpilibj2.command.Commands.run(
+                    () -> runVelocity(new ChassisSpeeds(0.5, 0.0, 0.0)), this)
+                .withTimeout(0.5))
+        .finallyDo(() -> runVelocity(new ChassisSpeeds()));
+  }
 }

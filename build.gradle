@@ -277,8 +277,9 @@ abstract class GenerateVersionFile extends DefaultTask {
         def gitBranch = execute("git rev-parse --abbrev-ref HEAD")
         def gitRevision = execute("git rev-list --count HEAD")
         def gitDate = execute("git log -1 --format=%cd --date=format:'%Y-%m-%d %H:%M:%S %Z'")
-        def buildDate = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss z").format(new Date())
-        def buildUnixTime = System.currentTimeMillis()
+        def now = java.time.ZonedDateTime.now()
+        def buildDate = now.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"))
+        def buildUnixTime = now.toInstant().toEpochMilli()
         def dirty = execute("git status --porcelain").isEmpty() ? 0 : 1
 
         outputFile.text = """package frc.robot;

@@ -129,6 +129,18 @@ public final class RobotBindings {
         .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
 
     controller.bindWhileTrue(
+        controller.y(),
+        "Y",
+        "Align To Climb Position",
+        swerveDrive.alignToPoint(
+            () ->
+                frc.robot.constants.FieldConstants.getClosestClimbingPosition(
+                    swerveDrive.getPose())));
+
+    controller.bindOnTrue(
+        controller.x(), "X", "Final Climb Lineup", swerveDrive.finalClimbLineupCommand());
+
+    controller.bindWhileTrue(
         controller.povUp(),
         "DPad_Up",
         "Manual Climber Up",

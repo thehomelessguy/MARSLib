@@ -37,4 +37,33 @@ public final class FieldConstants {
       new edu.wpi.first.math.geometry.Translation2d(11.91, 4.03);
   public static final edu.wpi.first.math.geometry.Translation2d BLUE_HUB_POS =
       new edu.wpi.first.math.geometry.Translation2d(4.62, 4.03);
+
+  public static final edu.wpi.first.math.geometry.Pose2d BLUE_NEARDEPOT_CLIMB_POSE =
+      new edu.wpi.first.math.geometry.Pose2d(
+          1.1, 4.86, edu.wpi.first.math.geometry.Rotation2d.fromDegrees(180));
+  public static final edu.wpi.first.math.geometry.Pose2d BLUE_OUTPOST_CLIMB_POSE =
+      new edu.wpi.first.math.geometry.Pose2d(
+          1.0, 2.6, edu.wpi.first.math.geometry.Rotation2d.fromDegrees(0));
+  public static final edu.wpi.first.math.geometry.Pose2d RED_NEARDEPOT_CLIMB_POSE =
+      new edu.wpi.first.math.geometry.Pose2d(
+          15.35, 3.2, edu.wpi.first.math.geometry.Rotation2d.fromDegrees(0));
+  public static final edu.wpi.first.math.geometry.Pose2d RED_NEAROUTPOST_CLIMB_POSE =
+      new edu.wpi.first.math.geometry.Pose2d(
+          15.4, 5.45, edu.wpi.first.math.geometry.Rotation2d.fromDegrees(180));
+
+  private static final java.util.List<edu.wpi.first.math.geometry.Pose2d> CLIMB_POSES_BLUE =
+      java.util.List.of(BLUE_NEARDEPOT_CLIMB_POSE, BLUE_OUTPOST_CLIMB_POSE);
+  private static final java.util.List<edu.wpi.first.math.geometry.Pose2d> CLIMB_POSES_RED =
+      java.util.List.of(RED_NEARDEPOT_CLIMB_POSE, RED_NEAROUTPOST_CLIMB_POSE);
+
+  public static edu.wpi.first.math.geometry.Pose2d getClosestClimbingPosition(
+      edu.wpi.first.math.geometry.Pose2d currentRobotPose) {
+    java.util.Optional<edu.wpi.first.wpilibj.DriverStation.Alliance> alliance =
+        edu.wpi.first.wpilibj.DriverStation.getAlliance();
+    if (alliance.isPresent()
+        && alliance.get() == edu.wpi.first.wpilibj.DriverStation.Alliance.Blue) {
+      return currentRobotPose.nearest(CLIMB_POSES_BLUE);
+    }
+    return currentRobotPose.nearest(CLIMB_POSES_RED);
+  }
 }
