@@ -1,6 +1,5 @@
 package frc.robot.constants;
 
-import com.marslib.mechanisms.*;
 import com.marslib.util.LoggedTunableNumber;
 
 public final class VisionConstants {

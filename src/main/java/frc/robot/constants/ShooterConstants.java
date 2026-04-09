@@ -1,7 +1,5 @@
 package frc.robot.constants;
 
-import com.marslib.mechanisms.*;
-
 public final class ShooterConstants {
   public static final int LM_MOTOR_ID = 9;
   public static final int LF_MOTOR_ID = 10;

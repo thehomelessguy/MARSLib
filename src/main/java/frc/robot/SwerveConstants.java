@@ -1,6 +1,5 @@
 package frc.robot;
 
-import com.marslib.mechanisms.*;
 import edu.wpi.first.math.geometry.Translation2d;
 
 /**

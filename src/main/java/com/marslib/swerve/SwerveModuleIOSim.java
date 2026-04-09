@@ -1,14 +1,11 @@
 package com.marslib.swerve;
 
-import static frc.robot.constants.ModeConstants.*;
-
 import com.marslib.simulation.SwerveChassisPhysics;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
 import frc.robot.SwerveConstants;
-import frc.robot.constants.*;
 import frc.robot.constants.ModeConstants;
 
 /**

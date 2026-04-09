@@ -1,0 +1,94 @@
+{
+  "name": "MARSLib Local Skills",
+  "description": "Local MARSLib framework skills for FRC robot development",
+  "plugins": [
+    {
+      "name": "marslib",
+      "source": "./marslib"
+    },
+    {
+      "name": "marslib-elite-mining",
+      "source": "./marslib-elite-mining"
+    },
+    {
+      "name": "marslib-autonomous",
+      "source": "./marslib-autonomous"
+    },
+    {
+      "name": "marslib-ci",
+      "source": "./marslib-ci"
+    },
+    {
+      "name": "marslib-control-theory",
+      "source": "./marslib-control-theory"
+    },
+    {
+      "name": "marslib-diagnostics",
+      "source": "./marslib-diagnostics"
+    },
+    {
+      "name": "marslib-ghost",
+      "source": "./marslib-ghost"
+    },
+    {
+      "name": "marslib-led",
+      "source": "./marslib-led"
+    },
+    {
+      "name": "marslib-math",
+      "source": "./marslib-math"
+    },
+    {
+      "name": "marslib-mechanisms",
+      "source": "./marslib-mechanisms"
+    },
+    {
+      "name": "marslib-network",
+      "source": "./marslib-network"
+    },
+    {
+      "name": "marslib-operator",
+      "source": "./marslib-operator"
+    },
+    {
+      "name": "marslib-power",
+      "source": "./marslib-power"
+    },
+    {
+      "name": "marslib-shotsetup",
+      "source": "./marslib-shotsetup"
+    },
+    {
+      "name": "marslib-simulation",
+      "source": "./marslib-simulation"
+    },
+    {
+      "name": "marslib-skill-authoring",
+      "source": "./marslib-skill-authoring"
+    },
+    {
+      "name": "marslib-statemachine",
+      "source": "./marslib-statemachine"
+    },
+    {
+      "name": "marslib-superstructure",
+      "source": "./marslib-superstructure"
+    },
+    {
+      "name": "marslib-swerve",
+      "source": "./marslib-swerve"
+    },
+    {
+      "name": "marslib-telemetry",
+      "source": "./marslib-telemetry"
+    },
+    {
+      "name": "marslib-testing",
+      "source": "./marslib-testing"
+    },
+    {
+      "name": "marslib-vision",
+      "source": "./marslib-vision"
+    }
+  ]
+}

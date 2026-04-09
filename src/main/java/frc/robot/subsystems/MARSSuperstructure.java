@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.marslib.mechanisms.*;
 import com.marslib.util.EliteShooterMath;
 import com.marslib.util.MARSStateMachine;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -20,6 +19,8 @@ public class MARSSuperstructure extends SubsystemBase {
   private final MARSShooter feeder;
 
   private final Supplier<Pose2d> poseSupplier;
+
+  @SuppressWarnings("PMD.UnusedPrivateField")
   private final Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
       visionTargetSupplier;
 
@@ -108,21 +109,6 @@ public class MARSSuperstructure extends SubsystemBase {
   public void periodic() {
     stateMachine.update();
     SuperstructureState currentState = stateMachine.getState();
-
-    double currentDistance;
-    java.util.Optional<edu.wpi.first.math.geometry.Translation2d> targetOpt =
-        visionTargetSupplier != null ? visionTargetSupplier.get() : java.util.Optional.empty();
-    if (targetOpt.isPresent()) {
-      currentDistance = poseSupplier.get().getTranslation().getDistance(targetOpt.get());
-    } else {
-      edu.wpi.first.math.geometry.Translation2d hub =
-          edu.wpi.first.wpilibj.DriverStation.getAlliance().isPresent()
-                  && edu.wpi.first.wpilibj.DriverStation.getAlliance().get()
-                      == edu.wpi.first.wpilibj.DriverStation.Alliance.Red
-              ? frc.robot.constants.FieldConstants.RED_HUB_POS
-              : frc.robot.constants.FieldConstants.BLUE_HUB_POS;
-      currentDistance = poseSupplier.get().getTranslation().getDistance(hub);
-    }
 
     switch (currentState) {
       case INTAKE_DOWN:

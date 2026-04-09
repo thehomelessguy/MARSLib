@@ -1,7 +1,5 @@
 package frc.robot.constants;
 
-import com.marslib.mechanisms.*;
-
 public final class SuperstructureConstants {
   public static final double INTAKE_PIVOT_ANGLE = Math.PI / 4;
 

@@ -1,7 +1,5 @@
 package frc.robot.constants;
 
-import com.marslib.mechanisms.*;
-
 public final class AutoConstants {
   public static final double MAX_VELOCITY_MPS = 3.0;
   public static final double MAX_ACCELERATION_MPS2 = 2.0;

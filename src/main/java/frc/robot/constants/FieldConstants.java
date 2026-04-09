@@ -1,7 +1,5 @@
 package frc.robot.constants;
 
-import com.marslib.mechanisms.*;
-
 public final class FieldConstants {
   /** Standard FRC field length (meters). */
   public static final double FIELD_LENGTH_METERS = 16.541;

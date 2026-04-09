@@ -1,7 +1,5 @@
 package frc.robot.constants;
 
-import com.marslib.mechanisms.*;
-
 public final class ClimberConstants {
   public static final int FAST_MOTOR_ID = 19;
   public static final int FLIP_LEADER_ID = 17;

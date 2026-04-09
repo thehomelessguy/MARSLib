@@ -1,6 +1,5 @@
 package frc.robot.simulation;
 
-import com.marslib.mechanisms.*;
 import com.marslib.simulation.MARSPhysicsWorld;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;

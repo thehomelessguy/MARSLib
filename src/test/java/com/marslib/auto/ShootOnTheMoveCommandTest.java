@@ -2,7 +2,6 @@ package com.marslib.auto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.marslib.mechanisms.*;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIOSim;
 import com.marslib.swerve.GyroIOSim;
@@ -19,7 +18,6 @@ import frc.robot.commands.*;
 import frc.robot.constants.FieldConstants;
 import frc.robot.constants.ModeConstants;
 import frc.robot.constants.ShooterConstants;
-import frc.robot.simulation.*;
 import frc.robot.subsystems.MARSCowl;
 import frc.robot.subsystems.MARSShooter;
 import org.junit.jupiter.api.AfterEach;
@@ -38,7 +36,6 @@ public class ShootOnTheMoveCommandTest {
   private SwerveDrive swerveDrive;
   private MARSCowl cowl;
   private MARSShooter shooter;
-  private MARSPowerManager powerManager;
 
   @BeforeEach
   public void setUp() {

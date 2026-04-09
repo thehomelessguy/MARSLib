@@ -1,12 +1,8 @@
 package frc.robot;
 
-import static frc.robot.constants.ModeConstants.*;
-import static frc.robot.constants.ModeConstants.Mode.*;
-
 import com.marslib.auto.GhostManager;
 import com.marslib.hmi.LEDIOAddressable;
 import com.marslib.hmi.LEDManager;
-import com.marslib.mechanisms.*;
 import com.marslib.mechanisms.FlywheelIO;
 import com.marslib.mechanisms.FlywheelIOSim;
 import com.marslib.mechanisms.FlywheelIOTalonFX;
@@ -34,7 +30,6 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.*;
 import frc.robot.constants.ClimberConstants;
 import frc.robot.constants.CowlConstants;
 import frc.robot.constants.DriveConstants;

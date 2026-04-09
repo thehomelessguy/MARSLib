@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/david/.claude/skills/**)",
+      "Read(.agents/skills/**)"
+    ]
+  },
+  "extraKnownMarketplaces": {
+    "marslib-local": {
+      "source": {
+        "source": "directory",
+        "path": ".agents/skills"
+      }
+    }
+  }
+}

@@ -1,14 +1,11 @@
 package com.marslib.auto;
 
-import static frc.robot.constants.ModeConstants.*;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.*;
 import frc.robot.constants.AutoConstants;
 
 /**

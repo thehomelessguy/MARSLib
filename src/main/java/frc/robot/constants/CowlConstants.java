@@ -1,7 +1,5 @@
 package frc.robot.constants;
 
-import com.marslib.mechanisms.*;
-
 public final class CowlConstants {
   public static final int MOTOR_ID = 13;
   public static final String CANBUS = "CAN2";

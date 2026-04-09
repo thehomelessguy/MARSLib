@@ -1,7 +1,5 @@
 package frc.robot.constants;
 
-import com.marslib.mechanisms.*;
-
 public final class SimulationConstants {
   public static final boolean ENABLE_VISION_OCCLUSION = false;
   public static final double VISION_OCCLUSION_DROP_PROBABILITY = 0.05;

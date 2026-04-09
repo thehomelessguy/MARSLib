@@ -1,7 +1,5 @@
 package frc.robot.constants;
 
-import com.marslib.mechanisms.*;
-
 public final class DriveConstants {
   public static final String CANBUS = "rio";
 

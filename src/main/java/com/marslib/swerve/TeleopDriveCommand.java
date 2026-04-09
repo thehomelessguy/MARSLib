@@ -1,7 +1,5 @@
 package com.marslib.swerve;
 
-import static frc.robot.constants.ModeConstants.*;
-
 import com.marslib.auto.GhostManager;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -12,7 +10,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.*;
 import frc.robot.constants.DriveConstants;
 import java.util.function.DoubleSupplier;
 import org.littletonrobotics.junction.Logger;

@@ -1,7 +1,5 @@
 package frc.robot.constants;
 
-import com.marslib.mechanisms.*;
-
 public final class IntakeConstants {
   public static final int PIVOT_MOTOR_ID = 14;
   public static final int ROLLER_MOTOR_ID = 15;

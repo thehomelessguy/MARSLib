@@ -1,0 +1,16 @@
+{
+  "name": "marslib-statemachine",
+  "version": "1.0.0",
+  "description": "MARSLib statemachine - FRC robot code framework component",
+  "author": {
+    "name": "Team MARS 2614",
+    "url": "https://github.com/MARSLib"
+  },
+  "repository": "https://github.com/MARSLib/MARSLib",
+  "license": "MIT",
+  "keywords": [
+    "frc",
+    "marslib",
+    "statemachine"
+  ]
+}
