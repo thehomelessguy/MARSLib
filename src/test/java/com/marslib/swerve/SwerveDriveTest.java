@@ -2,6 +2,7 @@ package com.marslib.swerve;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.marslib.mechanisms.*;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIO;
 import com.marslib.simulation.MARSPhysicsWorld;
@@ -10,8 +11,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants;
 import frc.robot.SwerveConstants;
+import frc.robot.commands.*;
+import frc.robot.constants.PowerConstants;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -77,7 +81,7 @@ public class SwerveDriveTest {
   @Test
   public void testLoadSheddingRestrictsHardwareOutputs() {
     // Drop voltage to trigger protective shutdown mode
-    simulatedVoltageOverride = Constants.PowerConstants.CRITICAL_VOLTAGE - 0.5;
+    simulatedVoltageOverride = PowerConstants.CRITICAL_VOLTAGE - 0.5;
 
     // Command drive
     swerveDrive.runVelocity(new ChassisSpeeds(1.0, 0.0, 0.0));

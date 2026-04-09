@@ -2,10 +2,8 @@ package com.marslib.integration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.marslib.mechanisms.*;
 import com.marslib.mechanisms.FlywheelIOSim;
-import com.marslib.mechanisms.MARSArm;
-import com.marslib.mechanisms.MARSShooter;
-import com.marslib.mechanisms.MARSSuperstructure;
 import com.marslib.mechanisms.RotaryMechanismIOSim;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIOSim;
@@ -22,7 +20,12 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import java.util.function.DoubleSupplier;
+import frc.robot.commands.*;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
+import frc.robot.subsystems.MARSArm;
+import frc.robot.subsystems.MARSShooter;
+import frc.robot.subsystems.MARSSuperstructure;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -74,7 +77,8 @@ public class RobotLifecycleTest {
                 edu.wpi.first.math.system.plant.DCMotor.getKrakenX60Foc(1), 1.0, 0.05),
             powerManager);
 
-    DoubleSupplier distSupplier = () -> 5.0; // Fixed dist
+    java.util.function.Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
+        distSupplier = () -> java.util.Optional.empty(); // Fixed dist
     ShotSetup shotSetup =
         new ShotSetup(0.0, 1.5, 6000, 0.1, 5, 0.01, 0.1, 1.0, new Transform2d(), new Rotation2d());
 

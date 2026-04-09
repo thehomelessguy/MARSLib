@@ -1,12 +1,13 @@
-package com.marslib.auto;
+package frc.robot.commands;
 
-import com.marslib.mechanisms.MARSArm;
-import com.marslib.mechanisms.MARSElevator;
+import com.marslib.mechanisms.*;
 import com.marslib.swerve.SwerveDrive;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.MARSArm;
+import frc.robot.subsystems.MARSClimber;
 
 /** Sequential command group that performs a predefined sequence of automated hardware checks. */
 public class MARSDiagnosticCheck extends SequentialCommandGroup {
@@ -27,7 +28,7 @@ public class MARSDiagnosticCheck extends SequentialCommandGroup {
    * @param fastClimber The main lifting/climbing mechanism.
    * @param cowl The shooter hood / adjustable angle mechanism.
    */
-  public MARSDiagnosticCheck(SwerveDrive swerveDrive, MARSElevator fastClimber, MARSArm cowl) {
+  public MARSDiagnosticCheck(SwerveDrive swerveDrive, MARSClimber climber, MARSArm cowl) {
 
     addCommands(
         // Ensure standard telemetry begins
@@ -46,13 +47,13 @@ public class MARSDiagnosticCheck extends SequentialCommandGroup {
         cowl.run(() -> cowl.setTargetPosition(0.2)).withTimeout(0.5),
 
         // Climbers Check
-        Commands.runOnce(() -> fastClimber.setVoltage(6.0), fastClimber),
+        Commands.runOnce(() -> climber.setFastClimbVoltage(6.0), climber),
         Commands.waitSeconds(0.5),
-        Commands.runOnce(() -> fastClimber.setVoltage(0.0), fastClimber),
+        Commands.runOnce(() -> climber.setFastClimbVoltage(0.0), climber),
 
         // Move target positions back to 0
         Commands.runOnce(() -> cowl.setTargetPosition(0.0), cowl),
-        Commands.runOnce(() -> fastClimber.setTargetPosition(0.0), fastClimber),
+        Commands.runOnce(() -> climber.setFastClimbPosition(0.0), climber),
         Commands.runOnce(() -> DriverStation.reportWarning("Diagnostic Check Complete!", false)));
   }
 }

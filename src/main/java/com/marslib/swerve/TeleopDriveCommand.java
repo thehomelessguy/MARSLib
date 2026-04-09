@@ -1,15 +1,19 @@
 package com.marslib.swerve;
 
+import static frc.robot.constants.ModeConstants.*;
+
 import com.marslib.auto.GhostManager;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+import frc.robot.constants.*;
+import frc.robot.constants.DriveConstants;
 import java.util.function.DoubleSupplier;
 import org.littletonrobotics.junction.Logger;
 
@@ -27,14 +31,12 @@ public class TeleopDriveCommand extends Command {
   private final DoubleSupplier ySupplier;
   private final DoubleSupplier omegaSupplier;
 
-  private final SlewRateLimiter xLimiter =
-      new SlewRateLimiter(Constants.DriveConstants.TELEOP_LINEAR_ACCEL_LIMIT);
-  private final SlewRateLimiter yLimiter =
-      new SlewRateLimiter(Constants.DriveConstants.TELEOP_LINEAR_ACCEL_LIMIT);
+  private final TractionControlLimiter tractionLimiter =
+      new TractionControlLimiter(DriveConstants.TELEOP_LINEAR_ACCEL_LIMIT);
   private final SlewRateLimiter omegaLimiter =
-      new SlewRateLimiter(Constants.DriveConstants.TELEOP_OMEGA_ACCEL_LIMIT);
+      new SlewRateLimiter(DriveConstants.TELEOP_OMEGA_ACCEL_LIMIT);
   private final PIDController headingController =
-      new PIDController(Constants.DriveConstants.HEADING_KP, 0, 0);
+      new PIDController(DriveConstants.HEADING_KP, 0, 0);
 
   private Rotation2d targetHeading = new Rotation2d();
   private final ChassisSpeeds targetSpeeds = new ChassisSpeeds();
@@ -84,11 +86,12 @@ public class TeleopDriveCommand extends Command {
     double omgVal =
         MathUtil.applyDeadband(ghostManager.getRightX(() -> rawOmega), TeleopDriveMath.DEADBAND);
 
-    double finalX = xLimiter.calculate(preSlewSpeeds.vxMetersPerSecond);
-    double finalY = yLimiter.calculate(preSlewSpeeds.vyMetersPerSecond);
+    Translation2d targetTrans =
+        new Translation2d(preSlewSpeeds.vxMetersPerSecond, preSlewSpeeds.vyMetersPerSecond);
+    Translation2d finalTrans = tractionLimiter.calculate(targetTrans);
 
-    targetSpeeds.vxMetersPerSecond = finalX;
-    targetSpeeds.vyMetersPerSecond = finalY;
+    targetSpeeds.vxMetersPerSecond = finalTrans.getX();
+    targetSpeeds.vyMetersPerSecond = finalTrans.getY();
 
     if (Math.abs(omgVal) <= 0.01) {
       if (Math.abs(xVal) > 0.01 || Math.abs(yVal) > 0.01) {

@@ -44,7 +44,7 @@ public class SwerveModule {
   /**
    * Iterates over the high-frequency positional arrays produced by internal Phoenix 6 Odometry
    * Threads to generate intermediate WPILib poses across a single {@value
-   * frc.robot.Constants#LOOP_PERIOD_SECS}s delta window.
+   * frc.robot.Constants#ModeConstants.LOOP_PERIOD_SECS}s delta window.
    *
    * @return Array of all physical module locations over the delta window in abstract WPILib
    *     kinematics terms.

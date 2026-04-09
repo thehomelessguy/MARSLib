@@ -5,7 +5,8 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.simulation.BatterySim;
 import edu.wpi.first.wpilibj.simulation.RoboRioSim;
-import frc.robot.Constants.FieldConstants;
+import frc.robot.constants.FieldConstants;
+import frc.robot.simulation.GamePieceSim;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -151,7 +152,7 @@ public class MARSPhysicsWorld {
 
   /** Places the initial set of 168 Fuel game pieces according to official 2026 REBUILT rules. */
   private void spawnInitialGamePieces() {
-    double fuelDiameter = frc.robot.Constants.FieldConstants.GAME_PIECE_RADIUS_METERS * 2.0;
+    double fuelDiameter = frc.robot.constants.FieldConstants.GAME_PIECE_RADIUS_METERS * 2.0;
     // Add small buffer to prevent dyn4j physics collision overlap on spawn
     double spacing = fuelDiameter + 0.05;
 
@@ -201,8 +202,8 @@ public class MARSPhysicsWorld {
   private Body buildStaticRectangle(double x, double y, double w, double h) {
     Body body = new Body();
     BodyFixture fixture = body.addFixture(Geometry.createRectangle(w, h));
-    fixture.setFriction(frc.robot.Constants.FieldConstants.WALL_FRICTION);
-    fixture.setRestitution(frc.robot.Constants.FieldConstants.WALL_RESTITUTION);
+    fixture.setFriction(frc.robot.constants.FieldConstants.WALL_FRICTION);
+    fixture.setRestitution(frc.robot.constants.FieldConstants.WALL_RESTITUTION);
     body.setMass(MassType.INFINITE);
     body.translate(x, y);
     world.addBody(body);
@@ -230,7 +231,7 @@ public class MARSPhysicsWorld {
 
     // Simulate stronger friction and deadened bounciness to prevent infinite sliding off core
     // elements
-    fixture.setFriction(frc.robot.Constants.FieldConstants.WALL_FRICTION * 2.5);
+    fixture.setFriction(frc.robot.constants.FieldConstants.WALL_FRICTION * 2.5);
     fixture.setRestitution(0.01);
 
     body.setMass(MassType.INFINITE);

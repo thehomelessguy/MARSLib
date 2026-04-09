@@ -2,6 +2,7 @@ package com.marslib.auto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.marslib.mechanisms.*;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIOSim;
 import com.marslib.swerve.GyroIOSim;
@@ -14,7 +15,12 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants;
+import frc.robot.commands.*;
+import frc.robot.constants.FieldConstants;
+import frc.robot.constants.ModeConstants;
+import frc.robot.constants.ShooterConstants;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,17 +69,17 @@ public class ShootOnTheMoveCommandTest {
     CommandScheduler.getInstance().schedule(command);
 
     for (int i = 0; i < 300; i++) {
-      SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+      SimHooks.stepTiming(ModeConstants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
-      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(ModeConstants.LOOP_PERIOD_SECS);
     }
 
     // From (0,0) aiming at BLUE_HUB_POS, the expected target angle is atan2(hub_y, hub_x)
     Pose2d resultingPose = swerveDrive.getPose();
     double expectedAngleRaw =
         Math.atan2(
-            Constants.FieldConstants.BLUE_HUB_POS.getY() - resultingPose.getY(),
-            Constants.FieldConstants.BLUE_HUB_POS.getX() - resultingPose.getX());
+            FieldConstants.BLUE_HUB_POS.getY() - resultingPose.getY(),
+            FieldConstants.BLUE_HUB_POS.getX() - resultingPose.getX());
 
     double finalDeg = resultingPose.getRotation().getDegrees();
     double expectedDeg = Math.toDegrees(expectedAngleRaw);
@@ -94,9 +100,9 @@ public class ShootOnTheMoveCommandTest {
     CommandScheduler.getInstance().schedule(command);
 
     for (int i = 0; i < 300; i++) {
-      SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+      SimHooks.stepTiming(ModeConstants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
-      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(ModeConstants.LOOP_PERIOD_SECS);
     }
 
     Pose2d resultingPose = swerveDrive.getPose();
@@ -108,8 +114,8 @@ public class ShootOnTheMoveCommandTest {
 
     double staticAngleRaw =
         Math.atan2(
-            Constants.FieldConstants.BLUE_HUB_POS.getY() - resultingPose.getY(),
-            Constants.FieldConstants.BLUE_HUB_POS.getX() - resultingPose.getX());
+            FieldConstants.BLUE_HUB_POS.getY() - resultingPose.getY(),
+            FieldConstants.BLUE_HUB_POS.getX() - resultingPose.getX());
 
     double expectedStaticDeg = Math.toDegrees(staticAngleRaw);
     double actualDeg = resultingPose.getRotation().getDegrees();
@@ -136,9 +142,9 @@ public class ShootOnTheMoveCommandTest {
     CommandScheduler.getInstance().schedule(command);
 
     for (int i = 0; i < 50; i++) {
-      SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+      SimHooks.stepTiming(ModeConstants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
-      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(ModeConstants.LOOP_PERIOD_SECS);
     }
 
     // If it ran without exception, the fallback logic executed successfully inside the loop
@@ -157,10 +163,10 @@ public class ShootOnTheMoveCommandTest {
   @Test
   public void testTofSolverStationary() {
     Translation2d robotPos = new Translation2d(0, 0);
-    Translation2d target = Constants.FieldConstants.BLUE_HUB_POS; // (4.62, 4.03)
+    Translation2d target = FieldConstants.BLUE_HUB_POS; // (4.62, 4.03)
     double vx = 0.0;
     double vy = 0.0;
-    double s = Constants.ShooterConstants.PROJECTILE_SPEED_MPS; // 15.0
+    double s = ShooterConstants.PROJECTILE_SPEED_MPS; // 15.0
 
     TofResult result = solveTof(robotPos, target, vx, vy, s);
 
@@ -181,10 +187,10 @@ public class ShootOnTheMoveCommandTest {
   @Test
   public void testTofSolverLeadsTargetWhenMoving() {
     Translation2d robotPos = new Translation2d(0, 0);
-    Translation2d target = Constants.FieldConstants.BLUE_HUB_POS;
+    Translation2d target = FieldConstants.BLUE_HUB_POS;
     double vx = 3.0; // Moving 3 m/s along X
     double vy = 0.0;
-    double s = Constants.ShooterConstants.PROJECTILE_SPEED_MPS;
+    double s = ShooterConstants.PROJECTILE_SPEED_MPS;
 
     TofResult result = solveTof(robotPos, target, vx, vy, s);
 
@@ -205,8 +211,8 @@ public class ShootOnTheMoveCommandTest {
   @Test
   public void testAimAngleDivergesFromStaticWhenMoving() {
     Translation2d robotPos = new Translation2d(2, 0);
-    Translation2d target = Constants.FieldConstants.BLUE_HUB_POS;
-    double s = Constants.ShooterConstants.PROJECTILE_SPEED_MPS;
+    Translation2d target = FieldConstants.BLUE_HUB_POS;
+    double s = ShooterConstants.PROJECTILE_SPEED_MPS;
 
     // Static aim angle
     TofResult stationary = solveTof(robotPos, target, 0, 0, s);

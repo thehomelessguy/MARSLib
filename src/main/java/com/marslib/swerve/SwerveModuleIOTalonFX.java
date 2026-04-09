@@ -56,7 +56,7 @@ public class SwerveModuleIOTalonFX implements SwerveModuleIO {
     turnCurrent = turnMotor.getStatorCurrent();
 
     // Ensure these signals run at standard config frequency
-    double updateHz = frc.robot.Constants.DriveConstants.TELEMETRY_HZ;
+    double updateHz = frc.robot.constants.DriveConstants.TELEMETRY_HZ;
     driveVelocity.setUpdateFrequency(updateHz);
     turnVelocity.setUpdateFrequency(updateHz);
     driveAppliedVolts.setUpdateFrequency(updateHz);

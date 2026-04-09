@@ -1,23 +1,18 @@
 package frc.robot;
 
+import static frc.robot.constants.ModeConstants.*;
+import static frc.robot.constants.ModeConstants.Mode.*;
+
 import com.marslib.auto.GhostManager;
-import com.marslib.auto.MARSDiagnosticCheck;
-import com.marslib.auto.ShootOnTheMoveCommand;
-import com.marslib.auto.ShotSetupFactory;
 import com.marslib.hmi.LEDIOAddressable;
 import com.marslib.hmi.LEDManager;
-import com.marslib.hmi.OperatorInterface;
-import com.marslib.hmi.TelemetryGamepad;
+import com.marslib.mechanisms.*;
 import com.marslib.mechanisms.FlywheelIO;
 import com.marslib.mechanisms.FlywheelIOSim;
 import com.marslib.mechanisms.FlywheelIOTalonFX;
 import com.marslib.mechanisms.LinearMechanismIO;
 import com.marslib.mechanisms.LinearMechanismIOSim;
 import com.marslib.mechanisms.LinearMechanismIOTalonFX;
-import com.marslib.mechanisms.MARSArm;
-import com.marslib.mechanisms.MARSElevator;
-import com.marslib.mechanisms.MARSShooter;
-import com.marslib.mechanisms.MARSSuperstructure;
 import com.marslib.mechanisms.RotaryMechanismIO;
 import com.marslib.mechanisms.RotaryMechanismIOSim;
 import com.marslib.mechanisms.RotaryMechanismIOTalonFX;
@@ -32,19 +27,29 @@ import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIO;
 import com.marslib.swerve.SwerveModuleIOSim;
 import com.marslib.swerve.SwerveModuleIOTalonFX;
-import com.marslib.swerve.TeleopDriveCommand;
 import com.marslib.util.ShotSetup;
 import com.marslib.vision.AprilTagVisionIOLimelight;
 import com.marslib.vision.AprilTagVisionIOSim;
 import com.marslib.vision.MARSVision;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.ShotSetupFactory;
+import frc.robot.constants.*;
+import frc.robot.constants.ClimberConstants;
+import frc.robot.constants.CowlConstants;
+import frc.robot.constants.DriveConstants;
+import frc.robot.constants.IntakeConstants;
+import frc.robot.constants.LEDConstants;
+import frc.robot.constants.ModeConstants;
+import frc.robot.constants.ShooterConstants;
+import frc.robot.subsystems.MARSArm;
+import frc.robot.subsystems.MARSClimber;
+import frc.robot.subsystems.MARSElevator;
+import frc.robot.subsystems.MARSShooter;
+import frc.robot.subsystems.MARSSuperstructure;
+import frc.robot.subsystems.OperatorInterface;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -59,7 +64,7 @@ public class RobotContainer {
   private final OperatorInterface operatorInterface;
 
   private final SwerveDrive swerveDrive;
-  private final MARSElevator fastClimber;
+  private final MARSClimber climber;
   private final MARSArm cowl;
   private final MARSArm intakePivot;
   private final MARSShooter floorIntake;
@@ -77,7 +82,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     // 1. Dependency Injection based on Current Mode
-    switch (Constants.CURRENT_MODE) {
+    switch (ModeConstants.CURRENT_MODE) {
       case SIM:
         {
           powerManager = new MARSPowerManager(new PowerIOSim());
@@ -94,20 +99,22 @@ public class RobotContainer {
                   gyroSim,
                   powerManager);
 
-          fastClimber =
+          MARSElevator fastClimber =
               new MARSElevator(
                   new LinearMechanismIOSim(
-                      "FastClimber", Constants.ClimberConstants.FAST_GEAR_RATIO, 0.05, 5.0),
+                      "FastClimber", ClimberConstants.FAST_GEAR_RATIO, 0.05, 5.0),
                   powerManager);
+
+          climber = new MARSClimber(fastClimber);
 
           cowl =
               new MARSArm(
-                  new RotaryMechanismIOSim("Cowl", Constants.CowlConstants.GEAR_RATIO, 0.5, 0.5),
+                  new RotaryMechanismIOSim("Cowl", CowlConstants.GEAR_RATIO, 0.5, 0.5),
                   powerManager);
           intakePivot =
               new MARSArm(
                   new RotaryMechanismIOSim(
-                      "IntakePivot", Constants.IntakeConstants.PIVOT_GEAR_RATIO, 0.5, 0.5),
+                      "IntakePivot", IntakeConstants.PIVOT_GEAR_RATIO, 0.5, 0.5),
                   powerManager);
 
           floorIntake =
@@ -124,16 +131,14 @@ public class RobotContainer {
               new MARSShooter(
                   new FlywheelIOSim(
                       edu.wpi.first.math.system.plant.DCMotor.getFalcon500(1),
-                      Constants.ShooterConstants.FEEDER_GEAR_RATIO,
+                      ShooterConstants.FEEDER_GEAR_RATIO,
                       0.025),
                   powerManager);
 
           ledManager =
               new LEDManager(
                   new com.marslib.hmi.LEDIOCANdle(
-                      Constants.LEDConstants.CANDLE_ID,
-                      Constants.LEDConstants.CANBUS,
-                      Constants.LEDConstants.LENGTH),
+                      LEDConstants.CANDLE_ID, LEDConstants.CANBUS, LEDConstants.LENGTH),
                   powerManager);
 
           vision =
@@ -163,94 +168,89 @@ public class RobotContainer {
                     new SwerveModule(
                         0,
                         new SwerveModuleIOTalonFX(
-                            Constants.DriveConstants.FL_DRIVE_ID,
-                            Constants.DriveConstants.FL_TURN_ID,
-                            Constants.DriveConstants.CANBUS)),
+                            DriveConstants.FL_DRIVE_ID,
+                            DriveConstants.FL_TURN_ID,
+                            DriveConstants.CANBUS)),
                     new SwerveModule(
                         1,
                         new SwerveModuleIOTalonFX(
-                            Constants.DriveConstants.FR_DRIVE_ID,
-                            Constants.DriveConstants.FR_TURN_ID,
-                            Constants.DriveConstants.CANBUS)),
+                            DriveConstants.FR_DRIVE_ID,
+                            DriveConstants.FR_TURN_ID,
+                            DriveConstants.CANBUS)),
                     new SwerveModule(
                         2,
                         new SwerveModuleIOTalonFX(
-                            Constants.DriveConstants.BL_DRIVE_ID,
-                            Constants.DriveConstants.BL_TURN_ID,
-                            Constants.DriveConstants.CANBUS)),
+                            DriveConstants.BL_DRIVE_ID,
+                            DriveConstants.BL_TURN_ID,
+                            DriveConstants.CANBUS)),
                     new SwerveModule(
                         3,
                         new SwerveModuleIOTalonFX(
-                            Constants.DriveConstants.BR_DRIVE_ID,
-                            Constants.DriveConstants.BR_TURN_ID,
-                            Constants.DriveConstants.CANBUS))
+                            DriveConstants.BR_DRIVE_ID,
+                            DriveConstants.BR_TURN_ID,
+                            DriveConstants.CANBUS))
                   },
-                  new GyroIOPigeon2(
-                      Constants.DriveConstants.PIGEON2_ID, Constants.DriveConstants.CANBUS),
+                  new GyroIOPigeon2(DriveConstants.PIGEON2_ID, DriveConstants.CANBUS),
                   powerManager);
 
-          fastClimber =
+          MARSElevator fastClimber =
               new MARSElevator(
                   new LinearMechanismIOTalonFX(
-                      Constants.ClimberConstants.FAST_MOTOR_ID,
-                      Constants.ClimberConstants.CANBUS,
-                      Constants.ClimberConstants.FAST_GEAR_RATIO,
+                      ClimberConstants.FAST_MOTOR_ID,
+                      ClimberConstants.CANBUS,
+                      ClimberConstants.FAST_GEAR_RATIO,
                       0.05,
                       false),
                   powerManager);
 
+          climber = new MARSClimber(fastClimber);
+
           cowl =
               new MARSArm(
                   new RotaryMechanismIOTalonFX(
-                      Constants.CowlConstants.MOTOR_ID,
-                      Constants.CowlConstants.CANBUS,
-                      Constants.CowlConstants.GEAR_RATIO,
-                      Constants.CowlConstants.INVERTED),
+                      CowlConstants.MOTOR_ID,
+                      CowlConstants.CANBUS,
+                      CowlConstants.GEAR_RATIO,
+                      CowlConstants.INVERTED),
                   powerManager);
           intakePivot =
               new MARSArm(
                   new RotaryMechanismIOTalonFX(
-                      Constants.IntakeConstants.PIVOT_MOTOR_ID,
-                      Constants.IntakeConstants.CANBUS,
-                      Constants.IntakeConstants.PIVOT_GEAR_RATIO,
+                      IntakeConstants.PIVOT_MOTOR_ID,
+                      IntakeConstants.CANBUS,
+                      IntakeConstants.PIVOT_GEAR_RATIO,
                       false),
                   powerManager);
 
           floorIntake =
               new MARSShooter(
                   new FlywheelIOTalonFX(
-                      Constants.IntakeConstants.FLOOR_MOTOR_ID,
-                      Constants.IntakeConstants.CANBUS,
-                      false),
+                      IntakeConstants.FLOOR_MOTOR_ID, IntakeConstants.CANBUS, false),
                   powerManager);
 
           shooter =
               new MARSShooter(
                   new FlywheelIOTalonFX(
-                      Constants.ShooterConstants.LM_MOTOR_ID,
+                      ShooterConstants.LM_MOTOR_ID,
                       new int[] {
-                        Constants.ShooterConstants.LF_MOTOR_ID,
-                        Constants.ShooterConstants.RM_MOTOR_ID,
-                        Constants.ShooterConstants.RF_MOTOR_ID
+                        ShooterConstants.LF_MOTOR_ID,
+                        ShooterConstants.RM_MOTOR_ID,
+                        ShooterConstants.RF_MOTOR_ID
                       },
                       new boolean[] {false, false, false},
-                      Constants.ShooterConstants.CANBUS,
+                      ShooterConstants.CANBUS,
                       false),
                   powerManager);
           feeder =
               new MARSShooter(
                   new FlywheelIOTalonFX(
-                      Constants.ShooterConstants.FEEDER_MOTOR_ID,
-                      Constants.ShooterConstants.CANBUS,
-                      false),
+                      ShooterConstants.FEEDER_MOTOR_ID, ShooterConstants.CANBUS, false),
                   powerManager);
 
           ledManager =
               new LEDManager(
                   new com.marslib.hmi.LEDIOCANdle(
-                      Constants.LEDConstants.CANDLE_ID,
-                      Constants.LEDConstants.CANBUS,
-                      Constants.LEDConstants.LENGTH),
+                      LEDConstants.CANDLE_ID, LEDConstants.CANBUS, LEDConstants.LENGTH),
                   powerManager);
 
           vision =
@@ -265,29 +265,48 @@ public class RobotContainer {
       case REPLAY:
       default:
         {
-          // REPLAY mode: no-op IO implementations (default interface methods) to allow
+          // REPLAY mode: no-op IO implementations to allow
           // deterministic log replay without hardware or physics dependencies.
           powerManager = new MARSPowerManager(new PowerIOSim());
 
           swerveDrive =
               new SwerveDrive(
                   new SwerveModule[] {
-                    new SwerveModule(0, new SwerveModuleIO() {}),
-                    new SwerveModule(1, new SwerveModuleIO() {}),
-                    new SwerveModule(2, new SwerveModuleIO() {}),
-                    new SwerveModule(3, new SwerveModuleIO() {})
+                    new SwerveModule(
+                        0, com.marslib.util.ReplayIOFactory.createProxy(SwerveModuleIO.class)),
+                    new SwerveModule(
+                        1, com.marslib.util.ReplayIOFactory.createProxy(SwerveModuleIO.class)),
+                    new SwerveModule(
+                        2, com.marslib.util.ReplayIOFactory.createProxy(SwerveModuleIO.class)),
+                    new SwerveModule(
+                        3, com.marslib.util.ReplayIOFactory.createProxy(SwerveModuleIO.class))
                   },
-                  new GyroIO() {},
+                  com.marslib.util.ReplayIOFactory.createProxy(GyroIO.class),
                   powerManager);
 
-          fastClimber = new MARSElevator(new LinearMechanismIO() {}, powerManager);
-          cowl = new MARSArm(new RotaryMechanismIO() {}, powerManager);
-          intakePivot = new MARSArm(new RotaryMechanismIO() {}, powerManager);
-          floorIntake = new MARSShooter(new FlywheelIO() {}, powerManager);
-          shooter = new MARSShooter(new FlywheelIO() {}, powerManager);
-          feeder = new MARSShooter(new FlywheelIO() {}, powerManager);
-          ledManager =
-              new LEDManager(new LEDIOAddressable(0, Constants.LEDConstants.LENGTH), powerManager);
+          MARSElevator fastClimber =
+              new MARSElevator(
+                  com.marslib.util.ReplayIOFactory.createProxy(LinearMechanismIO.class),
+                  powerManager);
+          climber = new MARSClimber(fastClimber);
+          cowl =
+              new MARSArm(
+                  com.marslib.util.ReplayIOFactory.createProxy(RotaryMechanismIO.class),
+                  powerManager);
+          intakePivot =
+              new MARSArm(
+                  com.marslib.util.ReplayIOFactory.createProxy(RotaryMechanismIO.class),
+                  powerManager);
+          floorIntake =
+              new MARSShooter(
+                  com.marslib.util.ReplayIOFactory.createProxy(FlywheelIO.class), powerManager);
+          shooter =
+              new MARSShooter(
+                  com.marslib.util.ReplayIOFactory.createProxy(FlywheelIO.class), powerManager);
+          feeder =
+              new MARSShooter(
+                  com.marslib.util.ReplayIOFactory.createProxy(FlywheelIO.class), powerManager);
+          ledManager = new LEDManager(new LEDIOAddressable(0, LEDConstants.LENGTH), powerManager);
 
           vision = new MARSVision(swerveDrive, java.util.List.of(), java.util.List.of());
           break;
@@ -307,15 +326,7 @@ public class RobotContainer {
             shooter,
             feeder,
             swerveDrive::getPose,
-            () -> {
-              // Alliance-aware distance: compute distance to our alliance's hub
-              Translation2d hub =
-                  DriverStation.getAlliance().isPresent()
-                          && DriverStation.getAlliance().get() == Alliance.Red
-                      ? Constants.FieldConstants.RED_HUB_POS
-                      : Constants.FieldConstants.BLUE_HUB_POS;
-              return swerveDrive.getPose().getTranslation().getDistance(hub);
-            },
+            vision::getBestTargetTranslation,
             shotSetup);
 
     // Configure PathPlanner AutoBuilder AFTER construction — composition root owns this
@@ -327,228 +338,15 @@ public class RobotContainer {
             "Auto Chooser", com.pathplanner.lib.auto.AutoBuilder.buildAutoChooser());
     autoChooser.addDefaultOption("Ghost Playback", ghostManager.getPlaybackCommand());
 
-    // 2. Configure Default Commands
-    configureDefaultCommands();
-
-    // 3. Configure Button Bindings
-    configureButtonBindings();
-  }
-
-  private void configureDefaultCommands() {
-    TelemetryGamepad controller = operatorInterface.getController();
-
-    // Drive with left thumbstick (translation) and right thumbstick X (rotation)
-    swerveDrive.setDefaultCommand(
-        new TeleopDriveCommand(
-            swerveDrive,
-            ghostManager,
-            () -> controller.getLeftY(),
-            () -> controller.getLeftX(),
-            () -> controller.getRightX()));
-  }
-
-  private void configureButtonBindings() {
-    TelemetryGamepad controller = operatorInterface.getController();
-    TelemetryGamepad coPilot = new TelemetryGamepad(1, "CoPilot");
-
-    // --- DRIVE PILOT BINDINGS ---
-
-    // Left Trigger -> Run Intake
-    controller
-        .bindOnTrue(
-            controller.leftTrigger(),
-            "LeftTrigger",
-            "Run Intake",
-            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_RUNNING))
-        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
-
-    // Right Trigger -> Aim & Shoot On The Move
-    controller
-        .bindWhileTrue(
-            controller.rightTrigger(),
-            "RightTrigger",
-            "Aim & Shoot On Move",
-            new ShootOnTheMoveCommand(
-                swerveDrive,
-                () -> {
-                  double raw =
-                      -Math.pow(
-                              edu.wpi.first.math.MathUtil.applyDeadband(controller.getLeftY(), 0.1),
-                              3.0)
-                          * SwerveConstants.MAX_LINEAR_SPEED_MPS;
-                  if (edu.wpi.first.wpilibj.DriverStation.getAlliance().isPresent()
-                      && edu.wpi.first.wpilibj.DriverStation.getAlliance().get()
-                          == edu.wpi.first.wpilibj.DriverStation.Alliance.Red) {
-                    raw = -raw;
-                  }
-                  return raw;
-                },
-                () -> {
-                  double raw =
-                      -Math.pow(
-                              edu.wpi.first.math.MathUtil.applyDeadband(controller.getLeftX(), 0.1),
-                              3.0)
-                          * SwerveConstants.MAX_LINEAR_SPEED_MPS;
-                  if (edu.wpi.first.wpilibj.DriverStation.getAlliance().isPresent()
-                      && edu.wpi.first.wpilibj.DriverStation.getAlliance().get()
-                          == edu.wpi.first.wpilibj.DriverStation.Alliance.Red) {
-                    raw = -raw;
-                  }
-                  return raw;
-                }))
-        .onTrue(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
-        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
-
-    // B Button -> Standard Stationary Shoot
-    controller
-        .bindOnTrue(
-            controller.b(),
-            "B",
-            "Stationary Shoot",
-            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
-        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
-
-    // Left Bumper -> Unjam
-    controller
-        .bindOnTrue(
-            controller.leftBumper(),
-            "LeftBumper",
-            "Unjam",
-            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.UNJAM))
-        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
-
-    // Right Bumper -> Aim and Shuttle
-    controller
-        .bindOnTrue(
-            controller.rightBumper(),
-            "RightBumper",
-            "Aim & Shuttle",
-            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
-        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
-
-    // DPad Right -> Deploy Intake Without Spinning
-    controller.bindOnTrue(
-        controller.povRight(),
-        "DPad_Right",
-        "Deploy Intake Only",
-        superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_DOWN));
-
-    // DPad Left -> Retract Intake (Stow)
-    controller.bindOnTrue(
-        controller.povLeft(),
-        "DPad_Left",
-        "Retract Intake",
-        superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
-
-    // A Button -> Slamtake (Deploy + Run)
-    controller
-        .bindOnTrue(
-            controller.a(),
-            "A",
-            "Slamtake",
-            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_RUNNING))
-        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
-
-    // Y Button -> Align to Climb Position (Stub)
-    // X Button -> Final Climb Lineup (Stub)
-
-    // DPad Up/Down -> Manual Climber Override
-    controller.bindWhileTrue(
-        controller.povUp(),
-        "DPad_Up",
-        "Manual Climber Up",
-        Commands.startEnd(
-            () -> fastClimber.setVoltage(12.0), () -> fastClimber.setVoltage(0.0), fastClimber));
-    controller.bindWhileTrue(
-        controller.povDown(),
-        "DPad_Down",
-        "Manual Climber Down",
-        Commands.startEnd(
-            () -> fastClimber.setVoltage(-12.0), () -> fastClimber.setVoltage(0.0), fastClimber));
-
-    // Ghost Mode Triggers
-    controller.bindOnTrue(
-        controller.back().and(controller.start()),
-        "Back_And_Start",
-        "Ghost Record",
-        ghostManager.registerRecordCommand(
-            () -> controller.getLeftY(),
-            () -> controller.getLeftX(),
-            () -> controller.getRightX(),
-            controller.a(),
-            controller.b(),
-            controller.x(),
-            controller.y(),
-            controller.leftBumper(),
-            controller.rightBumper(),
-            controller.povUp(),
-            controller.povDown(),
-            controller.povLeft(),
-            controller.povRight()));
-
-    // Start -> Diagnostic Hardware Check
-    controller.bindOnTrue(
-        controller.start(),
-        "Start",
-        "Diagnostic Check",
-        new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl));
-
-    // --- COPILOT BINDINGS ---
-
-    // CoPilot Left Trigger -> Manual Feed
-    coPilot.bindWhileTrue(
-        coPilot.leftTrigger(),
-        "LeftTrigger",
-        "Manual Feed",
-        Commands.startEnd(
-            () -> {
-              feeder.setVoltage(6.0);
-              floorIntake.setVoltage(6.0);
-            },
-            () -> {
-              feeder.setVoltage(0.0);
-              floorIntake.setVoltage(0.0);
-            },
-            feeder,
-            floorIntake));
-
-    // CoPilot Right Trigger -> Fixed Target Score (Hub)
-    coPilot
-        .bindOnTrue(
-            coPilot.rightTrigger(),
-            "RightTrigger",
-            "Fixed Score (Hub)",
-            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
-        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
-
-    // CoPilot Right Bumper -> Fixed Target Score (Ladder)
-    coPilot
-        .bindOnTrue(
-            coPilot.rightBumper(),
-            "RightBumper",
-            "Fixed Score (Ladder)",
-            superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.SCORE))
-        .onFalse(superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED));
-
-    // CoPilot Left Bumper -> Cowl Home
-    coPilot.bindOnTrue(coPilot.leftBumper(), "LeftBumper", "Cowl Home", cowl.home());
-
-    // CoPilot DPad Down -> Fast Climber Reverse Reverse
-    coPilot.bindWhileTrue(
-        coPilot.povDown(),
-        "DPad_Down",
-        "Climber Reverse",
-        Commands.startEnd(
-            () -> fastClimber.setVoltage(-12.0), () -> fastClimber.setVoltage(0.0), fastClimber));
-
-    // CoPilot X -> Swerve Stop
-    coPilot.bindOnTrue(
-        coPilot.x(),
-        "X",
-        "Drivetrain Stop",
-        Commands.runOnce(
-            () -> swerveDrive.runVelocity(new edu.wpi.first.math.kinematics.ChassisSpeeds()),
-            swerveDrive));
+    RobotBindings.configureBindings(
+        operatorInterface,
+        swerveDrive,
+        ghostManager,
+        superstructure,
+        climber,
+        cowl,
+        feeder,
+        floorIntake);
   }
 
   public Command getAutonomousCommand() {

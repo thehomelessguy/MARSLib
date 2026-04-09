@@ -14,11 +14,11 @@ public class PowerIOSim implements PowerIO {
     // Simulate generic CAN utilization between 65% and 80%
     inputs.canBusUtilization = 0.65 + (Math.random() * 0.15);
 
-    if (frc.robot.Constants.SimulationConstants.ENABLE_CAN_STARVATION) {
-      if (Math.random() < frc.robot.Constants.SimulationConstants.CAN_STARVATION_PROBABILITY) {
+    if (frc.robot.constants.SimulationConstants.ENABLE_CAN_STARVATION) {
+      if (Math.random() < frc.robot.constants.SimulationConstants.CAN_STARVATION_PROBABILITY) {
         inputs.canBusUtilization = 1.0;
         try {
-          Thread.sleep(frc.robot.Constants.SimulationConstants.CAN_STARVATION_DELAY_MS);
+          Thread.sleep(frc.robot.constants.SimulationConstants.CAN_STARVATION_DELAY_MS);
         } catch (InterruptedException e) {
           Thread.currentThread().interrupt();
         }
@@ -27,6 +27,6 @@ public class PowerIOSim implements PowerIO {
 
     // Explicitly flag if the physics world dynamically sank our voltage below real-life roboRio
     // limits
-    inputs.isBrownedOut = inputs.voltage < frc.robot.Constants.PowerConstants.CRITICAL_VOLTAGE;
+    inputs.isBrownedOut = inputs.voltage < frc.robot.constants.PowerConstants.CRITICAL_VOLTAGE;
   }
 }

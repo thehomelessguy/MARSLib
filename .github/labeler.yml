@@ -1,0 +1,28 @@
+devops:
+  - changed-files:
+    - any-glob-to-any-file:
+      - .github/**
+      - '**/*.gradle'
+      - gradle/**
+      - .githooks/**
+
+math:
+  - changed-files:
+    - any-glob-to-any-file: 
+      - '**/math/**'
+
+vision:
+  - changed-files:
+    - any-glob-to-any-file: 
+      - '**/vision/**'
+
+simulation:
+  - changed-files:
+    - any-glob-to-any-file: 
+      - '**/simulation/**'
+      - '**/dyn4j/**'
+
+testing:
+  - changed-files:
+    - any-glob-to-any-file: 
+      - 'src/test/**'

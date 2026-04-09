@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+echo "🤖 Running Spotless Formatter..."
+./gradlew spotlessApply --quiet
+
+echo "🤖 Re-staging formatted files..."
+# Only re-stage files that were actively staged for this commit to prevent accidental commits
+git diff --cached --name-only | while read FILE; do
+  if [ -f "$FILE" ]; then
+    git add "$FILE"
+  fi
+done

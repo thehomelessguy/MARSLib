@@ -12,7 +12,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import java.util.function.DoubleSupplier;
+import frc.robot.commands.*;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,7 +64,8 @@ public class MARSSuperstructureTest {
     feeder = new MARSShooter(physicalFeederSim, powerManager);
 
     Supplier<Pose2d> mockSupplier = () -> new Pose2d();
-    DoubleSupplier distSupplier = () -> 2.0; // Fixed dist
+    java.util.function.Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
+        distSupplier = () -> java.util.Optional.empty(); // Fixed dist
 
     ShotSetup shotSetup =
         new ShotSetup(0.0, 1.5, 6000, 0.1, 5, 0.01, 0.1, 1.0, new Transform2d(), new Rotation2d());
@@ -120,6 +123,9 @@ public class MARSSuperstructureTest {
   @Test
   public void testIntakeToStowedTransition() {
     superstructure
+        .setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_DOWN)
+        .initialize();
+    superstructure
         .setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_RUNNING)
         .initialize();
 
@@ -130,7 +136,10 @@ public class MARSSuperstructureTest {
     assertEquals(
         MARSSuperstructure.SuperstructureState.INTAKE_RUNNING, superstructure.getCurrentState());
 
-    // Switch to STOWED
+    // Switch to STOWED (must go through INTAKE_DOWN)
+    superstructure
+        .setAbsoluteState(MARSSuperstructure.SuperstructureState.INTAKE_DOWN)
+        .initialize();
     superstructure.setAbsoluteState(MARSSuperstructure.SuperstructureState.STOWED).initialize();
     superstructure.periodic();
     assertEquals(MARSSuperstructure.SuperstructureState.STOWED, superstructure.getCurrentState());

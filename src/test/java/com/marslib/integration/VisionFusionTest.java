@@ -2,6 +2,7 @@ package com.marslib.integration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.marslib.mechanisms.*;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIOSim;
 import com.marslib.simulation.MARSPhysicsWorld;
@@ -20,7 +21,10 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants;
+import frc.robot.commands.*;
+import frc.robot.constants.ModeConstants;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -92,11 +96,11 @@ public class VisionFusionTest {
   @Test
   public void testVisionSwerveDoesNotCrash() {
     for (int i = 0; i < 250; i++) {
-      SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+      SimHooks.stepTiming(ModeConstants.LOOP_PERIOD_SECS);
       assertDoesNotThrow(
           () -> CommandScheduler.getInstance().run(),
           "Vision-swerve pipeline crashed at tick " + i);
-      MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+      MARSPhysicsWorld.getInstance().update(ModeConstants.LOOP_PERIOD_SECS);
     }
 
     // Pose estimator should still be valid after 5s of vision+odometry fusion
@@ -118,9 +122,9 @@ public class VisionFusionTest {
 
     // Run for 3 seconds (150 ticks) while stationary
     for (int i = 0; i < 150; i++) {
-      SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+      SimHooks.stepTiming(ModeConstants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
-      MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+      MARSPhysicsWorld.getInstance().update(ModeConstants.LOOP_PERIOD_SECS);
     }
 
     Pose2d finalPose = swerveDrive.getPose();

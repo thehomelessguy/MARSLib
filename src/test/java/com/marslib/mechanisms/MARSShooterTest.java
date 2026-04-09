@@ -6,6 +6,9 @@ import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIOSim;
 import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.system.plant.DCMotor;
+import frc.robot.commands.*;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

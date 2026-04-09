@@ -1,12 +1,12 @@
-package com.marslib.mechanisms;
+package frc.robot.subsystems;
 
+import com.marslib.mechanisms.*;
 import com.marslib.util.MARSStateMachine;
 import com.marslib.util.ShotSetup;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 import org.littletonrobotics.junction.Logger;
 
@@ -20,7 +20,8 @@ public class MARSSuperstructure extends SubsystemBase {
   private final MARSShooter feeder;
 
   private final Supplier<Pose2d> poseSupplier;
-  private final DoubleSupplier distanceSupplier;
+  private final Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
+      visionTargetSupplier;
   private final ShotSetup shotSetup;
 
   public enum SuperstructureState {
@@ -44,7 +45,7 @@ public class MARSSuperstructure extends SubsystemBase {
       MARSShooter shooter,
       MARSShooter feeder,
       Supplier<Pose2d> poseSupplier,
-      DoubleSupplier distanceSupplier,
+      Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>> visionTargetSupplier,
       ShotSetup shotSetup) {
 
     this.cowl = cowl;
@@ -53,18 +54,18 @@ public class MARSSuperstructure extends SubsystemBase {
     this.shooter = shooter;
     this.feeder = feeder;
     this.poseSupplier = poseSupplier;
-    this.distanceSupplier = distanceSupplier;
+    this.visionTargetSupplier = visionTargetSupplier;
     this.shotSetup = shotSetup;
 
     stateMachine =
         new MARSStateMachine<>(
             "Superstructure", SuperstructureState.class, SuperstructureState.STOWED);
 
-    // Allowing wildcard transitions since there are no harsh collision paths on the decoupled MXIX
-    // chassis
-    for (SuperstructureState state : SuperstructureState.values()) {
-      stateMachine.addWildcardFrom(state);
-    }
+    stateMachine.addValidBidirectional(SuperstructureState.STOWED, SuperstructureState.INTAKE_DOWN);
+    stateMachine.addValidBidirectional(
+        SuperstructureState.INTAKE_DOWN, SuperstructureState.INTAKE_RUNNING);
+    stateMachine.addValidBidirectional(SuperstructureState.STOWED, SuperstructureState.SCORE);
+    stateMachine.addValidBidirectional(SuperstructureState.STOWED, SuperstructureState.UNJAM);
 
     stateMachine.setEntryAction(
         SuperstructureState.SCORE,
@@ -110,19 +111,34 @@ public class MARSSuperstructure extends SubsystemBase {
     stateMachine.update();
     SuperstructureState currentState = stateMachine.getState();
 
+    double currentDistance = 0.0;
+    java.util.Optional<edu.wpi.first.math.geometry.Translation2d> targetOpt =
+        visionTargetSupplier != null ? visionTargetSupplier.get() : java.util.Optional.empty();
+    if (targetOpt.isPresent()) {
+      currentDistance = poseSupplier.get().getTranslation().getDistance(targetOpt.get());
+    } else {
+      edu.wpi.first.math.geometry.Translation2d hub =
+          edu.wpi.first.wpilibj.DriverStation.getAlliance().isPresent()
+                  && edu.wpi.first.wpilibj.DriverStation.getAlliance().get()
+                      == edu.wpi.first.wpilibj.DriverStation.Alliance.Red
+              ? frc.robot.constants.FieldConstants.RED_HUB_POS
+              : frc.robot.constants.FieldConstants.BLUE_HUB_POS;
+      currentDistance = poseSupplier.get().getTranslation().getDistance(hub);
+    }
+
     switch (currentState) {
       case INTAKE_DOWN:
       case INTAKE_RUNNING:
-        goalIntakeAngle = frc.robot.Constants.SuperstructureConstants.INTAKE_ARM_ANGLE;
+        goalIntakeAngle = frc.robot.constants.SuperstructureConstants.INTAKE_ARM_ANGLE;
         goalCowlAngle = 0.0;
         break;
       case SCORE:
         goalIntakeAngle = 0.0;
         // Dynamically compute cowl angle based on distance
         if (shotSetup != null) {
-          goalCowlAngle = shotSetup.getStaticShotInfo(distanceSupplier.getAsDouble()).cowlPosition;
+          goalCowlAngle = shotSetup.getStaticShotInfo(currentDistance).cowlPosition;
         } else {
-          goalCowlAngle = frc.robot.Constants.SuperstructureConstants.SCORE_HIGH_ARM_ANGLE;
+          goalCowlAngle = frc.robot.constants.SuperstructureConstants.SCORE_HIGH_ARM_ANGLE;
         }
         break;
       case STOWED:
@@ -144,7 +160,7 @@ public class MARSSuperstructure extends SubsystemBase {
               com.marslib.simulation.MARSPhysicsWorld.getInstance()
                   .checkIntake(
                       poseSupplier.get(),
-                      frc.robot.Constants.FieldConstants.INTAKE_COLLECTION_RADIUS_METERS,
+                      frc.robot.constants.FieldConstants.INTAKE_COLLECTION_RADIUS_METERS,
                       40 - gamePieceCount);
           gamePieceCount += swallowed;
         } catch (Exception e) {
@@ -162,11 +178,10 @@ public class MARSSuperstructure extends SubsystemBase {
       floorIntake.setVoltage(0.0);
     }
 
-    // Run scoring / transfer sequence
     if (currentState == SuperstructureState.SCORE) {
       double targetRPM = 4000.0; // Default fallback
-      if (distanceSupplier != null && shotSetup != null) {
-        targetRPM = shotSetup.getStaticShotInfo(distanceSupplier.getAsDouble()).shot.shooterRPM;
+      if (visionTargetSupplier != null && shotSetup != null) {
+        targetRPM = shotSetup.getStaticShotInfo(currentDistance).shot.shooterRPM;
       }
 
       double targetRadPerSec = targetRPM * Math.PI * 2.0 / 60.0;
@@ -190,7 +205,7 @@ public class MARSSuperstructure extends SubsystemBase {
               isBlue
                   ? (robotPose.getX() <= allowedDistance)
                   : (robotPose.getX()
-                      >= frc.robot.Constants.FieldConstants.FIELD_LENGTH_METERS - allowedDistance);
+                      >= frc.robot.constants.FieldConstants.FIELD_LENGTH_METERS - allowedDistance);
 
           // Shoot the piece in whatever direction the robot is facing
           double vx = 15.0 * Math.cos(robotPose.getRotation().getRadians());
@@ -203,7 +218,7 @@ public class MARSSuperstructure extends SubsystemBase {
                   vx,
                   vy,
                   vz,
-                  frc.robot.Constants.SuperstructureConstants.SCORE_HIGH_ELEVATOR_HEIGHT,
+                  frc.robot.constants.SuperstructureConstants.SCORE_HIGH_ELEVATOR_HEIGHT,
                   correctSide);
           gamePieceCount--;
         }

@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * High-frequency CAN bus polling thread for CTRE Phoenix 6 odometry signals.
  *
- * <p>This singleton thread runs at {@link frc.robot.Constants.DriveConstants#ODOMETRY_HZ} Hz,
+ * <p>This singleton thread runs at {@link frc.robot.constants.DriveConstants#ODOMETRY_HZ} Hz,
  * continuously sampling drive/turn encoder positions and gyro yaw from TalonFX and Pigeon2 devices.
  * Samples are buffered in thread-safe {@link BlockingQueue}s and drained by {@link
  * com.marslib.swerve.SwerveDrive#periodic()} each robot loop iteration.
@@ -80,7 +80,7 @@ public class PhoenixOdometryThread extends Thread {
       signals.add(turnPosition);
 
       // Configure frequencies to 250Hz
-      double odometryHz = frc.robot.Constants.DriveConstants.ODOMETRY_HZ;
+      double odometryHz = frc.robot.constants.DriveConstants.ODOMETRY_HZ;
       drivePosition.setUpdateFrequency(odometryHz);
       turnPosition.setUpdateFrequency(odometryHz);
 
@@ -132,7 +132,7 @@ public class PhoenixOdometryThread extends Thread {
   public void registerGyro(BaseStatusSignal yawPos) {
     signalsLock.lock();
     try {
-      yawPos.setUpdateFrequency(frc.robot.Constants.DriveConstants.ODOMETRY_HZ);
+      yawPos.setUpdateFrequency(frc.robot.constants.DriveConstants.ODOMETRY_HZ);
       signals.add(yawPos);
       gyroSignalIndex = signals.size() - 1;
     } finally {
@@ -184,7 +184,7 @@ public class PhoenixOdometryThread extends Thread {
       }
 
       // Wait for all signals to update, timeout after 2x the expected period
-      double odometryHz = frc.robot.Constants.DriveConstants.ODOMETRY_HZ;
+      double odometryHz = frc.robot.constants.DriveConstants.ODOMETRY_HZ;
       BaseStatusSignal.waitForAll(2.0 / odometryHz, currentSignals);
 
       signalsLock.lock();

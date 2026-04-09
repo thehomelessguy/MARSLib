@@ -4,6 +4,8 @@
 ### Elite FRC AdvantageKit Abstraction & Physics Template
 
 [![CI Build](https://github.com/thehomelessguy/MARSLib/actions/workflows/ci.yml/badge.svg)](https://github.com/thehomelessguy/MARSLib/actions/workflows/ci.yml)
+[![Coverage](https://raw.githubusercontent.com/thehomelessguy/MARSLib/main/.github/badges/jacoco.svg)](https://github.com/thehomelessguy/MARSLib/actions/workflows/ci.yml)
+[![Branches](https://raw.githubusercontent.com/thehomelessguy/MARSLib/main/.github/badges/branches.svg)](https://github.com/thehomelessguy/MARSLib/actions/workflows/ci.yml)
 [![Spotless](https://img.shields.io/badge/style-spotless-brightgreen)](https://github.com/diffplug/spotless)
 [![Team](https://img.shields.io/badge/FRC-2614-orange)](https://www.thebluealliance.com/team/2614)
 [![AdvantageKit](https://img.shields.io/badge/Powered%20By-AdvantageKit-yellow)](https://github.com/Mechanical-Advantage/AdvantageKit)

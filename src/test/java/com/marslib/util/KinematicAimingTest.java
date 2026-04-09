@@ -2,10 +2,14 @@ package com.marslib.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.marslib.mechanisms.*;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import frc.robot.commands.*;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import org.junit.jupiter.api.Test;
 
 public class KinematicAimingTest {

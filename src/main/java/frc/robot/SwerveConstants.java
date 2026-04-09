@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.marslib.mechanisms.*;
 import edu.wpi.first.math.geometry.Translation2d;
 
 /**
@@ -99,7 +100,7 @@ public final class SwerveConstants {
    * Nominal battery voltage used for drive feedforward normalization (V).
    *
    * <p>This is the true battery nominal (12.0V), NOT the load-shedding trigger threshold ({@link
-   * frc.robot.Constants.PowerConstants#NOMINAL_VOLTAGE}). Used in {@link
+   * frc.robot.constants.PowerConstants#NOMINAL_VOLTAGE}). Used in {@link
    * com.marslib.swerve.SwerveModule#setDesiredState} to scale desired speed into voltage.
    */
   public static final double NOMINAL_BATTERY_VOLTAGE = 12.0;

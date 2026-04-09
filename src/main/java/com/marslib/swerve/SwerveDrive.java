@@ -1,6 +1,7 @@
 package com.marslib.swerve;
 
 import static edu.wpi.first.units.Units.Volts;
+import static frc.robot.constants.ModeConstants.*;
 
 import com.marslib.power.MARSPowerManager;
 import com.marslib.simulation.SwerveChassisPhysics;
@@ -22,8 +23,10 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.Constants;
 import frc.robot.SwerveConstants;
+import frc.robot.constants.*;
+import frc.robot.constants.ModeConstants;
+import frc.robot.constants.PowerConstants;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -206,14 +209,13 @@ public class SwerveDrive extends SubsystemBase {
     // Active Dynamic Load Shedding — only write to CAN when the limit actually changes
     double voltage = powerManager.getVoltage();
     double currentLimit;
-    if (voltage < Constants.PowerConstants.NOMINAL_VOLTAGE && voltage > 0.0) {
+    if (voltage < PowerConstants.NOMINAL_VOLTAGE && voltage > 0.0) {
       double slope =
           (SwerveConstants.DRIVE_STATOR_CURRENT_LIMIT - SwerveConstants.MIN_LOAD_SHED_CURRENT)
-              / (Constants.PowerConstants.NOMINAL_VOLTAGE
-                  - Constants.PowerConstants.CRITICAL_VOLTAGE);
+              / (PowerConstants.NOMINAL_VOLTAGE - PowerConstants.CRITICAL_VOLTAGE);
       currentLimit =
           SwerveConstants.MIN_LOAD_SHED_CURRENT
-              + (voltage - Constants.PowerConstants.CRITICAL_VOLTAGE) * slope;
+              + (voltage - PowerConstants.CRITICAL_VOLTAGE) * slope;
       currentLimit =
           Math.max(
               SwerveConstants.MIN_LOAD_SHED_CURRENT,
@@ -248,13 +250,14 @@ public class SwerveDrive extends SubsystemBase {
         simAngles[3] = modules[3].getLatestState().angle;
 
         simPhysics.applyModuleForces(
-            simVolts, simAngles, powerManager.getVoltage(), Constants.LOOP_PERIOD_SECS);
+            simVolts, simAngles, powerManager.getVoltage(), ModeConstants.LOOP_PERIOD_SECS);
 
         // We override the "measured speeds" with what the physics world says is actually happening
         measuredSpeeds = simPhysics.getConstrainedSpeeds();
       }
 
-      gyroIOSim.updateYawVelocity(measuredSpeeds.omegaRadiansPerSecond, Constants.LOOP_PERIOD_SECS);
+      gyroIOSim.updateYawVelocity(
+          measuredSpeeds.omegaRadiansPerSecond, ModeConstants.LOOP_PERIOD_SECS);
     }
 
     // Use real gyro yaw for pose estimation
@@ -331,7 +334,8 @@ public class SwerveDrive extends SubsystemBase {
    * @param speeds The requested translational and rotational velocities in m/s and rad/s.
    */
   public void runVelocity(ChassisSpeeds speeds) {
-    ChassisSpeeds discretizedSpeeds = ChassisSpeeds.discretize(speeds, Constants.LOOP_PERIOD_SECS);
+    ChassisSpeeds discretizedSpeeds =
+        ChassisSpeeds.discretize(speeds, ModeConstants.LOOP_PERIOD_SECS);
     SwerveModuleState[] states = kinematics.toSwerveModuleStates(discretizedSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(states, SwerveConstants.MAX_LINEAR_SPEED_MPS);
     for (int i = 0; i < 4; i++) {

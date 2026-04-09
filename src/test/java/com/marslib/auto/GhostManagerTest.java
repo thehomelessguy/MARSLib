@@ -2,8 +2,12 @@ package com.marslib.auto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.marslib.mechanisms.*;
 import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.*;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.function.BooleanSupplier;
@@ -26,7 +30,7 @@ public class GhostManagerTest {
   @BeforeEach
   public void setUp() {
     MARSTestHarness.reset();
-    ghostFile = new File(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH);
+    ghostFile = new File(frc.robot.constants.AutoConstants.GHOST_MACRO_FILE_PATH);
     if (ghostFile.exists()) {
       ghostFile.delete();
     }
@@ -83,7 +87,7 @@ public class GhostManagerTest {
     assertTrue(ghostFile.exists(), "Ghost macro file should have been created.");
 
     String content = Files.readString(ghostFile.toPath());
-    String[] lines = content.split("\n");
+    String[] lines = java.util.regex.Pattern.compile("\n").split(content);
 
     // Header + 5 data lines (+ potentially empty line from last println)
     assertTrue(lines.length >= 6, "Should write header and 5 execution frames");

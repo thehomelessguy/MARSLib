@@ -5,11 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.marslib.faults.Alert;
 import com.marslib.hmi.LEDIO;
 import com.marslib.hmi.LEDManager;
+import com.marslib.mechanisms.*;
 import com.marslib.mechanisms.FlywheelIOSim;
 import com.marslib.mechanisms.LinearMechanismIOSim;
-import com.marslib.mechanisms.MARSArm;
-import com.marslib.mechanisms.MARSElevator;
-import com.marslib.mechanisms.MARSShooter;
 import com.marslib.mechanisms.RotaryMechanismIOSim;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIO;
@@ -21,6 +19,12 @@ import com.marslib.swerve.SwerveModuleIO;
 import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.*;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
+import frc.robot.subsystems.MARSArm;
+import frc.robot.subsystems.MARSElevator;
+import frc.robot.subsystems.MARSShooter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -127,13 +131,17 @@ public class MARSDiagnosticCheckTest {
 
   @Test
   public void testDiagnosticCheckConstructs() {
-    MARSDiagnosticCheck check = new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl);
+    MARSDiagnosticCheck check =
+        new MARSDiagnosticCheck(
+            swerveDrive, new frc.robot.subsystems.MARSClimber(fastClimber), cowl);
     assertNotNull(check, "DiagnosticCheck should construct without error.");
   }
 
   @Test
   public void testDiagnosticCheckRunsToCompletion() {
-    MARSDiagnosticCheck check = new MARSDiagnosticCheck(swerveDrive, fastClimber, cowl);
+    MARSDiagnosticCheck check =
+        new MARSDiagnosticCheck(
+            swerveDrive, new frc.robot.subsystems.MARSClimber(fastClimber), cowl);
 
     CommandScheduler.getInstance().schedule(check);
 

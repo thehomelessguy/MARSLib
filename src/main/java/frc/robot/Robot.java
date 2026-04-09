@@ -7,8 +7,13 @@
 
 package frc.robot;
 
+import static frc.robot.constants.ModeConstants.*;
+
+import com.marslib.mechanisms.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.constants.*;
+import frc.robot.constants.ModeConstants;
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -27,7 +32,7 @@ public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   public Robot() {
-    super(Constants.LOOP_PERIOD_SECS);
+    super(ModeConstants.LOOP_PERIOD_SECS);
 
     // Record metadata
     Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
@@ -44,7 +49,7 @@ public class Robot extends LoggedRobot {
         });
 
     // Set up data receivers & replay source
-    switch (Constants.CURRENT_MODE) {
+    switch (ModeConstants.CURRENT_MODE) {
       case REAL:
         // Running on a real robot, log to a USB stick ("/U/logs")
         Logger.addDataReceiver(new WPILOGWriter());
@@ -142,6 +147,6 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {
-    com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+    com.marslib.simulation.MARSPhysicsWorld.getInstance().update(ModeConstants.LOOP_PERIOD_SECS);
   }
 }

@@ -2,6 +2,7 @@ package com.marslib.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.marslib.mechanisms.*;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIOSim;
 import com.marslib.swerve.GyroIOSim;
@@ -16,7 +17,11 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants;
+import frc.robot.commands.*;
+import frc.robot.constants.FieldConstants;
+import frc.robot.constants.ModeConstants;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -139,12 +144,12 @@ public class ShotSetupTest {
 
     // Step physics a few times to settle
     for (int i = 0; i < 10; i++) {
-      SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+      SimHooks.stepTiming(ModeConstants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
-      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(ModeConstants.LOOP_PERIOD_SECS);
     }
 
-    Translation2d target = Constants.FieldConstants.BLUE_HUB_POS;
+    Translation2d target = FieldConstants.BLUE_HUB_POS;
     ShotSetup.SOTMInfo sotm = shotSetup.getSOTMInfo(swerveDrive, target);
 
     assertNotNull(sotm, "SOTM info should not be null");
@@ -165,7 +170,7 @@ public class ShotSetupTest {
    */
   @Test
   public void testSOTMCacheHitOnSamePosition() {
-    Translation2d target = Constants.FieldConstants.BLUE_HUB_POS;
+    Translation2d target = FieldConstants.BLUE_HUB_POS;
 
     // First call — computes fresh
     ShotSetup.SOTMInfo first = shotSetup.getSOTMInfo(swerveDrive, target);
@@ -186,12 +191,12 @@ public class ShotSetupTest {
     swerveDrive.runVelocity(new ChassisSpeeds(0, 0, 0));
 
     for (int i = 0; i < 10; i++) {
-      SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+      SimHooks.stepTiming(ModeConstants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
-      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(ModeConstants.LOOP_PERIOD_SECS);
     }
 
-    Translation2d target = Constants.FieldConstants.BLUE_HUB_POS;
+    Translation2d target = FieldConstants.BLUE_HUB_POS;
     ShotSetup.SOTMInfo sotm = shotSetup.getSOTMInfo(swerveDrive, target);
 
     Pose2d pose = swerveDrive.getPose();

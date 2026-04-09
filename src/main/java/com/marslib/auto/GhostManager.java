@@ -207,7 +207,7 @@ public class GhostManager {
             }
           }
 
-          File file = new File(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH);
+          File file = new File(frc.robot.constants.AutoConstants.GHOST_MACRO_FILE_PATH);
 
           recording = true;
           writeBuffer.clear();
@@ -285,7 +285,7 @@ public class GhostManager {
         playIndex = 0;
         try (BufferedReader br =
             java.nio.file.Files.newBufferedReader(
-                java.nio.file.Paths.get(frc.robot.Constants.AutoConstants.GHOST_MACRO_FILE_PATH),
+                java.nio.file.Paths.get(frc.robot.constants.AutoConstants.GHOST_MACRO_FILE_PATH),
                 java.nio.charset.StandardCharsets.UTF_8)) {
           br.readLine(); // skip header
           String line = br.readLine();

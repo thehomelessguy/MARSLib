@@ -2,10 +2,14 @@ package com.marslib.power;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.marslib.mechanisms.*;
 import com.marslib.swerve.GyroIO;
 import com.marslib.swerve.SwerveDrive;
 import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIO;
+import frc.robot.commands.*;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import org.junit.jupiter.api.Test;
 
 public class MARSPowerManagerTest {

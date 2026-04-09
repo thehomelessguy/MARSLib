@@ -23,9 +23,9 @@ public class GyroIOSim implements GyroIO {
     yawVelocityRadPerSec = omegaRadPerSec;
     yawPositionRad += omegaRadPerSec * dtSeconds;
 
-    if (frc.robot.Constants.SimulationConstants.ENABLE_GYRO_NOISE) {
+    if (frc.robot.constants.SimulationConstants.ENABLE_GYRO_NOISE) {
       accumulatedDriftRad +=
-          Math.toRadians(frc.robot.Constants.SimulationConstants.GYRO_DRIFT_DEG_PER_SEC)
+          Math.toRadians(frc.robot.constants.SimulationConstants.GYRO_DRIFT_DEG_PER_SEC)
               * dtSeconds;
     }
   }
@@ -35,10 +35,10 @@ public class GyroIOSim implements GyroIO {
     inputs.connected = true;
 
     double noiseRads = 0.0;
-    if (frc.robot.Constants.SimulationConstants.ENABLE_GYRO_NOISE) {
+    if (frc.robot.constants.SimulationConstants.ENABLE_GYRO_NOISE) {
       noiseRads =
           random.nextGaussian()
-              * frc.robot.Constants.SimulationConstants.GYRO_NOISE_SCALAR
+              * frc.robot.constants.SimulationConstants.GYRO_NOISE_SCALAR
               * (1.0 + Math.abs(yawVelocityRadPerSec));
     }
 

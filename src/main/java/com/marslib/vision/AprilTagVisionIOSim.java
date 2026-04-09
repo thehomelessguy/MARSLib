@@ -93,9 +93,9 @@ public class AprilTagVisionIOSim implements AprilTagVisionIO {
     var results = camera.getAllUnreadResults();
 
     boolean simulatedOcclusion = false;
-    if (frc.robot.Constants.SimulationConstants.ENABLE_VISION_OCCLUSION) {
+    if (frc.robot.constants.SimulationConstants.ENABLE_VISION_OCCLUSION) {
       simulatedOcclusion =
-          Math.random() < frc.robot.Constants.SimulationConstants.VISION_OCCLUSION_DROP_PROBABILITY;
+          Math.random() < frc.robot.constants.SimulationConstants.VISION_OCCLUSION_DROP_PROBABILITY;
     }
 
     if (!results.isEmpty() && !simulatedOcclusion) {

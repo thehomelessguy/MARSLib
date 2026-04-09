@@ -1,0 +1,32 @@
+name: Generate FRC Vendordep
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  bump-vendordep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract tag name
+        id: tag
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Update MARSLib.json
+        run: |
+          NEW_UUID=$(uuidgen)
+          CLEAN_VERSION=${VERSION#v}
+          
+          jq --arg uuid "$NEW_UUID" --arg ver "$CLEAN_VERSION" '.uuid = $uuid | .version = $ver' MARSLib.json > tmp.json
+          mv tmp.json MARSLib.json
+          
+      - name: Commit Updated Vendordep
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: bump MARSLib vendordep to ${{ env.VERSION }} [skip ci]"
+          file_pattern: "MARSLib.json"

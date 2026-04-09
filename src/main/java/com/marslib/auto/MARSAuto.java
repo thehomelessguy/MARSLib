@@ -1,12 +1,15 @@
 package com.marslib.auto;
 
+import static frc.robot.constants.ModeConstants.*;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+import frc.robot.constants.*;
+import frc.robot.constants.AutoConstants;
 
 /**
  * Utility Command factory for autonomous routines.
@@ -49,10 +52,10 @@ public class MARSAuto {
       // Constraints for navigating to the starting pose of the trajectory
       PathConstraints pathfindingConstraints =
           new PathConstraints(
-              Constants.AutoConstants.MAX_VELOCITY_MPS,
-              Constants.AutoConstants.MAX_ACCELERATION_MPS2,
-              Constants.AutoConstants.MAX_ANGULAR_VELOCITY_RAD_PER_SEC,
-              Constants.AutoConstants.MAX_ANGULAR_ACCELERATION_RAD_PER_SEC2);
+              AutoConstants.MAX_VELOCITY_MPS,
+              AutoConstants.MAX_ACCELERATION_MPS2,
+              AutoConstants.MAX_ANGULAR_VELOCITY_RAD_PER_SEC,
+              AutoConstants.MAX_ANGULAR_ACCELERATION_RAD_PER_SEC2);
 
       return AutoBuilder.pathfindThenFollowPath(path, pathfindingConstraints);
     } catch (Exception e) {
@@ -77,10 +80,10 @@ public class MARSAuto {
     // Tunable dynamic pathfinding constraints
     PathConstraints constraints =
         new PathConstraints(
-            Constants.AutoConstants.MAX_VELOCITY_MPS,
-            Constants.AutoConstants.MAX_ACCELERATION_MPS2,
-            Constants.AutoConstants.MAX_ANGULAR_VELOCITY_RAD_PER_SEC,
-            Constants.AutoConstants.MAX_ANGULAR_ACCELERATION_RAD_PER_SEC2);
+            AutoConstants.MAX_VELOCITY_MPS,
+            AutoConstants.MAX_ACCELERATION_MPS2,
+            AutoConstants.MAX_ANGULAR_VELOCITY_RAD_PER_SEC,
+            AutoConstants.MAX_ANGULAR_ACCELERATION_RAD_PER_SEC2);
 
     // Pathfind dynamically to target, ending with 0 velocity
     return AutoBuilder.pathfindToPose(

@@ -1,5 +1,6 @@
-package com.marslib.auto;
+package frc.robot.commands;
 
+import com.marslib.mechanisms.*;
 import com.marslib.swerve.SwerveDrive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -36,6 +37,9 @@ public class ShootOnTheMoveCommand extends Command {
   private final DoubleSupplier joystickY;
 
   private final PIDController thetaAlignController;
+  private final com.marslib.swerve.TractionControlLimiter tractionLimiter =
+      new com.marslib.swerve.TractionControlLimiter(
+          frc.robot.constants.DriveConstants.TELEOP_LINEAR_ACCEL_LIMIT);
 
   // Approximate game piece exit velocity (Tune this matching your shooter mechanisms!)
   public ShootOnTheMoveCommand(
@@ -45,7 +49,7 @@ public class ShootOnTheMoveCommand extends Command {
     this.joystickY = joystickY;
 
     this.thetaAlignController =
-        new PIDController(frc.robot.Constants.AutoConstants.ALIGN_THETA_KP, 0, 0);
+        new PIDController(frc.robot.constants.AutoConstants.ALIGN_THETA_KP, 0, 0);
     this.thetaAlignController.enableContinuousInput(-Math.PI, Math.PI);
 
     addRequirements(swerveDrive);
@@ -65,10 +69,10 @@ public class ShootOnTheMoveCommand extends Command {
         ChassisSpeeds.fromRobotRelativeSpeeds(currentSpeeds, currentPose.getRotation());
 
     // Determine dynamic target based on alliance
-    Translation2d targetNode = frc.robot.Constants.FieldConstants.BLUE_HUB_POS;
+    Translation2d targetNode = frc.robot.constants.FieldConstants.BLUE_HUB_POS;
     if (DriverStation.getAlliance().isPresent()
         && DriverStation.getAlliance().get() == Alliance.Red) {
-      targetNode = frc.robot.Constants.FieldConstants.RED_HUB_POS;
+      targetNode = frc.robot.constants.FieldConstants.RED_HUB_POS;
     }
 
     // 3. Exact True-Vector Quadratic Time-Of-Flight Intersection Solver
@@ -76,7 +80,7 @@ public class ShootOnTheMoveCommand extends Command {
     double dy = targetNode.getY() - currentPose.getY();
     double vx = currentFieldSpeeds.vxMetersPerSecond;
     double vy = currentFieldSpeeds.vyMetersPerSecond;
-    double s = frc.robot.Constants.ShooterConstants.PROJECTILE_SPEED_MPS;
+    double s = frc.robot.constants.ShooterConstants.PROJECTILE_SPEED_MPS;
 
     double a = (s * s) - ((vx * vx) + (vy * vy));
     double b = -2.0 * ((dx * vx) + (dy * vy));
@@ -110,8 +114,11 @@ public class ShootOnTheMoveCommand extends Command {
     double omega = thetaAlignController.calculate(currentPose.getRotation().getRadians(), aimTheta);
 
     // 5. Package field-centric commands into kinematics
+    Translation2d limitedTrans = tractionLimiter.calculate(new Translation2d(fieldVx, fieldVy));
+
     ChassisSpeeds robotSpeeds =
-        ChassisSpeeds.fromFieldRelativeSpeeds(fieldVx, fieldVy, omega, currentPose.getRotation());
+        ChassisSpeeds.fromFieldRelativeSpeeds(
+            limitedTrans.getX(), limitedTrans.getY(), omega, currentPose.getRotation());
 
     swerveDrive.runVelocity(robotSpeeds);
   }

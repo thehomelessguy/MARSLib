@@ -1,6 +1,8 @@
-package com.marslib.hmi;
+package frc.robot.subsystems;
 
 import com.marslib.faults.MARSFaultManager;
+import com.marslib.hmi.TelemetryGamepad;
+import com.marslib.mechanisms.*;
 import com.marslib.power.MARSPowerManager;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,9 +19,9 @@ public class OperatorInterface extends SubsystemBase {
   private boolean isPulsing = false;
   private int pulseCounter = 0;
   private static final int PULSE_DURATION_LOOPS =
-      frc.robot.Constants.OperatorConstants.PULSE_DURATION_LOOPS;
+      frc.robot.constants.OperatorConstants.PULSE_DURATION_LOOPS;
   private static final int PULSE_INTERVAL_LOOPS =
-      frc.robot.Constants.OperatorConstants.PULSE_INTERVAL_LOOPS;
+      frc.robot.constants.OperatorConstants.PULSE_INTERVAL_LOOPS;
 
   public OperatorInterface(int port, MARSPowerManager powerManager) {
     this.controller = new TelemetryGamepad(port, "DrivePilot");
@@ -58,8 +60,8 @@ public class OperatorInterface extends SubsystemBase {
 
     // 2. Voltage Droop Rumble
     double voltage = powerManager.getVoltage();
-    double nominal = frc.robot.Constants.PowerConstants.NOMINAL_VOLTAGE;
-    double critical = frc.robot.Constants.PowerConstants.CRITICAL_VOLTAGE;
+    double nominal = frc.robot.constants.PowerConstants.NOMINAL_VOLTAGE;
+    double critical = frc.robot.constants.PowerConstants.CRITICAL_VOLTAGE;
 
     if (voltage > 0.0 && voltage < nominal) {
       double voltageRange = nominal - critical;

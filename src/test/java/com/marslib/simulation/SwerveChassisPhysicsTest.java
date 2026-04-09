@@ -2,11 +2,15 @@ package com.marslib.simulation;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.marslib.mechanisms.*;
 import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import frc.robot.Constants;
+import frc.robot.commands.*;
+import frc.robot.constants.ModeConstants;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +42,7 @@ public class SwerveChassisPhysicsTest {
   /** Applying forward voltage to all modules should accelerate the chassis in +X. */
   @Test
   public void testForwardVoltageAcceleratesChassis() {
-    double dt = Constants.LOOP_PERIOD_SECS;
+    double dt = ModeConstants.LOOP_PERIOD_SECS;
     double[] volts = {6.0, 6.0, 6.0, 6.0};
     Rotation2d[] angles = {new Rotation2d(), new Rotation2d(), new Rotation2d(), new Rotation2d()};
 
@@ -63,7 +67,7 @@ public class SwerveChassisPhysicsTest {
   /** Zero voltage should not accelerate the chassis. */
   @Test
   public void testZeroVoltageNoAcceleration() {
-    double dt = Constants.LOOP_PERIOD_SECS;
+    double dt = ModeConstants.LOOP_PERIOD_SECS;
     double[] volts = {0.0, 0.0, 0.0, 0.0};
     Rotation2d[] angles = {new Rotation2d(), new Rotation2d(), new Rotation2d(), new Rotation2d()};
 
@@ -87,7 +91,7 @@ public class SwerveChassisPhysicsTest {
    */
   @Test
   public void testLowBatteryReducesAcceleration() {
-    double dt = Constants.LOOP_PERIOD_SECS;
+    double dt = ModeConstants.LOOP_PERIOD_SECS;
     double[] volts = {10.0, 10.0, 10.0, 10.0};
     Rotation2d[] angles = {new Rotation2d(), new Rotation2d(), new Rotation2d(), new Rotation2d()};
 
@@ -131,7 +135,7 @@ public class SwerveChassisPhysicsTest {
    */
   @Test
   public void testHighVoltageInducesWheelSlip() {
-    double dt = Constants.LOOP_PERIOD_SECS;
+    double dt = ModeConstants.LOOP_PERIOD_SECS;
     double[] volts = {12.0, 12.0, 12.0, 12.0};
     Rotation2d[] angles = {new Rotation2d(), new Rotation2d(), new Rotation2d(), new Rotation2d()};
 
@@ -155,7 +159,7 @@ public class SwerveChassisPhysicsTest {
   /** setPose should teleport the chassis and zero all velocities. */
   @Test
   public void testSetPoseResetsAllState() {
-    double dt = Constants.LOOP_PERIOD_SECS;
+    double dt = ModeConstants.LOOP_PERIOD_SECS;
     double[] volts = {8.0, 8.0, 8.0, 8.0};
     Rotation2d[] angles = {new Rotation2d(), new Rotation2d(), new Rotation2d(), new Rotation2d()};
 

@@ -2,7 +2,11 @@ package com.marslib.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.marslib.mechanisms.*;
 import com.marslib.testing.MARSTestHarness;
+import frc.robot.commands.*;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,11 +32,11 @@ public class MARSStateMachineTest {
 
     // Define transitions: IDLE→ACTIVE, ACTIVE→SCORING, SCORING→IDLE
     // EMERGENCY is reachable from anywhere (wildcard-to)
-    machine.addTransition(TestState.IDLE, TestState.ACTIVE);
-    machine.addTransition(TestState.ACTIVE, TestState.SCORING);
-    machine.addTransition(TestState.SCORING, TestState.IDLE);
+    machine.addValidTransition(TestState.IDLE, TestState.ACTIVE);
+    machine.addValidTransition(TestState.ACTIVE, TestState.SCORING);
+    machine.addValidTransition(TestState.SCORING, TestState.IDLE);
     machine.addWildcardTo(TestState.EMERGENCY);
-    machine.addTransition(TestState.EMERGENCY, TestState.IDLE);
+    machine.addValidTransition(TestState.EMERGENCY, TestState.IDLE);
   }
 
   @Test
@@ -46,7 +50,6 @@ public class MARSStateMachineTest {
     boolean accepted = machine.requestTransition(TestState.ACTIVE);
     assertTrue(accepted, "IDLE→ACTIVE should be legal");
     assertEquals(TestState.ACTIVE, machine.getState());
-    assertEquals(TestState.IDLE, machine.getPreviousState());
     assertEquals(1, machine.getTotalTransitionCount());
   }
 

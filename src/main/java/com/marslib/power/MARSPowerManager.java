@@ -1,9 +1,12 @@
 package com.marslib.power;
 
+import static frc.robot.constants.ModeConstants.*;
+
 import com.marslib.faults.Alert;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.constants.*;
+import frc.robot.constants.PowerConstants;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -21,12 +24,12 @@ public class MARSPowerManager extends SubsystemBase {
   private final Alert warningAlert =
       new Alert(
           "Power",
-          "Load Shedding: Voltage below " + Constants.PowerConstants.WARNING_VOLTAGE + "V",
+          "Load Shedding: Voltage below " + PowerConstants.WARNING_VOLTAGE + "V",
           Alert.AlertType.WARNING);
   private final Alert criticalAlert =
       new Alert(
           "Power",
-          "Load Shedding: Voltage below " + Constants.PowerConstants.CRITICAL_VOLTAGE + "V",
+          "Load Shedding: Voltage below " + PowerConstants.CRITICAL_VOLTAGE + "V",
           Alert.AlertType.CRITICAL);
 
   /**
@@ -48,10 +51,10 @@ public class MARSPowerManager extends SubsystemBase {
     Logger.processInputs("Power", inputs);
 
     if (inputs.voltage > 0) {
-      if (inputs.voltage < Constants.PowerConstants.CRITICAL_VOLTAGE) {
+      if (inputs.voltage < PowerConstants.CRITICAL_VOLTAGE) {
         warningAlert.set(true);
         criticalAlert.set(true);
-      } else if (inputs.voltage < Constants.PowerConstants.WARNING_VOLTAGE) {
+      } else if (inputs.voltage < PowerConstants.WARNING_VOLTAGE) {
         warningAlert.set(true);
         criticalAlert.set(false);
       } else {

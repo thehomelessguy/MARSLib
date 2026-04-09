@@ -1,12 +1,15 @@
 package com.marslib.swerve;
 
+import static frc.robot.constants.ModeConstants.*;
+
 import com.marslib.simulation.SwerveChassisPhysics;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import frc.robot.Constants;
 import frc.robot.SwerveConstants;
+import frc.robot.constants.*;
+import frc.robot.constants.ModeConstants;
 
 /**
  * Simulation IO layer for a single swerve module.
@@ -63,7 +66,7 @@ public class SwerveModuleIOSim implements SwerveModuleIO {
 
   @Override
   public void updateInputs(SwerveModuleIOInputs inputs) {
-    turnSim.update(Constants.LOOP_PERIOD_SECS);
+    turnSim.update(ModeConstants.LOOP_PERIOD_SECS);
 
     inputs.hasHardwareConnected = true;
 
@@ -72,7 +75,7 @@ public class SwerveModuleIOSim implements SwerveModuleIO {
     if (chassisPhysics != null) {
       wheelOmega = chassisPhysics.getWheelOmegaRadPerSec(moduleIndex);
     }
-    drivePositionRad += wheelOmega * Constants.LOOP_PERIOD_SECS;
+    drivePositionRad += wheelOmega * ModeConstants.LOOP_PERIOD_SECS;
 
     inputs.driveVelocityRadPerSec = wheelOmega;
     inputs.turnVelocityRadPerSec = turnSim.getAngularVelocityRadPerSec();

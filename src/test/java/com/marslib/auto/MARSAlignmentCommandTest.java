@@ -2,6 +2,7 @@ package com.marslib.auto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.marslib.mechanisms.*;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.power.PowerIOSim;
 import com.marslib.swerve.GyroIOSim;
@@ -12,7 +13,10 @@ import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants;
+import frc.robot.commands.*;
+import frc.robot.constants.ModeConstants;
+import frc.robot.simulation.*;
+import frc.robot.subsystems.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -67,9 +71,9 @@ public class MARSAlignmentCommandTest {
 
     for (int i = 0; i < 150; i++) {
       // Step WPILib HAL timings manually!
-      edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(Constants.LOOP_PERIOD_SECS);
+      edu.wpi.first.wpilibj.simulation.SimHooks.stepTiming(ModeConstants.LOOP_PERIOD_SECS);
       CommandScheduler.getInstance().run();
-      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(Constants.LOOP_PERIOD_SECS);
+      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(ModeConstants.LOOP_PERIOD_SECS);
     }
 
     Pose2d resultingPose = swerveDrive.getPose();
