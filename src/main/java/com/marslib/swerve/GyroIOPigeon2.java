@@ -17,6 +17,8 @@ import edu.wpi.first.units.measure.AngularVelocity;
 public class GyroIOPigeon2 implements GyroIO {
   private final Pigeon2 pigeon;
   private final StatusSignal<Angle> yaw;
+  private final StatusSignal<Angle> pitch;
+  private final StatusSignal<Angle> roll;
   private final StatusSignal<AngularVelocity> yawVelocity;
 
   /**
@@ -29,6 +31,8 @@ public class GyroIOPigeon2 implements GyroIO {
     pigeon = new Pigeon2(canId, canbus);
 
     yaw = pigeon.getYaw();
+    pitch = pigeon.getPitch();
+    roll = pigeon.getRoll();
     yawVelocity = pigeon.getAngularVelocityZWorld();
 
     yawVelocity.setUpdateFrequency(100.0);
@@ -41,9 +45,11 @@ public class GyroIOPigeon2 implements GyroIO {
 
   @Override
   public void updateInputs(GyroIOInputs inputs) {
-    BaseStatusSignal.refreshAll(yaw, yawVelocity);
+    BaseStatusSignal.refreshAll(yaw, pitch, roll, yawVelocity);
     inputs.connected = yaw.getStatus().isOK();
     inputs.yawPositionRad = Units.degreesToRadians(yaw.getValueAsDouble());
+    inputs.pitchPositionRad = Units.degreesToRadians(pitch.getValueAsDouble());
+    inputs.rollPositionRad = Units.degreesToRadians(roll.getValueAsDouble());
     inputs.yawVelocityRadPerSec = Units.degreesToRadians(yawVelocity.getValueAsDouble());
 
     double[] rawOdometryYaw = PhoenixOdometryThread.getInstance().getGyroYawData();

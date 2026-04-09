@@ -129,6 +129,15 @@ public class SwerveDrive extends SubsystemBase {
   private final Rotation2d[] simAngles = new Rotation2d[4];
   private final SwerveModulePosition[] positionsForFrame = new SwerveModulePosition[4];
   private final SwerveModulePosition[] currentPositions = new SwerveModulePosition[4];
+  private final SwerveModulePosition[] scaledPositions =
+      new SwerveModulePosition[] {
+        new SwerveModulePosition(),
+        new SwerveModulePosition(),
+        new SwerveModulePosition(),
+        new SwerveModulePosition()
+      };
+  private final double[] lastRawDistances = new double[4];
+  private boolean isFirstOdometryDrain = true;
 
   /**
    * Configures PathPlanner's AutoBuilder for autonomous path following. Must be called exactly once
@@ -248,15 +257,43 @@ public class SwerveDrive extends SubsystemBase {
     // Use real gyro yaw for pose estimation
     // Rotation2d yaw = ... (moved into the drain loop for high frequency accuracy)
 
+    // Calculate tilt-based trust multiplier for odometry (filters out wheel slip when airborne on
+    // bumps)
+    double odometryTrust = 1.0;
+    if (gyroInputs.connected) {
+      double tiltRadians =
+          Math.acos(Math.cos(gyroInputs.pitchPositionRad) * Math.cos(gyroInputs.rollPositionRad));
+      odometryTrust =
+          1.0
+              - edu.wpi.first.math.MathUtil.inverseInterpolate(
+                  0, Math.toRadians(25.0), Math.abs(tiltRadians));
+      odometryTrust = edu.wpi.first.math.MathUtil.clamp(odometryTrust, 0.0, 1.0);
+    }
+    Logger.recordOutput("SwerveDrive/OdometryTrustMultiplier", odometryTrust);
+
     // Synchronous Pose Estimator Drain
     int sampleCount = modules[0].getPositionDeltas().length;
     double[] timestamps = modules[0].getOdometryTimestamps();
 
     for (int i = 0; i < sampleCount; i++) {
-      positionsForFrame[0] = modules[0].getPositionDeltas()[i];
-      positionsForFrame[1] = modules[1].getPositionDeltas()[i];
-      positionsForFrame[2] = modules[2].getPositionDeltas()[i];
-      positionsForFrame[3] = modules[3].getPositionDeltas()[i];
+      for (int m = 0; m < 4; m++) {
+        SwerveModulePosition rawPos = modules[m].getPositionDeltas()[i];
+
+        if (isFirstOdometryDrain) {
+          lastRawDistances[m] = rawPos.distanceMeters;
+          scaledPositions[m].distanceMeters = rawPos.distanceMeters;
+        }
+
+        double delta = rawPos.distanceMeters - lastRawDistances[m];
+        lastRawDistances[m] = rawPos.distanceMeters;
+
+        scaledPositions[m].distanceMeters += delta * odometryTrust;
+        scaledPositions[m].angle = rawPos.angle;
+
+        positionsForFrame[m] =
+            new SwerveModulePosition(scaledPositions[m].distanceMeters, scaledPositions[m].angle);
+      }
+      isFirstOdometryDrain = false;
 
       Rotation2d frameYaw;
       if (gyroInputs.connected && gyroInputs.odometryYawPositions.length > 0) {
@@ -381,11 +418,22 @@ public class SwerveDrive extends SubsystemBase {
     if (simPhysics != null) {
       simPhysics.setPose(pose);
     }
+
+    for (int i = 0; i < 4; i++) {
+      SwerveModulePosition raw = modules[i].getLatestPosition();
+      scaledPositions[i].distanceMeters = raw.distanceMeters;
+      scaledPositions[i].angle = raw.angle;
+      lastRawDistances[i] = raw.distanceMeters;
+    }
+    isFirstOdometryDrain = false;
+
     poseEstimator.resetPosition(
         gyroInputs.connected ? new Rotation2d(gyroInputs.yawPositionRad) : pose.getRotation(),
         new SwerveModulePosition[] {
-          modules[0].getLatestPosition(), modules[1].getLatestPosition(),
-          modules[2].getLatestPosition(), modules[3].getLatestPosition()
+          new SwerveModulePosition(scaledPositions[0].distanceMeters, scaledPositions[0].angle),
+          new SwerveModulePosition(scaledPositions[1].distanceMeters, scaledPositions[1].angle),
+          new SwerveModulePosition(scaledPositions[2].distanceMeters, scaledPositions[2].angle),
+          new SwerveModulePosition(scaledPositions[3].distanceMeters, scaledPositions[3].angle)
         },
         pose);
   }

@@ -127,7 +127,7 @@ public class MARSSuperstructure extends SubsystemBase {
     switch (currentState) {
       case INTAKE_DOWN:
       case INTAKE_RUNNING:
-        goalIntakeAngle = frc.robot.constants.SuperstructureConstants.INTAKE_ARM_ANGLE;
+        goalIntakeAngle = frc.robot.constants.SuperstructureConstants.INTAKE_PIVOT_ANGLE;
         goalCowlAngle = 0.0;
         break;
       case SCORE:
@@ -253,7 +253,7 @@ public class MARSSuperstructure extends SubsystemBase {
                   vx,
                   vy,
                   vz,
-                  frc.robot.constants.SuperstructureConstants.SCORE_HIGH_ELEVATOR_HEIGHT,
+                  frc.robot.constants.SuperstructureConstants.SHOOTER_EXIT_HEIGHT_METERS,
                   correctSide);
           gamePieceCount--;
         }
