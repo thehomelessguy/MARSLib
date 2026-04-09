@@ -123,3 +123,9 @@ The following log keys are written by `MARSVision.periodic()`:
 | `MULTI_TAG_STD_MULTIPLIER` | 0.1 | StdDev reduction factor when >1 tag visible |
 | `ANGULAR_STD_MULTIPLIER` | 2.0 | Linear → angular stdDev conversion factor |
 | `SLAM_STD_DEV` | 0.01 | Static stdDev for VIO SLAM measurements |
+
+## 6. Elite References (PhotonVision)
+
+When extracting elite vision logic (like Megatag 2 or multi-camera fusion) or debugging underlying behavior, use the core PhotonVision repository as the definitive reference.
+
+*   **PhotonVision Core Vision Engine:** `https://github.com/PhotonVision/photonvision`

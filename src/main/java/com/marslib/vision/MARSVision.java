@@ -29,6 +29,28 @@ public class MARSVision extends SubsystemBase {
   private final List<VIOSlamIO> slamIOs;
   private final VIOSlamIOInputsAutoLogged[] slamInputs;
 
+  private static final double CLOSE_DISTANCE = 2.0;
+  private static final double FAR_DISTANCE = 6.0;
+  private static final double MIN_WEIGHT = 0.1;
+  private static final double MAX_TAG_DISTANCE = 3.0;
+
+  private double calculateDistanceWeight(double distance) {
+    double baseWeight =
+        MIN_WEIGHT
+            + (1.0 - MIN_WEIGHT)
+                * (1.0
+                    / (1.0
+                        + Math.exp(
+                            (distance - CLOSE_DISTANCE) / (FAR_DISTANCE - CLOSE_DISTANCE) * 4.0)));
+
+    if (distance > FAR_DISTANCE) {
+      double farDistancePenalty = Math.pow(0.5, (distance - FAR_DISTANCE) / 2.0);
+      return baseWeight * farDistancePenalty;
+    }
+
+    return baseWeight;
+  }
+
   /**
    * Constructs the absolute Vision mapping structure.
    *
@@ -86,17 +108,23 @@ public class MARSVision extends SubsystemBase {
         double timestamp = aprilTagInputs[i].timestamps[f];
 
         // Dynamic Filtering & Ambiguity Rejection
-        if (tagCount == 1
-            && (ambiguity > frc.robot.constants.VisionConstants.MAX_AMBIGUITY.get()
-                || Math.abs(pose3d.getZ())
-                    > frc.robot.constants.VisionConstants.MAX_Z_HEIGHT.get())) {
-          continue; // Reject noisy single tag or flying robot
+        if (tagCount == 1) {
+          if (ambiguity > frc.robot.constants.VisionConstants.MAX_AMBIGUITY.get()
+              || Math.abs(pose3d.getZ()) > frc.robot.constants.VisionConstants.MAX_Z_HEIGHT.get()) {
+            continue; // Reject noisy single tag or flying robot
+          }
+          if (avgDist > MAX_TAG_DISTANCE) {
+            continue; // B.R.E.A.D. 2025: Strict 3.0 meter single tag cutoff
+          }
         }
+
+        double distanceWeight = calculateDistanceWeight(avgDist);
 
         // Quadratic scaling based on distance
         // The further away, the exponentially less we trust it (squared)
         double linearStdDev =
-            frc.robot.constants.VisionConstants.TAG_STD_BASE.get() * Math.pow(avgDist, 2);
+            (frc.robot.constants.VisionConstants.TAG_STD_BASE.get() * Math.pow(avgDist, 2))
+                / distanceWeight;
 
         // MegaTag2 Boost: Dramatically tighten bounds when multiple tags are visible
         if (tagCount > 1) {
