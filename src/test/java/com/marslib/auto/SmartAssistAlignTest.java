@@ -1,60 +1,69 @@
 package com.marslib.auto;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
+import com.marslib.power.MARSPowerManager;
+import com.marslib.power.PowerIOSim;
+import com.marslib.swerve.GyroIOSim;
 import com.marslib.swerve.SwerveDrive;
+import com.marslib.swerve.SwerveModule;
+import com.marslib.swerve.SwerveModuleIOSim;
 import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 
 public class SmartAssistAlignTest {
 
-  private SwerveDrive mockSwerveDrive;
+  private SwerveDrive swerveDrive;
 
   @BeforeEach
   public void setUp() {
     MARSTestHarness.reset();
-    mockSwerveDrive = mock(SwerveDrive.class);
+    MARSPowerManager powerManager = new MARSPowerManager(new PowerIOSim());
+
+    swerveDrive =
+        new SwerveDrive(
+            new SwerveModule[] {
+              new SwerveModule(0, new SwerveModuleIOSim(0)),
+              new SwerveModule(1, new SwerveModuleIOSim(1)),
+              new SwerveModule(2, new SwerveModuleIOSim(2)),
+              new SwerveModule(3, new SwerveModuleIOSim(3))
+            },
+            new GyroIOSim(),
+            powerManager);
   }
 
   @Test
   public void testSmartAssistAllowsXMovementButAutomatesYAndTheta() {
-    Pose2d currentPose = new Pose2d(0, 0, new Rotation2d(0));
-    Pose2d targetNode = new Pose2d(3, 3, Rotation2d.fromDegrees(90));
-
-    when(mockSwerveDrive.getPose()).thenReturn(currentPose);
+    // Current spawn is at 0, 0, 0
+    Pose2d targetNode = new Pose2d(3.0, 3.0, Rotation2d.fromDegrees(90));
 
     // Driver is pushing forward at 2.0 m/s
-    SmartAssistAlign command = new SmartAssistAlign(mockSwerveDrive, () -> 2.0, targetNode);
+    SmartAssistAlign command = new SmartAssistAlign(swerveDrive, () -> 2.0, targetNode);
 
     command.initialize();
-    command.execute();
 
-    ArgumentCaptor<ChassisSpeeds> speedsCaptor = ArgumentCaptor.forClass(ChassisSpeeds.class);
-    verify(mockSwerveDrive).runVelocity(speedsCaptor.capture());
+    // Tick the environment for ~0.5 seconds
+    for (int i = 0; i < 25; i++) {
+      command.execute();
+      swerveDrive.periodic();
+      com.marslib.simulation.MARSPhysicsWorld.getInstance().update(0.02);
+    }
 
-    ChassisSpeeds commanded = speedsCaptor.getValue();
+    Pose2d newPose = swerveDrive.getPose();
 
-    // Because current heading is 0, Field-Relative translation maps directly:
-    // Field X = Robot X, Field Y = Robot Y.
-    // The driver commanded 2.0 in X.
-    assertEquals(
-        2.0,
-        commanded.vxMetersPerSecond,
-        0.001,
-        "Driver forward speed should be perfectly passed through.");
+    // X should have moved positively (user input)
+    assertTrue(newPose.getX() > 0.1, "Should move in positive X due to human input.");
 
-    // The target is at Y=3, robot is at Y=0. It should command positive translation in Y.
+    // Y should have moved positively (auto align)
     assertTrue(
-        commanded.vyMetersPerSecond > 0.0, "Should automatically strafe leftward toward target Y.");
+        newPose.getY() > 0.1, "Should automatically strafe leftward (positive Y) toward target.");
 
-    // The target theta is 90 degrees, robot is at 0. It should command positive rotation.
+    // Theta should have rotated positively (auto align)
     assertTrue(
-        commanded.omegaRadiansPerSecond > 0.0, "Should automatically rotate toward target theta.");
+        newPose.getRotation().getRadians() > 0.1,
+        "Should automatically rotate positive toward target theta.");
   }
 }

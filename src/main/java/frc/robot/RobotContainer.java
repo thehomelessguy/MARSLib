@@ -3,6 +3,7 @@ package frc.robot;
 import com.marslib.auto.GhostManager;
 import com.marslib.auto.MARSDiagnosticCheck;
 import com.marslib.auto.ShootOnTheMoveCommand;
+import com.marslib.auto.ShotSetupFactory;
 import com.marslib.hmi.LEDIOAddressable;
 import com.marslib.hmi.LEDManager;
 import com.marslib.hmi.OperatorInterface;
@@ -30,26 +31,20 @@ import com.marslib.swerve.SwerveModule;
 import com.marslib.swerve.SwerveModuleIO;
 import com.marslib.swerve.SwerveModuleIOSim;
 import com.marslib.swerve.SwerveModuleIOTalonFX;
+import com.marslib.swerve.TeleopDriveCommand;
 import com.marslib.util.ShotSetup;
 import com.marslib.vision.AprilTagVisionIOLimelight;
 import com.marslib.vision.AprilTagVisionIOSim;
 import com.marslib.vision.MARSVision;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -77,19 +72,6 @@ public class RobotContainer {
   private final LEDManager ledManager;
 
   private final MARSVision vision;
-
-  private final ChassisSpeeds targetSpeeds = new ChassisSpeeds();
-  // Fixed: Physical Acceleration Caps (15.0 m/s^2 instead of arbitrary unitless timings)
-  private final SlewRateLimiter xLimiter =
-      new SlewRateLimiter(Constants.DriveConstants.TELEOP_LINEAR_ACCEL_LIMIT);
-  private final SlewRateLimiter yLimiter =
-      new SlewRateLimiter(Constants.DriveConstants.TELEOP_LINEAR_ACCEL_LIMIT);
-  private final SlewRateLimiter omegaLimiter =
-      new SlewRateLimiter(Constants.DriveConstants.TELEOP_OMEGA_ACCEL_LIMIT); // Fast rotation limit
-  private final PIDController headingController =
-      new PIDController(Constants.DriveConstants.HEADING_KP, 0, 0);
-
-  private Rotation2d targetHeading = new Rotation2d();
 
   private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -315,33 +297,7 @@ public class RobotContainer {
     operatorInterface = new OperatorInterface(0, powerManager);
 
     // Build the SOTM shot computation utility with REBUILT shooter characterization data
-    ShotSetup shotSetup =
-        new ShotSetup(
-            0.1, // phaseDelay — 100ms lookahead for mechanism latency
-            Math.PI / 2, // maxCowlPosition — 90° upper bound
-            6000.0, // maxFlywheelSpeedRPM
-            0.25, // recomputeThreshold — recalculate when distance changes by 0.25m
-            5, // convergenceIters
-            0.01, // convergenceEpsilon — 1cm convergence tolerance
-            0.1, // minTof — minimum time of flight 100ms
-            1.5, // maxTof — maximum time of flight 1.5s
-            new Transform2d(new Translation2d(0.0, 0.0), new Rotation2d()), // shooter at center
-            new Rotation2d() // operator forward = field forward
-            );
-
-    // Distance → (RPM, CowlAngle) interpolation map
-    shotSetup.addShotMapEntry(1.0, 2000.0, 0.15);
-    shotSetup.addShotMapEntry(3.0, 3000.0, 0.35);
-    shotSetup.addShotMapEntry(5.0, 4000.0, 0.55);
-    shotSetup.addShotMapEntry(7.0, 4800.0, 0.75);
-    shotSetup.addShotMapEntry(10.0, 5500.0, 1.0);
-
-    // Distance → Time-of-Flight (seconds) interpolation map
-    shotSetup.addTofMapEntry(1.0, 0.15);
-    shotSetup.addTofMapEntry(3.0, 0.25);
-    shotSetup.addTofMapEntry(5.0, 0.40);
-    shotSetup.addTofMapEntry(7.0, 0.60);
-    shotSetup.addTofMapEntry(10.0, 0.90);
+    ShotSetup shotSetup = ShotSetupFactory.createDefault();
 
     superstructure =
         new MARSSuperstructure(
@@ -365,8 +321,6 @@ public class RobotContainer {
     // Configure PathPlanner AutoBuilder AFTER construction — composition root owns this
     swerveDrive.configurePathPlanner();
 
-    headingController.enableContinuousInput(-Math.PI, Math.PI);
-
     // Initialize the Auto Chooser
     autoChooser =
         new LoggedDashboardChooser<>(
@@ -385,91 +339,12 @@ public class RobotContainer {
 
     // Drive with left thumbstick (translation) and right thumbstick X (rotation)
     swerveDrive.setDefaultCommand(
-        swerveDrive.run(
-            () -> {
-              // Compute field-relative speeds via shared math (tested in
-              // TeleopDrivePipelineTest)
-              boolean isRed =
-                  DriverStation.getAlliance().isPresent()
-                      && DriverStation.getAlliance().get() == Alliance.Red;
-              ChassisSpeeds preSlewSpeeds =
-                  com.marslib.swerve.TeleopDriveMath.computeFieldRelativeSpeeds(
-                      ghostManager.getLeftY(() -> controller.getLeftY()),
-                      ghostManager.getLeftX(() -> controller.getLeftX()),
-                      ghostManager.getRightX(() -> controller.getRightX()),
-                      isRed);
-
-              // Post-deadband values for gyro-lock condition check
-              double xVal =
-                  MathUtil.applyDeadband(
-                      ghostManager.getLeftY(() -> controller.getLeftY()),
-                      com.marslib.swerve.TeleopDriveMath.DEADBAND);
-              double yVal =
-                  MathUtil.applyDeadband(
-                      ghostManager.getLeftX(() -> controller.getLeftX()),
-                      com.marslib.swerve.TeleopDriveMath.DEADBAND);
-              double omgVal =
-                  MathUtil.applyDeadband(
-                      ghostManager.getRightX(() -> controller.getRightX()),
-                      com.marslib.swerve.TeleopDriveMath.DEADBAND);
-
-              // Apply slew rate limiting to translation (stateful, stays here)
-              double finalX = xLimiter.calculate(preSlewSpeeds.vxMetersPerSecond);
-              double finalY = yLimiter.calculate(preSlewSpeeds.vyMetersPerSecond);
-
-              targetSpeeds.vxMetersPerSecond = finalX;
-              targetSpeeds.vyMetersPerSecond = finalY;
-
-              if (Math.abs(omgVal) <= 0.01) {
-                if (Math.abs(xVal) > 0.01 || Math.abs(yVal) > 0.01) {
-                  // Gyro-Lock: hold cached target heading while translating
-                  targetSpeeds.omegaRadiansPerSecond =
-                      headingController.calculate(
-                          swerveDrive.getPose().getRotation().getRadians(),
-                          targetHeading.getRadians());
-                } else {
-                  // Stationary, update cached heading
-                  targetHeading = swerveDrive.getPose().getRotation();
-                  targetSpeeds.omegaRadiansPerSecond = 0.0;
-                }
-              } else {
-                // Driver rotating actively — use pre-slew omega from TeleopDriveMath
-                targetHeading = swerveDrive.getPose().getRotation();
-                targetSpeeds.omegaRadiansPerSecond =
-                    omegaLimiter.calculate(preSlewSpeeds.omegaRadiansPerSecond);
-              }
-
-              // CRITICAL: Convert teleop joystick values from Field-Relative to Robot-Centric
-              ChassisSpeeds robotRelativeSpeeds =
-                  ChassisSpeeds.fromFieldRelativeSpeeds(
-                      targetSpeeds.vxMetersPerSecond,
-                      targetSpeeds.vyMetersPerSecond,
-                      targetSpeeds.omegaRadiansPerSecond,
-                      swerveDrive.getPose().getRotation());
-
-              // Telemetry for debugging drive command pipeline
-              Logger.recordOutput("Teleop/RawJoystickX", controller.getLeftY());
-              Logger.recordOutput("Teleop/RawJoystickY", controller.getLeftX());
-              Logger.recordOutput("Teleop/RawJoystickOmega", controller.getRightX());
-              Logger.recordOutput("Teleop/PostDeadband", new double[] {xVal, yVal, omgVal});
-              Logger.recordOutput(
-                  "Teleop/FieldRelSpeeds",
-                  new double[] {
-                    targetSpeeds.vxMetersPerSecond,
-                    targetSpeeds.vyMetersPerSecond,
-                    targetSpeeds.omegaRadiansPerSecond
-                  });
-              Logger.recordOutput(
-                  "Teleop/RobotRelSpeeds",
-                  new double[] {
-                    robotRelativeSpeeds.vxMetersPerSecond,
-                    robotRelativeSpeeds.vyMetersPerSecond,
-                    robotRelativeSpeeds.omegaRadiansPerSecond
-                  });
-              Logger.recordOutput("Teleop/GyroLockActive", Math.abs(omgVal) <= 0.01);
-
-              swerveDrive.runVelocity(robotRelativeSpeeds);
-            }));
+        new TeleopDriveCommand(
+            swerveDrive,
+            ghostManager,
+            () -> controller.getLeftY(),
+            () -> controller.getLeftX(),
+            () -> controller.getRightX()));
   }
 
   private void configureButtonBindings() {
