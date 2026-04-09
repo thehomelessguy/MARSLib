@@ -42,7 +42,7 @@
   "java.test.defaultConfig": "WPIlibUnitTests",
   "spotlessGradle.format.enable": true,
   "spotlessGradle.diagnostics.enable": false,
-  "java.import.gradle.annotationProcessing.enabled": false,
+  "java.import.gradle.annotationProcessing.enabled": true,
   "java.completion.favoriteStaticMembers": [
     "org.junit.Assert.*",
     "org.junit.Assume.*",

@@ -20,7 +20,7 @@ public class MARSSuperstructure extends SubsystemBase {
 
   private final Supplier<Pose2d> poseSupplier;
 
-  @SuppressWarnings("PMD.UnusedPrivateField")
+  @SuppressWarnings({"PMD.UnusedPrivateField", "unused"})
   private final Supplier<java.util.Optional<edu.wpi.first.math.geometry.Translation2d>>
       visionTargetSupplier;
 
