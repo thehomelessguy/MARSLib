@@ -183,10 +183,6 @@ public class MARSSuperstructure extends SubsystemBase {
           boolean isBlue =
               alliance.isPresent()
                   && alliance.get() == edu.wpi.first.wpilibj.DriverStation.Alliance.Blue;
-          edu.wpi.first.math.geometry.Translation2d targetHub =
-              isBlue
-                  ? frc.robot.Constants.FieldConstants.BLUE_HUB_POS
-                  : frc.robot.Constants.FieldConstants.RED_HUB_POS;
 
           // Ensure on the correct side (182.11 inches or 4.625594 m from end of field)
           double allowedDistance = 4.625594;
@@ -196,30 +192,20 @@ public class MARSSuperstructure extends SubsystemBase {
                   : (robotPose.getX()
                       >= frc.robot.Constants.FieldConstants.FIELD_LENGTH_METERS - allowedDistance);
 
-          // Ensure aligned at the goal
-          double angleToGoal =
-              Math.atan2(targetHub.getY() - robotPose.getY(), targetHub.getX() - robotPose.getX());
-          double angleDiff =
-              edu.wpi.first.math.MathUtil.angleModulus(
-                  angleToGoal - robotPose.getRotation().getRadians());
-          boolean isAligned = Math.abs(angleDiff) < Math.toRadians(15.0);
+          // Shoot the piece in whatever direction the robot is facing
+          double vx = 15.0 * Math.cos(robotPose.getRotation().getRadians());
+          double vy = 15.0 * Math.sin(robotPose.getRotation().getRadians());
+          double vz = 5.0;
 
-          if (isAligned) {
-            // Shoot the piece
-            double vx = 15.0 * Math.cos(robotPose.getRotation().getRadians());
-            double vy = 15.0 * Math.sin(robotPose.getRotation().getRadians());
-            double vz = 5.0;
-
-            com.marslib.simulation.MARSPhysicsWorld.getInstance()
-                .launchGamePiece(
-                    robotPose.getTranslation(),
-                    vx,
-                    vy,
-                    vz,
-                    frc.robot.Constants.SuperstructureConstants.SCORE_HIGH_ELEVATOR_HEIGHT,
-                    correctSide);
-            gamePieceCount--;
-          }
+          com.marslib.simulation.MARSPhysicsWorld.getInstance()
+              .launchGamePiece(
+                  robotPose.getTranslation(),
+                  vx,
+                  vy,
+                  vz,
+                  frc.robot.Constants.SuperstructureConstants.SCORE_HIGH_ELEVATOR_HEIGHT,
+                  correctSide);
+          gamePieceCount--;
         }
       } else {
         feeder.setVoltage(0.0);

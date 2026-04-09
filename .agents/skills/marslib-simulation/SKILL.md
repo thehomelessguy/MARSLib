@@ -70,7 +70,7 @@ All initial piece staging lives in `MARSPhysicsWorld.spawnInitialGamePieces()`:
 ## 5. Shooting & Legality Simulation
 MARSLib simulates 3D arcing projectiles using `GamePieceSim.launch()`.
 - **Decoupled Scoring vs Physics:** A robot can physically launch a game piece from anywhere on the field. However, to count as a legal score, `isLegalShot` must be passed as `true` (enforced by the robot's pose constraint logic).
-- **Physical Bouncing vs Scoring:** When `isLegalShot` is true and the piece lands in a hub, it simulates rolling out. Otherwise, it simply bounces inelastically on the floor. 
+- **Physical Bouncing vs Scoring:** When `isLegalShot` is true and the piece lands in a hub, it simulates rolling out. Otherwise, it simply bounces inelastically on the floor.
 - Use `GamePieceSim.getPose3d()` for accurate representations in `AdvantageScope`.
 
 ## 6. Performance Limits
