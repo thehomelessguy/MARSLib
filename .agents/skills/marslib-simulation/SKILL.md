@@ -67,12 +67,18 @@ All initial piece staging lives in `MARSPhysicsWorld.spawnInitialGamePieces()`:
 - Grid spacing: `radius * 2.5` to prevent overlap
 - Row jitter: `±0.05m` alternating to prevent rigid interlocking
 
-## 5. Performance Limits
+## 5. Shooting & Legality Simulation
+MARSLib simulates 3D arcing projectiles using `GamePieceSim.launch()`.
+- **Decoupled Scoring vs Physics:** A robot can physically launch a game piece from anywhere on the field. However, to count as a legal score, `isLegalShot` must be passed as `true` (enforced by the robot's pose constraint logic).
+- **Physical Bouncing vs Scoring:** When `isLegalShot` is true and the piece lands in a hub, it simulates rolling out. Otherwise, it simply bounces inelastically on the floor. 
+- Use `GamePieceSim.getPose3d()` for accurate representations in `AdvantageScope`.
+
+## 6. Performance Limits
 - **168 dynamic bodies** at 50Hz is the current upper bound
 - If frame times exceed 20ms: reduce damping, implement sleep thresholds, or reduce piece count
 - Monitor via `Logger.recordOutput("PhysicsSim/StepTimeMs", ...)`
 
-## 6. Telemetry
+## 7. Telemetry
 - `PhysicsSim/StepTimeMs` — Physics engine step duration
 - `PhysicsSim/BodyCount` — Total active dyn4j bodies
 - `PhysicsSim/TotalCurrentDraw` — Aggregate current from all mechanisms
