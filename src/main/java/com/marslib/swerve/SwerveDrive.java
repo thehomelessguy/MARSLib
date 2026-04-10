@@ -278,12 +278,12 @@ public class SwerveDrive extends SubsystemBase {
     Logger.recordOutput("SwerveDrive/OdometryTrustMultiplier", odometryTrust);
 
     // Synchronous Pose Estimator Drain
-    int sampleCount = modules[0].getPositionDeltas().length;
+    int sampleCount = modules[0].getDeltaCount();
     double[] timestamps = modules[0].getOdometryTimestamps();
 
     for (int i = 0; i < sampleCount; i++) {
       for (int m = 0; m < 4; m++) {
-        SwerveModulePosition rawPos = modules[m].getPositionDeltas()[i];
+        SwerveModulePosition rawPos = modules[m].getCachedDelta(i);
 
         if (isFirstOdometryDrain) {
           lastRawDistances[m] = rawPos.distanceMeters;

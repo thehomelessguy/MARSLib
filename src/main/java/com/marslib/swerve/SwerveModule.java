@@ -20,6 +20,8 @@ public class SwerveModule {
   private final int index;
 
   private double lastDriveVoltage = 0.0;
+  private final SwerveModulePosition[] cachedDeltas = new SwerveModulePosition[20];
+  private int cachedDeltaCount = 0;
 
   /**
    * Constructs a generic Swerve Module boundary structure.
@@ -30,39 +32,33 @@ public class SwerveModule {
   public SwerveModule(int index, SwerveModuleIO io) {
     this.index = index;
     this.io = io;
+    for (int i = 0; i < cachedDeltas.length; i++) {
+      cachedDeltas[i] = new SwerveModulePosition(0.0, Rotation2d.fromRadians(0.0));
+    }
   }
 
-  /**
-   * Polls the underlying IO interface for fresh odometry states and processes inputs natively into
-   * AdvantageKit log streams.
-   */
   public void periodic() {
     io.updateInputs(inputs);
     Logger.processInputs("SwerveDrive/Module" + index, inputs);
+
+    // Update statically allocated positional cache
+    cachedDeltaCount = Math.min(inputs.drivePositionsRad.length, cachedDeltas.length);
+    for (int i = 0; i < cachedDeltaCount; i++) {
+      cachedDeltas[i].distanceMeters =
+          inputs.drivePositionsRad[i] * SwerveConstants.WHEEL_RADIUS_METERS;
+      cachedDeltas[i].angle = Rotation2d.fromRadians(inputs.turnPositionsRad[i]);
+    }
   }
 
-  /**
-   * Iterates over the high-frequency positional arrays produced by internal Phoenix 6 Odometry
-   * Threads to generate intermediate WPILib poses across a single {@value
-   * frc.robot.Constants#ModeConstants.LOOP_PERIOD_SECS}s delta window.
-   *
-   * @return Array of all physical module locations over the delta window in abstract WPILib
-   *     kinematics terms.
-   */
-  public SwerveModulePosition[] getPositionDeltas() {
-    int length = inputs.drivePositionsRad.length;
-    if (length == 0) {
-      return new SwerveModulePosition[] {new SwerveModulePosition()};
-    }
+  /** Returns the count of valid samples populated in the buffer during the last periodic cycle. */
+  public int getDeltaCount() {
+    return cachedDeltaCount;
+  }
 
-    SwerveModulePosition[] positions = new SwerveModulePosition[length];
-
-    for (int i = 0; i < length; i++) {
-      double distanceMeters = inputs.drivePositionsRad[i] * SwerveConstants.WHEEL_RADIUS_METERS;
-      Rotation2d angle = new Rotation2d(inputs.turnPositionsRad[i]);
-      positions[i] = new SwerveModulePosition(distanceMeters, angle);
-    }
-    return positions;
+  /** Accesses the pre-allocated cache representing positional samples without creating arrays. */
+  public SwerveModulePosition getCachedDelta(int i) {
+    if (cachedDeltaCount == 0) return cachedDeltas[0];
+    return cachedDeltas[i];
   }
 
   /**
@@ -80,8 +76,8 @@ public class SwerveModule {
    * @return A singular {@link SwerveModulePosition} bounding distance traveled and heading.
    */
   public SwerveModulePosition getLatestPosition() {
-    SwerveModulePosition[] deltas = getPositionDeltas();
-    return deltas[deltas.length - 1];
+    if (cachedDeltaCount == 0) return cachedDeltas[0];
+    return cachedDeltas[cachedDeltaCount - 1];
   }
 
   /**
@@ -92,7 +88,7 @@ public class SwerveModule {
   public SwerveModuleState getLatestState() {
     return new SwerveModuleState(
         inputs.driveVelocityRadPerSec * SwerveConstants.WHEEL_RADIUS_METERS,
-        new Rotation2d(
+        Rotation2d.fromRadians(
             inputs.turnPositionsRad.length > 0
                 ? inputs.turnPositionsRad[inputs.turnPositionsRad.length - 1]
                 : 0.0));
@@ -111,7 +107,7 @@ public class SwerveModule {
   public void setDesiredState(SwerveModuleState desiredState) {
     // Get current module angle
     Rotation2d currentAngle =
-        new Rotation2d(
+        Rotation2d.fromRadians(
             inputs.turnPositionsRad.length > 0
                 ? inputs.turnPositionsRad[inputs.turnPositionsRad.length - 1]
                 : 0.0);

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.marslib.testing.MARSTestHarness;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.SwerveConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,10 +53,10 @@ public class SwerveModuleTest {
 
   @Test
   public void testGetPositionDeltasDefaultsToEmpty() {
-    SwerveModulePosition[] deltas = module.getPositionDeltas();
-    assertEquals(1, deltas.length);
-    assertEquals(0.0, deltas[0].distanceMeters);
-    assertEquals(0.0, deltas[0].angle.getRadians());
+    int count = module.getDeltaCount();
+    assertEquals(0, count);
+    assertEquals(0.0, module.getCachedDelta(0).distanceMeters);
+    assertEquals(0.0, module.getCachedDelta(0).angle.getRadians());
   }
 
   @Test
