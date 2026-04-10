@@ -123,8 +123,10 @@ description: Superstructure documentation  # Too vague, no trigger phrase
 ## 7. After Creating the Skill
 
 1. **Verify the skill is discoverable.** The directory must be `.agents/skills/marslib-{name}/SKILL.md`.
-2. **Cross-reference from related skills.** If this system interacts with the superstructure, add a "See `marslib-superstructure` skill" note in the relevant section.
-3. **Add a test.** If the system has test-specific patterns (e.g., singleton resets), document them in the skill's Testing section AND in `marslib-testing`.
+2. **Create the Manifest:** You MUST create a `plugin.json` file inside the new skill directory to ensure AI agents (like Claude) can detect it. Use an existing one (e.g., `marslib-vision/plugin.json`) as a template.
+3. **Update Marketplace:** You MUST register the new skill by adding its name and relative source path to the `.agents/skills/marketplace.json` array.
+4. **Cross-reference from related skills.** If this system interacts with the superstructure, add a "See `marslib-superstructure` skill" note in the relevant section.
+5. **Add a test.** If the system has test-specific patterns (e.g., singleton resets), document them in the skill's Testing section AND in `marslib-testing`.
 
 ## 8. Updating Existing Skills
 
