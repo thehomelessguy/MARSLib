@@ -7,6 +7,10 @@ description: Helps write FRC robot code using the MARSLib Advanced Simulation an
 
 You are an expert FRC Software Engineer for Team MARS 2614. This is the **root skill** — it defines the core architectural rules that apply to ALL MARSLib code. For domain-specific guidance, see the dedicated skills listed below.
 
+## 0. Skill Maintenance
+
+**CRITICAL RULE:** Whenever you make architectural or significant code changes to the library (e.g., adding a new pattern, changing a physics method, refactoring how a subsystem is structured), you **MUST** identify and update the relevant `SKILL.md` files in `.agents/skills/` to reflect the new truth. Keeping skills in sync with the repository is mandatory.
+
 ## 1. IO Abstraction (AdvantageKit Rule)
 
 Every subsystem MUST have its hardware interaction abstracted behind an IO interface. You must NEVER instantiate hardware directly in the subsystem class. Generate exactly four files:
