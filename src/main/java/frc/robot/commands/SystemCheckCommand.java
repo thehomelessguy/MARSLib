@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.MARSClimber;
 import frc.robot.subsystems.MARSCowl;
-import frc.robot.subsystems.MARSIntake;
 import frc.robot.subsystems.MARSShooter;
 import org.littletonrobotics.junction.Logger;
 
@@ -44,7 +43,7 @@ public class SystemCheckCommand extends Command {
   private final SwerveDrive swerve;
   private final MARSClimber climber;
   private final MARSCowl cowl;
-  private final MARSIntake intake;
+  private final MARSShooter intake;
   private final MARSShooter shooter;
 
   // -- State Tracking --
@@ -119,7 +118,7 @@ public class SystemCheckCommand extends Command {
       SwerveDrive swerve,
       MARSClimber climber,
       MARSCowl cowl,
-      MARSIntake intake,
+      MARSShooter intake,
       MARSShooter shooter) {
     this.swerve = swerve;
     this.climber = climber;
@@ -315,7 +314,7 @@ public class SystemCheckCommand extends Command {
         intake.setVoltage(6.0);
 
         if (elapsed > FLYWHEEL_SPIN_TIME) {
-          intake.stop();
+          intake.setVoltage(0.0);
           // We can't directly read intake velocity from outside the IO layer
           // in the current architecture, but we check for CAN faults
           if (com.marslib.faults.MARSFaultManager.hasActiveCriticalFaults()) {
@@ -375,7 +374,7 @@ public class SystemCheckCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     // Safety: stop all actuators
-    intake.stop();
+    intake.setVoltage(0.0);
     shooter.setVoltage(0.0);
 
     if (interrupted) {
