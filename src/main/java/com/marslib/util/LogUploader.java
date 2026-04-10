@@ -3,7 +3,6 @@ package com.marslib.util;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -83,22 +82,20 @@ public final class LogUploader {
       return; // Already uploading
     }
 
-    @SuppressWarnings("FutureReturnValueIgnored")
-    var unused =
-        executor.submit(
-            () -> {
-              try {
-                doUploadLogs();
-              } catch (Exception e) {
-                if (LOGGER.isLoggable(Level.WARNING)) {
-                  LOGGER.log(
-                      Level.WARNING, "Error during log upload async process: " + e.getMessage(), e);
-                }
-                DriverStation.reportWarning("Log Upload Failed: " + e.getMessage(), false);
-              } finally {
-                isUploading.set(false);
-              }
-            });
+    executor.execute(
+        () -> {
+          try {
+            doUploadLogs();
+          } catch (Exception e) {
+            if (LOGGER.isLoggable(Level.WARNING)) {
+              LOGGER.log(
+                  Level.WARNING, "Error during log upload async process: " + e.getMessage(), e);
+            }
+            DriverStation.reportWarning("Log Upload Failed: " + e.getMessage(), false);
+          } finally {
+            isUploading.set(false);
+          }
+        });
   }
 
   private static void doUploadLogs() throws Exception {
@@ -207,7 +204,7 @@ public final class LogUploader {
             "https://uploads.github.com/repos/%s/%s/releases/%s/assets?name=%s",
             GITHUB_OWNER, GITHUB_REPO, releaseId, assetName);
 
-    try (InputStream unused = Files.newInputStream(logFile)) {
+    try {
       HttpRequest request =
           HttpRequest.newBuilder()
               .uri(URI.create(uploadUrl))
