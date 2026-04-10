@@ -36,6 +36,12 @@ public class Alert {
     }
   }
 
+  /**
+   * Activates or deactivates this alert. When activated, the alert's timestamp is recorded and (for
+   * CRITICAL type) a critical fault is registered with {@link MARSFaultManager}.
+   *
+   * @param active {@code true} to activate, {@code false} to deactivate.
+   */
   public void set(boolean active) {
     if (active && !this.active) {
       activeStartTime = Timer.getFPGATimestamp();
@@ -54,6 +60,12 @@ public class Alert {
     groups.get(group).updateAlert(this);
   }
 
+  /**
+   * Updates the displayed text of this alert. If the alert is currently active, the display is
+   * refreshed immediately.
+   *
+   * @param text The new alert message.
+   */
   public void setText(String text) {
     this.text = text;
     if (active) {
@@ -64,6 +76,11 @@ public class Alert {
     }
   }
 
+  /**
+   * Returns whether this alert is currently active.
+   *
+   * @return {@code true} if the alert is active.
+   */
   public boolean get() {
     return active;
   }

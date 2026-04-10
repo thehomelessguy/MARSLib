@@ -269,6 +269,7 @@ abstract class GenerateVersionFile extends DefaultTask {
 
     @TaskAction
     void generate() {
+
         def baseDir = getOutputDir().get().asFile
         def outputDir = new File(baseDir, "frc/robot")
         outputDir.mkdirs()
@@ -315,6 +316,7 @@ public final class BuildConstants {
 }
 
 def generateVersionFile = tasks.register("generateVersionFile", GenerateVersionFile) {
+    notCompatibleWithConfigurationCache("Executes external Git commands")
     outputDir = layout.buildDirectory.dir("generated/source/version/main/java")
     projectName = project.name
 }

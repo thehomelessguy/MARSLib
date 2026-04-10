@@ -42,6 +42,8 @@ These rules are **non-negotiable** across all MARSLib code:
 | Superstructure | `marslib-superstructure` | Collision safety, state machine coordination |
 | State Machines | `marslib-statemachine` | Generic FSM framework (`MARSStateMachine<S>`) |
 | Autonomous | `marslib-autonomous` | PathPlanner, GhostManager, Choreo, alignment |
+| Ghost Replay | `marslib-ghost` | GhostManager recording, playback, macro files |
+| Shot Setup | `marslib-shotsetup` | EliteShooterMath SOTM solver, time-of-flight |
 | Vision | `marslib-vision` | AprilTag fusion, VIO SLAM, camera simulation |
 | Simulation | `marslib-simulation` | dyn4j physics, field boundaries, game pieces |
 | Controls | `marslib-control-theory` | PID, feedforward, SysId, slew rate limiting |
@@ -52,6 +54,7 @@ These rules are **non-negotiable** across all MARSLib code:
 | Math | `marslib-math` | Interpolation, filtering, vector transforms |
 | Network | `marslib-network` | NT4, coprocessor streams, bandwidth |
 | Testing | `marslib-testing` | JUnit 5, singleton resets, physics loops |
+| Elite Mining | `marslib-elite-mining` | Cross-team code mining & architectural analysis |
 | CI/CD | `marslib-ci` | Gradle, Spotless, GitHub Actions |
 | Skill Authoring | `marslib-skill-authoring` | How to create new skills |
 

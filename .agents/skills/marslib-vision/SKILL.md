@@ -73,11 +73,22 @@ Without this, camera configurations leak across test classes, producing stale po
 Without these, sim performs unrealistically well and hides real-world vision issues.
 
 ### Rule F: Rejection Filters
-Two rejection filters are applied before any pose is accepted:
+Three rejection filters are applied before any pose is accepted:
 1. **Ambiguity check** — single-tag observations with ambiguity > `MAX_AMBIGUITY` (0.2) are rejected.
 2. **Z-height check** — single-tag observations with |z| > `MAX_Z_HEIGHT` (0.5m) are rejected as hallucinations.
+3. **Distance cutoff** (B.R.E.A.D. 2025) — single-tag observations beyond `MAX_TAG_DISTANCE` (3.0m) are rejected. At long range, single AprilTag solutions are geometrically degenerate, so hard-cutting prevents large-amplitude pose jumps.
 
-Multi-tag observations (tagCount > 1) bypass both filters.
+Multi-tag observations (tagCount > 1) bypass all three filters.
+
+### Rule G: Sigmoid Distance Weight
+The standard deviation is further scaled by a sigmoid-based weight function that smoothly reduces trust as distance increases:
+```java
+// Weight = baseWeight (capped at MIN_WEIGHT at FAR_DISTANCE)
+// Beyond FAR_DISTANCE: exponential halving penalty every 2m
+double baseWeight = MIN_WEIGHT + (1.0 - MIN_WEIGHT)
+    * (1.0 / (1.0 + Math.exp((dist - CLOSE_DISTANCE) / (FAR_DISTANCE - CLOSE_DISTANCE) * 4.0)));
+```
+Key parameters: `CLOSE_DISTANCE=2.0m`, `FAR_DISTANCE=6.0m`, `MIN_WEIGHT=0.1`.
 
 ## 3. Adding New Camera Sources
 
@@ -123,6 +134,8 @@ The following log keys are written by `MARSVision.periodic()`:
 | `MULTI_TAG_STD_MULTIPLIER` | 0.1 | StdDev reduction factor when >1 tag visible |
 | `ANGULAR_STD_MULTIPLIER` | 2.0 | Linear → angular stdDev conversion factor |
 | `SLAM_STD_DEV` | 0.01 | Static stdDev for VIO SLAM measurements |
+| `SLAM_ANGULAR_STD_DEV` | 0.5 | Static angular stdDev for VIO SLAM measurements |
+| `MAX_TAG_DISTANCE` | 3.0m | Hard cutoff for single-tag distance (B.R.E.A.D.) |
 
 ## 6. Elite References (PhotonVision)
 

@@ -1,5 +1,6 @@
 package com.marslib.vision;
 
+import com.marslib.swerve.GyroIOInputsAutoLogged;
 import com.marslib.swerve.SwerveDrive;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
@@ -9,7 +10,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.VisionConstants;
 import java.util.List;
+import java.util.Optional;
 import org.littletonrobotics.junction.Logger;
 
 /**
@@ -24,7 +27,7 @@ public class MARSVision extends SubsystemBase {
   private final SwerveDrive swerveDrive;
   private final List<AprilTagVisionIO> aprilTagIOs;
   private final AprilTagVisionIOInputsAutoLogged[] aprilTagInputs;
-  private java.util.Optional<Translation2d> latestTargetTranslation = java.util.Optional.empty();
+  private Optional<Translation2d> latestTargetTranslation = Optional.empty();
 
   private final List<VIOSlamIO> slamIOs;
   private final VIOSlamIOInputsAutoLogged[] slamInputs;
@@ -80,10 +83,9 @@ public class MARSVision extends SubsystemBase {
    */
   @Override
   public void periodic() {
-    latestTargetTranslation =
-        java.util.Optional.empty(); // Reset each loop unless a target is found
+    latestTargetTranslation = Optional.empty(); // Reset each loop unless a target is found
 
-    com.marslib.swerve.GyroIOInputsAutoLogged gyro = swerveDrive.getGyroInputs();
+    GyroIOInputsAutoLogged gyro = swerveDrive.getGyroInputs();
 
     // Process AprilTags
     for (int i = 0; i < aprilTagIOs.size(); i++) {
@@ -109,8 +111,8 @@ public class MARSVision extends SubsystemBase {
 
         // Dynamic Filtering & Ambiguity Rejection
         if (tagCount == 1) {
-          if (ambiguity > frc.robot.constants.VisionConstants.MAX_AMBIGUITY.get()
-              || Math.abs(pose3d.getZ()) > frc.robot.constants.VisionConstants.MAX_Z_HEIGHT.get()) {
+          if (ambiguity > VisionConstants.MAX_AMBIGUITY.get()
+              || Math.abs(pose3d.getZ()) > VisionConstants.MAX_Z_HEIGHT.get()) {
             continue; // Reject noisy single tag or flying robot
           }
           if (avgDist > MAX_TAG_DISTANCE) {
@@ -123,23 +125,21 @@ public class MARSVision extends SubsystemBase {
         // Quadratic scaling based on distance
         // The further away, the exponentially less we trust it (squared)
         double linearStdDev =
-            (frc.robot.constants.VisionConstants.TAG_STD_BASE.get() * Math.pow(avgDist, 2))
-                / distanceWeight;
+            (VisionConstants.TAG_STD_BASE.get() * Math.pow(avgDist, 2)) / distanceWeight;
 
         // MegaTag2 Boost: Dramatically tighten bounds when multiple tags are visible
         if (tagCount > 1) {
-          linearStdDev *= frc.robot.constants.VisionConstants.MULTI_TAG_STD_MULTIPLIER.get();
+          linearStdDev *= VisionConstants.MULTI_TAG_STD_MULTIPLIER.get();
         }
 
-        double angularStdDev =
-            linearStdDev * frc.robot.constants.VisionConstants.ANGULAR_STD_MULTIPLIER.get();
+        double angularStdDev = linearStdDev * VisionConstants.ANGULAR_STD_MULTIPLIER.get();
 
         Matrix<N3, N1> stdDevs = VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev);
         Pose2d pose2d = pose3d.toPose2d();
 
         swerveDrive.addVisionMeasurement(pose2d, timestamp, stdDevs);
         Logger.recordOutput("Vision/ValidPoses/" + i, pose2d);
-        latestTargetTranslation = java.util.Optional.of(pose2d.getTranslation());
+        latestTargetTranslation = Optional.of(pose2d.getTranslation());
       }
     }
 
@@ -155,9 +155,9 @@ public class MARSVision extends SubsystemBase {
         // Tight static covariance for reliable VIO odometry
         Matrix<N3, N1> stdDevs =
             VecBuilder.fill(
-                frc.robot.constants.VisionConstants.SLAM_STD_DEV.get(),
-                frc.robot.constants.VisionConstants.SLAM_STD_DEV.get(),
-                frc.robot.constants.VisionConstants.SLAM_ANGULAR_STD_DEV.get());
+                VisionConstants.SLAM_STD_DEV.get(),
+                VisionConstants.SLAM_STD_DEV.get(),
+                VisionConstants.SLAM_ANGULAR_STD_DEV.get());
         Pose2d pose2d = pose3d.toPose2d();
 
         swerveDrive.addVisionMeasurement(pose2d, timestamp, stdDevs);
@@ -170,7 +170,7 @@ public class MARSVision extends SubsystemBase {
    * Retrieves the latest, rigorously vetted vision-based target translation. This provides a direct
    * fallback for SOTM and aiming loops if odometry is drifting.
    */
-  public java.util.Optional<Translation2d> getBestTargetTranslation() {
+  public Optional<Translation2d> getBestTargetTranslation() {
     return latestTargetTranslation;
   }
 }

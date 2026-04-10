@@ -2,7 +2,10 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Volts;
 
-import com.marslib.mechanisms.*;
+import com.marslib.mechanisms.FlywheelIO;
+import com.marslib.mechanisms.FlywheelIOInputsAutoLogged;
+import com.marslib.mechanisms.FlywheelIOSim;
+import com.marslib.mechanisms.FlywheelIOTalonFX;
 import com.marslib.power.MARSPowerManager;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;

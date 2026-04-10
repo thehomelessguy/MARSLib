@@ -13,8 +13,8 @@ Math utilities span `com.marslib.util` and `com.marslib.auto`:
 
 | Class | Purpose |
 |---|---|
-| `KinematicAiming` | Linear time-of-flight solver (`distance / speed`). Educational, not production-ready. |
-| `ShootOnTheMoveCommand` | Newton-Raphson quadratic projectile intercept solver. Use this for competition. |
+| `EliteShooterMath` | Advanced quadratic projectile intercept solver with gravity and lift compensation. Ingested from Team 254 (2024). |
+| `MARSAlignmentCommand` | Dynamic native chassis alignment to stationary or moving objects using profiled PID controllers. |
 | `LoggedTunableNumber` | AdvantageKit-compatible tunable double with automatic logging and change detection. |
 
 ### WPILib Math Utilities Used
@@ -50,12 +50,9 @@ private final LoggedTunableNumber shotSpeed = new LoggedTunableNumber("Shooter/S
 5. Document the mathematical model in the class Javadoc — students need to understand the physics.
 
 ## 4. Reference Implementations
-- **Linear ToF:** `KinematicAiming.calculateLeadAngle()` — Simple `distance / speed` with linear lead. Good for learning.
-- **Quadratic ToF:** `ShootOnTheMoveCommand` — True projectile intercept with Newton-Raphson iteration. Handles moving targets, gravity, and spin. Use this on the real robot.
+- **Advanced Shot-On-The-Move:** `EliteShooterMath.calculateShotOnTheMove()` — True projectile intercept solving quadratic time-of-flight. Handles moving targets, gravity, and aerodynamic lift. Use this for competition.
+- **Dynamic Alignment:** `MARSAlignmentCommand` — Bypasses default PathPlanner routing to dynamically align the robot natively onto a target.
 
 ## 5. Telemetry
-- `KinematicAiming/LeadAngle` — Calculated lead angle in radians
-- `KinematicAiming/TimeOfFlight` — Estimated projectile flight time
-- `ShootOnTheMove/ConvergedSolution` — Boolean: Newton-Raphson converged
-- `ShootOnTheMove/IterationCount` — Solver iterations before convergence
+- `EliteShooterMath` outputs an `EliteShooterSetpoint` covering calculated yaw, pitched hood angles, speeds, and feedforwards which should be logged via AdvantageKit auto-logging or manual puts.
 - `{Name}/TunableValue` — Current value of any `LoggedTunableNumber`

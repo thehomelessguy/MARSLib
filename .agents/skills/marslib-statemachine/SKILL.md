@@ -86,19 +86,25 @@ You MUST call `machine.update()` in your subsystem's `periodic()`. If you skip i
 ### Rule D: AdvantageKit Replay Safety
 The FSM contains no hardware reads. All state decisions are deterministic from the sequence of `requestTransition()` calls, which are triggered by Commands (logged by AdvantageKit). This makes the entire state machine fully deterministic in log replay.
 
+### Convenience: Bidirectional Transitions
+```java
+// Registers both A→B and B→A in one call
+machine.addValidBidirectional(State.STOWED, State.SCORE);
+```
+
 ## 4. Usage in MARSSuperstructure
 
-The superstructure's transition graph is:
+The superstructure's transition graph uses bidirectional links:
 ```
-STOWED → INTAKE_FLOOR  ✅
-STOWED → SCORE_HIGH    ✅
-INTAKE_FLOOR → STOWED  ✅
-INTAKE_FLOOR → SCORE_HIGH ✅
-SCORE_HIGH → STOWED    ✅
-SCORE_HIGH → INTAKE_FLOOR ❌ ILLEGAL
+STOWED ↔ INTAKE_DOWN      ✅
+INTAKE_DOWN ↔ INTAKE_RUNNING ✅
+STOWED ↔ SCORE            ✅
+STOWED ↔ UNJAM            ✅
+Any ↔ BEACHED             ✅ (safety override via forceState)
+SCORE → INTAKE_RUNNING    ❌ ILLEGAL (must route through STOWED)
 ```
 
-See the `marslib-superstructure` skill for collision clamping details.
+See the `marslib-superstructure` skill for collision clamping and beaching details.
 
 ## 5. When to Use MARSStateMachine
 Use it when a subsystem has 3+ discrete modes needing explicit sequencing, illegal transition prevention, or post-match diagnostic data. Do NOT use it for simple on/off toggles (use a boolean), continuous control loops (use PID), or autonomous sequencing (use PathPlanner/Commands).

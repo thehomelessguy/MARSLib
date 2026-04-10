@@ -2,7 +2,10 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Volts;
 
-import com.marslib.mechanisms.*;
+import com.marslib.mechanisms.FlywheelIO;
+import com.marslib.mechanisms.FlywheelIOInputsAutoLogged;
+import com.marslib.mechanisms.FlywheelIOSim;
+import com.marslib.mechanisms.FlywheelIOTalonFX;
 import com.marslib.power.MARSPowerManager;
 import com.marslib.util.LoggedTunableNumber;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -12,15 +15,20 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.littletonrobotics.junction.Logger;
 
 /**
- * Subsystem controlling the robot's shooter flywheel mechanism.
+ * Generic flywheel subsystem used for the main shooter, floor intake, and feeder.
  *
- * <p>The shooter uses a velocity-controlled flywheel to launch game pieces (Fuel) at the target
- * Hub. It accepts a {@link FlywheelIO} implementation via dependency injection, allowing seamless
- * switching between real hardware ({@link FlywheelIOTalonFX}) and physics simulation ({@link
- * FlywheelIOSim}).
+ * <p>Despite its name, this class is a general-purpose velocity-controlled flywheel wrapper. In
+ * {@code RobotContainer}, three separate instances are created:
  *
- * <p>Students: Use {@link #spinUpCommand()} to rev the flywheel to scoring speed. The {@link
- * MARSSuperstructure} automatically manages spin-up timing relative to the elevator and arm state.
+ * <ul>
+ *   <li>{@code shooter} — the main scoring flywheel (4-motor, high-velocity)
+ *   <li>{@code floorIntake} — ground pickup rollers
+ *   <li>{@code feeder} — internal transfer mechanism
+ * </ul>
+ *
+ * <p>Each instance accepts a {@link FlywheelIO} implementation via dependency injection, allowing
+ * seamless switching between real hardware ({@link FlywheelIOTalonFX}) and physics simulation
+ * ({@link FlywheelIOSim}).
  */
 public class MARSShooter extends SubsystemBase {
   private final FlywheelIO io;
@@ -122,6 +130,11 @@ public class MARSShooter extends SubsystemBase {
     io.setClosedLoopVelocity(speed, ffVolts);
   }
 
+  /**
+   * Returns whether the flywheel velocity is within 20 rad/s of the target.
+   *
+   * @return {@code true} if the flywheel is at the commanded velocity within tolerance.
+   */
   public boolean isAtTolerance() {
     return Math.abs(inputs.velocityRadPerSec - targetVelocityRadPerSec) < 20.0;
   }

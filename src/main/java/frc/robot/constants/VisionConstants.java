@@ -33,4 +33,6 @@ public final class VisionConstants {
   /** Static standard deviation for VIO SLAM angular measurements (radians). */
   public static final LoggedTunableNumber SLAM_ANGULAR_STD_DEV =
       new LoggedTunableNumber("Vision/SLAM_ANGULAR_STD_DEV", 0.5);
+
+  private VisionConstants() {}
 }

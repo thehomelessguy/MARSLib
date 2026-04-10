@@ -26,6 +26,12 @@ import org.littletonrobotics.junction.Logger;
  *
  * <p>A separate background daemon thread wakes up every ~5ms to drain the queue chunks to disk,
  * guaranteeing zero main-loop blocking from file I/O formatting.
+ *
+ * <p><b>IMPORTANT: Mutual Exclusion.</b> This class is NOT a {@link Subsystem}. The record and
+ * playback commands do not have a subsystem requirement that prevents concurrent execution. Callers
+ * in {@code RobotBindings} MUST ensure that recording and playback commands are mutually exclusive
+ * (e.g., via button guards or command group sequencing). Running both simultaneously will corrupt
+ * the recorded data.
  */
 public class GhostManager {
 

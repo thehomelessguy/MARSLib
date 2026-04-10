@@ -26,7 +26,7 @@ This architecture is built so that students can develop completely offline. Our 
 *   **Time-Of-Flight Aiming:** Native quadratic kinematic intersections mean the robot shoots accurately while pulling full-speed swerve maneuvers.
 *   **Ghost Manager:** Press a button to record your entire teleop driving sequence to disk. Press another to play it perfectly back into PathPlanner as an autonomous macro.
 *   **Voltage Load-Shedding:** A native Stator Current allocation daemon statically bounds TalonFX modules to actively prevent robotic brownouts when pushing against defense.
-*   **Continuous Automation:** Every push to GitHub runs a spotless lint check and validates over 100 JUnit Mockito tests before compiling and logging an uploadable JAR.
+*   **Continuous Automation:** Every push to GitHub runs a spotless lint check and validates physics-backed JUnit tests against the dyn4j simulation engine before compiling and logging an uploadable JAR.
 
 ## 🧬 Architecture Diagram
 
@@ -40,7 +40,7 @@ graph TD
 
     Subsystem[Subsystem Logic / State Machines]:::logic
     IO[SubsystemIO Interface]:::io
-    Real[SubsystemIOReal: TalonFX/CANSparkMax]:::ext
+    Real[SubsystemIOReal: TalonFX / Limelight / QuestNav]:::ext
     Sim[SubsystemIOSim: Dyn4j Physics Engine]:::ext
     Log[(AdvantageKit Logger)]:::ext
 
@@ -57,11 +57,18 @@ MARSLib/
 ├── .github/                 # CI Pipelines, Dependabot, and PR Templates
 ├── .wpilib/                 # FRC 2614 Team Radio Configurations
 ├── com.marslib/             # Inner Architecture (Do Not Edit Routine Logic Here)
+│   ├── auto/                # GhostManager Macro Recording & Playback
+│   ├── faults/              # MARSFaultManager & Alert System
+│   ├── mechanisms/          # Linear/Rotary/Flywheel IO Abstractions
+│   ├── power/               # MARSPowerManager Load-Shedding Daemon
 │   ├── simulation/          # Dyn4j World Bounds and Hexagonal Meshes
 │   ├── swerve/              # 250Hz Odometry Thread & Odometry Computations
-│   └── util/                # Time-Of-Flight Interpolation
+│   ├── util/                # Time-Of-Flight Interpolation, State Machines, Alliance Utils
+│   └── vision/              # AprilTag & SLAM Fusion Pipelines
 └── frc.robot/               # Competition Logic (Edit Your Logic Here!)
     ├── commands/            # PathPlanner routines and Teleop Commands
+    ├── constants/           # All tunable parameters (Vision, Field, Shooter, etc.)
+    ├── simulation/          # Game Piece Physics Bodies
     ├── subsystems/          # Implementations of your Superstructure/Arm
     └── RobotContainer.java  # Controller Mapping and Subsystem bindings
 ```

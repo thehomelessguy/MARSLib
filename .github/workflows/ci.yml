@@ -61,6 +61,9 @@ jobs:
         reporter: github-pr-review
         fail_on_error: false
       
+    - name: Compile (pre-check)
+      run: ./gradlew compileJava compileTestJava
+
     - name: Build with Gradle and Coverage
       run: ./gradlew build jacocoTestReport
 

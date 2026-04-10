@@ -133,4 +133,36 @@ public void tearDown() {
 
 ---
 
+## 6. Constants Package
+
+All tunable parameters live in `frc.robot.constants.*`:
+
+| Class | Purpose |
+|---|---|
+| `ModeConstants` | REAL/SIM/REPLAY auto-detection |
+| `SwerveConstants` | Module offsets, kinematics, PID gains |
+| `VisionConstants` | Ambiguity thresholds, std dev scaling |
+| `FieldConstants` | Hub positions, field dimensions |
+| `ShooterConstants` | Shot speeds, exit heights |
+| `SuperstructureConstants` | Cowl angles, intake positions |
+| `SimulationConstants` | Dyn4j physics tuning |
+
+Never hard-code magic numbers in subsystem files — always define them in the appropriate constants class.
+
+---
+
+## 7. Troubleshooting
+
+### `BuildConstants cannot be resolved` Errors
+
+The `BuildConstants.java` file is **auto-generated** by the Gradle build task `generateVersionFile`. If your IDE shows resolution errors:
+
+1. Run `.\gradlew.bat generateVersionFile` once to create the file.
+2. Reload/refresh the Java project in your IDE.
+3. The generated file is at `build/generated/source/version/main/java/frc/robot/BuildConstants.java`.
+
+This file is `.gitignore`'d by design — it must be regenerated on each machine. If the `git` command is not available (e.g., on CI without Git), the fields will default to `"unknown"`.
+
+---
+
 Happy Coding! 🪐

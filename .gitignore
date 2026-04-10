@@ -194,7 +194,18 @@ ghost_macro*.csv
 *_test.txt
 *_log.txt
 *_error.txt
+*_errors.txt
 debug_*.txt
 diag_*.txt
 enum_*.txt
 tmp_*.txt
+
+# Build-time error/log dumps
+build_errors.*
+build_output.*
+compile_java.*
+compile_test_java.*
+spotless_error.*
+test_errors.*
+files.txt
+refactor.py

@@ -29,17 +29,30 @@ public enum SuperstructureState {
     INTAKE_DOWN,     // Intake deployed (pivot down) but rollers OFF
     INTAKE_RUNNING,  // Intake deployed AND rollers spinning at 12V
     SCORE,           // Cowl aimed, shooter at target RPM, feeder transfers on tolerance
-    UNJAM            // All mechanisms reversed at -6V to clear jams
+    UNJAM,           // All mechanisms reversed at -6V to clear jams
+    BEACHED          // Safety: all motors disabled during field obstacle traversal
 }
 ```
 
 ### Transition Graph
-All transitions are legal (wildcard from every state). The REBUILT chassis has no collision paths between the cowl and intake pivot, so no transition restrictions are needed.
+Transitions use explicit bidirectional links via `addValidBidirectional()`. BEACHED is reachable from every state and can return to any state:
+```
+STOWED ↔ INTAKE_DOWN ↔ INTAKE_RUNNING
+STOWED ↔ SCORE
+STOWED ↔ UNJAM
+Any ↔ BEACHED (via forceState)
+```
+
+### Auto-Beach Safety
+When the gyro reports a robot tilt exceeding **25°** (e.g., traversing a field obstacle), the superstructure automatically forces into `BEACHED` state, disabling all motors. This prevents mechanism damage during high-tilt maneuvers. The tilt is supplied via `Supplier<Double> tiltRadiansSupplier`.
 
 ## 2. Key Rules
 
 ### Rule A: Shot Parameters Are Distance-Dependent
-The cowl angle and shooter RPM in `SCORE` state are NOT constants — they are dynamically interpolated from `ShotSetup` based on `distanceSupplier`. The `ShotSetup` utility interpolates from a pre-characterized distance→(RPM, cowlAngle) map.
+The cowl angle and shooter RPM in `SCORE` state are dynamically calculated by `EliteShooterMath.calculateShotOnTheMove()`. The result is cached once per periodic via `calculateStaticShot()` — do NOT call it multiple times.
+
+### Rule A2: Use AllianceUtil
+All alliance checks must use `AllianceUtil.isRed()` / `AllianceUtil.isBlue()` from `com.marslib.util`. Do NOT call `DriverStation.getAlliance()` directly — it allocates an `Optional` every call.
 
 ### Rule B: Feeder Only Runs When Flywheel + Cowl Are Ready
 In `SCORE` state, the feeder and floor intake only activate after `shooter.isAtTolerance() && cowl.isAtTolerance()`. This prevents feeding pieces into a flywheel that hasn't spun up, which would jam or drop shots.
@@ -56,10 +69,10 @@ Outside of `SCORE` state, the shooter maintains a 1500 RPM idle speed. If curren
 ## 3. Adding New States
 To add a new `SuperstructureState`:
 1. Add the enum value to `SuperstructureState`.
-2. Add a `case` in the `periodic()` switch block mapping to `goalCowlAngle` and `goalIntakeAngle`.
-3. Add motor control logic (intake/shooter/feeder activation) for the new state.
-4. Any new constants go in `Constants.SuperstructureConstants`.
-5. Since all transitions are wildcarded, no `addTransition()` call is needed.
+2. Add behavior in the appropriate private helper (`handleIntakeLogic`, `handleScoringLogic`, `handleUnjamLogic`, or a new helper).
+3. Add target angle logic in `updateMechanismTargets()`.
+4. Register transitions in the constructor with `addValidBidirectional()`.
+5. Any new constants go in `SuperstructureConstants`.
 6. Add a test in `MARSSuperstructureTest` verifying the new state behavior.
 
 ## 4. Command API
