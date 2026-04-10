@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.FieldConstants;
 import frc.robot.constants.VisionConstants;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +20,9 @@ import org.littletonrobotics.junction.Logger;
  * Central aggregator for all visual and SLAM external odometry integrations.
  *
  * <p>Students: This subsystem actively pools array data from unlimited AprilTag and VIO SLAM
- * pipelines. It analyzes the physical ambiguity of every single target, scales dynamic standard
- * deviations exponentially based on target distance, and mathematically rejects 'hallucinatory'
- * camera frames before passing the secure coordinates into the SwerveDrive Pose Estimator.
+ * pipelines. It analyzes the physical ambiguity of every target, scales standard deviations
+ * dynamically, and executes strict multi-factor 254-style rejection conditions before passing
+ * coordinates into the SwerveDrive Pose Estimator.
  */
 public class MARSVision extends SubsystemBase {
   private final SwerveDrive swerveDrive;
@@ -31,28 +32,6 @@ public class MARSVision extends SubsystemBase {
 
   private final List<VIOSlamIO> slamIOs;
   private final VIOSlamIOInputsAutoLogged[] slamInputs;
-
-  private static final double CLOSE_DISTANCE = 2.0;
-  private static final double FAR_DISTANCE = 6.0;
-  private static final double MIN_WEIGHT = 0.1;
-  private static final double MAX_TAG_DISTANCE = 3.0;
-
-  private double calculateDistanceWeight(double distance) {
-    double baseWeight =
-        MIN_WEIGHT
-            + (1.0 - MIN_WEIGHT)
-                * (1.0
-                    / (1.0
-                        + Math.exp(
-                            (distance - CLOSE_DISTANCE) / (FAR_DISTANCE - CLOSE_DISTANCE) * 4.0)));
-
-    if (distance > FAR_DISTANCE) {
-      double farDistancePenalty = Math.pow(0.5, (distance - FAR_DISTANCE) / 2.0);
-      return baseWeight * farDistancePenalty;
-    }
-
-    return baseWeight;
-  }
 
   /**
    * Constructs the absolute Vision mapping structure.
@@ -79,7 +58,7 @@ public class MARSVision extends SubsystemBase {
 
   /**
    * The active periodic layer. Scans through all mapped interfaces exactly once per loop. Executes
-   * bounding box Z-height rejection and ambiguity thresholding natively.
+   * advanced field constraints, motion blur rejection, and ambiguity thresholding natively.
    */
   @Override
   public void periodic() {
@@ -102,6 +81,13 @@ public class MARSVision extends SubsystemBase {
       aprilTagIOs.get(i).updateInputs(aprilTagInputs[i]);
       Logger.processInputs("Vision/AprilTag/" + i, aprilTagInputs[i]);
 
+      int acceptedCount = 0;
+      boolean rejectedYawRate = false;
+      boolean rejectedTilt = false;
+      boolean rejectedOOB = false;
+      boolean rejectedZHeight = false;
+      boolean rejectedAmbiguity = false;
+
       for (int f = 0; f < aprilTagInputs[i].estimatedPoses.length; f++) {
         Pose3d pose3d = aprilTagInputs[i].estimatedPoses[f];
         int tagCount = aprilTagInputs[i].tagCounts[f];
@@ -109,23 +95,48 @@ public class MARSVision extends SubsystemBase {
         double avgDist = aprilTagInputs[i].averageDistancesMeters[f];
         double timestamp = aprilTagInputs[i].timestamps[f];
 
-        // Dynamic Filtering & Ambiguity Rejection
-        if (tagCount == 1) {
-          if (ambiguity > VisionConstants.MAX_AMBIGUITY.get()
-              || Math.abs(pose3d.getZ()) > VisionConstants.MAX_Z_HEIGHT.get()) {
-            continue; // Reject noisy single tag or flying robot
-          }
-          if (avgDist > MAX_TAG_DISTANCE) {
-            continue; // B.R.E.A.D. 2025: Strict 3.0 meter single tag cutoff
-          }
+        Pose2d pose2d = pose3d.toPose2d();
+
+        // Check 1: Z-Height Hallucination
+        if (Math.abs(pose3d.getZ()) > VisionConstants.MAX_Z_HEIGHT.get()) {
+          rejectedZHeight = true;
+          continue;
         }
 
-        double distanceWeight = calculateDistanceWeight(avgDist);
+        // Check 2: Field Bounds
+        double margin = VisionConstants.FIELD_MARGIN_METERS.get();
+        if (pose2d.getX() < -margin
+            || pose2d.getX() > FieldConstants.FIELD_LENGTH_METERS + margin
+            || pose2d.getY() < -margin
+            || pose2d.getY() > FieldConstants.FIELD_WIDTH_METERS + margin) {
+          rejectedOOB = true;
+          continue;
+        }
 
-        // Quadratic scaling based on distance
-        // The further away, the exponentially less we trust it (squared)
-        double linearStdDev =
-            (VisionConstants.TAG_STD_BASE.get() * Math.pow(avgDist, 2)) / distanceWeight;
+        // Check 3: Beached / Tilt
+        double maxTilt = Math.max(Math.abs(gyro.pitchPositionRad), Math.abs(gyro.rollPositionRad));
+        if (Math.toDegrees(maxTilt) > VisionConstants.MAX_TILT_DEG.get()) {
+          rejectedTilt = true;
+          continue;
+        }
+
+        // Check 4: Yaw Rate (Motion blur)
+        if (Math.toDegrees(Math.abs(gyro.yawVelocityRadPerSec))
+            > VisionConstants.MAX_YAW_RATE_DEG_PER_SEC.get()) {
+          rejectedYawRate = true;
+          continue;
+        }
+
+        // Check 5: Ambiguity (For PhotonVision single-tag. Limelight defaults to 0.0)
+        if (tagCount == 1 && ambiguity > VisionConstants.MAX_AMBIGUITY.get()) {
+          rejectedAmbiguity = true;
+          continue;
+        }
+
+        acceptedCount++;
+
+        // Calculate standard deviations (Quadratic distance scaling)
+        double linearStdDev = VisionConstants.TAG_STD_BASE.get() * Math.pow(avgDist, 2);
 
         // MegaTag2 Boost: Dramatically tighten bounds when multiple tags are visible
         if (tagCount > 1) {
@@ -135,12 +146,19 @@ public class MARSVision extends SubsystemBase {
         double angularStdDev = linearStdDev * VisionConstants.ANGULAR_STD_MULTIPLIER.get();
 
         Matrix<N3, N1> stdDevs = VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev);
-        Pose2d pose2d = pose3d.toPose2d();
 
         swerveDrive.addVisionMeasurement(pose2d, timestamp, stdDevs);
         Logger.recordOutput("Vision/ValidPoses/" + i, pose2d);
         latestTargetTranslation = Optional.of(pose2d.getTranslation());
       }
+
+      // Log rejection telemetry
+      Logger.recordOutput("Vision/Rejected/YawRate/" + i, rejectedYawRate);
+      Logger.recordOutput("Vision/Rejected/Tilt/" + i, rejectedTilt);
+      Logger.recordOutput("Vision/Rejected/OutOfBounds/" + i, rejectedOOB);
+      Logger.recordOutput("Vision/Rejected/ZHeight/" + i, rejectedZHeight);
+      Logger.recordOutput("Vision/Rejected/Ambiguity/" + i, rejectedAmbiguity);
+      Logger.recordOutput("Vision/AcceptedCount/" + i, acceptedCount);
     }
 
     // Process SLAM

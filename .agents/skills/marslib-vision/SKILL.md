@@ -13,7 +13,7 @@ The vision system lives in `com.marslib.vision` with 8 classes:
 
 | Class | Purpose |
 |---|---|
-| `MARSVision` | Top-level subsystem — multi-camera fusion, standard deviation scaling, pose injection |
+| `MARSVision` | Top-level subsystem — multi-camera fusion, standard deviation scaling, filtering, pose injection |
 | `AprilTagVisionIO` | IO interface with `@AutoLog` inputs (poses, ambiguity, timestamps) |
 | `AprilTagVisionIOPhoton` | PhotonVision camera implementation |
 | `AprilTagVisionIOLimelight` | Limelight camera implementation |
@@ -25,8 +25,11 @@ The vision system lives in `com.marslib.vision` with 8 classes:
 ### Fusion Pipeline
 ```
 Camera → AprilTagVisionIO.updateInputs() → MARSVision.periodic()
-    → Filter by ambiguity (reject > threshold)
-    → Filter by Z-height (reject "flying robot" hallucinations)
+    → Filter by Z-Height (reject "flying robot")
+    → Filter by Field Bounds (reject if coordinates are outside margin)
+    → Filter by Tilt (reject if beached/riding a bump > 15°)
+    → Filter by Yaw Rate (reject if spinning > 120°/s due to motion blur)
+    → Filter by Ambiguity (reject > threshold for PhotonVision, Limelight defaults to 0)
     → Scale stdDevs quadratically by distance
     → Multi-tag boost (tighten stdDevs when >1 tag visible)
     → SwerveDrive.addVisionMeasurement(pose, timestamp, stdDevs)
@@ -72,48 +75,23 @@ Without this, camera configurations leak across test classes, producing stale po
 
 Without these, sim performs unrealistically well and hides real-world vision issues.
 
-### Rule F: Rejection Filters
-Three rejection filters are applied before any pose is accepted:
-1. **Ambiguity check** — single-tag observations with ambiguity > `MAX_AMBIGUITY` (0.2) are rejected.
-2. **Z-height check** — single-tag observations with |z| > `MAX_Z_HEIGHT` (0.5m) are rejected as hallucinations.
-3. **Distance cutoff** (B.R.E.A.D. 2025) — single-tag observations beyond `MAX_TAG_DISTANCE` (3.0m) are rejected. At long range, single AprilTag solutions are geometrically degenerate, so hard-cutting prevents large-amplitude pose jumps.
-
-Multi-tag observations (tagCount > 1) bypass all three filters.
-
-### Rule G: Sigmoid Distance Weight
-The standard deviation is further scaled by a sigmoid-based weight function that smoothly reduces trust as distance increases:
-```java
-// Weight = baseWeight (capped at MIN_WEIGHT at FAR_DISTANCE)
-// Beyond FAR_DISTANCE: exponential halving penalty every 2m
-double baseWeight = MIN_WEIGHT + (1.0 - MIN_WEIGHT)
-    * (1.0 / (1.0 + Math.exp((dist - CLOSE_DISTANCE) / (FAR_DISTANCE - CLOSE_DISTANCE) * 4.0)));
-```
-Key parameters: `CLOSE_DISTANCE=2.0m`, `FAR_DISTANCE=6.0m`, `MIN_WEIGHT=0.1`.
+### Rule F: Rejection Filters (254-Style)
+Five strict rejection filters are applied before any pose is accepted:
+1. **Z-height check** — observations with |z| > `MAX_Z_HEIGHT` (0.5m) are rejected as hallucinations.
+2. **Field bounds check** — observations outside field dimensions + `FIELD_MARGIN_METERS` (0.5m) are rejected.
+3. **Beached/Tilt check** — observations where max(abs(pitch), abs(roll)) > `MAX_TILT_DEG` (15°) are rejected because the PnP geometry assumptions are violated.
+4. **Yaw Rate check** — observations where yaw velocity > `MAX_YAW_RATE_DEG_PER_SEC` (120°/s) are rejected due to motion blur and rolling shutter warp.
+5. **Ambiguity check** — single-tag observations with ambiguity > `MAX_AMBIGUITY` (0.2) are rejected. (Limelight MegaTag2 defaults to 0).
 
 ## 3. Adding New Camera Sources
 
 1. Create a new IO implementation (e.g., `AprilTagVisionIOCustom.java`) implementing `AprilTagVisionIO`.
 2. In `updateInputs()`, populate: `estimatedPoses`, `timestamps`, `ambiguities`, `averageDistancesMeters`, `tagCounts`.
-3. Wire it in `RobotContainer`:
-   ```java
-   MARSVision vision = new MARSVision(
-       swerveDrive,
-       java.util.List.of(
-           new AprilTagVisionIOPhoton("FrontCam", cameraPose),
-           new AprilTagVisionIOPhoton("RearCam", cameraPose2)),
-       java.util.List.of()); // Optional: SLAM IOs
-   ```
-4. `MARSVision` handles multi-camera aggregation automatically — just pass all IO instances.
-5. Tune per-camera stdDev scaling in `Constants.VisionConstants`.
+3. Wire it in `RobotContainer` by passing the classes to the `MARSVision` constructor.
+4. `MARSVision` handles multi-camera aggregation naturally.
 
 ## 4. Command API
 Vision is passive — no manual commands needed. The subsystem automatically injects measurements into `SwerveDrive` every periodic cycle.
-
-For manual recalibration:
-```java
-// Reset pose estimator to a known position (e.g., at match start)
-drive.resetPose(new Pose2d(startX, startY, startRotation));
-```
 
 ## 5. Telemetry
 The following log keys are written by `MARSVision.periodic()`:
@@ -121,9 +99,12 @@ The following log keys are written by `MARSVision.periodic()`:
 | Key | Description |
 |---|---|
 | `Vision/AprilTag/{i}` | Raw `@AutoLog` inputs for camera index `i` |
-| `Vision/ValidPoses/{i}` | Accepted Pose2d after ambiguity/z-height filtering for camera `i` |
-| `Vision/SLAM/{i}` | Raw `@AutoLog` inputs for SLAM source index `i` |
-| `Vision/SlamPoses/{i}` | Accepted Pose2d from SLAM source `i` |
+| `Vision/ValidPoses/{i}` | Accepted Pose2d after all filtering for camera `i` |
+| `Vision/Rejected/Tilt/{i}` | Boolean: true if pose rejected due to robot tilt > 15° |
+| `Vision/Rejected/YawRate/{i}` | Boolean: true if pose rejected due to extreme spinning |
+| `Vision/Rejected/OutOfBounds/{i}` | Boolean: true if hallucinated pose is outside arena |
+| `Vision/Rejected/ZHeight/{i}` | Boolean: true if pose rejected due to flying robot Z hallucination |
+| `Vision/AcceptedCount/{i}` | Raw counts of approved poses per cycle |
 
 ### Constants Reference (`Constants.VisionConstants`)
 | Field | Default | Purpose |
@@ -131,14 +112,13 @@ The following log keys are written by `MARSVision.periodic()`:
 | `TAG_STD_BASE` | 0.05 | Base linear stdDev for single-tag |
 | `MAX_AMBIGUITY` | 0.2 | Rejection threshold for ambiguous single-tag |
 | `MAX_Z_HEIGHT` | 0.5m | Rejection threshold for hallucinated poses |
+| `MAX_TILT_DEG` | 15.0° | Rejection threshold for pitch/roll beaching |
+| `MAX_YAW_RATE_DEG_PER_SEC` | 120°/s | Rejection threshold for motion blur spinning |
+| `FIELD_MARGIN_METERS` | 0.5m | Rejection threshold for bounds checking |
 | `MULTI_TAG_STD_MULTIPLIER` | 0.1 | StdDev reduction factor when >1 tag visible |
 | `ANGULAR_STD_MULTIPLIER` | 2.0 | Linear → angular stdDev conversion factor |
-| `SLAM_STD_DEV` | 0.01 | Static stdDev for VIO SLAM measurements |
-| `SLAM_ANGULAR_STD_DEV` | 0.5 | Static angular stdDev for VIO SLAM measurements |
-| `MAX_TAG_DISTANCE` | 3.0m | Hard cutoff for single-tag distance (B.R.E.A.D.) |
 
-## 6. Elite References (PhotonVision)
-
-When extracting elite vision logic (like Megatag 2 or multi-camera fusion) or debugging underlying behavior, use the core PhotonVision repository as the definitive reference.
-
-*   **PhotonVision Core Vision Engine:** `https://github.com/PhotonVision/photonvision`
+## 6. Elite References
+When extracting elite vision logic (like Megatag 2 or multi-camera fusion) or debugging underlying behavior:
+*   **Photonviz / Limelight documentation** (MegaTag2)
+*   **Team 254 (Cheesy Poofs)** — Reference for strict rejection filters (yaw rate, bounds, tilt).

@@ -23,6 +23,10 @@ public class LimelightHelpers {
     return new PoseEstimate();
   }
 
+  public static PoseEstimate getBotPoseEstimate_wpiBlue_MegaTag2(String limelightName) {
+    return new PoseEstimate();
+  }
+
   /**
    * Pushes the robot's orientation directly to the Limelight over NetworkTables. This is required
    * for accurate Megatag 2 solve generation and pitch correction.

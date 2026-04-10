@@ -18,6 +18,21 @@ public final class VisionConstants {
   public static final LoggedTunableNumber MAX_Z_HEIGHT =
       new LoggedTunableNumber("Vision/MAX_Z_HEIGHT", 0.5);
 
+  /**
+   * Maximum acceptable yaw angular velocity (deg/sec) to reject vision during high-speed spins
+   * (motion blur).
+   */
+  public static final LoggedTunableNumber MAX_YAW_RATE_DEG_PER_SEC =
+      new LoggedTunableNumber("Vision/MAX_YAW_RATE_DEG_PER_SEC", 120.0);
+
+  /** Maximum acceptable pitch or roll angle (deg) to reject vision when beached on an obstacle. */
+  public static final LoggedTunableNumber MAX_TILT_DEG =
+      new LoggedTunableNumber("Vision/MAX_TILT_DEG", 15.0);
+
+  /** Allowable field coordinate boundary margin in meters for pose rejection. */
+  public static final LoggedTunableNumber FIELD_MARGIN_METERS =
+      new LoggedTunableNumber("Vision/FIELD_MARGIN_METERS", 0.5);
+
   /** Multiplier applied to linear StdDev when multiple tags are simultaneously visible. */
   public static final LoggedTunableNumber MULTI_TAG_STD_MULTIPLIER =
       new LoggedTunableNumber("Vision/MULTI_TAG_STD_MULTIPLIER", 0.1);

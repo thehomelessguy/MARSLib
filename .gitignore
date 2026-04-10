@@ -197,8 +197,11 @@ ghost_macro*.csv
 *_errors.txt
 debug_*.txt
 diag_*.txt
-enum_*.txt
 tmp_*.txt
+
+# Log Upload artifacts
+github_pat.txt
+.uploaded_logs
 
 # Build-time error/log dumps
 build_errors.*

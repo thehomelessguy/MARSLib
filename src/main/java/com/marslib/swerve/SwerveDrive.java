@@ -125,7 +125,13 @@ public class SwerveDrive extends SubsystemBase {
   // Reusable GC-free arrays for periodic loop to prevent massive RoboRIO heap churn
   private final double[] simVolts = new double[4];
   private final Rotation2d[] simAngles = new Rotation2d[4];
-  private final SwerveModulePosition[] positionsForFrame = new SwerveModulePosition[4];
+  private final SwerveModulePosition[] positionsForFrame =
+      new SwerveModulePosition[] {
+        new SwerveModulePosition(),
+        new SwerveModulePosition(),
+        new SwerveModulePosition(),
+        new SwerveModulePosition()
+      };
   private final SwerveModulePosition[] currentPositions = new SwerveModulePosition[4];
   private final SwerveModulePosition[] scaledPositions =
       new SwerveModulePosition[] {
@@ -136,6 +142,8 @@ public class SwerveDrive extends SubsystemBase {
       };
   private final double[] lastRawDistances = new double[4];
   private boolean isFirstOdometryDrain = true;
+  private final Rotation2d[] frameYawCache = new Rotation2d[] {new Rotation2d()};
+  private final SwerveModuleState[] measuredStatesCache = new SwerveModuleState[4];
 
   /**
    * Configures PathPlanner's AutoBuilder for autonomous path following. Must be called exactly once
@@ -288,25 +296,28 @@ public class SwerveDrive extends SubsystemBase {
         scaledPositions[m].distanceMeters += delta * odometryTrust;
         scaledPositions[m].angle = rawPos.angle;
 
-        positionsForFrame[m] =
-            new SwerveModulePosition(scaledPositions[m].distanceMeters, scaledPositions[m].angle);
+        // GC-free: mutate pre-allocated position objects instead of new-ing
+        positionsForFrame[m].distanceMeters = scaledPositions[m].distanceMeters;
+        positionsForFrame[m].angle = scaledPositions[m].angle;
       }
       isFirstOdometryDrain = false;
 
-      Rotation2d frameYaw;
+      // GC-free: reuse single Rotation2d via static factory (returns cached instances for common
+      // values)
+      double frameYawRad;
       if (gyroInputs.connected && gyroInputs.odometryYawPositions.length > 0) {
-        frameYaw =
-            new Rotation2d(
-                gyroInputs
-                    .odometryYawPositions[Math.min(i, gyroInputs.odometryYawPositions.length - 1)]);
+        frameYawRad =
+            gyroInputs
+                .odometryYawPositions[Math.min(i, gyroInputs.odometryYawPositions.length - 1)];
       } else {
-        frameYaw = new Rotation2d(gyroInputs.yawPositionRad);
+        frameYawRad = gyroInputs.yawPositionRad;
       }
+      frameYawCache[0] = Rotation2d.fromRadians(frameYawRad);
 
       double timestamp =
           (timestamps.length > i) ? timestamps[i] : edu.wpi.first.wpilibj.Timer.getFPGATimestamp();
 
-      poseEstimator.updateWithTime(timestamp, frameYaw, positionsForFrame);
+      poseEstimator.updateWithTime(timestamp, frameYawCache[0], positionsForFrame);
     }
 
     // Log final Pose
@@ -323,7 +334,7 @@ public class SwerveDrive extends SubsystemBase {
 
       poseEstimator.resetPosition(
           gyroInputs.connected
-              ? new Rotation2d(gyroInputs.yawPositionRad)
+              ? Rotation2d.fromRadians(gyroInputs.yawPositionRad)
               : simBoundedPose.getRotation(),
           currentPositions,
           simBoundedPose); // Force odometry matching
@@ -337,12 +348,12 @@ public class SwerveDrive extends SubsystemBase {
 
     Logger.recordOutput("SwerveDrive/Pose", currentPose);
 
-    SwerveModuleState[] states =
-        new SwerveModuleState[] {
-          modules[0].getLatestState(), modules[1].getLatestState(),
-          modules[2].getLatestState(), modules[3].getLatestState()
-        };
-    Logger.recordOutput("SwerveDrive/MeasuredStates", states);
+    // GC-free: reuse pre-allocated states array for logging
+    measuredStatesCache[0] = modules[0].getLatestState();
+    measuredStatesCache[1] = modules[1].getLatestState();
+    measuredStatesCache[2] = modules[2].getLatestState();
+    measuredStatesCache[3] = modules[3].getLatestState();
+    Logger.recordOutput("SwerveDrive/MeasuredStates", measuredStatesCache);
   }
 
   /**
@@ -425,14 +436,17 @@ public class SwerveDrive extends SubsystemBase {
     }
     isFirstOdometryDrain = false;
 
+    // Reuse pre-allocated array to keep consistent with GC-free patterns
+    for (int i = 0; i < 4; i++) {
+      positionsForFrame[i].distanceMeters = scaledPositions[i].distanceMeters;
+      positionsForFrame[i].angle = scaledPositions[i].angle;
+    }
+
     poseEstimator.resetPosition(
-        gyroInputs.connected ? new Rotation2d(gyroInputs.yawPositionRad) : pose.getRotation(),
-        new SwerveModulePosition[] {
-          new SwerveModulePosition(scaledPositions[0].distanceMeters, scaledPositions[0].angle),
-          new SwerveModulePosition(scaledPositions[1].distanceMeters, scaledPositions[1].angle),
-          new SwerveModulePosition(scaledPositions[2].distanceMeters, scaledPositions[2].angle),
-          new SwerveModulePosition(scaledPositions[3].distanceMeters, scaledPositions[3].angle)
-        },
+        gyroInputs.connected
+            ? Rotation2d.fromRadians(gyroInputs.yawPositionRad)
+            : pose.getRotation(),
+        positionsForFrame,
         pose);
   }
 
@@ -459,17 +473,6 @@ public class SwerveDrive extends SubsystemBase {
       Pose2d visionRobotPoseMeters,
       double timestampSeconds,
       Matrix<N3, N1> visionMeasurementStdDevs) {
-
-    // 254 Vision Rejection Logic: Reject if angular velocities are too high (e.g. going over bumps)
-    double maxAngularVelocity =
-        Math.max(
-            Math.abs(gyroInputs.pitchVelocityRadPerSec),
-            Math.abs(gyroInputs.rollVelocityRadPerSec));
-    if (Math.toDegrees(maxAngularVelocity) > 10.0) {
-      Logger.recordOutput("SwerveDrive/VisionRejectedAngularVelocity", true);
-      return;
-    }
-    Logger.recordOutput("SwerveDrive/VisionRejectedAngularVelocity", false);
 
     poseEstimator.addVisionMeasurement(
         visionRobotPoseMeters, timestampSeconds, visionMeasurementStdDevs);

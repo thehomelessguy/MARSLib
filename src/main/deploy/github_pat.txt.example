@@ -1,0 +1,3 @@
+# GitHub PAT for LogUploader
+Place your Personal Access Token here. Keep it secret.
+Do not commit this file. Provide a classic PAT with `repo` scope.

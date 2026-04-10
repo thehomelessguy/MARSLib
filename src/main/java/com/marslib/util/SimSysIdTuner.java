@@ -21,7 +21,8 @@ import org.ejml.simple.SimpleMatrix;
 @SuppressWarnings({
   "PMD.SystemPrintln",
   "PMD.AvoidInstantiatingObjectsInLoops",
-  "PMD.DataflowAnomalyAnalysis"
+  "PMD.DataflowAnomalyAnalysis",
+  "PMD.GuardLogStatement"
 })
 public class SimSysIdTuner {
 

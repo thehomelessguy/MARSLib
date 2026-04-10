@@ -58,6 +58,7 @@ public class Robot extends LoggedRobot {
 
       case SIM:
         // Running a physics simulator, log to NT
+        Logger.addDataReceiver(new WPILOGWriter("logs/"));
         Logger.addDataReceiver(new NT4Publisher());
         break;
 
@@ -99,6 +100,9 @@ public class Robot extends LoggedRobot {
     // No-op. GC is triggered once in disabledInit() on mode transition,
     // which is sufficient to reclaim post-auto garbage without risking
     // a GC pause during the disabled→auto transition window.
+
+    // Attempt to upload logs safely in background
+    com.marslib.util.LogUploader.tryUploadLogsAsync();
   }
 
   /** This autonomous runs the selected autonomous command. */

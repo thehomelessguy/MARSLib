@@ -34,8 +34,8 @@ public class AprilTagVisionIOLimelight implements AprilTagVisionIO {
 
   @Override
   public void updateInputs(AprilTagVisionIOInputs inputs) {
-    // Utilize traditional MegaTag2 / BotPose wpiBlue
-    PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiBlue(cameraName);
+    // Utilize traditional MegaTag2 / BotPose wpiBlue_MegaTag2
+    PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName);
 
     if (estimate != null && estimate.tagCount > 0) {
       inputs.estimatedPoses = new Pose3d[] {estimate.pose};
