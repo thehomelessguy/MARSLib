@@ -56,7 +56,6 @@ jobs:
       if: github.event_name == 'pull_request' && matrix.os == 'ubuntu-latest'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        pmd_version: "6.55.0"
         workdir: ./
         reporter: github-pr-review
         fail_on_error: false
