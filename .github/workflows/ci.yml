@@ -52,7 +52,7 @@ jobs:
         commit_message: "style: auto-format code with spotless"
 
     - name: Run Reviewdog PMD Annotations
-      uses: kemsakurai/action-pmd@v1
+      uses: kemsakurai/action-pmd@v0.0.4
       if: github.event_name == 'pull_request' && matrix.os == 'ubuntu-latest'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
